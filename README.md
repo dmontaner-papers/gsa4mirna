@@ -3,5 +3,6 @@ Integrated Gene Set Analysis for microRNA Studies
 
 Scripts, documents and working paper ...
 
-VER
-https://wiki.nci.nih.gov/display/TCGA/Protein+Array+Data+Format+Specification
+supplementary materials here:
+
+http://www.dmontaner.com/gsa4mirna/
