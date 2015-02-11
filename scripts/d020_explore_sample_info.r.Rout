@@ -1,0 +1,625 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##d020_explore_sample_info.r
+> ##2014-05-23 dmontaner@cipf.es
+> ##Collecting miRNA data from The Cancer Genome Atlas
+> ##Explore the sample info organization
+> 
+> ## OBS: "Blood Derived Normal" samples do not have miRNA expression data
+> 
+> ## We use just those patients with case and control measured by IlluminaHiSeq
+> ## See: http://www.biostars.org/p/66612/
+> 
+> date ()
+[1] "Fri Jun  6 20:07:13 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                        
+[2] "-f"                                                                                   
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/d020_explore_sample_info.r"
+[4] "--restore"                                                                            
+[5] "--save"                                                                               
+[6] "--no-readline"                                                                        
+[7] "--no-save"                                                                            
+[8] "--no-restore"                                                                         
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.0 (2014-04-10)"
+> #library (); packageDescription ("", fields = "Version") #
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> ###DATOS
+> load (file.path (.job$dir$proces, "sample_info_all.RData"))
+> ls ()
+[1] "sinfos"
+> 
+> tags <- names (sinfos)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "acc"  "blca" "brca" "cesc" "coad" "dlbc" "esca" "hnsc" "kich" "kirc" "kirp" "laml" "lgg"  "lihc" "luad" "lusc" "meso" "ov"   "paad" "pcpg" "prad" "read" "sarc" "skcm" "stad" "thca" "ucec" "ucs" 
+> TAGS
+   acc   blca   brca   cesc   coad   dlbc   esca   hnsc   kich   kirc   kirp   laml    lgg   lihc   luad   lusc   meso     ov   paad   pcpg   prad   read   sarc   skcm   stad   thca   ucec    ucs 
+ "ACC" "BLCA" "BRCA" "CESC" "COAD" "DLBC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LAML"  "LGG" "LIHC" "LUAD" "LUSC" "MESO"   "OV" "PAAD" "PCPG" "PRAD" "READ" "SARC" "SKCM" "STAD" "THCA" "UCEC"  "UCS" 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> 
+> mat <- matrix (NA, nrow = length (tags), ncol = 3)
+> rownames (mat) <- tags
+> colnames (mat) <- c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")
+> 
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     
++     sinfo <- sinfos[[tag]]
++     
++     ## sinfo[,"path"] <- file.path (.job$dir$raw, TAGS[tag], "miRNASeq", paste0 ("BCGSC__", sinfo$Platform), "Level_3")
++     ## sinfo[is.na (sinfo$Platform), "path"] <- NA
++     
++     sinfo[,"exists.mirna"]   <- file.exists (file.path (sinfo[,"path"], sinfo[,"File.Name.mirna"]))
++     sinfo[,"exists.isoform"] <- file.exists (file.path (sinfo[,"path"], sinfo[,"File.Name.isoform"]))
++ 
++     if (!identical (sinfo[,"exists.mirna"], sinfo[,"exists.isoform"])) stop ("mirna and isoform files do not match")
++     
++     table (sinfo[,"exists.mirna"], sinfo[,"exists.isoform"], sinfo$Platform, exclude = NULL)
++ 
++     ## type
++     ta <- table (sinfo$patient, sinfo$sample_type)
++     suma <- colSums (ta)
++     print (suma)
++     
++     mat[tag, c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")] <- suma[c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")]
++ }
+
+===============  ACC  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                  87                   92                    5 
+
+===============  BLCA  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                 348                  375                   36 
+
+===============  BRCA  ===============
+Blood Derived Normal           Metastatic        Primary Tumor  Solid Tissue Normal 
+                 974                    7                 1078                  160 
+
+===============  CESC  ===============
+Blood Derived Normal           Metastatic        Primary Tumor  Solid Tissue Normal 
+                 253                    1                  257                    7 
+
+===============  COAD  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 409                  868                    2                  101 
+
+===============  DLBC  ===============
+Blood Derived Normal   Bone Marrow Normal        Primary Tumor 
+                  54                    4                   48 
+
+===============  ESCA  ===============
+Blood Derived Normal           Metastatic        Primary Tumor  Solid Tissue Normal 
+                 126                    1                  185                   65 
+
+===============  HNSC  ===============
+Blood Derived Normal           Metastatic        Primary Tumor  Solid Tissue Normal 
+                 511                    2                  528                   82 
+
+===============  KICH  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                  42                  101                   59 
+
+===============  KIRC  ===============
+Additional - New Primary     Blood Derived Normal            Primary Tumor      Solid Tissue Normal 
+                       1                      116                      565                      442 
+
+===============  KIRP  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                 189                  258                   84 
+
+===============  LAML  ===============
+                             Buccal Cell Normal Primary Blood Derived Cancer - Peripheral Blood                             Solid Tissue Normal 
+                                              1                                             200                                             200 
+
+===============  LGG  ===============
+Blood Derived Normal   Buccal Cell Normal        Primary Tumor      Recurrent Tumor 
+                 514                    2                  516                   17 
+
+===============  LIHC  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 241                  291                    1                   89 
+
+===============  LUAD  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 423                  519                    2                  203 
+
+===============  LUSC  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                 318                  504                  254 
+
+===============  MESO  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                  86                   87                    1 
+
+===============  OV  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 462                 1077                   30                  135 
+
+===============  PAAD  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                 127                  149                   26 
+
+===============  PCPG  ===============
+Additional - New Primary     Blood Derived Normal               Metastatic            Primary Tumor      Solid Tissue Normal 
+                       3                      177                        2                      179                        5 
+
+===============  PRAD  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                  90                  101                   31 
+
+===============  READ  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 159                  330                    2                   22 
+
+===============  SARC  ===============
+Blood Derived Normal           Metastatic        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 223                    1                  242                    2                   23 
+
+===============  SKCM  ===============
+Additional Metastatic  Blood Derived Normal            Metastatic         Primary Tumor   Solid Tissue Normal 
+                    2                   469                   367                   105                     3 
+
+===============  STAD  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                 339                  386                  100 
+
+===============  THCA  ===============
+Blood Derived Normal           Metastatic        Primary Tumor  Solid Tissue Normal 
+                 438                    8                  507                  100 
+
+===============  UCEC  ===============
+Blood Derived Normal        Primary Tumor      Recurrent Tumor  Solid Tissue Normal 
+                 524                  555                    1                   52 
+
+===============  UCS  ===============
+Blood Derived Normal        Primary Tumor  Solid Tissue Normal 
+                  51                   57                    6 
+> mat[is.na (mat)] <- 0
+> mat
+     Primary Tumor Blood Derived Normal Solid Tissue Normal
+acc             92                   87                   5
+blca           375                  348                  36
+brca          1078                  974                 160
+cesc           257                  253                   7
+coad           868                  409                 101
+dlbc            48                   54                   0
+esca           185                  126                  65
+hnsc           528                  511                  82
+kich           101                   42                  59
+kirc           565                  116                 442
+kirp           258                  189                  84
+laml             0                    0                 200
+lgg            516                  514                   0
+lihc           291                  241                  89
+luad           519                  423                 203
+lusc           504                  318                 254
+meso            87                   86                   1
+ov            1077                  462                 135
+paad           149                  127                  26
+pcpg           179                  177                   5
+prad           101                   90                  31
+read           330                  159                  22
+sarc           242                  223                  23
+skcm           105                  469                   3
+stad           386                  339                 100
+thca           507                  438                 100
+ucec           555                  524                  52
+ucs             57                   51                   6
+> 
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     
++     sinfo <- sinfos[[tag]]
++     print (table (sinfo$Platform, exclude = NULL))
++ }
+
+===============  ACC  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                    80                    104 
+
+===============  BLCA  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                     2                    277                    480 
+
+===============  BRCA  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   338                    830                   1051 
+
+===============  CESC  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   219                    299 
+
+===============  COAD  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   374                    485                    521 
+
+===============  DLBC  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                    27                     79 
+
+===============  ESCA  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   113                    264 
+
+===============  HNSC  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                    37                    520                    566 
+
+===============  KICH  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                    91                    111 
+
+===============  KIRC  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   284                    318                    522 
+
+===============  KIRP  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                    16                    245                    270 
+
+===============  LAML  ===============
+
+IlluminaGA_miRNASeq                <NA> 
+                188                 213 
+
+===============  LGG  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   485                    564 
+
+===============  LIHC  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   284                    338 
+
+===============  LUAD  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                    63                    482                    602 
+
+===============  LUSC  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   136                    376                    564 
+
+===============  MESO  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                    26                    148 
+
+===============  OV  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   974                    730 
+
+===============  PAAD  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   100                    202 
+
+===============  PCPG  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   187                    179 
+
+===============  PRAD  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   117                    105 
+
+===============  READ  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   136                    188                    189 
+
+===============  SARC  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   196                    295 
+
+===============  SKCM  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   372                    574 
+
+===============  STAD  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                    47                    345                    433 
+
+===============  THCA  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                   566                    487 
+
+===============  UCEC  ===============
+
+   IlluminaGA_miRNASeq IlluminaHiSeq_miRNASeq                   <NA> 
+                   129                    425                    578 
+
+===============  UCS  ===============
+
+IlluminaHiSeq_miRNASeq                   <NA> 
+                    57                     57 
+> 
+> 
+> ################################################################################
+> 
+> 
+> ### SAMPLES WITH DATA
+> mat2 <- matrix (NA, nrow = length (tags), ncol = 3)
+> rownames (mat2) <- tags
+> colnames (mat2) <- c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")
+> 
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     
++     sinfo <- sinfos[[tag]]
++     touse <- !is.na (sinfo$Platform.Type)
++     sinfo <- sinfo[touse,]
++     
++     ## sinfo[,"path"] <- file.path (.job$dir$raw, TAGS[tag], "miRNASeq", paste0 ("BCGSC__", sinfo$Platform), "Level_3")
++     ## sinfo[is.na (sinfo$Platform), "path"] <- NA
++     
++     sinfo[,"exists.mirna"]   <- file.exists (file.path (sinfo[,"path"], sinfo[,"File.Name.mirna"]))
++     sinfo[,"exists.isoform"] <- file.exists (file.path (sinfo[,"path"], sinfo[,"File.Name.isoform"]))
++ 
++     if (!identical (sinfo[,"exists.mirna"], sinfo[,"exists.isoform"])) stop ("mirna and isoform files do not match")
++     
++     table (sinfo[,"exists.mirna"], sinfo[,"exists.isoform"], sinfo$Platform, exclude = NULL)
++ 
++     ## type
++     ta <- table (sinfo$patient, sinfo$sample_type)
++     suma <- colSums (ta)
++     print (suma)
++     
++     mat2[tag, c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")] <- suma[c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")]
++ }
+
+===============  ACC  ===============
+Primary Tumor 
+           80 
+
+===============  BLCA  ===============
+      Primary Tumor Solid Tissue Normal 
+                260                  19 
+
+===============  BRCA  ===============
+         Metastatic       Primary Tumor Solid Tissue Normal 
+                  7                1058                 103 
+
+===============  CESC  ===============
+         Metastatic       Primary Tumor Solid Tissue Normal 
+                  1                 215                   3 
+
+===============  COAD  ===============
+      Primary Tumor     Recurrent Tumor Solid Tissue Normal 
+                841                   2                  16 
+
+===============  DLBC  ===============
+Primary Tumor 
+           27 
+
+===============  ESCA  ===============
+      Primary Tumor Solid Tissue Normal 
+                102                  11 
+
+===============  HNSC  ===============
+         Metastatic       Primary Tumor Solid Tissue Normal 
+                  1                 512                  44 
+
+===============  KICH  ===============
+      Primary Tumor Solid Tissue Normal 
+                 66                  25 
+
+===============  KIRC  ===============
+Additional - New Primary            Primary Tumor      Solid Tissue Normal 
+                       1                      530                       71 
+
+===============  KIRP  ===============
+      Primary Tumor Solid Tissue Normal 
+                227                  34 
+
+===============  LAML  ===============
+Primary Blood Derived Cancer - Peripheral Blood 
+                                            188 
+
+===============  LGG  ===============
+  Primary Tumor Recurrent Tumor 
+            472              13 
+
+===============  LIHC  ===============
+      Primary Tumor     Recurrent Tumor Solid Tissue Normal 
+                233                   1                  50 
+
+===============  LUAD  ===============
+      Primary Tumor     Recurrent Tumor Solid Tissue Normal 
+                497                   2                  46 
+
+===============  LUSC  ===============
+      Primary Tumor Solid Tissue Normal 
+                467                  45 
+
+===============  MESO  ===============
+Primary Tumor 
+           26 
+
+===============  OV  ===============
+  Primary Tumor Recurrent Tumor 
+            954              20 
+
+===============  PAAD  ===============
+      Primary Tumor Solid Tissue Normal 
+                 96                   4 
+
+===============  PCPG  ===============
+Additional - New Primary               Metastatic            Primary Tumor      Solid Tissue Normal 
+                       3                        2                      179                        3 
+
+===============  PRAD  ===============
+      Primary Tumor Solid Tissue Normal 
+                100                  17 
+
+===============  READ  ===============
+      Primary Tumor     Recurrent Tumor Solid Tissue Normal 
+                316                   2                   6 
+
+===============  SARC  ===============
+  Primary Tumor Recurrent Tumor 
+            194               2 
+
+===============  SKCM  ===============
+Additional Metastatic            Metastatic         Primary Tumor   Solid Tissue Normal 
+                    1                   296                    74                     1 
+
+===============  STAD  ===============
+      Primary Tumor Solid Tissue Normal 
+                353                  39 
+
+===============  THCA  ===============
+         Metastatic       Primary Tumor Solid Tissue Normal 
+                  8                 499                  59 
+
+===============  UCEC  ===============
+      Primary Tumor     Recurrent Tumor Solid Tissue Normal 
+                520                   1                  33 
+
+===============  UCS  ===============
+Primary Tumor 
+           57 
+> mat2[is.na (mat2)] <- 0
+> mat2
+     Primary Tumor Blood Derived Normal Solid Tissue Normal
+acc             80                    0                   0
+blca           260                    0                  19
+brca          1058                    0                 103
+cesc           215                    0                   3
+coad           841                    0                  16
+dlbc            27                    0                   0
+esca           102                    0                  11
+hnsc           512                    0                  44
+kich            66                    0                  25
+kirc           530                    0                  71
+kirp           227                    0                  34
+laml             0                    0                   0
+lgg            472                    0                   0
+lihc           233                    0                  50
+luad           497                    0                  46
+lusc           467                    0                  45
+meso            26                    0                   0
+ov             954                    0                   0
+paad            96                    0                   4
+pcpg           179                    0                   3
+prad           100                    0                  17
+read           316                    0                   6
+sarc           194                    0                   0
+skcm            74                    0                   1
+stad           353                    0                  39
+thca           499                    0                  59
+ucec           520                    0                  33
+ucs             57                    0                   0
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  0.513   0.117   1.133 

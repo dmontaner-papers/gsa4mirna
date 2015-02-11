@@ -1,0 +1,330 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##e010_read_paired_data.r
+> ##2014-05-30 dmontaner@cipf.es
+> ##Collecting miRNA data from The Cancer Genome Atlas
+> ##Reading data paired data
+> 
+> date ()
+[1] "Fri Jun  6 20:07:58 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                     
+[2] "-f"                                                                                
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/e010_read_paired_data.r"
+[4] "--restore"                                                                         
+[5] "--save"                                                                            
+[6] "--no-readline"                                                                     
+[7] "--no-save"                                                                         
+[8] "--no-restore"                                                                      
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.0 (2014-04-10)"
+> #library (); packageDescription ("", fields = "Version") #
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> ###DATOS
+> load (file.path (.job$dir$proces, "sample_info_paired_clean.RData"))
+> ls ()
+[1] "paired.sinfo.s"
+> 
+> tags <- names (paired.sinfo.s)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> tag <- "kich"
+> 
+> datos <- list ()
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     sinfo <- paired.sinfo.s[[tag]]
++     conteos <- list ()
++ 
++     ## Reading files
++     for (i in 1:nrow (sinfo)) {
++         fichero <- file.path (sinfo[i,"path"], sinfo[i,"fichero"])
++         dat <- read.table (fichero, header = TRUE, sep = "\t", quote = "", as.is = TRUE)
++         dat[1:3,]
++         
++         touse <- grep (",", dat$miRNA_region)
++         malo <- setdiff (1:nrow (dat), touse)
++         ##print (table (dat[malo, "miRNA_region"]))
++         
++         dat <- dat[touse,]
++         dat[,"ID"] <- sub ("mature,", "", dat$miRNA_region)
++         dat[,"ID"] <- sub ("star,",   "", dat[,"ID"])
++         res.by <- by (dat$read_count, dat$ID, sum)
++         
++         conteos[[sinfo[i, "sample"]]] <- unlist (as.list (res.by))
++     }
++     ## t (sapply (conteos, summary)) ## minimum number of counts is 1
++     
++     ## MATRIX format
++     misIDs <- unique (unlist (lapply (conteos, names)))
++     length (misIDs)
++     misIDs[1:3]
++     
++     contmat <- matrix (NA, nrow = length (misIDs), ncol = length (conteos))
++     rownames (contmat) <- misIDs
++     colnames (contmat) <- names (conteos)
++     ##
++     for (id in names (conteos)) {
++         ##print (id)
++         contmat[,id] <- conteos[[id]][misIDs]
++     }
++     summary (contmat)
++     contmat[is.na (contmat)] <- 0
++     summary (contmat)
++ 
++     if (any (colnames (contmat) != rownames (sinfo))) stop ("PROBLEMA 1")
++ 
++     ## FILTERING:
++     ## Use those miRNAs having more than 10 counts in any sample
++     ## or a sum big enough:
++     ## higher than 50 or 
++     ## higher than half the number of samples
++     ## (ie. on average a count in cases or in controls)
++     maxi <- apply (contmat, 1, max)
++     touse.maxi <- maxi > 10
++     ##
++     sumas <- rowSums (contmat)
++     touse.sumas <- sumas > min (50, ncol (contmat) / 2)
++     ##
++     print (table (touse.sumas, touse.maxi))
++     ##
++     touse <- touse.sumas | touse.maxi
++     table (touse)
++     ##
++     contmat <- contmat[touse,]
++     ##
++     table (colnames (contmat) == rownames (sinfo))
++ 
++     if (any (colnames (contmat) != rownames (sinfo))) stop ("PROBLEMA 1")
++     
++     ## store
++     datos[[tag]] <- list (contmat = contmat, sinfo = sinfo)
++ }
+
+===============  BLCA  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   239    1
+      TRUE     92  596
+
+===============  BRCA  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   284    6
+      TRUE     78  602
+
+===============  CESC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   140    0
+      TRUE    164  467
+
+===============  ESCA  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   214    0
+      TRUE    133  526
+
+===============  HNSC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   281    4
+      TRUE    100  587
+
+===============  KICH  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   284    4
+      TRUE    116  518
+
+===============  KIRC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   317    0
+      TRUE     90  518
+
+===============  KIRP  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   240    8
+      TRUE     90  604
+
+===============  LIHC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   263    5
+      TRUE     64  627
+
+===============  LUAD  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   295   11
+      TRUE     80  562
+
+===============  LUSC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   245   17
+      TRUE     70  650
+
+===============  PAAD  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   166    0
+      TRUE    161  467
+
+===============  PCPG  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   160    0
+      TRUE    139  463
+
+===============  PRAD  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   269    0
+      TRUE    141  441
+
+===============  STAD  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   308   14
+      TRUE     67  570
+
+===============  THCA  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   270    3
+      TRUE     80  635
+
+===============  UCEC  ===============
+           touse.maxi
+touse.sumas FALSE TRUE
+      FALSE   240    5
+      TRUE     84  623
+> 
+> names (datos)
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> sapply (datos, names)
+     blca      brca      cesc      esca      hnsc      kich      kirc      kirp      lihc      luad      lusc      paad      pcpg      prad      stad      thca      ucec     
+[1,] "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat"
+[2,] "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"  
+> 
+> t (sapply (datos, function (x) dim (x$contmat)))
+     [,1] [,2]
+blca  689   38
+brca  686  172
+cesc  631    6
+esca  659   22
+hnsc  691   86
+kich  638   50
+kirc  608  136
+kirp  702   68
+lihc  696   98
+luad  653   78
+lusc  737   90
+paad  628    8
+pcpg  602    6
+prad  582   34
+stad  651   78
+thca  718  118
+ucec  712   38
+> 
+> ###SALVAMOS
+> save (list = "datos", file = file.path (.job$dir$proces, "datos_paired.RData"))
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 72.016   0.406  79.648 

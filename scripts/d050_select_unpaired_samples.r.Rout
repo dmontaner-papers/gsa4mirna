@@ -1,0 +1,469 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##d050_select_unpaired_samples_snt.r
+> ##2014-05-23 dmontaner@cipf.es
+> ##Collecting miRNA data from The Cancer Genome Atlas
+> ##Select the samples to be analyzed in an unpaired analysis
+> ## "Primary Tumor" samples are compared against "Solid Tissue Normal" as in the paired analysis
+> ## Remember there is no miRNA expression data available for "Blood Derived Normal" samples
+> 
+> ## We use just those patients with case and control measured by IlluminaHiSeq
+> ## See: http://www.biostars.org/p/66612/
+> 
+> date ()
+[1] "Fri Jun  6 20:07:44 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                            
+[2] "-f"                                                                                       
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/d050_select_unpaired_samples.r"
+[4] "--restore"                                                                                
+[5] "--save"                                                                                   
+[6] "--no-readline"                                                                            
+[7] "--no-save"                                                                                
+[8] "--no-restore"                                                                             
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.0 (2014-04-10)"
+> #library (); packageDescription ("", fields = "Version") #
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> ###DATOS
+> load (file.path (.job$dir$proces, "sample_info_all.RData"))
+> ls ()
+[1] "sinfos"
+> 
+> tags <- names (sinfos)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "acc"  "blca" "brca" "cesc" "coad" "dlbc" "esca" "hnsc" "kich" "kirc" "kirp" "laml" "lgg"  "lihc" "luad" "lusc" "meso" "ov"   "paad" "pcpg" "prad" "read" "sarc" "skcm" "stad" "thca" "ucec" "ucs" 
+> TAGS
+   acc   blca   brca   cesc   coad   dlbc   esca   hnsc   kich   kirc   kirp   laml    lgg   lihc   luad   lusc   meso     ov   paad   pcpg   prad   read   sarc   skcm   stad   thca   ucec    ucs 
+ "ACC" "BLCA" "BRCA" "CESC" "COAD" "DLBC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LAML"  "LGG" "LIHC" "LUAD" "LUSC" "MESO"   "OV" "PAAD" "PCPG" "PRAD" "READ" "SARC" "SKCM" "STAD" "THCA" "UCEC"  "UCS" 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> 
+> new.sinfos <- list ()
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     sinfo <- sinfos[[tag]]
++     ## Use just IlluminaHiSeq
++     touse <- which (sinfo$Platform == "IlluminaHiSeq_miRNASeq")
++     sinfo <- sinfo[touse,]
++     ## Use just some types
++     touse <- sinfo$sample_type %in% c ("Primary Tumor", "Blood Derived Normal", "Solid Tissue Normal")
++     sinfo <- sinfo[touse,]
++     ## Keep just samples with data
++     sinfo <- sinfo[!is.na (sinfo$File.Name.isoform),]
++     ## Eliminate duplicated samples
++     dup <- duplicated (sinfo$Sample)
++     print (table (dup))
++     sinfo <- sinfo[!dup,]
++     ## Rownames
++     rownames (sinfo) <- sinfo$Sample
++     
++     ## KEEP JUST DESIRED CONTROL TYPE
++     touse <- sinfo$sample_type %in% c ("Primary Tumor", "Solid Tissue Normal")
++     ##touse <- sinfo$sample_type %in% c ("Primary Tumor", "Blood Derived Normal")
++     sinfo <- sinfo[touse,]
++     ## Define tumor variale
++     sinfo[,"tumor"] <- 1 * (sinfo$sample_type == "Primary Tumor")
++     print (table (sinfo[,"tumor"], sinfo[,"sample_type"], exclude = NULL))
++ 
++     ## STORE
++     new.sinfos[[tag]] <- sinfo
++ }
+
+===============  ACC  ===============
+dup
+FALSE 
+   80 
+      
+       Primary Tumor <NA>
+  1               80    0
+  <NA>             0    0
+
+===============  BLCA  ===============
+dup
+FALSE  TRUE 
+  271     6 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  19    0
+  1              252                   0    0
+  <NA>             0                   0    0
+
+===============  BRCA  ===============
+dup
+FALSE  TRUE 
+  807    16 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  87    0
+  1              720                   0    0
+  <NA>             0                   0    0
+
+===============  CESC  ===============
+dup
+FALSE 
+  218 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   3    0
+  1              215                   0    0
+  <NA>             0                   0    0
+
+===============  COAD  ===============
+dup
+FALSE  TRUE 
+  243   240 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   8    0
+  1              235                   0    0
+  <NA>             0                   0    0
+
+===============  DLBC  ===============
+dup
+FALSE 
+   27 
+      
+       Primary Tumor <NA>
+  1               27    0
+  <NA>             0    0
+
+===============  ESCA  ===============
+dup
+FALSE 
+  113 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  11    0
+  1              102                   0    0
+  <NA>             0                   0    0
+
+===============  HNSC  ===============
+dup
+FALSE 
+  519 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  44    0
+  1              475                   0    0
+  <NA>             0                   0    0
+
+===============  KICH  ===============
+dup
+FALSE 
+   91 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  25    0
+  1               66                   0    0
+  <NA>             0                   0    0
+
+===============  KIRC  ===============
+dup
+FALSE  TRUE 
+  311     6 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  71    0
+  1              240                   0    0
+  <NA>             0                   0    0
+
+===============  KIRP  ===============
+dup
+FALSE 
+  245 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  34    0
+  1              211                   0    0
+  <NA>             0                   0    0
+
+===============  LAML  ===============
+< table of extent 0 >
+      
+       <NA>
+  <NA>    0
+
+===============  LGG  ===============
+dup
+FALSE 
+  472 
+      
+       Primary Tumor <NA>
+  1              472    0
+  <NA>             0    0
+
+===============  LIHC  ===============
+dup
+FALSE 
+  283 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  50    0
+  1              233                   0    0
+  <NA>             0                   0    0
+
+===============  LUAD  ===============
+dup
+FALSE  TRUE 
+  474     6 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  46    0
+  1              428                   0    0
+  <NA>             0                   0    0
+
+===============  LUSC  ===============
+dup
+FALSE 
+  376 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  45    0
+  1              331                   0    0
+  <NA>             0                   0    0
+
+===============  MESO  ===============
+dup
+FALSE 
+   26 
+      
+       Primary Tumor <NA>
+  1               26    0
+  <NA>             0    0
+
+===============  OV  ===============
+dup
+FALSE  TRUE 
+  475   479 
+      
+       Primary Tumor <NA>
+  1              475    0
+  <NA>             0    0
+
+===============  PAAD  ===============
+dup
+FALSE 
+  100 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   4    0
+  1               96                   0    0
+  <NA>             0                   0    0
+
+===============  PCPG  ===============
+dup
+FALSE 
+  182 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   3    0
+  1              179                   0    0
+  <NA>             0                   0    0
+
+===============  PRAD  ===============
+dup
+FALSE 
+  117 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  17    0
+  1              100                   0    0
+  <NA>             0                   0    0
+
+===============  READ  ===============
+dup
+FALSE  TRUE 
+   93    93 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   3    0
+  1               90                   0    0
+  <NA>             0                   0    0
+
+===============  SARC  ===============
+dup
+FALSE 
+  194 
+      
+       Primary Tumor <NA>
+  1              194    0
+  <NA>             0    0
+
+===============  SKCM  ===============
+dup
+FALSE 
+   75 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                   1    0
+  1               74                   0    0
+  <NA>             0                   0    0
+
+===============  STAD  ===============
+dup
+FALSE 
+  345 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  39    0
+  1              306                   0    0
+  <NA>             0                   0    0
+
+===============  THCA  ===============
+dup
+FALSE 
+  558 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  59    0
+  1              499                   0    0
+  <NA>             0                   0    0
+
+===============  UCEC  ===============
+dup
+FALSE  TRUE 
+  418     6 
+      
+       Primary Tumor Solid Tissue Normal <NA>
+  0                0                  32    0
+  1              386                   0    0
+  <NA>             0                   0    0
+
+===============  UCS  ===============
+dup
+FALSE 
+   57 
+      
+       Primary Tumor <NA>
+  1               57    0
+  <NA>             0    0
+> 
+> sapply (new.sinfos, dim)
+     acc blca brca cesc coad dlbc esca hnsc kich kirc kirp laml lgg lihc luad lusc meso  ov paad pcpg prad read sarc skcm stad thca ucec ucs
+[1,]  80  271  807  218  243   27  113  519   91  311  245    0 472  283  474  376   26 475  100  182  117   93  194   75  345  558  418  57
+[2,]  12   12   12   12   12   12   12   12   12   12   12   12  12   12   12   12   12  12   12   12   12   12   12   12   12   12   12  12
+> 
+> recuento <- sapply (new.sinfos, function (x) c (tumor = sum (x$tumor == 1), control = sum (x$tumor == 0)))
+> recuento
+        acc blca brca cesc coad dlbc esca hnsc kich kirc kirp laml lgg lihc luad lusc meso  ov paad pcpg prad read sarc skcm stad thca ucec ucs
+tumor    80  252  720  215  235   27  102  475   66  240  211    0 472  233  428  331   26 475   96  179  100   90  194   74  306  499  386  57
+control   0   19   87    3    8    0   11   44   25   71   34    0   0   50   46   45    0   0    4    3   17    3    0    1   39   59   32   0
+> table (colnames (recuento) == names (new.sinfos))
+
+TRUE 
+  28 
+> 
+> touse <- (recuento[1,] != 0) &  (recuento[2,] != 0)
+> table (touse)
+touse
+FALSE  TRUE 
+    8    20 
+> 
+> new.sinfos <- new.sinfos[touse]
+> names (new.sinfos)
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> 
+> 
+> ##final counts
+> sapply (new.sinfos, function (x) c (tumor = sum (x$tumor == 1), control = sum (x$tumor == 0)))
+        blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec
+tumor    252  720  215  235  102  475   66  240  211  233  428  331   96  179  100   90   74  306  499  386
+control   19   87    3    8   11   44   25   71   34   50   46   45    4    3   17    3    1   39   59   32
+> 
+> 
+> ###SALVAMOS
+> sinfos <- new.sinfos
+> save (list = "sinfos", file = file.path (.job$dir$proces, "sample_info_unpaired.RData"))
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  0.416   0.027   0.451 

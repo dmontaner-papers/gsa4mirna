@@ -1,0 +1,429 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##u010_two_canceled_out_genes_example.r
+> ##2015-01-23 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script searches for genes targeted for two miRNAs that cancel out
+> 
+> date ()
+[1] "Mon Jan 26 11:47:48 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                           
+[2] "-f"                                                                                              
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/u010_two_canceled_out_genes_example.r"
+[4] "--restore"                                                                                       
+[5] "--save"                                                                                          
+[6] "--no-readline"                                                                                   
+[7] "--no-save"                                                                                       
+[8] "--no-restore"                                                                                    
+> rm (list = ls ())
+> R.version.string #"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> #library (edgeR); packageDescription ("edgeR", fields = "Version") #"3.6.1"
+> library (Matrix)  ## needed for the rowSums
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+Loading required package: DBI
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:Matrix’:
+
+    as.vector
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist, unsplit
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: GenomeInfoDb
+Loading required package: S4Vectors
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:Matrix’:
+
+    expand
+
+
+Attaching package: ‘AnnotationDbi’
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    species
+
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "0.99.2"
+> library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+[1] "0.0.2"
+> help (package = mirbaseID)
+
+		Information on package ‘mirbaseID’
+
+Description:
+
+Package:               mirbaseID
+Type:                  Package
+Title:                 miRBase ID conversion.
+Version:               0.0.2
+Date:                  2013-10-31
+Author:                David Montaner <dmontaner@cipf.es>
+Maintainer:            David Montaner <dmontaner@cipf.es>
+Description:           A library to convert between different versions
+                       of miRBase identifiers.
+License:               GPL-2
+LazyData:              TRUE
+LazyDataCompression:   xz
+Depends:               R (>= 2.14)
+Packaged:              2014-06-24 11:45:12 UTC; dmontaner
+Built:                 R 3.1.1; ; 2014-10-16 21:28:02 UTC; unix
+
+Index:
+
+acc2geneMTB             miRNA targets from miRTarBase
+acc2geneTS              miRNA targets from TargetScan
+buildVersion            Build a vector of miRBase id conversions to the
+                        chosen version.
+guessVersion            Guess mirbase version.
+id2accession            miRBase ID conversion to Accession.
+id2mirLast              miRBase ID conversion to the latest version.
+idConvert               miRBase id conversion to the chosen version.
+miRBaseDownloadDate     miRBase download date
+miRTarBaseDownloadDate
+                        TargetScan download date
+mirIDmat                miRBase ID conversion matrix.
+mirbVersions            Show all available miRBase versions
+mirbaseID-package       miRBase ID conversion.
+targetScanDownloadDate
+                        TargetScan download date
+
+Further information is available in the following vignettes in
+directory ‘/usr/local/lib/R/site-library/mirbaseID/doc’:
+
+mirbaseID: mirbaseID Vignette (source, pdf)
+
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ################################################################################
+> 
+> ## miRNA to gene transfer information
+> class (acc2geneTSp)
+[1] "list"
+> length (acc2geneTSp)
+[1] 2318
+> lapply (acc2geneTSp[1:2], head)
+$MIMAT0000062
+[1] "PPP1R15B" "LMX1A"    "SLC37A4"  "AFF2"     "EIF4G2"   "DAGLA"   
+
+$MIMAT0000063
+[1] "PPP1R15B" "LMX1A"    "SLC37A4"  "AFF2"     "EIF4G2"   "DAGLA"   
+
+> dim (annotList2mat (acc2geneTSp))
+[1] 1146551       2
+> ##dim (annotList2mat (acc2geneTSc)) ##five times bigger... we do not use it. Introduces some noise...
+> length (unique (unlist (acc2geneTSp)))
+[1] 12084
+> 
+> ################################################################################
+> 
+> ## DATA edgeR results
+> setwd (file.path (.job$dir$proces))
+> load ("res_dif_exp_paired.RData")
+> ls ()
+[1] "res.edger"
+> 
+> tags <- names (res.edger)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad"
+[11] "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" 
+  paad   pcpg   prad   stad   thca   ucec 
+"PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> tags <- "kich"
+> 
+> rindex0 <- rindexT <- rindex <- list ()
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++ 
++     mat <- res.edger[[tag]]$table
++     
++     ## gene level p-value and statistic
++     pvalue    <- mat[,"PValue"]
++     statistic <- mat[,"logFC"]
++     names (pvalue) <- names (statistic) <- rownames (mat)
++     
++     ## Index
++     rindex0[[tag]] <- pval2index (pval = pvalue, sign = statistic)
++     rindex0[[tag]][1:3]
++ 
++     ## Transform (to normal distribution) at miRNA level BETTER NOT USE
++     ##rindex0[[tag]] <- indexTransform (index = rindex0[[tag]], method = "normalize")
++ 
++     tind <- transferIndex (index = rindex0[[tag]], targets = acc2geneTSp, method = "sum") ## transfer before transformation (normalization)
++     tmat <- transferIndex (index = rindex0[[tag]], targets = acc2geneTSp, method = "sum", transferMatrix = TRUE) ## transfer before transformation (normalization)
++     dim (tmat)
++     length (tind)
++ 
++     table (rownames (tmat) == names (tind))
++     tind[1:3]
++     tmat[1:3, 1:5]
++     rowSums (tmat[1:3,])
++     rowSums (tmat[1:3, 1:5])
++     rowSums (tmat[1:3, 1:5] == 0)
++     
++     Nmirna <- rowSums (tmat != 0)
++     summary (Nmirna)
++     Nmirna[1:3]
++     misd <- function (x) sd (x[x!=0])
++     sds <- apply (tmat, 1, misd)
++     length (sds)
++     summary (sds)
++     sds[1:3]
++     table (rownames (tmat) == names (sds))
++     ##table (rownames (tmat) == names (Nmirna))
++ 
++     ## par (mfrow = c(2,1))
++     ## plot (Nmirna, tind)
++     ## abline (h = 0, col = "blue")
++     ## abline (v = 0:5)
++     ## ##
++     ## plot (Nmirna, sds)
++     ## abline (h = 0, col = "blue")
++     ## abline (v = 0:5)
++    
++     ## par (mfrow = c(2,1))
++     ## plot (Nmirna, tind, log = "x")
++     ## abline (h = 0, col = "blue")
++     ## abline (v = 1:5)
++     ## ##
++     ## plot (Nmirna, sds, log = "x")
++     ## abline (h = 0, col = "blue")
++     ## abline (v = 1:5)
++ 
++     touse <- Nmirna == 2
++     table (touse)
++     
++     dosp <- t (apply (tmat[touse,], 1, function (x) x[x != 0]))
++     ## x11()
++     ## plot (dosp, main = tag)
++     ## abline (0, -1, col = "blue")
++     ## abline (0,  1, col = "blue")
++     ## abline (h = 0, v = 0, col = "blue")
++ 
++     touse <- dosp[,1] > 50 &dosp[,2] < -50
++     table (touse)
++ 
++     print (dosp[touse,])
++     print (tind[rownames (dosp[touse,])])
++     
++     ## ## Transfer
++     ## rindexT[[tag]] <- transferIndex (index = rindex0[[tag]], targets = acc2geneTSp, method = "sum") ## transfer before transformation (normalization)
++     ## rindexT[[tag]][1:3]
++     
++     ## ## Transform (to normal distribution)
++     ## rindex[[tag]] <- indexTransform (index = rindexT[[tag]], method = "normalize")
++     ## rindex[[tag]][1:3]
++ }
+
+===============  KICH  ===============
+Loading required package: edgeR
+Loading required package: limma
+
+Attaching package: ‘limma’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+  221miRNAs with annotated targets
+  417miRNAs without targets
+  2097miRNAs with targets but not in the ranking index
+  221miRNAs with annotated targets
+  417miRNAs without targets
+  2097miRNAs with targets but not in the ranking index
+            [,1]       [,2]
+GABARAP 52.23251 -127.54700
+GPR162  67.33926  -66.60566
+UBALD1  67.33926  -66.60566
+    GABARAP      GPR162      UBALD1 
+-75.3144839   0.7335982   0.7335982 
+> 
+> touse <- tmat["GPR162",] != 0
+> table (touse)
+touse
+FALSE  TRUE 
+  219     2 
+> tmat[c ("GPR162", "UBALD1"), touse]
+2 x 2 sparse Matrix of class "dgCMatrix"
+       MIMAT0000077 MIMAT0000271
+GPR162     67.33926    -66.60566
+UBALD1     67.33926    -66.60566
+> 
+> intersect (acc2geneTSp[["MIMAT0000077"]], acc2geneTSp[["MIMAT0000271"]])
+ [1] "WDTC1"    "VASH1"    "HIF1AN"   "RIMS4"    "KIAA0226" "UBALD1"  
+ [7] "USP46"    "RTF1"     "ANKRD6"   "ZNF618"   "SORCS1"   "CREB1"   
+[13] "GIGYF2"   "ITGB8"    "GFRA1"    "MMP24"    "YWHAZ"    "RAPGEF1" 
+[19] "GPR162"   "PRDM16"   "CPEB1"    "MECOM"    "ZBTB39"   "STAG2"   
+[25] "KIAA0247" "UBE2O"    "ZNF609"   "CCNT2"    "PAFAH1B2" "PURB"    
+[31] "IL17RD"   "PCLO"     "RAB5B"    "ATP8A1"   "HNRNPA3"  "HNRNPUL2"
+[37] "PIP4K2B"  "KSR2"     "SMIM12"   "RNF44"    "NSD1"     "SNX30"   
+[43] "ARHGEF12" "WDR82"    "MED19"    "ACLY"     "EXOC5"    "HTR2C"   
+[49] "TMEM229B" "GATAD2B"  "RAPGEFL1" "ARID3B"   "VPS53"    "BCL9L"   
+[55] "CBL"      "ANKRD52"  "TMEM33"   "SMG5"     "MTHFR"    "DLGAP2"  
+> 
+> mirIDmat[c ("MIMAT0000077", "MIMAT0000271"), "mirBase20"]
+    MIMAT0000077     MIMAT0000271 
+ "hsa-miR-22-3p" "hsa-miR-214-3p" 
+> 
+> rindex0[["kich"]][c ("MIMAT0000077", "MIMAT0000271")]
+MIMAT0000077 MIMAT0000271 
+    67.33926    -66.60566 
+> 
+> tind[c ("GPR162", "UBALD1")]
+   GPR162    UBALD1 
+0.7335982 0.7335982 
+> 
+> mat[c ("MIMAT0000077", "MIMAT0000271"),]
+                 logFC    logCPM       LR       PValue
+MIMAT0000077  1.437341 16.974890 129.3493 5.687607e-30
+MIMAT0000271 -3.247459  1.555449 127.8932 1.184479e-29
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] edgeR_3.8.3          limma_3.22.1         mirbaseID_0.0.2     
+ [4] mdgsa_0.99.2         AnnotationDbi_1.28.1 GenomeInfoDb_1.2.3  
+ [7] IRanges_2.0.0        S4Vectors_0.4.0      Biobase_2.26.0      
+[10] BiocGenerics_0.12.1  RSQLite_1.0.0        DBI_0.3.1           
+[13] Matrix_1.1-5        
+
+loaded via a namespace (and not attached):
+[1] cluster_1.15.3  GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0  
+[5] lattice_0.20-29
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 13.285   0.160  13.490 

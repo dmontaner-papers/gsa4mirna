@@ -1,0 +1,735 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##t010_paper_tables.r
+> ##2014-12-12 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script prints some tables for the report
+> 
+> date ()
+[1] "Wed Feb 11 13:24:59 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                   
+[2] "-f"                                                                      
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts/t010_paper_tables.r"
+[4] "--restore"                                                               
+[5] "--save"                                                                  
+[6] "--no-readline"                                                           
+[7] "--no-save"                                                               
+[8] "--no-restore"                                                            
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+> library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
+[1] "1.8"
+> library (xtable); packageDescription ("xtable", fields = "Version") #"1.7-3"
+[1] "1.7-4"
+> library (tables); packageDescription ("tables", fields = "Version") #"0.7.79"
+Loading required package: Hmisc
+Loading required package: grid
+Loading required package: lattice
+Loading required package: survival
+Loading required package: splines
+Loading required package: Formula
+
+Attaching package: ‘Hmisc’
+
+The following objects are masked from ‘package:xtable’:
+
+    label, label<-
+
+The following objects are masked from ‘package:base’:
+
+    format.pval, round.POSIXt, trunc.POSIXt, units
+
+[1] "0.7.79"
+> help (package = xtable)
+
+		Information on package ‘xtable’
+
+Description:
+
+Package:            xtable
+Version:            1.7-4
+Date:               2014/08/17
+Title:              Export tables to LaTeX or HTML
+Author:             David B. Dahl <dahl@stat.byu.edu>
+Maintainer:         David Scott <d.scott@auckland.ac.nz>
+Description:        Coerce data to LaTeX and HTML tables
+URL:                http://xtable.r-forge.r-project.org/
+Depends:            R (>= 2.10.0)
+License:            GPL (>= 2)
+Repository:         CRAN
+Packaged:           2014-09-11 22:38:16 UTC; dsco036
+NeedsCompilation:   no
+Date/Publication:   2014-09-12 14:30:04
+Built:              R 3.1.1; ; 2014-09-30 21:54:01 UTC; unix
+
+Index:
+
+caption                 Retrieve and Set Options for Export Tables
+print.xtable            Print Export Tables
+string                  String handling functions
+tli                     Math scores from Texas Assessment of Academic
+                        Skills (TAAS)
+toLatex.xtable          Convert Table to Latex
+xtable                  Create Export Tables
+
+Further information is available in the following vignettes in
+directory ‘/usr/local/lib/R/site-library/xtable/doc’:
+
+margintable: xtable margintable (source, pdf)
+xtableGallery: xtable Gallery (source, pdf)
+
+> help (package = tables)
+
+		Information on package ‘tables’
+
+Description:
+
+Package:                            tables
+Title:                              Formula-driven table generation
+Version:                            0.7.79
+Author:                             Duncan Murdoch
+Description:                        Computes and displays complex
+                                    tables of summary statistics
+Maintainer:                         Duncan Murdoch
+                                    <murdoch@stats.uwo.ca>
+License:                            GPL-2
+Depends:                            R (>= 2.12.0), Hmisc
+Repository:                         CRAN
+Repository/R-Forge/Project:         tables
+Repository/R-Forge/Revision:        79
+Repository/R-Forge/DateTimeStamp:   2014-05-22 01:40:15
+Date/Publication:                   2014-07-24 15:04:15
+Packaged:                           2014-05-22 02:35:16 UTC; rforge
+NeedsCompilation:                   no
+Built:                              R 3.1.2; ; 2014-12-04 16:04:33 UTC;
+                                    unix
+
+Index:
+
+All                     Include all columns of a dataframe.
+Arguments               'Arguments' pseudo-function
+Format                  'Format' pseudo-function
+Heading                 'Heading' pseudo-function
+Hline                   Add a horizontal line to a LaTeX table.
+Justify                 'Justify' pseudo-function
+Literal                 Insert a literal entry into a table margin.
+Paste                   Generate terms to paste values together in
+                        table.
+Percent                 'Percent' pseudo-function
+PlusMinus               Generate 'x +/- y' terms in table.
+RowFactor               Use a variable as a factor to give rows in a
+                        table.
+as.matrix.tabular       Convert tabular object to matrix
+as.tabular              Convert matrix or dataframe to tabular object.
+html.tabular            Display a tabular object using HTML.
+labelSubset             Add a label to a logical vector.
+latex.tabular           Display a tabular object using LaTeX.
+latexNumeric            Process numeric LaTeX or HTML values.
+table_options           Set or query options for the table formatting.
+tabular                 Compute complex table
+write.csv.tabular       Write table to file in CSV or other format.
+
+Further information is available in the following vignettes in
+directory ‘/usr/local/lib/R/site-library/tables/doc’:
+
+tables: About the tables package (source, pdf)
+
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> 
+> ### DATA
+> load (file.path (.job$dir$proces, "report", "allStudyInfo.RData"))
+> ls ()
+[1] "datos"
+> datos[1:3,]
+       ID N.cases N.controls N.total case.cont.ratio N.paired.samples                      cancer.type miRNA.Down.unpa miRNA.noDif.unpa miRNA.Up.unpa miRNA.Down.pair
+blca BLCA     252         19     271       13.263158               19     Bladder Urothelial Carcinoma             128              337           353             127
+brca BRCA     720         87     807        8.275862               86        Breast invasive carcinoma             200              244           396             202
+cesc CESC     215          3     218       71.666667                3 Cervical squamous cell carcinoma              92              621            73              29
+     miRNA.noDif.pair miRNA.Up.pair targets.Down.unpa targets.Intersect.unpa targets.Up.unpa targets.Down.pair targets.Intersect.pair targets.Up.pair targetGOs.Down.unpa
+blca              343           219              8345                   6763            8599              8087                   5955            7528                5169
+brca              215           269              8968                   7700            9465              9305                   7724            9001                5169
+cesc              537            65              7834                   5201            6525              4877                   3178            5431                5169
+     targetGOs.Intersect.unpa targetGOs.Up.unpa targetGOs.Down.pair targetGOs.Intersect.pair targetGOs.Up.pair bp.Down.unpa bp.noDif.unpa bp.UP.unpa cc.Down.unpa
+blca                     5169              5169                5169                     5168              5168            0          3976          0            2
+brca                     5169              5169                5169                     5169              5169            0          3976          0            3
+cesc                     5168              5168                5144                     5138              5160            0          3976          0            0
+     cc.noDif.unpa cc.UP.unpa mf.Down.unpa mf.noDif.unpa mf.UP.unpa go.Down.unpa go.noDif.unpa go.UP.unpa bp.Down.pair bp.noDif.pair bp.UP.pair cc.Down.pair
+blca           444          0            0           747          0            2          5167          0            0          3976          0            2
+brca           443          0            0           747          0            3          5166          0            0          3976          0            0
+cesc           446          0            0           747          0            0          5169          0            0          3976          0            1
+     cc.noDif.pair cc.UP.pair mf.Down.pair mf.noDif.pair mf.UP.pair go.Down.pair go.noDif.pair go.UP.pair
+blca           444          0            0           747          0            2          5167          0
+brca           444          2            0           747          0            0          5167          2
+cesc           444          1            0           747          0            1          5167          1
+> 
+> t (t (colnames (datos)))
+      [,1]                      
+ [1,] "ID"                      
+ [2,] "N.cases"                 
+ [3,] "N.controls"              
+ [4,] "N.total"                 
+ [5,] "case.cont.ratio"         
+ [6,] "N.paired.samples"        
+ [7,] "cancer.type"             
+ [8,] "miRNA.Down.unpa"         
+ [9,] "miRNA.noDif.unpa"        
+[10,] "miRNA.Up.unpa"           
+[11,] "miRNA.Down.pair"         
+[12,] "miRNA.noDif.pair"        
+[13,] "miRNA.Up.pair"           
+[14,] "targets.Down.unpa"       
+[15,] "targets.Intersect.unpa"  
+[16,] "targets.Up.unpa"         
+[17,] "targets.Down.pair"       
+[18,] "targets.Intersect.pair"  
+[19,] "targets.Up.pair"         
+[20,] "targetGOs.Down.unpa"     
+[21,] "targetGOs.Intersect.unpa"
+[22,] "targetGOs.Up.unpa"       
+[23,] "targetGOs.Down.pair"     
+[24,] "targetGOs.Intersect.pair"
+[25,] "targetGOs.Up.pair"       
+[26,] "bp.Down.unpa"            
+[27,] "bp.noDif.unpa"           
+[28,] "bp.UP.unpa"              
+[29,] "cc.Down.unpa"            
+[30,] "cc.noDif.unpa"           
+[31,] "cc.UP.unpa"              
+[32,] "mf.Down.unpa"            
+[33,] "mf.noDif.unpa"           
+[34,] "mf.UP.unpa"              
+[35,] "go.Down.unpa"            
+[36,] "go.noDif.unpa"           
+[37,] "go.UP.unpa"              
+[38,] "bp.Down.pair"            
+[39,] "bp.noDif.pair"           
+[40,] "bp.UP.pair"              
+[41,] "cc.Down.pair"            
+[42,] "cc.noDif.pair"           
+[43,] "cc.UP.pair"              
+[44,] "mf.Down.pair"            
+[45,] "mf.noDif.pair"           
+[46,] "mf.UP.pair"              
+[47,] "go.Down.pair"            
+[48,] "go.noDif.pair"           
+[49,] "go.UP.pair"              
+> 
+> placement <- "hbt"
+> 
+> 
+> ################################################################################
+> ## Table 1: overwiew
+> ################################################################################
+> 
+> tabla.file <-     "table1"
+> tabla.labe <- "tab:table1"
+> tabla.cols <- c ("ID", "N.total", "N.cases", "N.controls", "N.paired.samples", "cancer.type")
+> tabla.nams <- c ("ID", "total"  , "cases"   , "controls",   "paired",          "description")
+> tabla.capt <- c ("Analyzed datasets. Columns of the table display:
++ TCGA disease ID,
++ the total number of samples in the analysis,
++ the number of tumoral samples,
++ the number of control samples (solid normal tissue),
++ the number of paired samples available in the dataset,
++ the cancer type.")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> tabla
+       ID total cases controls paired                           description
+blca BLCA   271   252       19     19          Bladder Urothelial Carcinoma
+brca BRCA   807   720       87     86             Breast invasive carcinoma
+cesc CESC   218   215        3      3      Cervical squamous cell carcinoma
+coad COAD   243   235        8      0                  Colon adenocarcinoma
+esca ESCA   113   102       11     11                  Esophageal carcinoma
+hnsc HNSC   519   475       44     43 Head and Neck squamous cell carcinoma
+kich KICH    91    66       25     25                    Kidney Chromophobe
+kirc KIRC   311   240       71     68     Kidney renal clear cell carcinoma
+kirp KIRP   245   211       34     34 Kidney renal papillary cell carcinoma
+lihc LIHC   283   233       50     49        Liver hepatocellular carcinoma
+luad LUAD   474   428       46     39                   Lung adenocarcinoma
+lusc LUSC   376   331       45     45          Lung squamous cell carcinoma
+paad PAAD   100    96        4      4             Pancreatic adenocarcinoma
+pcpg PCPG   182   179        3      3    Pheochromocytoma and Paraganglioma
+prad PRAD   117   100       17     17               Prostate adenocarcinoma
+read READ    93    90        3      0                 Rectum adenocarcinoma
+skcm SKCM    75    74        1      0               Skin Cutaneous Melanoma
+stad STAD   345   306       39     39                Stomach adenocarcinoma
+thca THCA   558   499       59     59                     Thyroid carcinoma
+ucec UCEC   418   386       32     19  Uterine Corpus Endometrial Carcinoma
+> ##
+> writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
++             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+> ##
+> print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
++        include.rownames = FALSE, table.placement = placement,
++        size = "scriptsize",
++        file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> 
+> ## kable (tabla, format = "markdown", caption = tabla.capt)
+> ## kable (tabla, format = "pandoc",   caption = tabla.capt)
+> ## kable (tabla, format = "rst",      caption = tabla.capt)
+> ## kable (tabla, format = "latex",    caption = tabla.capt)
+> ## kable (tabla, format = "html",     caption = tabla.capt)
+> 
+> 
+> ################################################################################
+> ## Table 2: ressults at miRNA level
+> ################################################################################
+> 
+> tabla.file <-     "table2"
+> tabla.labe <- "tab:table2"
+> tabla.cols <- c ("ID", "miRNA.Down.unpa", "miRNA.noDif.unpa", "miRNA.Up.unpa", "miRNA.Down.pair", "miRNA.noDif.pair", "miRNA.Up.pair")
+> tabla.nams <- c ("ID",       "Down",            "noDif",            "Up",            "Down",            "noDif",            "Up")
+> ##tabla.nams <- tabla.cols
+> multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
+> ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
+> tabla.capt <- c ("Number of up and down regulated miRNAS in each cancer type.") 
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> tabla
+       ID Down noDif  Up Down noDif  Up
+blca BLCA  128   337 353  127   343 219
+brca BRCA  200   244 396  202   215 269
+cesc CESC   92   621  73   29   537  65
+coad COAD  174   291 262   NA    NA  NA
+esca ESCA   98   443 152   62   464 133
+hnsc HNSC  204   285 360  164   305 222
+kich KICH  166   297 199  217   252 169
+kirc KIRC  169   191 323  213   180 215
+kirp KIRP  221   262 295  223   242 237
+lihc LIHC  120   278 407  200   283 213
+luad LUAD  152   292 405  130   264 259
+lusc LUSC  169   215 462  180   313 244
+paad PAAD   23   607  11    8   606  14
+pcpg PCPG   70   608  43   40   507  55
+prad PRAD   76   429 104   38   513  31
+read READ  136   307 204   NA    NA  NA
+skcm SKCM   46   680   6   NA    NA  NA
+stad STAD  152   308 356  138   307 206
+thca THCA  218   351 257  226   347 145
+ucec UCEC  243   284 347  211   272 229
+> ##
+> writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
++             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+> ##
+> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
++                      include.rownames = FALSE, table.placement = placement,
++                      size = "footnotesize",
++                      tabular.environment = "tabular*",
++                      width = "\\columnwidth",
++                      booktabs = TRUE)
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Feb 11 13:25:01 2015
+\begin{table}[hbt]
+\centering
+{\footnotesize
+\begin{tabular*}{\columnwidth}{lrrrrrr}
+  \toprule
+ID & Down & noDif & Up & Down & noDif & Up \\ 
+  \midrule
+BLCA & 128 & 337 & 353 & 127 & 343 & 219 \\ 
+  BRCA & 200 & 244 & 396 & 202 & 215 & 269 \\ 
+  CESC &  92 & 621 &  73 &  29 & 537 &  65 \\ 
+  COAD & 174 & 291 & 262 &  &  &  \\ 
+  ESCA &  98 & 443 & 152 &  62 & 464 & 133 \\ 
+  HNSC & 204 & 285 & 360 & 164 & 305 & 222 \\ 
+  KICH & 166 & 297 & 199 & 217 & 252 & 169 \\ 
+  KIRC & 169 & 191 & 323 & 213 & 180 & 215 \\ 
+  KIRP & 221 & 262 & 295 & 223 & 242 & 237 \\ 
+  LIHC & 120 & 278 & 407 & 200 & 283 & 213 \\ 
+  LUAD & 152 & 292 & 405 & 130 & 264 & 259 \\ 
+  LUSC & 169 & 215 & 462 & 180 & 313 & 244 \\ 
+  PAAD &  23 & 607 &  11 &   8 & 606 &  14 \\ 
+  PCPG &  70 & 608 &  43 &  40 & 507 &  55 \\ 
+  PRAD &  76 & 429 & 104 &  38 & 513 &  31 \\ 
+  READ & 136 & 307 & 204 &  &  &  \\ 
+  SKCM &  46 & 680 &   6 &  &  &  \\ 
+  STAD & 152 & 308 & 356 & 138 & 307 & 206 \\ 
+  THCA & 218 & 351 & 257 & 226 & 347 & 145 \\ 
+  UCEC & 243 & 284 & 347 & 211 & 272 & 229 \\ 
+   \bottomrule
+\end{tabular*}
+}
+\caption{Number of up and down regulated miRNAS in each cancer type.} 
+\label{tab:table2}
+\end{table}
+>                      ## add.to.row = my.add.to.row,
+>                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
+> tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> 
+> 
+> ################################################################################
+> ## Table 3: ressults at gene level
+> ################################################################################
+> 
+> tabla.file <-     "table3"
+> tabla.labe <- "tab:table3"
+> tabla.cols <- c ("ID", "targets.Down.unpa", "targets.Intersect.unpa", "targets.Up.unpa", "targets.Down.pair", "targets.Intersect.pair", "targets.Up.pair")
+> tabla.nams <- c ("ID",         "Down",               "Inter",                 "Up",              "Down",               "Inter",                 "Up")
+> ##tabla.nams <- tabla.cols
+> multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
+> ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
+> tabla.capt <- c ("Number of genes targeted by the up and down regulated miRNAS.
++ The Intersect column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> tabla
+       ID Down Inter   Up Down Inter   Up
+blca BLCA 8345  6763 8599 8087  5955 7528
+brca BRCA 8968  7700 9465 9305  7724 9001
+cesc CESC 7834  5201 6525 4877  3178 5431
+coad COAD 6981  6418 9998   NA    NA   NA
+esca ESCA 7992  5646 6959 8233  5207 6212
+hnsc HNSC 9090  7496 8976 9065  7006 8013
+kich KICH 8998  7044 8252 9594  7125 7902
+kirc KIRC 8838  7351 9056 9575  7543 8681
+kirp KIRP 9169  7388 8629 9311  7025 8267
+lihc LIHC 7466  6848 9560 8896  6851 7720
+luad LUAD 8255  7354 9898 8150  6843 8848
+lusc LUSC 8535  7265 9447 8844  6710 8166
+paad PAAD 3759   616 1169 1529   442 1748
+pcpg PCPG 6303  4033 5295 4102  3110 5652
+prad PRAD 7422  5932 8039 4997  1600 2374
+read READ 6938  6225 9672   NA    NA   NA
+skcm SKCM 5983   631  857   NA    NA   NA
+stad STAD 8921  6761 8041 8947  6731 7855
+thca THCA 8763  7244 8702 9064  7065 8056
+ucec UCEC 9182  7171 8436 9338  7069 8201
+> ##
+> writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
++             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+> ##
+> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
++                      include.rownames = FALSE, table.placement = placement,
++                      size = "footnotesize",
++                      tabular.environment = "tabular*",
++                      width = "\\columnwidth",
++                      booktabs = TRUE)
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Feb 11 13:25:01 2015
+\begin{table}[hbt]
+\centering
+{\footnotesize
+\begin{tabular*}{\columnwidth}{lrrrrrr}
+  \toprule
+ID & Down & Inter & Up & Down & Inter & Up \\ 
+  \midrule
+BLCA & 8345 & 6763 & 8599 & 8087 & 5955 & 7528 \\ 
+  BRCA & 8968 & 7700 & 9465 & 9305 & 7724 & 9001 \\ 
+  CESC & 7834 & 5201 & 6525 & 4877 & 3178 & 5431 \\ 
+  COAD & 6981 & 6418 & 9998 &  &  &  \\ 
+  ESCA & 7992 & 5646 & 6959 & 8233 & 5207 & 6212 \\ 
+  HNSC & 9090 & 7496 & 8976 & 9065 & 7006 & 8013 \\ 
+  KICH & 8998 & 7044 & 8252 & 9594 & 7125 & 7902 \\ 
+  KIRC & 8838 & 7351 & 9056 & 9575 & 7543 & 8681 \\ 
+  KIRP & 9169 & 7388 & 8629 & 9311 & 7025 & 8267 \\ 
+  LIHC & 7466 & 6848 & 9560 & 8896 & 6851 & 7720 \\ 
+  LUAD & 8255 & 7354 & 9898 & 8150 & 6843 & 8848 \\ 
+  LUSC & 8535 & 7265 & 9447 & 8844 & 6710 & 8166 \\ 
+  PAAD & 3759 & 616 & 1169 & 1529 & 442 & 1748 \\ 
+  PCPG & 6303 & 4033 & 5295 & 4102 & 3110 & 5652 \\ 
+  PRAD & 7422 & 5932 & 8039 & 4997 & 1600 & 2374 \\ 
+  READ & 6938 & 6225 & 9672 &  &  &  \\ 
+  SKCM & 5983 & 631 & 857 &  &  &  \\ 
+  STAD & 8921 & 6761 & 8041 & 8947 & 6731 & 7855 \\ 
+  THCA & 8763 & 7244 & 8702 & 9064 & 7065 & 8056 \\ 
+  UCEC & 9182 & 7171 & 8436 & 9338 & 7069 & 8201 \\ 
+   \bottomrule
+\end{tabular*}
+}
+\caption{Number of genes targeted by the up and down regulated miRNAS.
+The Intersect column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.} 
+\label{tab:table3}
+\end{table}
+>                      ## add.to.row = my.add.to.row,
+>                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
+> tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> 
+> 
+> ################################################################################
+> ## Table 4: intersecction of the go terms
+> ################################################################################
+> 
+> tabla.file <-     "table4"
+> tabla.labe <- "tab:table4"
+> tabla.cols <- c ("ID", "targetGOs.Down.unpa", "targetGOs.Intersect.unpa", "targetGOs.Up.unpa", "targetGOs.Down.pair", "targetGOs.Intersect.pair", "targetGOs.Up.pair")
+> tabla.nams <- c ("ID",           "Down",                "Inter",                    "Up",                "Down",                "Inter",                    "Up")
+> #tabla.nams <- tabla.cols
+> multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
+> ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
+> tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
++ Most GO terms are targeted in cases and controls at the same time.")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> tabla
+       ID Down Inter   Up Down Inter   Up
+blca BLCA 5169  5169 5169 5169  5168 5168
+brca BRCA 5169  5169 5169 5169  5169 5169
+cesc CESC 5169  5168 5168 5144  5138 5160
+coad COAD 5168  5168 5169   NA    NA   NA
+esca ESCA 5169  5168 5168 5169  5167 5167
+hnsc HNSC 5169  5169 5169 5169  5169 5169
+kich KICH 5169  5169 5169 5169  5169 5169
+kirc KIRC 5169  5169 5169 5169  5169 5169
+kirp KIRP 5169  5169 5169 5169  5169 5169
+lihc LIHC 5169  5169 5169 5169  5169 5169
+luad LUAD 5169  5169 5169 5169  5169 5169
+lusc LUSC 5169  5169 5169 5169  5169 5169
+paad PAAD 5129  4578 4590 4870  4681 4915
+pcpg PCPG 5166  5161 5164 5150  5146 5165
+prad PRAD 5169  5169 5169 5159  4981 4990
+read READ 5168  5168 5169   NA    NA   NA
+skcm SKCM 5169  4385 4385   NA    NA   NA
+stad STAD 5169  5169 5169 5169  5169 5169
+thca THCA 5169  5169 5169 5169  5169 5169
+ucec UCEC 5169  5169 5169 5169  5169 5169
+> ##
+> writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
++             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+> ##
+> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
++                      include.rownames = FALSE, table.placement = placement,
++                      size = "footnotesize",
++                      tabular.environment = "tabular*",
++                      width = "\\columnwidth",
++                      booktabs = TRUE)
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Feb 11 13:25:01 2015
+\begin{table}[hbt]
+\centering
+{\footnotesize
+\begin{tabular*}{\columnwidth}{lrrrrrr}
+  \toprule
+ID & Down & Inter & Up & Down & Inter & Up \\ 
+  \midrule
+BLCA & 5169 & 5169 & 5169 & 5169 & 5168 & 5168 \\ 
+  BRCA & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  CESC & 5169 & 5168 & 5168 & 5144 & 5138 & 5160 \\ 
+  COAD & 5168 & 5168 & 5169 &  &  &  \\ 
+  ESCA & 5169 & 5168 & 5168 & 5169 & 5167 & 5167 \\ 
+  HNSC & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  KICH & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  KIRC & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  KIRP & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  LIHC & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  LUAD & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  LUSC & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  PAAD & 5129 & 4578 & 4590 & 4870 & 4681 & 4915 \\ 
+  PCPG & 5166 & 5161 & 5164 & 5150 & 5146 & 5165 \\ 
+  PRAD & 5169 & 5169 & 5169 & 5159 & 4981 & 4990 \\ 
+  READ & 5168 & 5168 & 5169 &  &  &  \\ 
+  SKCM & 5169 & 4385 & 4385 &  &  &  \\ 
+  STAD & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  THCA & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+  UCEC & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
+   \bottomrule
+\end{tabular*}
+}
+\caption{Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
+Most GO terms are targeted in cases and controls at the same time.} 
+\label{tab:table4}
+\end{table}
+>                      ## add.to.row = my.add.to.row,
+>                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
+> tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> 
+> 
+> ################################################################################
+> ## Table 5: ressults at gene set level
+> ################################################################################
+> 
+> tabla.file <-     "table5"
+> tabla.labe <- "tab:table5"
+> tabla.cols <- c ("ID", "go.Down.unpa", "go.noDif.unpa", "go.UP.unpa", "go.Down.pair", "go.noDif.pair", "go.UP.pair")
+> tabla.nams <- c ("ID",    "Down",         "noDif",         "Up",         "Down",         "noDif",         "Up")
+> #tabla.nams <- tabla.cols
+> multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
+> tabla.capt <- c ("Number of intercepted or deregulated GOs in each cancer type (paired and unpired analyses).
++ inh.cont:  Ihibited in controls; the genes of the GO have significantly positive scores.
++ inh.cases: Ihibited in cases; the genes of the GO have significantly positive scores.")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> tabla
+       ID Down noDif  Up Down noDif Up
+blca BLCA    2  5167   0    2  5167  0
+brca BRCA    3  5166   0    0  5167  2
+cesc CESC    0  5169   0    1  5167  1
+coad COAD   18  4930 221   NA    NA NA
+esca ESCA    2  5167   0    1  5168  0
+hnsc HNSC   53  5116   0    0  5169  0
+kich KICH    1  5167   1   30  5138  1
+kirc KIRC    0  5159  10    5  5163  1
+kirp KIRP    4  5165   0   13  5155  1
+lihc LIHC    7  5080  82    0  5169  0
+luad LUAD    0  5169   0    0  5169  0
+lusc LUSC    0  5169   0    0  5169  0
+paad PAAD    3  5165   1    0  5169  0
+pcpg PCPG    0  5169   0    0  5166  3
+prad PRAD    0  5168   1    1  5168  0
+read READ    0  5157  12   NA    NA NA
+skcm SKCM  121  5043   5   NA    NA NA
+stad STAD    5  5164   0    0  5169  0
+thca THCA    2  5167   0    2  5167  0
+ucec UCEC   89  5080   0    9  5160  0
+> ##
+> writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
++             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+> ##
+> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
++                      include.rownames = FALSE, table.placement = placement,
++                      size = "footnotesize",
++                      tabular.environment = "tabular*",
++                      width = "\\columnwidth",
++                      booktabs = TRUE)
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Wed Feb 11 13:25:01 2015
+\begin{table}[hbt]
+\centering
+{\footnotesize
+\begin{tabular*}{\columnwidth}{lrrrrrr}
+  \toprule
+ID & Down & noDif & Up & Down & noDif & Up \\ 
+  \midrule
+BLCA &   2 & 5167 &   0 &   2 & 5167 &   0 \\ 
+  BRCA &   3 & 5166 &   0 &   0 & 5167 &   2 \\ 
+  CESC &   0 & 5169 &   0 &   1 & 5167 &   1 \\ 
+  COAD &  18 & 4930 & 221 &  &  &  \\ 
+  ESCA &   2 & 5167 &   0 &   1 & 5168 &   0 \\ 
+  HNSC &  53 & 5116 &   0 &   0 & 5169 &   0 \\ 
+  KICH &   1 & 5167 &   1 &  30 & 5138 &   1 \\ 
+  KIRC &   0 & 5159 &  10 &   5 & 5163 &   1 \\ 
+  KIRP &   4 & 5165 &   0 &  13 & 5155 &   1 \\ 
+  LIHC &   7 & 5080 &  82 &   0 & 5169 &   0 \\ 
+  LUAD &   0 & 5169 &   0 &   0 & 5169 &   0 \\ 
+  LUSC &   0 & 5169 &   0 &   0 & 5169 &   0 \\ 
+  PAAD &   3 & 5165 &   1 &   0 & 5169 &   0 \\ 
+  PCPG &   0 & 5169 &   0 &   0 & 5166 &   3 \\ 
+  PRAD &   0 & 5168 &   1 &   1 & 5168 &   0 \\ 
+  READ &   0 & 5157 &  12 &  &  &  \\ 
+  SKCM & 121 & 5043 &   5 &  &  &  \\ 
+  STAD &   5 & 5164 &   0 &   0 & 5169 &   0 \\ 
+  THCA &   2 & 5167 &   0 &   2 & 5167 &   0 \\ 
+  UCEC &  89 & 5080 &   0 &   9 & 5160 &   0 \\ 
+   \bottomrule
+\end{tabular*}
+}
+\caption{Number of intercepted or deregulated GOs in each cancer type (paired and unpired analyses).
+inh.cont:  Ihibited in controls; the genes of the GO have significantly positive scores.
+inh.cases: Ihibited in cases; the genes of the GO have significantly positive scores.} 
+\label{tab:table5}
+\end{table}
+>                      ## add.to.row = my.add.to.row,
+> ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
+> tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> 
+> 
+> 
+> ## datos[1:3,]
+> ## t (t (colnames (datos)))
+> ## colnames (datos)
+> 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] splines   grid      stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] tables_0.7.79   Hmisc_3.14-6    Formula_1.1-2   survival_2.37-7 lattice_0.20-29 xtable_1.7-4    knitr_1.8      
+
+loaded via a namespace (and not attached):
+ [1] acepack_1.3-3.3     cluster_2.0.1       evaluate_0.5.5      foreign_0.8-62      formatR_1.0         latticeExtra_0.6-26 nnet_7.3-8          RColorBrewer_1.0-5 
+ [9] rpart_4.1-8         stringr_0.6.2       tools_3.1.2        
+> #q ("no")
+> 
+> proc.time()
+   user  system elapsed 
+  0.721   0.043   2.990 

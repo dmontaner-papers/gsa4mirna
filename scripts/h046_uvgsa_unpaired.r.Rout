@@ -1,0 +1,361 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##h040_uvgsa_unpaired.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script performs the GSA analysis of the transferred miRNA
+> 
+> date ()
+[1] "Fri Jun  6 21:26:23 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                   
+[2] "-f"                                                                              
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/h046_uvgsa_unpaired.r"
+[4] "--restore"                                                                       
+[5] "--save"                                                                          
+[6] "--no-readline"                                                                   
+[7] "--no-save"                                                                       
+[8] "--no-restore"                                                                    
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.1.0 (2014-04-10)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+Loading required package: DBI
+Loading required package: AnnotationDbi
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: GenomeInfoDb
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "0.3.4"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ## ANNOTATION
+> load (file.path (.job$dir$proces, "annot_for_unpaired_data.RData"))
+> ls ()
+[1] "annot"
+> 
+> ontologias <- names (annot)
+> ontologias
+[1] "bp" "cc" "mf"
+> 
+> ## INDEX
+> load (file.path (.job$dir$proces, "rindex_unpaired.RData"))
+> ls ()
+[1] "annot"      "ontologias" "rindex"    
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc"
+[11] "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" 
+  lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> length (tags)
+[1] 20
+> 
+> ## tags <- tags[1:3]    ## 1
+> ## tags <- tags[4:6]    ## 2
+> ## tags <- tags[7:9]    ## 3
+> ## tags <- tags[10:12]  ## 4
+> ## tags <- tags[13:15]  ## 5
+> tags <- tags[16:18]  ## 6
+> ## tags <- tags[19:20]  ## 7
+> 
+> ################################################################################
+> 
+> ## GSA
+> setwd (file.path (.job$dir$proces, "res_uvgsa_unpaired"))
+> 
+> for (tag in tags) {
++     for (onto in ontologias) {
++         cat ("\n=============== ", TAGS[tag], ":", onto, " ===============\n")
++         
++         anotacion <- annotFilter (annot[[onto]], index = rindex[[tag]], minBlockSize = 10, maxBlockSize = 300)
++ 
++         if (.job$testmode) anotacion <- anotacion[1:3]
++         
++         res <- try (uvGsa (rindex[[tag]], anotacion, fulltable = TRUE))
++         
++         fichero <- paste (tag, "_", onto, ".RData", sep = "")
++         save (list = "res", file = fichero)
++     }
++ }
+
+===============  READ : bp  ===============
+
+83.87% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, time in seconds:
+   user  system elapsed 
+394.975   0.064 398.357 
+
+===============  READ : cc  ===============
+
+90.19% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 44.140   0.040  44.407 
+
+===============  READ : mf  ===============
+
+87.83% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 75.776   0.012  76.224 
+
+===============  SKCM : bp  ===============
+
+83.87% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, time in seconds:
+   user  system elapsed 
+403.485   0.592 406.323 
+
+===============  SKCM : cc  ===============
+
+90.19% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 44.687   0.024  45.181 
+
+===============  SKCM : mf  ===============
+
+87.83% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 77.242   0.008  77.794 
+
+===============  STAD : bp  ===============
+
+83.87% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, time in seconds:
+   user  system elapsed 
+397.112   0.013 396.935 
+
+===============  STAD : cc  ===============
+
+90.19% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 43.954   0.004  43.936 
+
+===============  STAD : mf  ===============
+
+87.83% of the genes in the index are annotated in the list.
+
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 68.510   0.000  68.472 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] mdgsa_0.3.4          AnnotationDbi_1.26.0 GenomeInfoDb_1.0.2  
+[4] Biobase_2.24.0       BiocGenerics_0.10.0  RSQLite_0.11.4      
+[7] DBI_0.2-7           
+
+loaded via a namespace (and not attached):
+[1] cluster_1.15.2  GO.db_2.14.0    grid_3.1.0      IRanges_1.22.6 
+[5] KEGG.db_2.14.0  lattice_0.20-29 Matrix_1.1-3    stats4_3.1.0   
+> q ("no")
+> proc.time()
+    user   system  elapsed 
+1563.878    0.869 1571.750 

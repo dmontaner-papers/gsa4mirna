@@ -1,0 +1,238 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##d040_format_paired_samples.r
+> ##2014-05-30 dmontaner@cipf.es
+> ##Collecting miRNA data from The Cancer Genome Atlas
+> ##Formatting paired samples
+> 
+> date ()
+[1] "Fri Jun  6 20:07:36 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                          
+[2] "-f"                                                                                     
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/d040_format_paired_samples.r"
+[4] "--restore"                                                                              
+[5] "--save"                                                                                 
+[6] "--no-readline"                                                                          
+[7] "--no-save"                                                                              
+[8] "--no-restore"                                                                           
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.0 (2014-04-10)"
+> #library (); packageDescription ("", fields = "Version") #
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> ###DATOS
+> load (file.path (.job$dir$proces, "sample_info_all.RData"))     #sinfos
+> load (file.path (.job$dir$proces, "sample_info_paired.RData"))  #pinfos
+> ls ()
+[1] "pinfos" "sinfos"
+> 
+> #tags <- names (sinfos)
+> tags <- names (pinfos)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> 
+> paired.sinfo.s <- list ()
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     sinfo <- sinfos[[tag]]
++     pinfo <- pinfos[[tag]]
++     print (colSums (!is.na (pinfo[,-1])))
++ 
++     ##reformat to 2 columns
++     dat.t <- cbind (pinfo[,c("patient", "PTs")], tumor = 1)
++     dat.n <- cbind (pinfo[,c("patient", "SNs")], tumor = 0)
++     colnames (dat.t) <- colnames (dat.n) <- c ("patient", "sample", "tumor")
++     dat <- rbind (dat.t, dat.n)
++ 
++     ##cut samples
++     touse <- sinfo$Sample %in% dat$sample
++     misinfo <- sinfo[touse, c ("Sample", "File.Name.isoform", "path")]
++     dups <- duplicated (misinfo[,"Sample"])
++     misinfo <- misinfo[!dups,]
++     rownames (misinfo) <- misinfo[,"Sample"]
++ 
++     ##combine sample and file
++     dat[,c("fichero", "path")] <- misinfo[dat$sample, c("File.Name.isoform", "path")]
++     rownames (dat) <- dat$sample
++ 
++     ##store
++     paired.sinfo.s[[tag]] <- dat
++ }
+
+===============  BLCA  ===============
+PTs BDs SNs 
+ 19   0  19 
+
+===============  BRCA  ===============
+PTs BDs SNs 
+ 86   0  86 
+
+===============  CESC  ===============
+PTs BDs SNs 
+  3   0   3 
+
+===============  ESCA  ===============
+PTs BDs SNs 
+ 11   0  11 
+
+===============  HNSC  ===============
+PTs BDs SNs 
+ 43   0  43 
+
+===============  KICH  ===============
+PTs BDs SNs 
+ 25   0  25 
+
+===============  KIRC  ===============
+PTs BDs SNs 
+ 68   0  68 
+
+===============  KIRP  ===============
+PTs BDs SNs 
+ 34   0  34 
+
+===============  LIHC  ===============
+PTs BDs SNs 
+ 49   0  49 
+
+===============  LUAD  ===============
+PTs BDs SNs 
+ 39   0  39 
+
+===============  LUSC  ===============
+PTs BDs SNs 
+ 45   0  45 
+
+===============  PAAD  ===============
+PTs BDs SNs 
+  4   0   4 
+
+===============  PCPG  ===============
+PTs BDs SNs 
+  3   0   3 
+
+===============  PRAD  ===============
+PTs BDs SNs 
+ 17   0  17 
+
+===============  STAD  ===============
+PTs BDs SNs 
+ 39   0  39 
+
+===============  THCA  ===============
+PTs BDs SNs 
+ 59   0  59 
+
+===============  UCEC  ===============
+PTs BDs SNs 
+ 19   0  19 
+> 
+> sapply (paired.sinfo.s, dim)
+     blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec
+[1,]   38  172    6   22   86   50  136   68   98   78   90    8    6   34   78  118   38
+[2,]    5    5    5    5    5    5    5    5    5    5    5    5    5    5    5    5    5
+> 
+> dat[1:3,]
+                     patient          sample tumor                                                 fichero                                                                                      path
+TCGA-AJ-A2QL-01 TCGA-AJ-A2QL TCGA-AJ-A2QL-01     1 TCGA-AJ-A2QL-01A-11R-A18L-13.isoform.quantification.txt ~/datos/2014/mirna_gsa_total/data_raw/UCEC/miRNASeq/BCGSC__IlluminaHiSeq_miRNASeq/Level_3
+TCGA-AJ-A3NC-01 TCGA-AJ-A3NC TCGA-AJ-A3NC-01     1 TCGA-AJ-A3NC-01A-11R-A22I-13.isoform.quantification.txt ~/datos/2014/mirna_gsa_total/data_raw/UCEC/miRNASeq/BCGSC__IlluminaHiSeq_miRNASeq/Level_3
+TCGA-AJ-A3NE-01 TCGA-AJ-A3NE TCGA-AJ-A3NE-01     1 TCGA-AJ-A3NE-01A-11R-A22I-13.isoform.quantification.txt ~/datos/2014/mirna_gsa_total/data_raw/UCEC/miRNASeq/BCGSC__IlluminaHiSeq_miRNASeq/Level_3
+> 
+> ###SALVAMOS
+> save (list = "paired.sinfo.s", file = file.path (.job$dir$proces, "sample_info_paired_clean.RData"))
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  0.320   0.014   0.344 

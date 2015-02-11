@@ -1,0 +1,435 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##h020_explore_index_unpaired.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script explores the computed gene ranking index from the results of the differential gene expression
+> 
+> date ()
+[1] "Thu Dec  4 14:18:14 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                   
+[2] "-f"                                                                                      
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/h020_explore_index_unpaired.r"
+[4] "--restore"                                                                               
+[5] "--save"                                                                                  
+[6] "--no-readline"                                                                           
+[7] "--no-save"                                                                               
+[8] "--no-restore"                                                                            
+> rm (list = ls ())
+> R.version.string #"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
+[1] "0.3-8"
+> ##library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> ################################################################################
+> 
+> ## DATOS
+> setwd (file.path (.job$dir$proces))
+> 
+> load ("rindex0_unpaired.RData")
+> load ("rindexT_unpaired.RData")
+> load ("rindex_unpaired.RData")
+> 
+> ls ()
+[1] "rindex"  "rindex0" "rindexT"
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> ## MATRIX FORMAT
+> 
+> ids0 <- idsT <- idsN <- NULL
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++ 
++     ids0 <- c (ids0, names (rindex0[[tag]]))
++     idsT <- c (idsT, names (rindexT[[tag]]))
++     idsN <- c (idsN, names (rindex [[tag]]))
++ }
+
+===============  BLCA  ===============
+
+===============  BRCA  ===============
+
+===============  CESC  ===============
+
+===============  COAD  ===============
+
+===============  ESCA  ===============
+
+===============  HNSC  ===============
+
+===============  KICH  ===============
+
+===============  KIRC  ===============
+
+===============  KIRP  ===============
+
+===============  LIHC  ===============
+
+===============  LUAD  ===============
+
+===============  LUSC  ===============
+
+===============  PAAD  ===============
+
+===============  PCPG  ===============
+
+===============  PRAD  ===============
+
+===============  READ  ===============
+
+===============  SKCM  ===============
+
+===============  STAD  ===============
+
+===============  THCA  ===============
+
+===============  UCEC  ===============
+> ids0 <- sort (unique (ids0))
+> idsT <- sort (unique (idsT))
+> idsN <- sort (unique (idsN))
+> 
+> length (ids0)
+[1] 962
+> length (idsT)
+[1] 12084
+> length (idsN)
+[1] 12084
+> 
+> table (idsT == idsN) ##ok
+
+ TRUE 
+12084 
+> 
+> 
+> mat0         <- matrix (NA, nrow = length (ids0), ncol = length (rindex), dimnames = list (ids0, names (rindex)))
+> matT <- matN <- matrix (NA, nrow = length (idsT), ncol = length (rindex), dimnames = list (idsT, names (rindex)))
+> ##
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     ##
++     mat0[,tag] <- rindex0[[tag]][rownames (mat0)]
++     matT[,tag] <- rindexT[[tag]][rownames (matT)]
++     matN[,tag] <- rindex [[tag]][rownames (matN)]
++ }
+
+===============  BLCA  ===============
+
+===============  BRCA  ===============
+
+===============  CESC  ===============
+
+===============  COAD  ===============
+
+===============  ESCA  ===============
+
+===============  HNSC  ===============
+
+===============  KICH  ===============
+
+===============  KIRC  ===============
+
+===============  KIRP  ===============
+
+===============  LIHC  ===============
+
+===============  LUAD  ===============
+
+===============  LUSC  ===============
+
+===============  PAAD  ===============
+
+===============  PCPG  ===============
+
+===============  PRAD  ===============
+
+===============  READ  ===============
+
+===============  SKCM  ===============
+
+===============  STAD  ===============
+
+===============  THCA  ===============
+
+===============  UCEC  ===============
+> 
+> summary (mat0)
+      blca                brca               cesc               coad               esca               hnsc               kich                kirc               kirp               lihc          
+ Min.   :-141.1936   Min.   :-724.929   Min.   :-77.2122   Min.   :-426.034   Min.   :-62.5769   Min.   :-201.290   Min.   :-122.6950   Min.   :-248.395   Min.   :-149.073   Min.   :-146.3919  
+ 1st Qu.:  -0.4032   1st Qu.:  -2.388   1st Qu.: -1.1125   1st Qu.:  -3.005   1st Qu.: -0.8205   1st Qu.:  -2.912   1st Qu.:  -3.5909   1st Qu.:  -3.092   1st Qu.:  -7.005   1st Qu.:  -0.2768  
+ Median :   2.2160   Median :   2.570   Median :  0.2130   Median :   1.012   Median :  1.0911   Median :   2.031   Median :   0.1544   Median :   2.736   Median :   1.058   Median :   3.4546  
+ Mean   :   1.0168   Mean   :  -2.515   Mean   : -0.6067   Mean   :   1.198   Mean   :  0.2357   Mean   :  -1.002   Mean   :   0.6044   Mean   :   5.466   Mean   :  -2.374   Mean   :   5.6028  
+ 3rd Qu.:   7.6669   3rd Qu.:  14.058   3rd Qu.:  1.5814   3rd Qu.:  10.589   3rd Qu.:  3.5342   3rd Qu.:   7.706   3rd Qu.:   5.4624   3rd Qu.:  15.504   3rd Qu.:   7.319   3rd Qu.:  12.7735  
+ Max.   :  39.0075   Max.   : 226.750   Max.   : 23.9099   Max.   : 186.934   Max.   : 36.5413   Max.   :  94.658   Max.   : 184.4174   Max.   : 211.095   Max.   : 113.306   Max.   :  77.6762  
+ NA's   :144         NA's   :122        NA's   :176        NA's   :235        NA's   :269        NA's   :113        NA's   :300         NA's   :279        NA's   :184        NA's   :157        
+      luad                lusc                paad               pcpg               prad               read                skcm                 stad              thca                 ucec         
+ Min.   :-261.2991   Min.   :-303.1042   Min.   :-27.8500   Min.   :-36.7424   Min.   :-29.5661   Min.   :-345.2469   Min.   :-129.06853   Min.   :-99.244   Min.   :-121.13907   Min.   :-433.124  
+ 1st Qu.:  -0.6259   1st Qu.:  -0.9064   1st Qu.: -0.7941   1st Qu.: -0.8505   1st Qu.: -1.4825   1st Qu.:  -2.1318   1st Qu.:  -0.50555   1st Qu.: -1.519   1st Qu.:  -4.11356   1st Qu.:  -4.607  
+ Median :   3.1485   Median :   4.2380   Median :  0.0135   Median :  0.2225   Median :  0.2711   Median :   0.6672   Median :   0.02064   Median :  2.048   Median :   0.02243   Median :   1.390  
+ Mean   :   1.5646   Mean   :   0.4601   Mean   : -0.1669   Mean   : -0.3482   Mean   :  0.4061   Mean   :  -2.9846   Mean   :  -0.93469   Mean   :  1.303   Mean   :   1.09331   Mean   :  -4.933  
+ 3rd Qu.:  11.0956   3rd Qu.:  12.1864   3rd Qu.:  1.0713   3rd Qu.:  1.5193   3rd Qu.:  2.5559   3rd Qu.:   6.1269   3rd Qu.:   0.79389   3rd Qu.:  7.595   3rd Qu.:   6.36353   3rd Qu.:   8.214  
+ Max.   : 117.4604   Max.   : 164.3679   Max.   :  8.0047   Max.   : 21.8933   Max.   : 23.9997   Max.   :  68.5569   Max.   :   7.33779   Max.   : 83.518   Max.   : 142.96474   Max.   : 125.270  
+ NA's   :113         NA's   :116         NA's   :321        NA's   :241        NA's   :353        NA's   :315         NA's   :230          NA's   :146       NA's   :136          NA's   :88        
+> summary (matT)
+      blca               brca                cesc               coad               esca               hnsc                kich               kirc              kirp               lihc        
+ Min.   :-690.661   Min.   :-3688.291   Min.   :-331.392   Min.   :-870.325   Min.   :-337.901   Min.   :-1355.393   Min.   :-639.725   Min.   :-710.00   Min.   :-825.726   Min.   :-277.36  
+ 1st Qu.: -61.545   1st Qu.:  -81.930   1st Qu.: -32.234   1st Qu.:   2.639   1st Qu.: -42.707   1st Qu.: -152.727   1st Qu.: -49.053   1st Qu.: -15.81   1st Qu.: -99.591   1st Qu.:   0.00  
+ Median :  -1.478   Median :    0.234   Median :  -3.521   Median :  97.719   Median :  -6.145   Median :  -26.004   Median :  -1.905   Median :  29.74   Median : -23.198   Median :  20.67  
+ Mean   : -21.235   Mean   :  -76.220   Mean   : -17.453   Mean   : 189.629   Mean   : -23.531   Mean   :  -81.940   Mean   : -12.843   Mean   : 100.30   Mean   : -54.007   Mean   :  74.85  
+ 3rd Qu.:  16.083   3rd Qu.:  130.076   3rd Qu.:   2.474   3rd Qu.: 289.706   3rd Qu.:   2.499   3rd Qu.:    5.353   3rd Qu.:  15.971   3rd Qu.: 188.99   3rd Qu.:   5.992   3rd Qu.: 112.85  
+ Max.   : 489.148   Max.   : 1928.048   Max.   : 167.029   Max.   :2351.668   Max.   : 143.624   Max.   :  545.178   Max.   : 733.939   Max.   :1974.94   Max.   : 403.702   Max.   :1181.11  
+      luad                 lusc               paad                pcpg               prad               read              skcm               stad               thca              ucec         
+ Min.   :-1088.0396   Min.   :-2057.34   Min.   :-109.8306   Min.   :-209.947   Min.   :-206.083   Min.   :-684.49   Min.   :-388.018   Min.   :-689.642   Min.   :-443.15   Min.   :-2421.92  
+ 1st Qu.:  -79.3276   1st Qu.: -241.06   1st Qu.:  -8.0220   1st Qu.: -12.322   1st Qu.:  -7.290   1st Qu.:   0.00   1st Qu.: -29.977   1st Qu.: -78.838   1st Qu.: -27.78   1st Qu.: -273.07  
+ Median :    0.4724   Median :  -15.44   Median :  -0.4368   Median :   0.000   Median :   0.122   Median :  22.30   Median :  -3.073   Median :  -7.619   Median :   0.00   Median :  -60.89  
+ Mean   :  -20.3467   Mean   : -159.55   Mean   :  -4.2151   Mean   :  -7.542   Mean   :   5.670   Mean   :  46.64   Mean   : -21.572   Mean   : -35.718   Mean   :  20.71   Mean   : -171.60  
+ 3rd Qu.:   58.3806   3rd Qu.:   18.31   3rd Qu.:   2.4294   3rd Qu.:   4.421   3rd Qu.:  16.930   3rd Qu.:  95.52   3rd Qu.:   0.497   3rd Qu.:   9.460   3rd Qu.:  42.32   3rd Qu.:    0.00  
+ Max.   : 1031.3225   Max.   :  859.73   Max.   :  67.3195   Max.   :  96.247   Max.   : 242.768   Max.   : 807.68   Max.   :  40.732   Max.   : 428.986   Max.   : 779.30   Max.   :  579.38  
+> summary (matN)
+      blca              brca              cesc              coad              esca              hnsc              kich              kirc              kirp              lihc              luad        
+ Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363  
+ 1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744  
+ Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+ 3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744  
+ Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363  
+      lusc              paad              pcpg              prad              read              skcm              stad              thca              ucec        
+ Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363   Min.   :-3.9363  
+ 1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744   1st Qu.:-0.6744  
+ Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+ 3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744   3rd Qu.: 0.6744  
+ Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363   Max.   : 3.9363  
+> 
+> ################################################################################
+> 
+> ## PLOTS
+> graphics.off ()
+> setwd (.job$dir$plots)
+> dir ()
+[1] "paired_cor_rindex0.png"       "paired_cor_rindexN.png"       "paired_cor_rindexT.png"       "paired_rindex_boxplot.png"    "paired_rindex_cor_vs_cor.png"
+> 
+> ## boxplot
+> por <- 2
+> cex <- 2
+> png ("unpaired_rindex_boxplot.png", width = por * 480, height = por * 480 * 2, pointsize = 12, bg = "white")
+> par (mfrow = c (3,1), cex.axis = cex, cex.lab = cex, cex.main = cex)
+> boxplot (mat0, las = 3, main = "rindex0"); abline (h = 0, col = "blue")
+> boxplot (matT, las = 3, main = "rindexT"); abline (h = 0, col = "blue")
+> boxplot (matN, las = 3, main = "rindex"); abline (h = 0, col = "blue")
+> dev.off ()
+null device 
+          1 
+> 
+> 
+> ## correlation
+> por <- 2
+> 
+> corre <- cor (matT, matN)
+> diag (corre)  ##OK
+     blca      brca      cesc      coad      esca      hnsc      kich      kirc      kirp      lihc      luad      lusc      paad      pcpg      prad      read      skcm      stad      thca      ucec 
+0.9674040 0.8947785 0.9288424 0.9204140 0.9363864 0.9325358 0.9324794 0.9408536 0.9472934 0.9029859 0.9503783 0.9034580 0.9395772 0.9186342 0.9633511 0.9570111 0.8329636 0.9603135 0.9318181 0.9153159 
+> 
+> corre0 <- cor (mat0, use = "pairwise.complete.obs")
+> round (corre0, 2)
+     blca  brca cesc  coad esca  hnsc  kich  kirc  kirp lihc  luad lusc  paad  pcpg  prad  read  skcm stad  thca  ucec
+blca 1.00  0.55 0.59  0.11 0.62  0.58  0.11  0.07  0.32 0.36  0.60 0.56  0.15  0.23  0.30  0.20  0.10 0.71  0.19  0.58
+brca 0.55  1.00 0.55  0.19 0.40  0.40  0.17  0.06  0.32 0.25  0.46 0.41  0.26  0.13  0.34  0.22 -0.01 0.57  0.23  0.44
+cesc 0.59  0.55 1.00  0.09 0.49  0.41  0.18  0.09  0.39 0.11  0.32 0.40  0.14  0.11  0.24  0.17  0.01 0.50  0.10  0.66
+coad 0.11  0.19 0.09  1.00 0.12 -0.06  0.01  0.07 -0.02 0.07  0.39 0.02  0.00 -0.02  0.05  0.89 -0.02 0.19 -0.02 -0.06
+esca 0.62  0.40 0.49  0.12 1.00  0.56  0.09  0.16  0.34 0.34  0.35 0.46  0.14  0.13  0.12  0.19  0.29 0.78  0.20  0.48
+hnsc 0.58  0.40 0.41 -0.06 0.56  1.00  0.05  0.14  0.39 0.30  0.42 0.56  0.09  0.07  0.22  0.01  0.35 0.55  0.17  0.46
+kich 0.11  0.17 0.18  0.01 0.09  0.05  1.00  0.20  0.28 0.17  0.04 0.07 -0.07  0.00  0.13 -0.01  0.00 0.09  0.17  0.16
+kirc 0.07  0.06 0.09  0.07 0.16  0.14  0.20  1.00  0.55 0.07  0.05 0.00 -0.08  0.02  0.08  0.06  0.05 0.07 -0.04  0.06
+kirp 0.32  0.32 0.39 -0.02 0.34  0.39  0.28  0.55  1.00 0.27  0.16 0.23  0.19  0.01  0.26  0.04  0.10 0.33  0.13  0.36
+lihc 0.36  0.25 0.11  0.07 0.34  0.30  0.17  0.07  0.27 1.00  0.23 0.25  0.27  0.23  0.25  0.11  0.11 0.45  0.25  0.36
+luad 0.60  0.46 0.32  0.39 0.35  0.42  0.04  0.05  0.16 0.23  1.00 0.62  0.22  0.11  0.13  0.44 -0.02 0.49  0.27  0.29
+lusc 0.56  0.41 0.40  0.02 0.46  0.56  0.07  0.00  0.23 0.25  0.62 1.00  0.19  0.12  0.11  0.06  0.03 0.47  0.20  0.42
+paad 0.15  0.26 0.14  0.00 0.14  0.09 -0.07 -0.08  0.19 0.27  0.22 0.19  1.00  0.06  0.03  0.08 -0.12 0.24  0.20  0.21
+pcpg 0.23  0.13 0.11 -0.02 0.13  0.07  0.00  0.02  0.01 0.23  0.11 0.12  0.06  1.00  0.07  0.00  0.03 0.16  0.03  0.32
+prad 0.30  0.34 0.24  0.05 0.12  0.22  0.13  0.08  0.26 0.25  0.13 0.11  0.03  0.07  1.00  0.10 -0.05 0.34 -0.02  0.32
+read 0.20  0.22 0.17  0.89 0.19  0.01 -0.01  0.06  0.04 0.11  0.44 0.06  0.08  0.00  0.10  1.00  0.00 0.27  0.02  0.05
+skcm 0.10 -0.01 0.01 -0.02 0.29  0.35  0.00  0.05  0.10 0.11 -0.02 0.03 -0.12  0.03 -0.05  0.00  1.00 0.17 -0.02  0.05
+stad 0.71  0.57 0.50  0.19 0.78  0.55  0.09  0.07  0.33 0.45  0.49 0.47  0.24  0.16  0.34  0.27  0.17 1.00  0.32  0.49
+thca 0.19  0.23 0.10 -0.02 0.20  0.17  0.17 -0.04  0.13 0.25  0.27 0.20  0.20  0.03 -0.02  0.02 -0.02 0.32  1.00  0.08
+ucec 0.58  0.44 0.66 -0.06 0.48  0.46  0.16  0.06  0.36 0.36  0.29 0.42  0.21  0.32  0.32  0.05  0.05 0.49  0.08  1.00
+> png ("unpaired_cor_rindex0.png", width = por * 480, height = por * 480, pointsize = 12, bg = "white")
+> plotcorr (corre0, main = "Ranking index correlation (miRNAs)")
+> dev.off ()
+null device 
+          1 
+> 
+> correT <- cor (matT, use = "pairwise.complete.obs")
+> round (correT, 2)
+      blca  brca  cesc  coad  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad  pcpg  prad  read  skcm  stad  thca  ucec
+blca  1.00  0.64  0.71  0.00  0.67  0.61  0.15 -0.04  0.58  0.42  0.76  0.58  0.02  0.44  0.32  0.16  0.13  0.82  0.02  0.71
+brca  0.64  1.00  0.70  0.09  0.42  0.36  0.36  0.00  0.48  0.12  0.42  0.32  0.15  0.12  0.35  0.23 -0.01  0.55  0.11  0.47
+cesc  0.71  0.70  1.00 -0.14  0.62  0.56  0.28 -0.16  0.60 -0.04  0.48  0.56  0.08  0.25  0.25  0.11  0.19  0.66 -0.07  0.79
+coad  0.00  0.09 -0.14  1.00 -0.33 -0.39 -0.06  0.50 -0.31  0.59  0.05 -0.44 -0.47 -0.32  0.36  0.86 -0.52 -0.16  0.03 -0.49
+esca  0.67  0.42  0.62 -0.33  1.00  0.78  0.09  0.02  0.65  0.01  0.42  0.73  0.14  0.27  0.07 -0.07  0.50  0.87  0.05  0.68
+hnsc  0.61  0.36  0.56 -0.39  0.78  1.00  0.02 -0.02  0.65 -0.02  0.45  0.74  0.17  0.29  0.12 -0.15  0.54  0.74 -0.04  0.71
+kich  0.15  0.36  0.28 -0.06  0.09  0.02  1.00 -0.08  0.26  0.05  0.01  0.03  0.08 -0.10  0.12 -0.04  0.03  0.12  0.21  0.18
+kirc -0.04  0.00 -0.16  0.50  0.02 -0.02 -0.08  1.00  0.05  0.31 -0.06 -0.24 -0.47 -0.38  0.19  0.43 -0.07  0.03  0.17 -0.40
+kirp  0.58  0.48  0.60 -0.31  0.65  0.65  0.26  0.05  1.00  0.07  0.27  0.53  0.33  0.25  0.22 -0.09  0.41  0.67  0.03  0.63
+lihc  0.42  0.12 -0.04  0.59  0.01 -0.02  0.05  0.31  0.07  1.00  0.35 -0.09 -0.13  0.05  0.38  0.42 -0.35  0.26  0.22 -0.08
+luad  0.76  0.42  0.48  0.05  0.42  0.45  0.01 -0.06  0.27  0.35  1.00  0.52 -0.05  0.57 -0.02  0.18  0.00  0.54  0.10  0.55
+lusc  0.58  0.32  0.56 -0.44  0.73  0.74  0.03 -0.24  0.53 -0.09  0.52  1.00  0.26  0.44  0.02 -0.23  0.32  0.70 -0.12  0.66
+paad  0.02  0.15  0.08 -0.47  0.14  0.17  0.08 -0.47  0.33 -0.13 -0.05  0.26  1.00  0.23 -0.16 -0.36  0.08  0.12  0.21  0.26
+pcpg  0.44  0.12  0.25 -0.32  0.27  0.29 -0.10 -0.38  0.25  0.05  0.57  0.44  0.23  1.00 -0.32 -0.23  0.14  0.30 -0.01  0.48
+prad  0.32  0.35  0.25  0.36  0.07  0.12  0.12  0.19  0.22  0.38 -0.02  0.02 -0.16 -0.32  1.00  0.36 -0.19  0.29 -0.22  0.13
+read  0.16  0.23  0.11  0.86 -0.07 -0.15 -0.04  0.43 -0.09  0.42  0.18 -0.23 -0.36 -0.23  0.36  1.00 -0.34  0.08  0.06 -0.20
+skcm  0.13 -0.01  0.19 -0.52  0.50  0.54  0.03 -0.07  0.41 -0.35  0.00  0.32  0.08  0.14 -0.19 -0.34  1.00  0.29 -0.18  0.40
+stad  0.82  0.55  0.66 -0.16  0.87  0.74  0.12  0.03  0.67  0.26  0.54  0.70  0.12  0.30  0.29  0.08  0.29  1.00  0.15  0.69
+thca  0.02  0.11 -0.07  0.03  0.05 -0.04  0.21  0.17  0.03  0.22  0.10 -0.12  0.21 -0.01 -0.22  0.06 -0.18  0.15  1.00 -0.10
+ucec  0.71  0.47  0.79 -0.49  0.68  0.71  0.18 -0.40  0.63 -0.08  0.55  0.66  0.26  0.48  0.13 -0.20  0.40  0.69 -0.10  1.00
+> png ("unpaired_cor_rindexT.png", width = por * 480, height = por * 480, pointsize = 12, bg = "white")
+> plotcorr (correT, main = "Transferred ranking index correlation")
+> dev.off ()
+null device 
+          1 
+> 
+> correN <- cor (matN, use = "pairwise.complete.obs")
+> round (correN, 2)
+      blca  brca  cesc  coad  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad  pcpg  prad  read  skcm  stad  thca  ucec
+blca  1.00  0.64  0.72  0.02  0.68  0.63  0.15 -0.02  0.55  0.43  0.76  0.64 -0.03  0.38  0.33  0.16  0.24  0.81  0.04  0.73
+brca  0.64  1.00  0.69  0.25  0.40  0.38  0.30  0.05  0.44  0.32  0.52  0.36  0.10  0.14  0.40  0.34 -0.02  0.53  0.15  0.47
+cesc  0.72  0.69  1.00  0.01  0.59  0.54  0.28 -0.09  0.54  0.11  0.52  0.58  0.00  0.20  0.32  0.18  0.21  0.63 -0.02  0.79
+coad  0.02  0.25  0.01  1.00 -0.19 -0.26 -0.03  0.36 -0.17  0.41  0.13 -0.25 -0.36 -0.21  0.33  0.86 -0.35 -0.08 -0.07 -0.31
+esca  0.68  0.40  0.59 -0.19  1.00  0.76  0.07  0.12  0.61  0.14  0.44  0.66  0.05  0.19  0.13  0.00  0.55  0.85  0.10  0.64
+hnsc  0.63  0.38  0.54 -0.26  0.76  1.00  0.03  0.08  0.61  0.13  0.47  0.70  0.08  0.23  0.17 -0.09  0.56  0.72 -0.01  0.66
+kich  0.15  0.30  0.28 -0.03  0.07  0.03  1.00 -0.06  0.29  0.04  0.02  0.06  0.06 -0.14  0.22 -0.02 -0.02  0.10  0.11  0.23
+kirc -0.02  0.05 -0.09  0.36  0.12  0.08 -0.06  1.00  0.22  0.14 -0.03 -0.18 -0.34 -0.23  0.14  0.33  0.06  0.07  0.03 -0.27
+kirp  0.55  0.44  0.54 -0.17  0.61  0.61  0.29  0.22  1.00  0.19  0.28  0.46  0.22  0.17  0.25 -0.01  0.37  0.63  0.06  0.57
+lihc  0.43  0.32  0.11  0.41  0.14  0.13  0.04  0.14  0.19  1.00  0.43  0.12  0.01  0.17  0.30  0.30 -0.16  0.32  0.15  0.11
+luad  0.76  0.52  0.52  0.13  0.44  0.47  0.02 -0.03  0.28  0.43  1.00  0.60 -0.05  0.48  0.08  0.22  0.04  0.56  0.13  0.53
+lusc  0.64  0.36  0.58 -0.25  0.66  0.70  0.06 -0.18  0.46  0.12  0.60  1.00  0.15  0.39  0.11 -0.13  0.29  0.65 -0.04  0.67
+paad -0.03  0.10  0.00 -0.36  0.05  0.08  0.06 -0.34  0.22  0.01 -0.05  0.15  1.00  0.16 -0.13 -0.30 -0.09  0.06  0.30  0.12
+pcpg  0.38  0.14  0.20 -0.21  0.19  0.23 -0.14 -0.23  0.17  0.17  0.48  0.39  0.16  1.00 -0.27 -0.16  0.07  0.24  0.05  0.35
+prad  0.33  0.40  0.32  0.33  0.13  0.17  0.22  0.14  0.25  0.30  0.08  0.11 -0.13 -0.27  1.00  0.34 -0.07  0.31 -0.22  0.23
+read  0.16  0.34  0.18  0.86  0.00 -0.09 -0.02  0.33 -0.01  0.30  0.22 -0.13 -0.30 -0.16  0.34  1.00 -0.23  0.11  0.01 -0.10
+skcm  0.24 -0.02  0.21 -0.35  0.55  0.56 -0.02  0.06  0.37 -0.16  0.04  0.29 -0.09  0.07 -0.07 -0.23  1.00  0.36 -0.14  0.38
+stad  0.81  0.53  0.63 -0.08  0.85  0.72  0.10  0.07  0.63  0.32  0.56  0.65  0.06  0.24  0.31  0.11  0.36  1.00  0.18  0.68
+thca  0.04  0.15 -0.02 -0.07  0.10 -0.01  0.11  0.03  0.06  0.15  0.13 -0.04  0.30  0.05 -0.22  0.01 -0.14  0.18  1.00 -0.03
+ucec  0.73  0.47  0.79 -0.31  0.64  0.66  0.23 -0.27  0.57  0.11  0.53  0.67  0.12  0.35  0.23 -0.10  0.38  0.68 -0.03  1.00
+> png ("unpaired_cor_rindexN.png", width = por * 480, height = por * 480, pointsize = 12, bg = "white")
+> plotcorr (correN, main = "Ranking index correlation (genes)")
+> dev.off ()
+null device 
+          1 
+> 
+> 
+> ## correlation vs correlationx
+> tri0 <- corre0[upper.tri (corre0)]
+> triT <- correT[upper.tri (correT)]
+> triN <- correN[upper.tri (correN)]
+> 
+> por <- 1
+> png ("unpaired_rindex_cor_vs_cor.png", width = por * 480 * 3, height = por * 480, pointsize = 12, bg = "white")
+> par (mfrow = c (1, 3))
+> plot (tri0, triT); abline (0, 1, col = "red")
+> plot (tri0, triN); abline (0, 1, col = "red")
+> plot (triT, triT); abline (0, 1, col = "red")
+> dev.off ()
+null device 
+          1 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ellipse_0.3-8
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  2.309   0.059   2.380 

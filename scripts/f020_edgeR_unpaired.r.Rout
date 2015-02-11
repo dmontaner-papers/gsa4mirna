@@ -1,0 +1,298 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##f020_edgeR_unpaired.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script performs the differential gene expression analysis for the paired data
+> 
+> date ()
+[1] "Fri Jun  6 21:13:54 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                   
+[2] "-f"                                                                              
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/f020_edgeR_unpaired.r"
+[4] "--restore"                                                                       
+[5] "--save"                                                                          
+[6] "--no-readline"                                                                   
+[7] "--no-save"                                                                       
+[8] "--no-restore"                                                                    
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.0 (2014-04-10)"
+> library (edgeR); packageDescription ("edgeR", fields = "Version") #"3.6.1"
+Loading required package: limma
+[1] "3.6.1"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ## DATA
+> setwd (file.path (.job$dir$proces))
+> load ("datos_unpaired.RData")
+> ls ()
+[1] "datos"
+> 
+> tags <- names (datos)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc"
+[11] "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" 
+  lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+> 
+> sapply (datos, names)
+     blca      brca      cesc      coad      esca      hnsc      kich     
+[1,] "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat"
+[2,] "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"  
+     kirc      kirp      lihc      luad      lusc      paad      pcpg     
+[1,] "contmat" "contmat" "contmat" "contmat" "contmat" "contmat" "contmat"
+[2,] "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"  
+     prad      read      skcm      stad      thca      ucec     
+[1,] "contmat" "contmat" "contmat" "contmat" "contmat" "contmat"
+[2,] "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"   "sinfo"  
+> sapply (datos, function (x) dim (x$contmat))
+     blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad
+[1,]  818  840  786  727  693  849  662  683  778  805  849  846  641  721  609
+[2,]  271  807  218  243  113  519   91  311  245  283  474  376  100  182  117
+     read skcm stad thca ucec
+[1,]  647  732  816  826  874
+[2,]   93   75  345  558  418
+> 
+> sapply (datos, function (x) table (colnames (x$contmat) == rownames (x$sinfo)))
+blca.TRUE brca.TRUE cesc.TRUE coad.TRUE esca.TRUE hnsc.TRUE kich.TRUE kirc.TRUE 
+      271       807       218       243       113       519        91       311 
+kirp.TRUE lihc.TRUE luad.TRUE lusc.TRUE paad.TRUE pcpg.TRUE prad.TRUE read.TRUE 
+      245       283       474       376       100       182       117        93 
+skcm.TRUE stad.TRUE thca.TRUE ucec.TRUE 
+       75       345       558       418 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> tag <- "skcm"
+> 
+> res.edger <- list ()
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     sinfo   <- datos[[tag]]$sinfo
++     contmat <- datos[[tag]]$contmat
++     print (dim (contmat))
++     
++     ## compute FOLD CHANGES
++     ## just for checking purposes
++     ## no normalization has been done
++     ## at least RPKM or similar will be needed before the fold change is computed
++     media0 <- rowMeans (contmat[,sinfo$tumor == 0, drop = FALSE])
++     media1 <- rowMeans (contmat[,sinfo$tumor == 1, drop = FALSE])
++     mifold <- log2 ((media1 + 0.001) / (media0 + 0.001))
++     
++     ## edgeR classic analysis
++     clase <- sinfo$tumor   ##does not need to be a factor
++     edger.cla <- DGEList (counts = contmat, group = clase)
++     edger.cla <- calcNormFactors     (edger.cla)       ## HAS TO BE COMPUTED IN THIS ORDER
++     edger.cla <- estimateCommonDisp  (edger.cla)
++     edger.cla <- estimateTagwiseDisp (edger.cla)
++     edger.cla.res <- exactTest       (edger.cla)
++     ##topTags (edger.cla.res)
++     print (cor (mifold, edger.cla.res$table[,"logFC"], use = "pairwise.complete.obs"))
++     
++     ## ## PAIRED edgeR glm analysis
++     ## indiv <- as.factor (sinfo$patient)
++     ## clase <- sinfo$tumor
++     ## design <- model.matrix (~ clase + indiv)
++     ## rownames (design) <- colnames (contmat)
++     ## edger.par <- DGEList (counts = contmat)
++     ## edger.par <- calcNormFactors (edger.par)
++     ## system.time (edger.par <- estimateGLMCommonDisp  (edger.par, design))  #takes some time
++     ## system.time (edger.par <- estimateGLMTrendedDisp (edger.par, design))
++     ## system.time (edger.par <- estimateGLMTagwiseDisp (edger.par, design))
++     ## edger.par.fit <- glmFit (edger.par, design)
++     ## edger.par.res <- glmLRT (edger.par.fit, coef = "clase")
++     ## ##topTags (edger.par.res)
++     ## print (cor (mifold, edger.par.res$table[,"logFC"], use = "pairwise.complete.obs"))
++     
++     ##STORE RESULTS
++     ##res.edger[[tag]] <- edger.par.res
++     res.edger[[tag]] <- edger.cla.res
++ }
+
+===============  BLCA  ===============
+[1] 818 271
+[1] 0.8609713
+
+===============  BRCA  ===============
+[1] 840 807
+[1] 0.8725427
+
+===============  CESC  ===============
+[1] 786 218
+[1] 0.8062854
+
+===============  COAD  ===============
+[1] 727 243
+[1] 0.9014884
+
+===============  ESCA  ===============
+[1] 693 113
+[1] 0.8680906
+
+===============  HNSC  ===============
+[1] 849 519
+[1] 0.8762841
+
+===============  KICH  ===============
+[1] 662  91
+[1] 0.8787884
+
+===============  KIRC  ===============
+[1] 683 311
+[1] 0.9245706
+
+===============  KIRP  ===============
+[1] 778 245
+[1] 0.8647259
+
+===============  LIHC  ===============
+[1] 805 283
+[1] 0.8943485
+
+===============  LUAD  ===============
+[1] 849 474
+[1] 0.8363999
+
+===============  LUSC  ===============
+[1] 846 376
+[1] 0.8653033
+
+===============  PAAD  ===============
+[1] 641 100
+[1] 0.7986786
+
+===============  PCPG  ===============
+[1] 721 182
+[1] 0.8820921
+
+===============  PRAD  ===============
+[1] 609 117
+[1] 0.873501
+
+===============  READ  ===============
+[1] 647  93
+[1] 0.9536013
+
+===============  SKCM  ===============
+[1] 732  75
+[1] 0.9488366
+
+===============  STAD  ===============
+[1] 816 345
+[1] 0.8810202
+
+===============  THCA  ===============
+[1] 826 558
+[1] 0.9171402
+
+===============  UCEC  ===============
+[1] 874 418
+[1] 0.8674657
+> 
+> names (res.edger)
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc"
+[11] "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> 
+> 
+> ## SAVING
+> save (list = "res.edger", file = file.path (.job$dir$proces, "res_dif_exp_unpaired.RData"))
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] edgeR_3.6.1  limma_3.20.1
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 80.756   0.114  80.865 

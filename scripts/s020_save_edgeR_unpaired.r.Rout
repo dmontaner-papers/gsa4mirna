@@ -1,0 +1,512 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##s020_save_edgeR_unpaired.r
+> ##2014-07-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script exports the differential gene expression results at gene level
+> 
+> date ()
+[1] "Fri Dec 12 18:58:57 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                
+[2] "-f"                                                                                   
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/s020_save_edgeR_unpaired.r"
+[4] "--restore"                                                                            
+[5] "--save"                                                                               
+[6] "--no-readline"                                                                        
+[7] "--no-save"                                                                            
+[8] "--no-restore"                                                                         
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+Loading required package: rJava
+Loading required package: xlsxjars
+[1] "0.5.7"
+> library (edgeR); packageDescription ("edgeR", fields = "Version") #"3.6.1"
+Loading required package: limma
+[1] "3.8.3"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+Loading required package: DBI
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:limma’:
+
+    plotMA
+
+The following objects are masked from ‘package:rJava’:
+
+    anyDuplicated, duplicated, sort, unique
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist, unsplit
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: GenomeInfoDb
+Loading required package: S4Vectors
+Loading required package: IRanges
+
+Attaching package: ‘AnnotationDbi’
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    species
+
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "0.99.2"
+> library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+[1] "0.0.2"
+> #help (package = mirbaseID)
+> #help (package = mdgsa)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> source (file.path (.job$dir$scripts, "000_function_signifCount_1.r"))
+> 
+> corte <- 0.05
+> 
+> ## DATA
+> load (file.path (.job$dir$proces, "res_dif_exp_unpaired.RData"))
+> ls ()
+[1] "corte"       "res.edger"   "signifCount"
+> 
+> tags <- names (res.edger)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc"
+[11] "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" 
+  lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+> 
+> ## ANNOTATION
+> load (file.path (.job$dir$proces, "annot_for_unpaired_data.RData"))
+> names (annot)
+[1] "bp" "cc" "mf"
+> 
+> anotacion <- c(annot[["bp"]], annot[["cc"]], annot[["mf"]])
+> length (anotacion)
+[1] 16494
+> sum (sapply (annot, length))
+[1] 16494
+> table (duplicated (names (anotacion)))
+
+FALSE 
+16494 
+> 
+> anotacion <- annotFilter (anotacion, minBlockSize = 10, maxBlockSize = 300)
+Filtering annotation by size:
+   10645 small blocks removed.
+   680 big blocks removed.
+   5169 blocks remain in the annotation.
+> gen2go <- revList (anotacion)
+> length (gen2go)
+[1] 9701
+> gen2go[1:2]
+$A1CF
+[1] "GO:0009451" "GO:0031647" "GO:0050821" "GO:0003727"
+
+$A2ML1
+[1] "GO:0052547" "GO:0052548" "GO:0004857" "GO:0004866" "GO:0004867"
+[6] "GO:0030414" "GO:0061134" "GO:0061135"
+
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> 
+> res.edger.formatted <- list ()
+> n.target.genes <- matrix (NA, nrow = length (tags), ncol = 3)
+> colnames (n.target.genes) <- c ("Down", "Intersect", "Up")
+> rownames (n.target.genes) <- tags
+> n.target.genes
+     Down Intersect Up
+blca   NA        NA NA
+brca   NA        NA NA
+cesc   NA        NA NA
+coad   NA        NA NA
+esca   NA        NA NA
+hnsc   NA        NA NA
+kich   NA        NA NA
+kirc   NA        NA NA
+kirp   NA        NA NA
+lihc   NA        NA NA
+luad   NA        NA NA
+lusc   NA        NA NA
+paad   NA        NA NA
+pcpg   NA        NA NA
+prad   NA        NA NA
+read   NA        NA NA
+skcm   NA        NA NA
+stad   NA        NA NA
+thca   NA        NA NA
+ucec   NA        NA NA
+> 
+> n.target.gos <- n.target.genes  ## directly targeted gos
+> 
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     
++     mat <- res.edger[[tag]]$table
++ 
++     ## gene level p-value and statistic
++     pvalue    <- mat[,"PValue"]
++     statistic <- mat[,"logFC"]
++     names (pvalue) <- names (statistic) <- rownames (mat)
++         
++     ## p-value adjustment
++     mat[,"PAdjusted"] <- p.adjust (pvalue, method = "BH")
++     
++     ## ranking index at miRNA level
++     mat[,"RankingIndex"] <- pval2index (pval = pvalue, sign = statistic)    
++     
++     ## differential expression pattern
++     mat[,"DiffExp"] <- uvPat (mat, cutoff = corte, pvalue = "PAdjusted", statistic = "logFC")
++ 
++     ## mirbase ids
++     mat[,"miRBase20"] <- mirIDmat[rownames (mat), "mirBase20"]
++     
++     ## order by ranking index
++     orden <- order (mat[,"RankingIndex"], decreasing = TRUE)
++     mat <- mat[orden,]
++     
++     ## up and down regulated genes
++     up <- unique (unlist (acc2geneTSp[rownames (mat)[mat$DiffExp ==  1]]))
++     do <- unique (unlist (acc2geneTSp[rownames (mat)[mat$DiffExp == -1]]))
++ 
++     ## up and down regulated GOs
++     upGOs <- unique (unlist (gen2go[up]))
++     doGOs <- unique (unlist (gen2go[do]))
++     
++     ## SAVE
++     res.edger.formatted[[tag]] <- mat
++     n.target.genes[tag,] <- c (length (do), length (intersect (up, do)), length (up))
++     ##
++     n.target.gos[tag,] <- c (length (doGOs), length (intersect (upGOs, doGOs)), length (upGOs))
++ }
+
+===============  BLCA  ===============
+
+===============  BRCA  ===============
+
+===============  CESC  ===============
+
+===============  COAD  ===============
+
+===============  ESCA  ===============
+
+===============  HNSC  ===============
+
+===============  KICH  ===============
+
+===============  KIRC  ===============
+
+===============  KIRP  ===============
+
+===============  LIHC  ===============
+
+===============  LUAD  ===============
+
+===============  LUSC  ===============
+
+===============  PAAD  ===============
+
+===============  PCPG  ===============
+
+===============  PRAD  ===============
+
+===============  READ  ===============
+
+===============  SKCM  ===============
+
+===============  STAD  ===============
+
+===============  THCA  ===============
+
+===============  UCEC  ===============
+> 
+> sapply (res.edger.formatted, dim)
+     blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad
+[1,]  818  840  786  727  693  849  662  683  778  805  849  846  641  721  609
+[2,]    7    7    7    7    7    7    7    7    7    7    7    7    7    7    7
+     read skcm stad thca ucec
+[1,]  647  732  816  826  874
+[2,]    7    7    7    7    7
+> t (sapply (res.edger.formatted, function (x) table (x[,"DiffExp"])))
+      -1   0   1
+blca 128 337 353
+brca 200 244 396
+cesc  92 621  73
+coad 174 291 262
+esca  98 443 152
+hnsc 204 285 360
+kich 166 297 199
+kirc 169 191 323
+kirp 221 262 295
+lihc 120 278 407
+luad 152 292 405
+lusc 169 215 462
+paad  23 607  11
+pcpg  70 608  43
+prad  76 429 104
+read 136 307 204
+skcm  46 680   6
+stad 152 308 356
+thca 218 351 257
+ucec 243 284 347
+> signif.counts <- signifCount (res.edger.formatted, stat = "logFC", pval = "PAdjusted", cutoff = corte)
+> signif.counts
+     N. down-regulated N. not-diff. N. up-regulated
+blca               128          337             353
+brca               200          244             396
+cesc                92          621              73
+coad               174          291             262
+esca                98          443             152
+hnsc               204          285             360
+kich               166          297             199
+kirc               169          191             323
+kirp               221          262             295
+lihc               120          278             407
+luad               152          292             405
+lusc               169          215             462
+paad                23          607              11
+pcpg                70          608              43
+prad                76          429             104
+read               136          307             204
+skcm                46          680               6
+stad               152          308             356
+thca               218          351             257
+ucec               243          284             347
+> n.target.genes
+     Down Intersect   Up
+blca 8345      6763 8599
+brca 8968      7700 9465
+cesc 7834      5201 6525
+coad 6981      6418 9998
+esca 7992      5646 6959
+hnsc 9090      7496 8976
+kich 8998      7044 8252
+kirc 8838      7351 9056
+kirp 9169      7388 8629
+lihc 7466      6848 9560
+luad 8255      7354 9898
+lusc 8535      7265 9447
+paad 3759       616 1169
+pcpg 6303      4033 5295
+prad 7422      5932 8039
+read 6938      6225 9672
+skcm 5983       631  857
+stad 8921      6761 8041
+thca 8763      7244 8702
+ucec 9182      7171 8436
+> n.target.gos
+     Down Intersect   Up
+blca 5169      5169 5169
+brca 5169      5169 5169
+cesc 5169      5168 5168
+coad 5168      5168 5169
+esca 5169      5168 5168
+hnsc 5169      5169 5169
+kich 5169      5169 5169
+kirc 5169      5169 5169
+kirp 5169      5169 5169
+lihc 5169      5169 5169
+luad 5169      5169 5169
+lusc 5169      5169 5169
+paad 5129      4578 4590
+pcpg 5166      5161 5164
+prad 5169      5169 5169
+read 5168      5168 5169
+skcm 5169      4385 4385
+stad 5169      5169 5169
+thca 5169      5169 5169
+ucec 5169      5169 5169
+> 
+> ## SAVE
+> save (list = c("res.edger.formatted", "signif.counts", "n.target.genes", "n.target.gos"),
++       file = file.path (.job$dir$proces, "report", "res_dif_exp_unpaired_formatted.RData"))
+> 
+> ## SAVE XLS
+> setwd (.job$dir$res)
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++     fichero <- paste0 ("res_edger_unpaired_", tag, ".xlsx")
++     write.xlsx2 (res.edger.formatted[[tag]], file = fichero)
++ }
+
+===============  BLCA  ===============
+
+===============  BRCA  ===============
+
+===============  CESC  ===============
+
+===============  COAD  ===============
+
+===============  ESCA  ===============
+
+===============  HNSC  ===============
+
+===============  KICH  ===============
+
+===============  KIRC  ===============
+
+===============  KIRP  ===============
+
+===============  LIHC  ===============
+
+===============  LUAD  ===============
+
+===============  LUSC  ===============
+
+===============  PAAD  ===============
+
+===============  PCPG  ===============
+
+===============  PRAD  ===============
+
+===============  READ  ===============
+
+===============  SKCM  ===============
+
+===============  STAD  ===============
+
+===============  THCA  ===============
+
+===============  UCEC  ===============
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                 
+ [3] LC_TIME=es_ES.UTF-8           LC_COLLATE=en_US.UTF-8       
+ [5] LC_MONETARY=es_ES.UTF-8       LC_MESSAGES=en_US.UTF-8      
+ [7] LC_PAPER=es_ES.UTF-8          LC_NAME=es_ES.UTF-8          
+ [9] LC_ADDRESS=es_ES.UTF-8        LC_TELEPHONE=es_ES.UTF-8     
+[11] LC_MEASUREMENT=es_ES.UTF-8    LC_IDENTIFICATION=es_ES.UTF-8
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] mirbaseID_0.0.2      mdgsa_0.99.2         AnnotationDbi_1.28.1
+ [4] GenomeInfoDb_1.2.3   IRanges_2.0.0        S4Vectors_0.4.0     
+ [7] Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0       
+[10] DBI_0.3.1            edgeR_3.8.3          limma_3.22.1        
+[13] xlsx_0.5.7           xlsxjars_0.6.1       rJava_0.9-6         
+
+loaded via a namespace (and not attached):
+[1] cluster_1.15.3  GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0  
+[5] lattice_0.20-29 Matrix_1.1-4   
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 30.147   0.543  21.415 

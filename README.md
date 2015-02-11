@@ -1,10 +1,7 @@
-# gsa4mirna
+Integrated Gene Set Analysis for microRNA Studies
+=================================================
 
-readme
+Scripts, documents and working paper ...
 
-Se ve aqui
-
-http://www.dmontaner.com/gsa4mirna/
-
-
-MAS
+VER
+https://wiki.nci.nih.gov/display/TCGA/Protein+Array+Data+Format+Specification

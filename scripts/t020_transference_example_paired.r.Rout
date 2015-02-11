@@ -1,0 +1,344 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##t020_transference_example_paired.r
+> ##2014-12-18 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##We revise how the transference to gene has worked
+> 
+> date ()
+[1] "Tue Feb  3 13:36:53 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                        
+[2] "-f"                                                                                           
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/t020_transference_example_paired.r"
+[4] "--restore"                                                                                    
+[5] "--save"                                                                                       
+[6] "--no-readline"                                                                                
+[7] "--no-save"                                                                                    
+[8] "--no-restore"                                                                                 
+> rm (list = ls ())
+> R.version.string #"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
+[1] "0.3-8"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+Loading required package: DBI
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist, unsplit
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: GenomeInfoDb
+Loading required package: S4Vectors
+Loading required package: IRanges
+
+Attaching package: ‘AnnotationDbi’
+
+The following object is masked from ‘package:GenomeInfoDb’:
+
+    species
+
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "0.99.2"
+> library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+[1] "0.0.2"
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 200)
+> 
+> por <- 1
+> 
+> ################################################################################
+> 
+> ## DATOS
+> setwd (file.path (.job$dir$proces))
+> 
+> load ("annot_for_unpaired_data.RData")
+> 
+> load ("rindex0_paired.RData")
+> load ("rindexT_paired.RData")
+> load ("rindex_paired.RData")
+> 
+> ls ()
+[1] "annot"   "por"     "rindex"  "rindex0" "rindexT"
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> sapply (rindex0, length)
+blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec 
+ 689  686  631  659  691  638  608  702  696  653  737  628  602  582  651  718  712 
+> sapply (rindexT, length)
+ blca  brca  cesc  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad  pcpg  prad  stad  thca  ucec 
+12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 
+> 
+> universo.mirnas <- unique (unlist (lapply (rindex0, names)))
+> length (universo.mirnas)
+[1] 838
+> 
+> 
+> ################################################################################
+> ## Transfered Index & number of targeting miRNAS
+> ################################################################################
+> 
+> graphics.off ()
+> setwd (.job$dir$plots)
+> 
+> for (tag in tags) {
++     print (tag)
++ 
++     ind0 <- rindex0[[tag]]
++     indT <- rindexT[[tag]]
++     mirna2gene <- acc2geneTSp[names (ind0)]
++     gene2mirna <- revList (mirna2gene)
++     nmirnas <- sapply (gene2mirna, length)
++     nmirnas <- nmirnas[names (indT)]
++     table (is.na (nmirnas))
++     
++     fichero.png <- paste0 ("paired_explore_transfer_", tag, ".png")
++     png (filename = fichero.png, width = por * 480 * 3, height = por * 480 *2)
++     par (mfrow = c(1,2))
++     ##
++     boxplot (indT, ylab = "indexT (gene level)", main = TAGS[tag])
++     abline (h = 0, col = "blue")
++     ##
++     plot (nmirnas, indT, xlab = "N miRNAs (log scale)", ylab = "indexT (gene level)", log = "x" , main = TAGS[tag])
++     ##abline (h = 0, v = c(1, 2, 10, 20, 25), col = "blue")
++     abline (h = 0, col = "blue")
++     abline (h = summary (indT)[c("1st Qu.", "Median", "3rd Qu.")], col = "grey")
++     ##
++     dev.off ()
++ }
+[1] "blca"
+[1] "brca"
+[1] "cesc"
+[1] "esca"
+[1] "hnsc"
+[1] "kich"
+[1] "kirc"
+[1] "kirp"
+[1] "lihc"
+[1] "luad"
+[1] "lusc"
+[1] "paad"
+[1] "pcpg"
+[1] "prad"
+[1] "stad"
+[1] "thca"
+[1] "ucec"
+> 
+> ################################################################################
+> ### DIAGRAM
+> ################################################################################
+> 
+> ## selected GO
+> tag <- "brca"
+> go <- "GO:0060053"
+> getGOnames (go)
+Using GO.db version: 3.0.0
+                  GO:0060053 
+"neurofilament cytoskeleton" 
+> 
+> ind0 <- rindex0[[tag]]
+> indT <- rindexT[[tag]]
+> mirna2gene <- acc2geneTSp[names (ind0)]
+> gene2mirna <- revList (mirna2gene)
+> nmirnas <- sapply (gene2mirna, length)
+> nmirnas <- nmirnas[names (indT)]
+> table (is.na (nmirnas))
+
+FALSE  TRUE 
+10874  1210 
+> 
+> genes <- annot[["cc"]][[go]]
+> table (genes %in% names (indT))
+
+TRUE 
+  11 
+> 
+> ordenados <- sort (rindexT[[tag]][genes], decreasing = TRUE)
+> ordenados
+   SHANK2      NRP1      SYNM       GAN    DLGAP2       INA   LDLRAP1     NDEL1      NEFH       DST      NEFM 
+688.85590 372.57608 361.31810 325.80920 320.48693 275.47722 251.09875 227.87712 108.88589  70.09776 -16.60027 
+> genes <- names (ordenados)
+> genes
+ [1] "SHANK2"  "NRP1"    "SYNM"    "GAN"     "DLGAP2"  "INA"     "LDLRAP1" "NDEL1"   "NEFH"    "DST"     "NEFM"   
+> 
+> colores <- rainbow (length (genes))
+> 
+> ## list for the boxplot
+> lista <- list ("All" = rindex0[[tag]])
+> for (gen in genes) {
++     mirnas <- gene2mirna[[gen]]
++     lista[[gen]] <- rindex0[[tag]][mirnas]
++ }
+> 
+> 
+> graphics.off ()
+> por <- 2
+> png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+> ##par (mfcol = c(2, 1))
+> layout (mat = matrix (c (1,1,1,1, 2,2,2,2,2,2,  3,3,3,3,3,3,  4,4,4,4), ncol = 2), widths = c(2,1), heights = 1)
+> par (mar = c (5.1, 6, 4.1, 2.1)) #A vector of the form ‘c(bottom, left, top, right)
+> ##
+> xlimite <- c (0.1, length (genes) + 1.5)
+> plot (1:(length (genes) + 1), c (0, indT[genes]), col = c ("black", colores), pch = 15, xlim = xlimite, ylim = c (-20, 20 + max (indT)), ylab = "Transferred   Index   (gene level)", xlab = "", xaxt = "n",
++       main = paste0 (getGOnames (go), " (", go, ")"),
++       cex = 2, cex.main = 3, cex.axis = 1.7, cex.lab = 2)
+Using GO.db version: 3.0.0
+> axis (side = 1, at = 1:(length (genes)+1), labels = c ("All", genes), tick = TRUE, cex.axis = 1.7)
+> abline (h = 0, col = "blue", lty = 2)
+> text (1.5 + length (genes), y = 1300, labels = "B", col = "brown", cex = 4)
+> #abline (h = 1000)
+> ##
+> boxplot (lista, ylab = "Ranking Index (miRNA level) computed from p-values", col = c("white", colores), xlim = xlimite, xlab = "genes", cex.axis = 1.7, cex.lab = 2)
+> abline (h = 0, col = "blue", lty = 2)
+> text (1:(length (genes)+1), y = -190, labels = c("Number of miRNAs:", nmirnas[genes]), cex = 1.5)
+> text (0, y = -120, labels = "Under expressed miRNAs", offset = 0, srt = 90, col = "darkgrey", cex = 1.5)
+> text (0, y =  140, labels = "Over expressed miRNAs",  offset = 0, srt = 90, col = "darkgrey", cex = 1.5)
+> text (1.5 + length (genes), y = 190, labels = "A", col = "brown", cex = 4)
+> ##
+> boxplot (indT, indT[genes], names = c("All genes", go), ylab = "Transferred   Index   (gene level)", cex.axis = 1.7, cex.lab = 2)
+> abline (h = 0, col = "blue", lty = 2)
+> points (seq (1.25, 1.75, length.out = length (genes)), indT[genes], col = colores, pch = 15, cex = 2)
+> text (2.4, y = 1300, labels = "C", col = "brown", cex = 4)
+> #abline (h = 1000)
+> dev.off ()
+null device 
+          1 
+> 
+> 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
+ [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] mirbaseID_0.0.2      mdgsa_0.99.2         AnnotationDbi_1.28.1 GenomeInfoDb_1.2.3   IRanges_2.0.0        S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0       
+[10] DBI_0.3.1            ellipse_0.3-8       
+
+loaded via a namespace (and not attached):
+[1] cluster_1.15.3  GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0   lattice_0.20-29 Matrix_1.1-5   
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 28.040   0.130  28.223 

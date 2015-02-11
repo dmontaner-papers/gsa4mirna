@@ -1,0 +1,224 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##s030_save_transfer_index_paired.r
+> ##2014-07-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script saves the transferred index from miRNAs to GENE
+> 
+> date ()
+[1] "Fri Dec  5 17:18:22 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                       
+[2] "-f"                                                                                          
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/s030_save_transfer_index_paired.r"
+[4] "--restore"                                                                                   
+[5] "--save"                                                                                      
+[6] "--no-readline"                                                                               
+[7] "--no-save"                                                                                   
+[8] "--no-restore"                                                                                
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.0 (2014-04-10)"
+[1] "R version 3.1.2 (2014-10-31)"
+> library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+Loading required package: rJava
+Loading required package: xlsxjars
+[1] "0.5.7"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ## DATA
+> load (file.path (.job$dir$proces, "rindexT_paired.RData")) #Transferred
+> ls ()
+[1] "rindexT"
+> load (file.path (.job$dir$proces, "rindex_paired.RData"))  #Transferred and normalized
+> ls ()
+[1] "rindex"  "rindexT"
+> 
+> class (rindex)
+[1] "list"
+> class (rindexT)
+[1] "list"
+> 
+> sapply (rindex,  class)
+     blca      brca      cesc      esca      hnsc      kich      kirc      kirp 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     lihc      luad      lusc      paad      pcpg      prad      stad      thca 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     ucec 
+"numeric" 
+> sapply (rindexT, class)
+     blca      brca      cesc      esca      hnsc      kich      kirc      kirp 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     lihc      luad      lusc      paad      pcpg      prad      stad      thca 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     ucec 
+"numeric" 
+> 
+> #boxplot (rindexT, las = 3)
+> #boxplot (rindex)
+> 
+> table (names (rindex) == names (rindexT))
+
+TRUE 
+  17 
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad"
+[11] "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" 
+  paad   pcpg   prad   stad   thca   ucec 
+"PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> tag <- "blca"
+> 
+> setwd (.job$dir$res)
+> 
+> for (tag in tags) {
++     cat ("\n=============== ", TAGS[tag], " ===============\n")
++ 
++     if (any (names (rindex[[tag]]) != names (rindexT[[tag]]))) stop ("problem")
++ 
++     mat <- as.data.frame (cbind (transfer.index = rindexT[[tag]], normalized.index = rindex[[tag]]))
++ 
++     ## order
++     orden <- order (mat[,"transfer.index"], decreasing = TRUE)
++     mat <- mat[orden,]
++     mat[1:10,]
++ 
++     ## GENE ids
++     mat <- cbind (gene = rownames (mat), mat, stringsAsFactors = FALSE)
++     
++     ## SAVE xls
++     fichero <- paste0 ("transfer_index_paired_", tag, ".xlsx")
++     write.xlsx2 (mat, file = fichero, row.names = FALSE)
++ }
+
+===============  BLCA  ===============
+
+===============  BRCA  ===============
+
+===============  CESC  ===============
+
+===============  ESCA  ===============
+
+===============  HNSC  ===============
+
+===============  KICH  ===============
+
+===============  KIRC  ===============
+
+===============  KIRP  ===============
+
+===============  LIHC  ===============
+
+===============  LUAD  ===============
+
+===============  LUSC  ===============
+
+===============  PAAD  ===============
+
+===============  PCPG  ===============
+
+===============  PRAD  ===============
+
+===============  STAD  ===============
+
+===============  THCA  ===============
+
+===============  UCEC  ===============
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.2 (2014-10-31)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                 
+ [3] LC_TIME=es_ES.UTF-8           LC_COLLATE=en_US.UTF-8       
+ [5] LC_MONETARY=es_ES.UTF-8       LC_MESSAGES=en_US.UTF-8      
+ [7] LC_PAPER=es_ES.UTF-8          LC_NAME=es_ES.UTF-8          
+ [9] LC_ADDRESS=es_ES.UTF-8        LC_TELEPHONE=es_ES.UTF-8     
+[11] LC_MEASUREMENT=es_ES.UTF-8    LC_IDENTIFICATION=es_ES.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] xlsx_0.5.7     xlsxjars_0.6.1 rJava_0.9-6   
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 26.473   0.655  12.387 

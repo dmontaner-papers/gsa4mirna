@@ -1,0 +1,356 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##g030_prepare_annotation.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##Format GO annotation from Ensembl-Biomart
+> 
+> date ()
+[1] "Fri Jun  6 22:13:29 2014"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+     "dlap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/local/lib64/R/bin/exec/R"                                                       
+[2] "-f"                                                                                  
+[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/g030_prepare_annotation.r"
+[4] "--restore"                                                                           
+[5] "--save"                                                                              
+[6] "--no-readline"                                                                       
+[7] "--no-save"                                                                           
+[8] "--no-restore"                                                                        
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.1.0 (2014-04-10)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+Loading required package: DBI
+Loading required package: AnnotationDbi
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: GenomeInfoDb
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "0.3.4"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "mirna_gsa_total"
+
+$dir
+$dir$data
+[1] "~/datos/2014/mirna_gsa_total"
+
+$dir$code
+[1] "~/trabajos_mios/2014/mirna_gsa_total"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/mirna_gsa_total/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/mirna_gsa_total/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/mirna_gsa_total/results/plots"
+
+$dir$res
+[1] "~/datos/2014/mirna_gsa_total/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ##DATOS
+> setwd (file.path (.job$dir$proces))
+> load ("rindex_paired.RData")
+> ls ()
+[1] "rindex"
+> 
+> sapply (rindex, class)
+     blca      brca      cesc      esca      hnsc      kich      kirc      kirp 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     lihc      luad      lusc      paad      pcpg      prad      stad      thca 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     ucec 
+"numeric" 
+> sapply (rindex, head)
+              blca       brca       cesc         esca       hnsc        kich
+A1CF   0.727940327  0.9580247  2.1440882  0.882926959 -1.5670757  1.15195889
+A2ML1 -0.007156522 -0.3053547 -0.3628287 -0.132626745  0.1460321  0.05967257
+AADAT  0.565235970  0.5504522  0.2230641  0.612858042  0.2065066  0.79645157
+AAED1  0.046378042 -0.1366039 -0.1931746  0.006326769  0.2574404  0.35641125
+AAGAB  0.613609077  0.6191273  0.4009853  0.476598855  0.6001427  0.34076078
+AAK1   1.317701947 -0.2746331  2.0644279  2.637248429 -0.2544397 -2.30319646
+             kirc        kirp         lihc          luad       lusc        paad
+A1CF  -1.44587412 -1.35936241  1.126555443 -2.1828525097 -1.6187019 -0.69243739
+A2ML1 -0.21753837 -0.06237423 -0.057386888  0.8249775968  0.7352596 -0.23093950
+AADAT  0.67253792  0.78680353 -0.004667274  0.5067970128  0.6236563 -0.41677168
+AAED1  0.04554743  0.29363944  0.069858203  0.1008798830  0.2405371 -0.02686589
+AAGAB  0.70674452  0.95868135  1.188572980  0.0003111505 -0.2217883  0.51957502
+AAK1  -1.23348491 -2.30026343  1.527925847 -1.1281218699  1.3362131  2.55858987
+            pcpg        prad       stad        thca        ucec
+A1CF  -1.2665596  1.50243127 -1.5101715  0.62516875 -0.83111505
+A2ML1  0.4950389  0.64241192  0.1060936  0.07027409 -0.02043364
+AADAT -0.2574404  1.10300157  0.8287733  0.34251997  0.63224609
+AAED1 -0.1296976  0.29992587  0.2426728  0.10671941  0.20883808
+AAGAB  0.8952464 -0.01939626  0.8986581  1.38922835  0.51696527
+AAK1  -1.4243807 -3.03568900 -0.9873204 -1.56073385 -1.26424989
+> sapply (rindex, length)
+ blca  brca  cesc  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad  pcpg 
+12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 
+ prad  stad  thca  ucec 
+12084 12084 12084 12084 
+> sapply (rindex, summary)
+              blca       brca       cesc       esca       hnsc       kich
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.355e-17  1.355e-17  1.354e-17  1.355e-17  1.356e-17  1.355e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+              kirc       kirp       lihc       luad       lusc       paad
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.356e-17  1.357e-17  1.356e-17  1.354e-17  1.354e-17  1.354e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+              pcpg       prad       stad       thca       ucec
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.354e-17  1.354e-17  1.354e-17  1.355e-17  1.354e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+> 
+> sapply (rindex, function (x) table (x == 0))
+blca.FALSE brca.FALSE cesc.FALSE esca.FALSE hnsc.FALSE kich.FALSE kirc.FALSE 
+     12084      12084      12084      12084      12084      12084      12084 
+kirp.FALSE lihc.FALSE luad.FALSE lusc.FALSE paad.FALSE pcpg.FALSE prad.FALSE 
+     12084      12084      12084      12084      12084      12084      12084 
+stad.FALSE thca.FALSE ucec.FALSE 
+     12084      12084      12084 
+> 
+> genes <- unique (unlist (lapply (rindex, names)))
+> length (genes)
+[1] 12084
+> 
+> 
+> ## ANNOTATION
+> ensgo <- read.table (file.path (.job$dir$annotation, "mart_export.txt"), 
++                      header = TRUE, sep = "\t", quote = "", na.strings = "", colClasses = "character")
+> dim (ensgo)
+[1] 241740      2
+> ensgo[1:3,]
+  GO.Term.Accession HGNC.symbol
+1        GO:0006810    SLC25A26
+2        GO:0005739    SLC25A26
+3        GO:0005634    SLC25A26
+> 
+> table (duplicated (ensgo))
+
+ FALSE 
+241740 
+> 
+> table (ensgo$GO.Term.Accession == "")
+
+ FALSE 
+232998 
+> table (ensgo$HGNC.symbol       == "")
+
+ FALSE 
+240835 
+> 
+> na.go   <- is.na (ensgo$GO.Term.Accession)
+> na.gene <- is.na (ensgo$HGNC.symbol)
+> 
+> table (na.go, na.gene) ## some missing
+       na.gene
+na.go    FALSE   TRUE
+  FALSE 232094    904
+  TRUE    8741      1
+> 
+> touse <- !na.go & !na.gene
+> table (touse)
+touse
+ FALSE   TRUE 
+  9646 232094 
+> 
+> ensgo <- ensgo[touse,]
+> dim (ensgo)
+[1] 232094      2
+> 
+> 
+> ## keep just genes in the dataset
+> touse <- ensgo[,"HGNC.symbol"] %in% genes  ##most of them are present
+> table (touse)
+touse
+ FALSE   TRUE 
+ 66028 166066 
+> 
+> ensgo <- ensgo[touse,]
+> ensgo[1:3,]
+  GO.Term.Accession HGNC.symbol
+1        GO:0006810    SLC25A26
+2        GO:0005739    SLC25A26
+3        GO:0005634    SLC25A26
+> length (unique (ensgo[,"HGNC.symbol"]))
+[1] 11608
+> length (unique (ensgo[,"GO.Term.Accession"]))
+[1] 12661
+> 
+> 
+> 
+> ## LIST FORMAT
+> ensgo <- ensgo[, c("HGNC.symbol", "GO.Term.Accession")]
+> ensgo[1:3,]
+  HGNC.symbol GO.Term.Accession
+1    SLC25A26        GO:0006810
+2    SLC25A26        GO:0005739
+3    SLC25A26        GO:0005634
+> 
+> system.time (annot <- annotMat2list (ensgo))
+   user  system elapsed 
+  1.444   0.008   1.451 
+> length (annot)
+[1] 12661
+> 
+> 
+> ## PROPAGATE ONTOLOGY
+> system.time (annot <- propagateGO (annot))
+
+Using GO.db version: 2.14.0
+
+   duplicated 1 : 1.03 0.02 1.05
+  get ancestors : 1.97 0.02 1.98
+ sort ancestors : 0.04 0 0.04
+compute lengths : 0.34 0 0.33
+ unlist & cbind : 1.54 0.03 1.57
+          rbind : 0.23 0.01 0.24
+     remove all : 0.35 0.01 0.36
+   duplicated 2 : 26.08 0.11 26.17
+
+   user  system elapsed 
+ 39.606   0.204  39.781 
+> 
+> 
+> ## FILTERING: better to be done for each dataset
+> # annot <- annotFilter (annot, minBlockSize = 10, maxBlockSize = 500)
+> # length (annot)
+> 
+> 
+> ## Split Ontologies
+> annot <- splitOntologies (annot, na.rm = TRUE, verbose = TRUE)
+
+Using GO.db version: 2.14.0
+Some GO ids where not found, they will be excluded from the list
+> sapply (annot, length)
+   bp    cc    mf 
+11728  1345  3421 
+> 
+> ## SAVING
+> save (list = "annot", file = file.path (.job$dir$proces, "annot_for_paired_data.RData"))
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.1.0 (2014-04-10)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] mdgsa_0.3.4          AnnotationDbi_1.26.0 GenomeInfoDb_1.0.2  
+[4] Biobase_2.24.0       BiocGenerics_0.10.0  RSQLite_0.11.4      
+[7] DBI_0.2-7           
+
+loaded via a namespace (and not attached):
+[1] cluster_1.15.2  GO.db_2.14.0    grid_3.1.0      IRanges_1.22.6 
+[5] KEGG.db_2.14.0  lattice_0.20-29 Matrix_1.1-3    stats4_3.1.0   
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 48.727   0.299  48.993 
