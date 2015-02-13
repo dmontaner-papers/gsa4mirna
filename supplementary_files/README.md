@@ -2,8 +2,8 @@
 This folder contains supplementary materials for the paper entitled "Integrated Gene Set Analysis for microRNA Studies" by Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 
-File content:
--------------
+File content
+------------
 
 - res_edger_paired ### .xlsx   :  results from the __paired__   miRNA differential expression analysis using edgeR.
 - res_edger_unpaired ### .xlsx :  results from the __unpaired__ miRNA differential expression analysis using edgeR.
@@ -29,8 +29,8 @@ Where ### indicates each cancer type.
 - allStudyInfo.xlsx  :  summary information of each of the 20 cancer types analyzed.
 
 
-Image interpretation:
----------------------
+Plot interpretation
+-------------------
 
 
 
