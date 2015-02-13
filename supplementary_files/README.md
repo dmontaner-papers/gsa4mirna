@@ -5,8 +5,8 @@ This folder contains supplementary materials for the paper entitled "Integrated 
 File content:
 -------------
 
-- res_edger_paired ### .xlsx     results from the __paired__   miRNA differential expression analysis using edgeR.
-- res_edger_unpaired ### .xlsx   results from the __unpaired__ miRNA differential expression analysis using edgeR.
+- res_edger_paired ### .xlsx   :  results from the __paired__   miRNA differential expression analysis using edgeR.
+- res_edger_unpaired ### .xlsx :  results from the __unpaired__ miRNA differential expression analysis using edgeR.
 
 - transfer_index_paired ### .xlsx     gene transferred statistics for the __paired__   analysis.
 - transfer_index_unpaired ### .xlsx   gene transferred statistics for the __unpaired__ analysis.
