@@ -19,23 +19,26 @@ Type 'q()' to quit R.
 
 > ##t020_transference_example_paired.r
 > ##2014-12-18 dmontaner@cipf.es
+> ##2015-02-13 dmontaner@cipf.es
 > ##Analysis of the miRNA data from The Cancer Genome Atlas
 > ##We revise how the transference to gene has worked
 > 
+> ## We create the figure in EPS format for the NAR submission
+> 
 > date ()
-[1] "Tue Feb  3 13:36:53 2015"
+[1] "Fri Feb 13 17:38:10 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
 > commandArgs ()
-[1] "/usr/lib/R/bin/exec/R"                                                                        
-[2] "-f"                                                                                           
-[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/t020_transference_example_paired.r"
-[4] "--restore"                                                                                    
-[5] "--save"                                                                                       
-[6] "--no-readline"                                                                                
-[7] "--no-save"                                                                                    
-[8] "--no-restore"                                                                                 
+[1] "/usr/lib/R/bin/exec/R"                                                                  
+[2] "-f"                                                                                     
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts/t020_transference_example_paired.r"
+[4] "--restore"                                                                              
+[5] "--save"                                                                                 
+[6] "--no-readline"                                                                          
+[7] "--no-save"                                                                              
+[8] "--no-restore"                                                                           
 > rm (list = ls ())
 > R.version.string #"R version 3.1.0 (2014-04-10)"
 [1] "R version 3.1.2 (2014-10-31)"
@@ -105,35 +108,35 @@ KEGG.db contains mappings based on older data because the original
 .job.r has been sourced
 
 $name
-[1] "mirna_gsa_total"
+[1] "gsa4mirna"
 
 $dir
 $dir$data
-[1] "~/datos/2014/mirna_gsa_total"
+[1] "~/datos/2014/gsa4mirna"
 
 $dir$code
-[1] "~/trabajos_mios/2014/mirna_gsa_total"
+[1] "~/trabajos_mios/2014/gsa4mirna"
 
 $dir$scripts
-[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
 
 $dir$docs
-[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
 
 $dir$rawdat
-[1] "~/datos/2014/mirna_gsa_total/data_raw"
+[1] "~/datos/2014/gsa4mirna/data_raw"
 
 $dir$annotation
-[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+[1] "~/datos/2014/gsa4mirna/data_annotation"
 
 $dir$proces
-[1] "~/datos/2014/mirna_gsa_total/data_processed"
+[1] "~/datos/2014/gsa4mirna/data_processed"
 
 $dir$plots
-[1] "~/datos/2014/mirna_gsa_total/results/plots"
+[1] "~/datos/2014/gsa4mirna/results/plots"
 
 $dir$res
-[1] "~/datos/2014/mirna_gsa_total/results/files"
+[1] "~/datos/2014/gsa4mirna/results/files"
 
 
 $testmode
@@ -284,8 +287,11 @@ TRUE
 > 
 > graphics.off ()
 > por <- 2
-> png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+> #png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+> #pdf (file = file.path (.job$dir$code, "paper", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
 > ##par (mfcol = c(2, 1))
+> setEPS ()  # sets parameters for printing EPS 
+> postscript (file = file.path (.job$dir$code, "paper", "images", "diagram.eps"), width = por * 7 * 1.5, height = por * 7) ## width, height: the width and height of the graphics region in inches. Default to ‘0’.
 > layout (mat = matrix (c (1,1,1,1, 2,2,2,2,2,2,  3,3,3,3,3,3,  4,4,4,4), ncol = 2), widths = c(2,1), heights = 1)
 > par (mar = c (5.1, 6, 4.1, 2.1)) #A vector of the form ‘c(bottom, left, top, right)
 > ##
@@ -316,8 +322,6 @@ null device
           1 
 > 
 > 
-> 
-> 
 > ###EXIT
 > warnings ()
 NULL
@@ -337,8 +341,8 @@ other attached packages:
 [10] DBI_0.3.1            ellipse_0.3-8       
 
 loaded via a namespace (and not attached):
-[1] cluster_1.15.3  GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0   lattice_0.20-29 Matrix_1.1-5   
+[1] cluster_2.0.1   GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0   lattice_0.20-29 Matrix_1.1-5   
 > q ("no")
 > proc.time()
    user  system elapsed 
- 28.040   0.130  28.223 
+ 28.006   0.110  28.178 

@@ -1,7 +1,10 @@
 ##t020_transference_example_paired.r
 ##2014-12-18 dmontaner@cipf.es
+##2015-02-13 dmontaner@cipf.es
 ##Analysis of the miRNA data from The Cancer Genome Atlas
 ##We revise how the transference to gene has worked
+
+## We create the figure in EPS format for the NAR submission
 
 date ()
 Sys.info ()[c("nodename", "user")]
@@ -116,8 +119,10 @@ for (gen in genes) {
 graphics.off ()
 por <- 2
 #png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
-pdf (file = file.path (.job$dir$code, "paper", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
+#pdf (file = file.path (.job$dir$code, "paper", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
 ##par (mfcol = c(2, 1))
+setEPS ()  # sets parameters for printing EPS 
+postscript (file = file.path (.job$dir$code, "paper", "images", "diagram.eps"), width = por * 7 * 1.5, height = por * 7) ## width, height: the width and height of the graphics region in inches. Default to ‘0’.
 layout (mat = matrix (c (1,1,1,1, 2,2,2,2,2,2,  3,3,3,3,3,3,  4,4,4,4), ncol = 2), widths = c(2,1), heights = 1)
 par (mar = c (5.1, 6, 4.1, 2.1)) #A vector of the form ‘c(bottom, left, top, right)
 ##
