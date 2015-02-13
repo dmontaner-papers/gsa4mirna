@@ -42,8 +42,8 @@ TCGA disease ID,
 the total number of samples in the analysis,
 the number of tumoral samples,
 the number of control samples (solid normal tissue),
-the number of paired samples available in the dataset,
-the cancer type.")
+the number of paired samples available in the dataset
+and the cancer type.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
@@ -74,7 +74,7 @@ tabla.nams <- c ("ID",       "Down",            "noDif",            "Up",       
 ##tabla.nams <- tabla.cols
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
-tabla.capt <- c ("Number of up and down regulated miRNAS in each cancer type.") 
+tabla.capt <- c ("Number of up, down and not differentially regulated miRNAS in each cancer type.") 
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
@@ -107,7 +107,7 @@ tabla.nams <- c ("ID",         "Down",               "Inter",                 "U
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 tabla.capt <- c ("Number of genes targeted by the up and down regulated miRNAS.
-The Intersect column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
+The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
@@ -140,7 +140,8 @@ tabla.nams <- c ("ID",           "Down",                "Inter",                
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
-Most GO terms are targeted in cases and controls at the same time.")
+Most GO terms are targeted in cases and controls at the same time
+as it can be seen in the intersection column (Inter).")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
@@ -168,12 +169,15 @@ writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste
 tabla.file <-     "table5"
 tabla.labe <- "tab:table5"
 tabla.cols <- c ("ID", "go.Down.unpa", "go.noDif.unpa", "go.UP.unpa", "go.Down.pair", "go.noDif.pair", "go.UP.pair")
-tabla.nams <- c ("ID",    "Down",         "noDif",         "Up",         "Down",         "noDif",         "Up")
+tabla.nams <- c ("ID",    "Derg.",        "noDif",         "Inh.",       "Derg.",        "noDif",         "Inh.")
 #tabla.nams <- tabla.cols
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
-tabla.capt <- c ("Number of intercepted or deregulated GOs in each cancer type (paired and unpired analyses).
-inh.cont:  Ihibited in controls; the genes of the GO have significantly positive scores.
-inh.cases: Ihibited in cases; the genes of the GO have significantly positive scores.")
+tabla.capt <- c ("Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. 
+Columns \\textbf{Inh.} indicates the number of terms with a \\textbf{positive} $\\alpha$ coefficient in the logistic regression analysis.
+Those are the terms inhibited or intercepted in cases.
+Columns \\textbf{Derg.} indicates the number of terms with a \\textbf{negative} $\\alpha$ value.
+Those are the terms inhibited in controls or \\emph{deregulated} in cases.
+Columns noDif indicate the number of GOs with a not significant slope coefficient.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla

@@ -115,7 +115,8 @@ for (gen in genes) {
 
 graphics.off ()
 por <- 2
-png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+#png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+pdf (file = file.path (.job$dir$code, "paper", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
 ##par (mfcol = c(2, 1))
 layout (mat = matrix (c (1,1,1,1, 2,2,2,2,2,2,  3,3,3,3,3,3,  4,4,4,4), ncol = 2), widths = c(2,1), heights = 1)
 par (mar = c (5.1, 6, 4.1, 2.1)) #A vector of the form ‘c(bottom, left, top, right)
@@ -142,8 +143,6 @@ points (seq (1.25, 1.75, length.out = length (genes)), indT[genes], col = colore
 text (2.4, y = 1300, labels = "C", col = "brown", cex = 4)
 #abline (h = 1000)
 dev.off ()
-
-
 
 
 ###EXIT

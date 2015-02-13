@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ##This script prints some tables for the report
 > 
 > date ()
-[1] "Wed Feb 11 13:24:59 2015"
+[1] "Thu Feb 12 14:24:38 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -300,8 +300,8 @@ cesc           444          1            0           747          0            1
 + the total number of samples in the analysis,
 + the number of tumoral samples,
 + the number of control samples (solid normal tissue),
-+ the number of paired samples available in the dataset,
-+ the cancer type.")
++ the number of paired samples available in the dataset
++ and the cancer type.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
@@ -353,7 +353,7 @@ ucec UCEC   418   386       32     19  Uterine Corpus Endometrial Carcinoma
 > ##tabla.nams <- tabla.cols
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 > ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
-> tabla.capt <- c ("Number of up and down regulated miRNAS in each cancer type.") 
+> tabla.capt <- c ("Number of up, down and not differentially regulated miRNAS in each cancer type.") 
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
@@ -389,7 +389,7 @@ ucec UCEC  243   284 347  211   272 229
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Wed Feb 11 13:25:01 2015
+% Thu Feb 12 14:24:38 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -420,7 +420,7 @@ BLCA & 128 & 337 & 353 & 127 & 343 & 219 \\
    \bottomrule
 \end{tabular*}
 }
-\caption{Number of up and down regulated miRNAS in each cancer type.} 
+\caption{Number of up, down and not differentially regulated miRNAS in each cancer type.} 
 \label{tab:table2}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -442,7 +442,7 @@ BLCA & 128 & 337 & 353 & 127 & 343 & 219 \\
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 > ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 > tabla.capt <- c ("Number of genes targeted by the up and down regulated miRNAS.
-+ The Intersect column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
++ The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
@@ -478,7 +478,7 @@ ucec UCEC 9182  7171 8436 9338  7069 8201
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Wed Feb 11 13:25:01 2015
+% Thu Feb 12 14:24:38 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -510,7 +510,7 @@ BLCA & 8345 & 6763 & 8599 & 8087 & 5955 & 7528 \\
 \end{tabular*}
 }
 \caption{Number of genes targeted by the up and down regulated miRNAS.
-The Intersect column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.} 
+The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.} 
 \label{tab:table3}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -532,7 +532,8 @@ The Intersect column (Inter) shows the number of genes which are targets of both
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 > ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 > tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
-+ Most GO terms are targeted in cases and controls at the same time.")
++ Most GO terms are targeted in cases and controls at the same time
++ as it can be seen in the intersection column (Inter).")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
@@ -568,7 +569,7 @@ ucec UCEC 5169  5169 5169 5169  5169 5169
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Wed Feb 11 13:25:01 2015
+% Thu Feb 12 14:24:38 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -600,7 +601,8 @@ BLCA & 5169 & 5169 & 5169 & 5169 & 5168 & 5168 \\
 \end{tabular*}
 }
 \caption{Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
-Most GO terms are targeted in cases and controls at the same time.} 
+Most GO terms are targeted in cases and controls at the same time
+as it can be seen in the intersection column (Inter).} 
 \label{tab:table4}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -617,36 +619,39 @@ Most GO terms are targeted in cases and controls at the same time.}
 > tabla.file <-     "table5"
 > tabla.labe <- "tab:table5"
 > tabla.cols <- c ("ID", "go.Down.unpa", "go.noDif.unpa", "go.UP.unpa", "go.Down.pair", "go.noDif.pair", "go.UP.pair")
-> tabla.nams <- c ("ID",    "Down",         "noDif",         "Up",         "Down",         "noDif",         "Up")
+> tabla.nams <- c ("ID",    "Derg.",        "noDif",         "Inh.",       "Derg.",        "noDif",         "Inh.")
 > #tabla.nams <- tabla.cols
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
-> tabla.capt <- c ("Number of intercepted or deregulated GOs in each cancer type (paired and unpired analyses).
-+ inh.cont:  Ihibited in controls; the genes of the GO have significantly positive scores.
-+ inh.cases: Ihibited in cases; the genes of the GO have significantly positive scores.")
+> tabla.capt <- c ("Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. 
++ Columns \\textbf{Inh.} indicates the number of terms with a \\textbf{positive} $\\alpha$ coefficient in the logistic regression analysis.
++ Those are the terms inhibited or intercepted in cases.
++ Columns \\textbf{Derg.} indicates the number of terms with a \\textbf{negative} $\\alpha$ value.
++ Those are the terms inhibited in controls or \\emph{deregulated} in cases.
++ Columns noDif indicate the number of GOs with a not significant slope coefficient.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
-       ID Down noDif  Up Down noDif Up
-blca BLCA    2  5167   0    2  5167  0
-brca BRCA    3  5166   0    0  5167  2
-cesc CESC    0  5169   0    1  5167  1
-coad COAD   18  4930 221   NA    NA NA
-esca ESCA    2  5167   0    1  5168  0
-hnsc HNSC   53  5116   0    0  5169  0
-kich KICH    1  5167   1   30  5138  1
-kirc KIRC    0  5159  10    5  5163  1
-kirp KIRP    4  5165   0   13  5155  1
-lihc LIHC    7  5080  82    0  5169  0
-luad LUAD    0  5169   0    0  5169  0
-lusc LUSC    0  5169   0    0  5169  0
-paad PAAD    3  5165   1    0  5169  0
-pcpg PCPG    0  5169   0    0  5166  3
-prad PRAD    0  5168   1    1  5168  0
-read READ    0  5157  12   NA    NA NA
-skcm SKCM  121  5043   5   NA    NA NA
-stad STAD    5  5164   0    0  5169  0
-thca THCA    2  5167   0    2  5167  0
-ucec UCEC   89  5080   0    9  5160  0
+       ID Derg. noDif Inh. Derg. noDif Inh.
+blca BLCA     2  5167    0     2  5167    0
+brca BRCA     3  5166    0     0  5167    2
+cesc CESC     0  5169    0     1  5167    1
+coad COAD    18  4930  221    NA    NA   NA
+esca ESCA     2  5167    0     1  5168    0
+hnsc HNSC    53  5116    0     0  5169    0
+kich KICH     1  5167    1    30  5138    1
+kirc KIRC     0  5159   10     5  5163    1
+kirp KIRP     4  5165    0    13  5155    1
+lihc LIHC     7  5080   82     0  5169    0
+luad LUAD     0  5169    0     0  5169    0
+lusc LUSC     0  5169    0     0  5169    0
+paad PAAD     3  5165    1     0  5169    0
+pcpg PCPG     0  5169    0     0  5166    3
+prad PRAD     0  5168    1     1  5168    0
+read READ     0  5157   12    NA    NA   NA
+skcm SKCM   121  5043    5    NA    NA   NA
+stad STAD     5  5164    0     0  5169    0
+thca THCA     2  5167    0     2  5167    0
+ucec UCEC    89  5080    0     9  5160    0
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
@@ -658,13 +663,13 @@ ucec UCEC   89  5080   0    9  5160  0
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Wed Feb 11 13:25:01 2015
+% Thu Feb 12 14:24:38 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
 \begin{tabular*}{\columnwidth}{lrrrrrr}
   \toprule
-ID & Down & noDif & Up & Down & noDif & Up \\ 
+ID & Derg. & noDif & Inh. & Derg. & noDif & Inh. \\ 
   \midrule
 BLCA &   2 & 5167 &   0 &   2 & 5167 &   0 \\ 
   BRCA &   3 & 5166 &   0 &   0 & 5167 &   2 \\ 
@@ -689,9 +694,12 @@ BLCA &   2 & 5167 &   0 &   2 & 5167 &   0 \\
    \bottomrule
 \end{tabular*}
 }
-\caption{Number of intercepted or deregulated GOs in each cancer type (paired and unpired analyses).
-inh.cont:  Ihibited in controls; the genes of the GO have significantly positive scores.
-inh.cases: Ihibited in cases; the genes of the GO have significantly positive scores.} 
+\caption{Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. 
+Columns \textbf{Inh.} indicates the number of terms with a \textbf{positive} $\alpha$ coefficient in the logistic regression analysis.
+Those are the terms inhibited or intercepted in cases.
+Columns \textbf{Derg.} indicates the number of terms with a \textbf{negative} $\alpha$ value.
+Those are the terms inhibited in controls or \emph{deregulated} in cases.
+Columns noDif indicate the number of GOs with a not significant slope coefficient.} 
 \label{tab:table5}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -732,4 +740,4 @@ loaded via a namespace (and not attached):
 > 
 > proc.time()
    user  system elapsed 
-  0.721   0.043   2.990 
+  0.629   0.042   0.663 
