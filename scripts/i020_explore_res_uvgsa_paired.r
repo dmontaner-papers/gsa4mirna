@@ -77,7 +77,7 @@ for (onto in ontologias) {
 }
 
 
-png ("paired_inhibition_effect_correlation_across_ontologies", width = por * 480 * 3, height = por * 480, pointsize = 12, bg = "white")
+png ("paired_inhibition_effect_correlation_across_ontologies.png", width = por * 480 * 3, height = por * 480, pointsize = 12, bg = "white")
 par (mfrow = c(1, 3))
 plot (cor (mat.gsa.pair[["bp"]][["index"]]), cor (mat.gsa.pair[["cc"]][["index"]]))
 abline (0, 1, col = "blue")
