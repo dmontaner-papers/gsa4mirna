@@ -32,8 +32,34 @@ Where ### indicates each cancer type.
 Plot interpretation
 -------------------
 
+- paired_explore_transfer ### .png: exploring the transferred index  for miRNA and gene for each __paired__ study.
+- paired_size_effect ### .png: these plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in __paired__ studies.
+- unpaired_size_effect ### .png: these set of plots show the relationship between the functional block size and 
+its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in __unpaired__ studies.
+
+Where ### indicates each cancer type.
+
+- paired_cor @@@.png :  plots of inhibition effect correlation, between all __paired__ studies.
+- unpaired_cor @@@.png :  plots of inhibition effect correlation, between all __unpaired__ studies.
+- paired_dist_of_cor@@@.png:  inhibition effect correlation distribution for all __paired__ studies.
+- unpaired_dist_of_cor@@@.png:  inhibition effect correlation distribution for all __unpaired__ studies.
+
+Where @@@ indicates each ontology: BP (Biological Process), CC (Cellular Component), MF (Molecular Function).
+
+- paired_cor_rindex#.png:  ranking index correlation for all __paired__ studies.
+- unpaired_cor_rindex#.png:  ranking index correlation for all __unpaired__ studies.
+
+Where #:  0 (ranking index correlation miRNA) , N (ranking index correlation genes), T (transferred ranking index).
+
+- paired_inhibition_effect_correlation_across_ontologies: evaluating inhibition effect correlation across ontologies for all __paired__ studies.
+- unpaired_inhibition_effect_correlation_across_ontologies: evaluating inhibition effect correlation across ontologies for all __unpaired__ studies.
+
+- paired_rindex_boxplot.png:  comparing distributions of several ranking index for all __paired__ studies.
+- unpaired_rindex_boxplot.png:  comparing distributions of several ranking index for all un __unpaired__ studies.
+
+- paired_rindex_cor_vs_cor.png:  
+- unpaired_rindex_cor_vs_cor.png:  
 
 
-gfj
 
 
