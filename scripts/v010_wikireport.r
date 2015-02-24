@@ -190,6 +190,31 @@ plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",s
 mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION@@"]] <- twTable (dat = plots, sortable = TRUE)
 
 
+############################################################################################## 
+## by cancer
+
+canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kick", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
+              "read", "skcm", "stad", "thca", "ucec")
+  
+for (i in 1:length(canceres)) {
+  my_plots2 <- my_plots[grep(canceres[i], my_plots)]
+  links <- rep('NA', length(my_plots2))
+  plots <- cbind(my_plots2, links)
+  class(plots)
+  plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+  mistags[[paste("@@~PLOTS_", canceres[i], "@@", sep ="")]] <- twTable (dat = plots, sortable = TRUE)
+
+  
+  my_files2 <- my_files[grep(canceres[i], my_files)]
+  my_files2
+  links <- rep('NA', length(my_files2))
+  data <- cbind(my_files2, links)
+  class(data)
+  data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+  colnames(data) <- c("files", "links")
+  mistags[[paste("@@~FILES_", canceres[i], "@@", sep ="")]] <- twTable (dat = data, sortable = TRUE)
+  
+}             
 
 writeTags (mistags, file = outfile)
 
