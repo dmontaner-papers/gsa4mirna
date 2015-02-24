@@ -1,8 +1,8 @@
 Integrated Gene Set Analysis for microRNA Studies
 =================================================
 
-Scripts, documents and working paper ...
+Here you can find the __scripts__ used in the work by _Garcia-Garcia F, Panadero J, Dopazo J and Montaner D_.
 
-supplementary materials here:
+All __supplementary materials__ are also available but you may prefer to browse them at:
 
-http://www.dmontaner.com/gsa4mirna/
+<http://dmontaner-papers.github.io/gsa4mirna/>
