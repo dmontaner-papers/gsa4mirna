@@ -521,247 +521,514 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
+<div title="17 plots for paired" creator="YourName" modifier="YourName" created="201502231023" changecount="1">
+<pre>@@~PLOTS_TABLE@@</pre>
+</div>
 <div title="DefaultTiddlers" creator="YourName" modifier="YourName" created="201502160923" changecount="1">
 <pre>[[Integrated Gene Set Analysis for microRNA Studies]]</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="YourName" created="201502151053" modified="201502161148" changecount="31">
+<div title="Detailed information about  differential expression and functional enrichment for all studies" creator="YourName" modifier="YourName" created="201502231215" changecount="1">
+<pre>
+|sortable|k
+|!|files|links|h
+|!1|allStudyInfo.xlsx|[[allStudyInfo.xlsx|supplementary_files/files/allStudyInfo.xlsx]]|
+|!2|common_enrichment_paired.xlsx|[[common_enrichment_paired.xlsx|supplementary_files/files/common_enrichment_paired.xlsx]]|
+|!3|common_enrichment_unpaired.xlsx|[[common_enrichment_unpaired.xlsx|supplementary_files/files/common_enrichment_unpaired.xlsx]]|
+</pre>
+</div>
+<div title="Distribution of ranking index" creator="YourName" modifier="YourName" created="201502231218" modified="201502231750" changecount="3">
+<pre>Comparing distributions of several ranking index by paired / unpaired studies.
+
+
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_rindex_boxplot.png|[img[supplementary_files/plots/paired_rindex_boxplot.png]]|
+|!2|unpaired_rindex_boxplot.png|[img[supplementary_files/plots/unpaired_rindex_boxplot.png]]|
+</pre>
+</div>
+<div title="Gene Set level" creator="YourName" modifier="YourName" created="201502231752" modified="201502231752" changecount="2">
+<pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
+
+In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
+* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison]]. 
+* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison]]. 
+* [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
+* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. </pre>
+</div>
+<div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="YourName" modifier="YourName" created="201502231206" modified="201502231727" changecount="4">
+<pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
+
+
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_size_effect_blca.png|[img[supplementary_files/plots/paired_size_effect_blca.png]]|
+|!2|paired_size_effect_brca.png|[img[supplementary_files/plots/paired_size_effect_brca.png]]|
+|!3|paired_size_effect_cesc.png|[img[supplementary_files/plots/paired_size_effect_cesc.png]]|
+|!4|paired_size_effect_esca.png|[img[supplementary_files/plots/paired_size_effect_esca.png]]|
+|!5|paired_size_effect_hnsc.png|[img[supplementary_files/plots/paired_size_effect_hnsc.png]]|
+|!6|paired_size_effect_kich.png|[img[supplementary_files/plots/paired_size_effect_kich.png]]|
+|!7|paired_size_effect_kirc.png|[img[supplementary_files/plots/paired_size_effect_kirc.png]]|
+|!8|paired_size_effect_kirp.png|[img[supplementary_files/plots/paired_size_effect_kirp.png]]|
+|!9|paired_size_effect_lihc.png|[img[supplementary_files/plots/paired_size_effect_lihc.png]]|
+|!10|paired_size_effect_luad.png|[img[supplementary_files/plots/paired_size_effect_luad.png]]|
+|!11|paired_size_effect_lusc.png|[img[supplementary_files/plots/paired_size_effect_lusc.png]]|
+|!12|paired_size_effect_paad.png|[img[supplementary_files/plots/paired_size_effect_paad.png]]|
+|!13|paired_size_effect_pcpg.png|[img[supplementary_files/plots/paired_size_effect_pcpg.png]]|
+|!14|paired_size_effect_prad.png|[img[supplementary_files/plots/paired_size_effect_prad.png]]|
+|!15|paired_size_effect_stad.png|[img[supplementary_files/plots/paired_size_effect_stad.png]]|
+|!16|paired_size_effect_thca.png|[img[supplementary_files/plots/paired_size_effect_thca.png]]|
+|!17|paired_size_effect_ucec.png|[img[supplementary_files/plots/paired_size_effect_ucec.png]]|
+|!18|unpaired_size_effect_blca.png|[img[supplementary_files/plots/unpaired_size_effect_blca.png]]|
+|!19|unpaired_size_effect_brca.png|[img[supplementary_files/plots/unpaired_size_effect_brca.png]]|
+|!20|unpaired_size_effect_cesc.png|[img[supplementary_files/plots/unpaired_size_effect_cesc.png]]|
+|!21|unpaired_size_effect_coad.png|[img[supplementary_files/plots/unpaired_size_effect_coad.png]]|
+|!22|unpaired_size_effect_esca.png|[img[supplementary_files/plots/unpaired_size_effect_esca.png]]|
+|!23|unpaired_size_effect_hnsc.png|[img[supplementary_files/plots/unpaired_size_effect_hnsc.png]]|
+|!24|unpaired_size_effect_kich.png|[img[supplementary_files/plots/unpaired_size_effect_kich.png]]|
+|!25|unpaired_size_effect_kirc.png|[img[supplementary_files/plots/unpaired_size_effect_kirc.png]]|
+|!26|unpaired_size_effect_kirp.png|[img[supplementary_files/plots/unpaired_size_effect_kirp.png]]|
+|!27|unpaired_size_effect_lihc.png|[img[supplementary_files/plots/unpaired_size_effect_lihc.png]]|
+|!28|unpaired_size_effect_luad.png|[img[supplementary_files/plots/unpaired_size_effect_luad.png]]|
+|!29|unpaired_size_effect_lusc.png|[img[supplementary_files/plots/unpaired_size_effect_lusc.png]]|
+|!30|unpaired_size_effect_paad.png|[img[supplementary_files/plots/unpaired_size_effect_paad.png]]|
+|!31|unpaired_size_effect_pcpg.png|[img[supplementary_files/plots/unpaired_size_effect_pcpg.png]]|
+|!32|unpaired_size_effect_prad.png|[img[supplementary_files/plots/unpaired_size_effect_prad.png]]|
+|!33|unpaired_size_effect_read.png|[img[supplementary_files/plots/unpaired_size_effect_read.png]]|
+|!34|unpaired_size_effect_skcm.png|[img[supplementary_files/plots/unpaired_size_effect_skcm.png]]|
+|!35|unpaired_size_effect_stad.png|[img[supplementary_files/plots/unpaired_size_effect_stad.png]]|
+|!36|unpaired_size_effect_thca.png|[img[supplementary_files/plots/unpaired_size_effect_thca.png]]|
+|!37|unpaired_size_effect_ucec.png|[img[supplementary_files/plots/unpaired_size_effect_ucec.png]]|
+</pre>
+</div>
+<div title="Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis" creator="YourName" modifier="YourName" created="201502231206" modified="201502231727" changecount="2">
+<pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in unpaired studies.
+
+
+|sortable|k
+|!|my_plots2|links|h
+|!1|unpaired_size_effect_blca.png|[img[supplementary_files/plots/unpaired_size_effect_blca.png]]|
+|!2|unpaired_size_effect_brca.png|[img[supplementary_files/plots/unpaired_size_effect_brca.png]]|
+|!3|unpaired_size_effect_cesc.png|[img[supplementary_files/plots/unpaired_size_effect_cesc.png]]|
+|!4|unpaired_size_effect_coad.png|[img[supplementary_files/plots/unpaired_size_effect_coad.png]]|
+|!5|unpaired_size_effect_esca.png|[img[supplementary_files/plots/unpaired_size_effect_esca.png]]|
+|!6|unpaired_size_effect_hnsc.png|[img[supplementary_files/plots/unpaired_size_effect_hnsc.png]]|
+|!7|unpaired_size_effect_kich.png|[img[supplementary_files/plots/unpaired_size_effect_kich.png]]|
+|!8|unpaired_size_effect_kirc.png|[img[supplementary_files/plots/unpaired_size_effect_kirc.png]]|
+|!9|unpaired_size_effect_kirp.png|[img[supplementary_files/plots/unpaired_size_effect_kirp.png]]|
+|!10|unpaired_size_effect_lihc.png|[img[supplementary_files/plots/unpaired_size_effect_lihc.png]]|
+|!11|unpaired_size_effect_luad.png|[img[supplementary_files/plots/unpaired_size_effect_luad.png]]|
+|!12|unpaired_size_effect_lusc.png|[img[supplementary_files/plots/unpaired_size_effect_lusc.png]]|
+|!13|unpaired_size_effect_paad.png|[img[supplementary_files/plots/unpaired_size_effect_paad.png]]|
+|!14|unpaired_size_effect_pcpg.png|[img[supplementary_files/plots/unpaired_size_effect_pcpg.png]]|
+|!15|unpaired_size_effect_prad.png|[img[supplementary_files/plots/unpaired_size_effect_prad.png]]|
+|!16|unpaired_size_effect_read.png|[img[supplementary_files/plots/unpaired_size_effect_read.png]]|
+|!17|unpaired_size_effect_skcm.png|[img[supplementary_files/plots/unpaired_size_effect_skcm.png]]|
+|!18|unpaired_size_effect_stad.png|[img[supplementary_files/plots/unpaired_size_effect_stad.png]]|
+|!19|unpaired_size_effect_thca.png|[img[supplementary_files/plots/unpaired_size_effect_thca.png]]|
+|!20|unpaired_size_effect_ucec.png|[img[supplementary_files/plots/unpaired_size_effect_ucec.png]]|
+</pre>
+</div>
+<div title="Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison" creator="YourName" modifier="YourName" created="201502231201" modified="201502231727" changecount="4">
+<pre>Results from the gene set analysis of the Gene Ontology Biological Processes, Cellular Component and Molecular Function, in the paired comparison.
+
+
+|sortable|k
+|!|files|links|h
+|!1|res_gsa_paired_blca_bp.xlsx|[[res_gsa_paired_blca_bp.xlsx|supplementary_files/files/res_gsa_paired_blca_bp.xlsx]]|
+|!2|res_gsa_paired_blca_cc.xlsx|[[res_gsa_paired_blca_cc.xlsx|supplementary_files/files/res_gsa_paired_blca_cc.xlsx]]|
+|!3|res_gsa_paired_blca_mf.xlsx|[[res_gsa_paired_blca_mf.xlsx|supplementary_files/files/res_gsa_paired_blca_mf.xlsx]]|
+|!4|res_gsa_paired_brca_bp.xlsx|[[res_gsa_paired_brca_bp.xlsx|supplementary_files/files/res_gsa_paired_brca_bp.xlsx]]|
+|!5|res_gsa_paired_brca_cc.xlsx|[[res_gsa_paired_brca_cc.xlsx|supplementary_files/files/res_gsa_paired_brca_cc.xlsx]]|
+|!6|res_gsa_paired_brca_mf.xlsx|[[res_gsa_paired_brca_mf.xlsx|supplementary_files/files/res_gsa_paired_brca_mf.xlsx]]|
+|!7|res_gsa_paired_cesc_bp.xlsx|[[res_gsa_paired_cesc_bp.xlsx|supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]]|
+|!8|res_gsa_paired_cesc_cc.xlsx|[[res_gsa_paired_cesc_cc.xlsx|supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]]|
+|!9|res_gsa_paired_cesc_mf.xlsx|[[res_gsa_paired_cesc_mf.xlsx|supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]]|
+|!10|res_gsa_paired_esca_bp.xlsx|[[res_gsa_paired_esca_bp.xlsx|supplementary_files/files/res_gsa_paired_esca_bp.xlsx]]|
+|!11|res_gsa_paired_esca_cc.xlsx|[[res_gsa_paired_esca_cc.xlsx|supplementary_files/files/res_gsa_paired_esca_cc.xlsx]]|
+|!12|res_gsa_paired_esca_mf.xlsx|[[res_gsa_paired_esca_mf.xlsx|supplementary_files/files/res_gsa_paired_esca_mf.xlsx]]|
+|!13|res_gsa_paired_hnsc_bp.xlsx|[[res_gsa_paired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_paired_hnsc_bp.xlsx]]|
+|!14|res_gsa_paired_hnsc_cc.xlsx|[[res_gsa_paired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_paired_hnsc_cc.xlsx]]|
+|!15|res_gsa_paired_hnsc_mf.xlsx|[[res_gsa_paired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_paired_hnsc_mf.xlsx]]|
+|!16|res_gsa_paired_kich_bp.xlsx|[[res_gsa_paired_kich_bp.xlsx|supplementary_files/files/res_gsa_paired_kich_bp.xlsx]]|
+|!17|res_gsa_paired_kich_cc.xlsx|[[res_gsa_paired_kich_cc.xlsx|supplementary_files/files/res_gsa_paired_kich_cc.xlsx]]|
+|!18|res_gsa_paired_kich_mf.xlsx|[[res_gsa_paired_kich_mf.xlsx|supplementary_files/files/res_gsa_paired_kich_mf.xlsx]]|
+|!19|res_gsa_paired_kirc_bp.xlsx|[[res_gsa_paired_kirc_bp.xlsx|supplementary_files/files/res_gsa_paired_kirc_bp.xlsx]]|
+|!20|res_gsa_paired_kirc_cc.xlsx|[[res_gsa_paired_kirc_cc.xlsx|supplementary_files/files/res_gsa_paired_kirc_cc.xlsx]]|
+|!21|res_gsa_paired_kirc_mf.xlsx|[[res_gsa_paired_kirc_mf.xlsx|supplementary_files/files/res_gsa_paired_kirc_mf.xlsx]]|
+|!22|res_gsa_paired_kirp_bp.xlsx|[[res_gsa_paired_kirp_bp.xlsx|supplementary_files/files/res_gsa_paired_kirp_bp.xlsx]]|
+|!23|res_gsa_paired_kirp_cc.xlsx|[[res_gsa_paired_kirp_cc.xlsx|supplementary_files/files/res_gsa_paired_kirp_cc.xlsx]]|
+|!24|res_gsa_paired_kirp_mf.xlsx|[[res_gsa_paired_kirp_mf.xlsx|supplementary_files/files/res_gsa_paired_kirp_mf.xlsx]]|
+|!25|res_gsa_paired_lihc_bp.xlsx|[[res_gsa_paired_lihc_bp.xlsx|supplementary_files/files/res_gsa_paired_lihc_bp.xlsx]]|
+|!26|res_gsa_paired_lihc_cc.xlsx|[[res_gsa_paired_lihc_cc.xlsx|supplementary_files/files/res_gsa_paired_lihc_cc.xlsx]]|
+|!27|res_gsa_paired_lihc_mf.xlsx|[[res_gsa_paired_lihc_mf.xlsx|supplementary_files/files/res_gsa_paired_lihc_mf.xlsx]]|
+|!28|res_gsa_paired_luad_bp.xlsx|[[res_gsa_paired_luad_bp.xlsx|supplementary_files/files/res_gsa_paired_luad_bp.xlsx]]|
+|!29|res_gsa_paired_luad_cc.xlsx|[[res_gsa_paired_luad_cc.xlsx|supplementary_files/files/res_gsa_paired_luad_cc.xlsx]]|
+|!30|res_gsa_paired_luad_mf.xlsx|[[res_gsa_paired_luad_mf.xlsx|supplementary_files/files/res_gsa_paired_luad_mf.xlsx]]|
+|!31|res_gsa_paired_lusc_bp.xlsx|[[res_gsa_paired_lusc_bp.xlsx|supplementary_files/files/res_gsa_paired_lusc_bp.xlsx]]|
+|!32|res_gsa_paired_lusc_cc.xlsx|[[res_gsa_paired_lusc_cc.xlsx|supplementary_files/files/res_gsa_paired_lusc_cc.xlsx]]|
+|!33|res_gsa_paired_lusc_mf.xlsx|[[res_gsa_paired_lusc_mf.xlsx|supplementary_files/files/res_gsa_paired_lusc_mf.xlsx]]|
+|!34|res_gsa_paired_paad_bp.xlsx|[[res_gsa_paired_paad_bp.xlsx|supplementary_files/files/res_gsa_paired_paad_bp.xlsx]]|
+|!35|res_gsa_paired_paad_cc.xlsx|[[res_gsa_paired_paad_cc.xlsx|supplementary_files/files/res_gsa_paired_paad_cc.xlsx]]|
+|!36|res_gsa_paired_paad_mf.xlsx|[[res_gsa_paired_paad_mf.xlsx|supplementary_files/files/res_gsa_paired_paad_mf.xlsx]]|
+|!37|res_gsa_paired_pcpg_bp.xlsx|[[res_gsa_paired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_paired_pcpg_bp.xlsx]]|
+|!38|res_gsa_paired_pcpg_cc.xlsx|[[res_gsa_paired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_paired_pcpg_cc.xlsx]]|
+|!39|res_gsa_paired_pcpg_mf.xlsx|[[res_gsa_paired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_paired_pcpg_mf.xlsx]]|
+|!40|res_gsa_paired_prad_bp.xlsx|[[res_gsa_paired_prad_bp.xlsx|supplementary_files/files/res_gsa_paired_prad_bp.xlsx]]|
+|!41|res_gsa_paired_prad_cc.xlsx|[[res_gsa_paired_prad_cc.xlsx|supplementary_files/files/res_gsa_paired_prad_cc.xlsx]]|
+|!42|res_gsa_paired_prad_mf.xlsx|[[res_gsa_paired_prad_mf.xlsx|supplementary_files/files/res_gsa_paired_prad_mf.xlsx]]|
+|!43|res_gsa_paired_stad_bp.xlsx|[[res_gsa_paired_stad_bp.xlsx|supplementary_files/files/res_gsa_paired_stad_bp.xlsx]]|
+|!44|res_gsa_paired_stad_cc.xlsx|[[res_gsa_paired_stad_cc.xlsx|supplementary_files/files/res_gsa_paired_stad_cc.xlsx]]|
+|!45|res_gsa_paired_stad_mf.xlsx|[[res_gsa_paired_stad_mf.xlsx|supplementary_files/files/res_gsa_paired_stad_mf.xlsx]]|
+|!46|res_gsa_paired_thca_bp.xlsx|[[res_gsa_paired_thca_bp.xlsx|supplementary_files/files/res_gsa_paired_thca_bp.xlsx]]|
+|!47|res_gsa_paired_thca_cc.xlsx|[[res_gsa_paired_thca_cc.xlsx|supplementary_files/files/res_gsa_paired_thca_cc.xlsx]]|
+|!48|res_gsa_paired_thca_mf.xlsx|[[res_gsa_paired_thca_mf.xlsx|supplementary_files/files/res_gsa_paired_thca_mf.xlsx]]|
+|!49|res_gsa_paired_ucec_bp.xlsx|[[res_gsa_paired_ucec_bp.xlsx|supplementary_files/files/res_gsa_paired_ucec_bp.xlsx]]|
+|!50|res_gsa_paired_ucec_cc.xlsx|[[res_gsa_paired_ucec_cc.xlsx|supplementary_files/files/res_gsa_paired_ucec_cc.xlsx]]|
+|!51|res_gsa_paired_ucec_mf.xlsx|[[res_gsa_paired_ucec_mf.xlsx|supplementary_files/files/res_gsa_paired_ucec_mf.xlsx]]|
+</pre>
+</div>
+<div title="Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison" creator="YourName" modifier="YourName" created="201502231202" modified="201502231726" changecount="4">
+<pre>Results from the gene set analysis of the Gene Ontology Biological Processes, Cellular Component and Molecular Function,  in the unpaired comparison.
+
+
+|sortable|k
+|!|files|links|h
+|!1|res_gsa_unpaired_blca_bp.xlsx|[[res_gsa_unpaired_blca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]]|
+|!2|res_gsa_unpaired_blca_cc.xlsx|[[res_gsa_unpaired_blca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]]|
+|!3|res_gsa_unpaired_blca_mf.xlsx|[[res_gsa_unpaired_blca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]]|
+|!4|res_gsa_unpaired_brca_bp.xlsx|[[res_gsa_unpaired_brca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]]|
+|!5|res_gsa_unpaired_brca_cc.xlsx|[[res_gsa_unpaired_brca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]]|
+|!6|res_gsa_unpaired_brca_mf.xlsx|[[res_gsa_unpaired_brca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]]|
+|!7|res_gsa_unpaired_cesc_bp.xlsx|[[res_gsa_unpaired_cesc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]]|
+|!8|res_gsa_unpaired_cesc_cc.xlsx|[[res_gsa_unpaired_cesc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]]|
+|!9|res_gsa_unpaired_cesc_mf.xlsx|[[res_gsa_unpaired_cesc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]]|
+|!10|res_gsa_unpaired_coad_bp.xlsx|[[res_gsa_unpaired_coad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_coad_bp.xlsx]]|
+|!11|res_gsa_unpaired_coad_cc.xlsx|[[res_gsa_unpaired_coad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_coad_cc.xlsx]]|
+|!12|res_gsa_unpaired_coad_mf.xlsx|[[res_gsa_unpaired_coad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_coad_mf.xlsx]]|
+|!13|res_gsa_unpaired_esca_bp.xlsx|[[res_gsa_unpaired_esca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_esca_bp.xlsx]]|
+|!14|res_gsa_unpaired_esca_cc.xlsx|[[res_gsa_unpaired_esca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_esca_cc.xlsx]]|
+|!15|res_gsa_unpaired_esca_mf.xlsx|[[res_gsa_unpaired_esca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_esca_mf.xlsx]]|
+|!16|res_gsa_unpaired_hnsc_bp.xlsx|[[res_gsa_unpaired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_bp.xlsx]]|
+|!17|res_gsa_unpaired_hnsc_cc.xlsx|[[res_gsa_unpaired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_cc.xlsx]]|
+|!18|res_gsa_unpaired_hnsc_mf.xlsx|[[res_gsa_unpaired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_mf.xlsx]]|
+|!19|res_gsa_unpaired_kich_bp.xlsx|[[res_gsa_unpaired_kich_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kich_bp.xlsx]]|
+|!20|res_gsa_unpaired_kich_cc.xlsx|[[res_gsa_unpaired_kich_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kich_cc.xlsx]]|
+|!21|res_gsa_unpaired_kich_mf.xlsx|[[res_gsa_unpaired_kich_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kich_mf.xlsx]]|
+|!22|res_gsa_unpaired_kirc_bp.xlsx|[[res_gsa_unpaired_kirc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_bp.xlsx]]|
+|!23|res_gsa_unpaired_kirc_cc.xlsx|[[res_gsa_unpaired_kirc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_cc.xlsx]]|
+|!24|res_gsa_unpaired_kirc_mf.xlsx|[[res_gsa_unpaired_kirc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_mf.xlsx]]|
+|!25|res_gsa_unpaired_kirp_bp.xlsx|[[res_gsa_unpaired_kirp_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_bp.xlsx]]|
+|!26|res_gsa_unpaired_kirp_cc.xlsx|[[res_gsa_unpaired_kirp_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_cc.xlsx]]|
+|!27|res_gsa_unpaired_kirp_mf.xlsx|[[res_gsa_unpaired_kirp_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_mf.xlsx]]|
+|!28|res_gsa_unpaired_lihc_bp.xlsx|[[res_gsa_unpaired_lihc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_bp.xlsx]]|
+|!29|res_gsa_unpaired_lihc_cc.xlsx|[[res_gsa_unpaired_lihc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_cc.xlsx]]|
+|!30|res_gsa_unpaired_lihc_mf.xlsx|[[res_gsa_unpaired_lihc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_mf.xlsx]]|
+|!31|res_gsa_unpaired_luad_bp.xlsx|[[res_gsa_unpaired_luad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_luad_bp.xlsx]]|
+|!32|res_gsa_unpaired_luad_cc.xlsx|[[res_gsa_unpaired_luad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_luad_cc.xlsx]]|
+|!33|res_gsa_unpaired_luad_mf.xlsx|[[res_gsa_unpaired_luad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_luad_mf.xlsx]]|
+|!34|res_gsa_unpaired_lusc_bp.xlsx|[[res_gsa_unpaired_lusc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_bp.xlsx]]|
+|!35|res_gsa_unpaired_lusc_cc.xlsx|[[res_gsa_unpaired_lusc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_cc.xlsx]]|
+|!36|res_gsa_unpaired_lusc_mf.xlsx|[[res_gsa_unpaired_lusc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_mf.xlsx]]|
+|!37|res_gsa_unpaired_paad_bp.xlsx|[[res_gsa_unpaired_paad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_paad_bp.xlsx]]|
+|!38|res_gsa_unpaired_paad_cc.xlsx|[[res_gsa_unpaired_paad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_paad_cc.xlsx]]|
+|!39|res_gsa_unpaired_paad_mf.xlsx|[[res_gsa_unpaired_paad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_paad_mf.xlsx]]|
+|!40|res_gsa_unpaired_pcpg_bp.xlsx|[[res_gsa_unpaired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_bp.xlsx]]|
+|!41|res_gsa_unpaired_pcpg_cc.xlsx|[[res_gsa_unpaired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_cc.xlsx]]|
+|!42|res_gsa_unpaired_pcpg_mf.xlsx|[[res_gsa_unpaired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_mf.xlsx]]|
+|!43|res_gsa_unpaired_prad_bp.xlsx|[[res_gsa_unpaired_prad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_prad_bp.xlsx]]|
+|!44|res_gsa_unpaired_prad_cc.xlsx|[[res_gsa_unpaired_prad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_prad_cc.xlsx]]|
+|!45|res_gsa_unpaired_prad_mf.xlsx|[[res_gsa_unpaired_prad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_prad_mf.xlsx]]|
+|!46|res_gsa_unpaired_read_bp.xlsx|[[res_gsa_unpaired_read_bp.xlsx|supplementary_files/files/res_gsa_unpaired_read_bp.xlsx]]|
+|!47|res_gsa_unpaired_read_cc.xlsx|[[res_gsa_unpaired_read_cc.xlsx|supplementary_files/files/res_gsa_unpaired_read_cc.xlsx]]|
+|!48|res_gsa_unpaired_read_mf.xlsx|[[res_gsa_unpaired_read_mf.xlsx|supplementary_files/files/res_gsa_unpaired_read_mf.xlsx]]|
+|!49|res_gsa_unpaired_skcm_bp.xlsx|[[res_gsa_unpaired_skcm_bp.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_bp.xlsx]]|
+|!50|res_gsa_unpaired_skcm_cc.xlsx|[[res_gsa_unpaired_skcm_cc.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_cc.xlsx]]|
+|!51|res_gsa_unpaired_skcm_mf.xlsx|[[res_gsa_unpaired_skcm_mf.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_mf.xlsx]]|
+|!52|res_gsa_unpaired_stad_bp.xlsx|[[res_gsa_unpaired_stad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_stad_bp.xlsx]]|
+|!53|res_gsa_unpaired_stad_cc.xlsx|[[res_gsa_unpaired_stad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_stad_cc.xlsx]]|
+|!54|res_gsa_unpaired_stad_mf.xlsx|[[res_gsa_unpaired_stad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_stad_mf.xlsx]]|
+|!55|res_gsa_unpaired_thca_bp.xlsx|[[res_gsa_unpaired_thca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_thca_bp.xlsx]]|
+|!56|res_gsa_unpaired_thca_cc.xlsx|[[res_gsa_unpaired_thca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_thca_cc.xlsx]]|
+|!57|res_gsa_unpaired_thca_mf.xlsx|[[res_gsa_unpaired_thca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_thca_mf.xlsx]]|
+|!58|res_gsa_unpaired_ucec_bp.xlsx|[[res_gsa_unpaired_ucec_bp.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_bp.xlsx]]|
+|!59|res_gsa_unpaired_ucec_cc.xlsx|[[res_gsa_unpaired_ucec_cc.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_cc.xlsx]]|
+|!60|res_gsa_unpaired_ucec_mf.xlsx|[[res_gsa_unpaired_ucec_mf.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_mf.xlsx]]|
+</pre>
+</div>
+<div title="Gene level" creator="YourName" modifier="YourName" created="201502231752" changecount="1">
+<pre>After miRNA differential expression analysis,  we translate  this miRNA differential expression evidence to a gene differential inhibition scale. 
+For each gene, this transferred index pulls its targeting miRNA information preserving two characteristics suitable for the functional interpretation of the experiment: it accounts for the multiple miRNA cancellation effect and incorporates the additivity of several small inhibitory events into a relevant one.
+*  [[Gene level. Results about gene transferred statistics for the paired analysis]]. 
+*  [[Gene level. Results about gene transferred statistics for the unpaired analysis]]. 
+*  [[Gene level. Exploring the transfer between miRNA and gene]]. </pre>
+</div>
+<div title="Gene level. Exploring the transfer between miRNA and gene" creator="YourName" modifier="YourName" created="201502231144" modified="201502231725" changecount="2">
+<pre>Exploring the transferred index for miRNA and gene for each paired study.
+
+
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_explore_transfer_blca.png|[img[supplementary_files/plots/paired_explore_transfer_blca.png]]|
+|!2|paired_explore_transfer_brca.png|[img[supplementary_files/plots/paired_explore_transfer_brca.png]]|
+|!3|paired_explore_transfer_cesc.png|[img[supplementary_files/plots/paired_explore_transfer_cesc.png]]|
+|!4|paired_explore_transfer_esca.png|[img[supplementary_files/plots/paired_explore_transfer_esca.png]]|
+|!5|paired_explore_transfer_hnsc.png|[img[supplementary_files/plots/paired_explore_transfer_hnsc.png]]|
+|!6|paired_explore_transfer_kich.png|[img[supplementary_files/plots/paired_explore_transfer_kich.png]]|
+|!7|paired_explore_transfer_kirc.png|[img[supplementary_files/plots/paired_explore_transfer_kirc.png]]|
+|!8|paired_explore_transfer_kirp.png|[img[supplementary_files/plots/paired_explore_transfer_kirp.png]]|
+|!9|paired_explore_transfer_lihc.png|[img[supplementary_files/plots/paired_explore_transfer_lihc.png]]|
+|!10|paired_explore_transfer_luad.png|[img[supplementary_files/plots/paired_explore_transfer_luad.png]]|
+|!11|paired_explore_transfer_lusc.png|[img[supplementary_files/plots/paired_explore_transfer_lusc.png]]|
+|!12|paired_explore_transfer_paad.png|[img[supplementary_files/plots/paired_explore_transfer_paad.png]]|
+|!13|paired_explore_transfer_pcpg.png|[img[supplementary_files/plots/paired_explore_transfer_pcpg.png]]|
+|!14|paired_explore_transfer_prad.png|[img[supplementary_files/plots/paired_explore_transfer_prad.png]]|
+|!15|paired_explore_transfer_stad.png|[img[supplementary_files/plots/paired_explore_transfer_stad.png]]|
+|!16|paired_explore_transfer_thca.png|[img[supplementary_files/plots/paired_explore_transfer_thca.png]]|
+|!17|paired_explore_transfer_ucec.png|[img[supplementary_files/plots/paired_explore_transfer_ucec.png]]|
+</pre>
+</div>
+<div title="Gene level. Results about gene transferred statistics for the paired analysis" creator="YourName" modifier="YourName" created="201502231135" modified="201502231724" changecount="3">
+<pre>Gene transferred statistics for the paired analysis.
+
+
+|sortable|k
+|!|files|links|h
+|!1|transfer_index_paired_blca.xlsx|[[transfer_index_paired_blca.xlsx|supplementary_files/files/transfer_index_paired_blca.xlsx]]|
+|!2|transfer_index_paired_brca.xlsx|[[transfer_index_paired_brca.xlsx|supplementary_files/files/transfer_index_paired_brca.xlsx]]|
+|!3|transfer_index_paired_cesc.xlsx|[[transfer_index_paired_cesc.xlsx|supplementary_files/files/transfer_index_paired_cesc.xlsx]]|
+|!4|transfer_index_paired_esca.xlsx|[[transfer_index_paired_esca.xlsx|supplementary_files/files/transfer_index_paired_esca.xlsx]]|
+|!5|transfer_index_paired_hnsc.xlsx|[[transfer_index_paired_hnsc.xlsx|supplementary_files/files/transfer_index_paired_hnsc.xlsx]]|
+|!6|transfer_index_paired_kich.xlsx|[[transfer_index_paired_kich.xlsx|supplementary_files/files/transfer_index_paired_kich.xlsx]]|
+|!7|transfer_index_paired_kirc.xlsx|[[transfer_index_paired_kirc.xlsx|supplementary_files/files/transfer_index_paired_kirc.xlsx]]|
+|!8|transfer_index_paired_kirp.xlsx|[[transfer_index_paired_kirp.xlsx|supplementary_files/files/transfer_index_paired_kirp.xlsx]]|
+|!9|transfer_index_paired_lihc.xlsx|[[transfer_index_paired_lihc.xlsx|supplementary_files/files/transfer_index_paired_lihc.xlsx]]|
+|!10|transfer_index_paired_luad.xlsx|[[transfer_index_paired_luad.xlsx|supplementary_files/files/transfer_index_paired_luad.xlsx]]|
+|!11|transfer_index_paired_lusc.xlsx|[[transfer_index_paired_lusc.xlsx|supplementary_files/files/transfer_index_paired_lusc.xlsx]]|
+|!12|transfer_index_paired_paad.xlsx|[[transfer_index_paired_paad.xlsx|supplementary_files/files/transfer_index_paired_paad.xlsx]]|
+|!13|transfer_index_paired_pcpg.xlsx|[[transfer_index_paired_pcpg.xlsx|supplementary_files/files/transfer_index_paired_pcpg.xlsx]]|
+|!14|transfer_index_paired_prad.xlsx|[[transfer_index_paired_prad.xlsx|supplementary_files/files/transfer_index_paired_prad.xlsx]]|
+|!15|transfer_index_paired_stad.xlsx|[[transfer_index_paired_stad.xlsx|supplementary_files/files/transfer_index_paired_stad.xlsx]]|
+|!16|transfer_index_paired_thca.xlsx|[[transfer_index_paired_thca.xlsx|supplementary_files/files/transfer_index_paired_thca.xlsx]]|
+|!17|transfer_index_paired_ucec.xlsx|[[transfer_index_paired_ucec.xlsx|supplementary_files/files/transfer_index_paired_ucec.xlsx]]|
+</pre>
+</div>
+<div title="Gene level. Results about gene transferred statistics for the unpaired analysis" creator="YourName" modifier="YourName" created="201502231135" modified="201502231724" changecount="2">
+<pre>Gene transferred statistics for the unpaired analysis.
+
+
+|sortable|k
+|!|files|links|h
+|!1|transfer_index_unpaired_blca.xlsx|[[transfer_index_unpaired_blca.xlsx|supplementary_files/files/transfer_index_unpaired_blca.xlsx]]|
+|!2|transfer_index_unpaired_brca.xlsx|[[transfer_index_unpaired_brca.xlsx|supplementary_files/files/transfer_index_unpaired_brca.xlsx]]|
+|!3|transfer_index_unpaired_cesc.xlsx|[[transfer_index_unpaired_cesc.xlsx|supplementary_files/files/transfer_index_unpaired_cesc.xlsx]]|
+|!4|transfer_index_unpaired_coad.xlsx|[[transfer_index_unpaired_coad.xlsx|supplementary_files/files/transfer_index_unpaired_coad.xlsx]]|
+|!5|transfer_index_unpaired_esca.xlsx|[[transfer_index_unpaired_esca.xlsx|supplementary_files/files/transfer_index_unpaired_esca.xlsx]]|
+|!6|transfer_index_unpaired_hnsc.xlsx|[[transfer_index_unpaired_hnsc.xlsx|supplementary_files/files/transfer_index_unpaired_hnsc.xlsx]]|
+|!7|transfer_index_unpaired_kich.xlsx|[[transfer_index_unpaired_kich.xlsx|supplementary_files/files/transfer_index_unpaired_kich.xlsx]]|
+|!8|transfer_index_unpaired_kirc.xlsx|[[transfer_index_unpaired_kirc.xlsx|supplementary_files/files/transfer_index_unpaired_kirc.xlsx]]|
+|!9|transfer_index_unpaired_kirp.xlsx|[[transfer_index_unpaired_kirp.xlsx|supplementary_files/files/transfer_index_unpaired_kirp.xlsx]]|
+|!10|transfer_index_unpaired_lihc.xlsx|[[transfer_index_unpaired_lihc.xlsx|supplementary_files/files/transfer_index_unpaired_lihc.xlsx]]|
+|!11|transfer_index_unpaired_luad.xlsx|[[transfer_index_unpaired_luad.xlsx|supplementary_files/files/transfer_index_unpaired_luad.xlsx]]|
+|!12|transfer_index_unpaired_lusc.xlsx|[[transfer_index_unpaired_lusc.xlsx|supplementary_files/files/transfer_index_unpaired_lusc.xlsx]]|
+|!13|transfer_index_unpaired_paad.xlsx|[[transfer_index_unpaired_paad.xlsx|supplementary_files/files/transfer_index_unpaired_paad.xlsx]]|
+|!14|transfer_index_unpaired_pcpg.xlsx|[[transfer_index_unpaired_pcpg.xlsx|supplementary_files/files/transfer_index_unpaired_pcpg.xlsx]]|
+|!15|transfer_index_unpaired_prad.xlsx|[[transfer_index_unpaired_prad.xlsx|supplementary_files/files/transfer_index_unpaired_prad.xlsx]]|
+|!16|transfer_index_unpaired_read.xlsx|[[transfer_index_unpaired_read.xlsx|supplementary_files/files/transfer_index_unpaired_read.xlsx]]|
+|!17|transfer_index_unpaired_skcm.xlsx|[[transfer_index_unpaired_skcm.xlsx|supplementary_files/files/transfer_index_unpaired_skcm.xlsx]]|
+|!18|transfer_index_unpaired_stad.xlsx|[[transfer_index_unpaired_stad.xlsx|supplementary_files/files/transfer_index_unpaired_stad.xlsx]]|
+|!19|transfer_index_unpaired_thca.xlsx|[[transfer_index_unpaired_thca.xlsx|supplementary_files/files/transfer_index_unpaired_thca.xlsx]]|
+|!20|transfer_index_unpaired_ucec.xlsx|[[transfer_index_unpaired_ucec.xlsx|supplementary_files/files/transfer_index_unpaired_ucec.xlsx]]|
+</pre>
+</div>
+<div title="Global results" creator="YourName" modifier="YourName" created="201502231752" modified="201502231752" changecount="2">
+<pre>Next results show a global comparison between all studies from several point of interest:
+* [[Detailed information about  differential expression and functional enrichment for all studies]]. (3 files). 
+* [[Distribution of ranking index]]. (1 plot for paired and 1 plot for unpaired).
+* [[Ranking index correlation]]. (3 plots for paired and 3 plots for unpaired).
+* [[Inhibition index correlation by ontology]]. (3 plots for paired and 3 plots for unpaired).
+* [[Inhibition effect correlation distribution by ontology]]. (3 plots for paired and 3 plots for unpaired).
+* [[Ranking index correlation vs. correlation]]. (1 plot for paired and 1 plot for unpaired).
+</pre>
+</div>
+<div title="Inhibition effect correlation distribution by ontology" creator="YourName" modifier="YourName" created="201502231434" changecount="1">
+<pre>
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_dist_of_corbp.png|[img[supplementary_files/plots/paired_dist_of_corbp.png]]|
+|!2|paired_dist_of_corcc.png|[img[supplementary_files/plots/paired_dist_of_corcc.png]]|
+|!3|paired_dist_of_cormf.png|[img[supplementary_files/plots/paired_dist_of_cormf.png]]|
+|!4|unpaired_dist_of_corbp.png|[img[supplementary_files/plots/unpaired_dist_of_corbp.png]]|
+|!5|unpaired_dist_of_corcc.png|[img[supplementary_files/plots/unpaired_dist_of_corcc.png]]|
+|!6|unpaired_dist_of_cormf.png|[img[supplementary_files/plots/unpaired_dist_of_cormf.png]]|
+</pre>
+</div>
+<div title="Inhibition index correlation by ontology" creator="YourName" modifier="YourName" created="201502231435" changecount="1">
+<pre>
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_cor_rindex0.png|[img[supplementary_files/plots/paired_cor_rindex0.png]]|
+|!2|paired_cor_rindexN.png|[img[supplementary_files/plots/paired_cor_rindexN.png]]|
+|!3|paired_cor_rindexT.png|[img[supplementary_files/plots/paired_cor_rindexT.png]]|
+|!4|unpaired_cor_rindex0.png|[img[supplementary_files/plots/unpaired_cor_rindex0.png]]|
+|!5|unpaired_cor_rindexN.png|[img[supplementary_files/plots/unpaired_cor_rindexN.png]]|
+|!6|unpaired_cor_rindexT.png|[img[supplementary_files/plots/unpaired_cor_rindexT.png]]|
+</pre>
+</div>
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="YourName" created="201502151053" modified="201502241637" changecount="53">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
-work finished: 16 February 2015
-number of samples: 17
-Authors: * ''Francisco Garcia''
-* ''David Montaner''
 
 !!~MiRNA level 
 Differential expression analysis was carried out for each cancer type using  [[edgeR|http://www.bioconductor.org/packages/release/bioc/html/edgeR.html]] followed for a p-value correction to control the [[false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
-* [[Results in paired studies]] (17 files).
-* Results in unpaired studies (20 files).
+* [[MiRNA level. Results in paired studies]]. 
+* [[MiRNA level. Results in unpaired studies]].
 
 !!Gene level
 After miRNA differential expression analysis,  we translate  this miRNA differential expression evidence to a gene differential inhibition scale. 
 For each gene, this transferred index pulls its targeting miRNA information preserving two characteristics suitable for the functional interpretation of the experiment: it accounts for the multiple miRNA cancellation effect and incorporates the additivity of several small inhibitory events into a relevant one.
-* Exploring the transfer between miRNA and gene (17 [[plots for paired]]).
-* Results about gene transferred statistics for the paired analysis (17 files).
-* Results about gene transferred statistics for the unpaired analysis (20 files).
+*  [[Gene level. Results about gene transferred statistics for the paired analysis]]. 
+*  [[Gene level. Results about gene transferred statistics for the unpaired analysis]]. 
+*  [[Gene level. Exploring the transfer between miRNA and gene]]. 
 
 !!Gene Set level
 Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
-* Results from the gene set analysis of the Gene Ontology  in the paired comparison (17 x 3 files).
-* Results from the gene set analysis of the Gene Ontology  in the unpaired comparison (20 x 3 files).
-* Evaluation of size effect for functional terms (17 plots for paired and 20 plots for unpaired).
+* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison]]. 
+* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison]]. 
+* [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
+* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
 
 !!Global results
 Next results show a global comparison between all studies from several point of interest:
-* Detailed information about  differential expression and functional enrichment for all studies (3 files). 
-* Distribution of ranking index (1 plot for paired and 1 plot for unpaired).
-* Ranking index correlation (3 plots for paired and 3 plots for unpaired).
-* Inhibition index correlation by ontology (3 plots for paired and 3 plots for unpaired).
-* Inhibition effect correlation distribution by ontology (3 plots for paired and 3 plots for unpaired).
-* Inhibition effect correlation across ontologies (1 plot for paired and 1 plot for unpaired).
-* paired_rindex_cor_vs_cor.png???? (1 plot for paired and 1 plot for unpaired).
+* [[Detailed information about  differential expression and functional enrichment for all studies]].
+* [[Distribution of ranking index]]. 
+* [[Ranking index correlation]]. 
+* [[Inhibition index correlation by ontology]]. 
+* [[Inhibition effect correlation distribution by ontology]].
+* [[Ranking index correlation vs. correlation]]. 
 
 </pre>
 </div>
-<div title="MainMenu" creator="YourName" modifier="YourName" created="201502160925" modified="201502160957" changecount="2">
-<pre></pre>
+<div title="MainMenu" creator="YourName" modifier="YourName" created="201502160925" modified="201502241642" changecount="17">
+<pre>''BY LEVELS:''
+[[MiRNA  level]]
+[[Gene level]]
+[[Gene Set level]]
+[[Global results]]
+
+
+
+</pre>
 </div>
-<div title="Results in paired studies" creator="YourName" modifier="YourName" created="201502160940" modified="201502161035" changecount="5">
-<pre>|common_enrichment|[[results|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/common_enrichment_paired.xlsx]]|
+<div title="MiRNA  level" creator="YourName" modifier="YourName" created="201502231751" modified="201502231753" changecount="3">
+<pre>Differential expression analysis was carried out for each cancer type using  [[edgeR|http://www.bioconductor.org/packages/release/bioc/html/edgeR.html]] followed for a p-value correction to control the [[false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
+* [[MiRNA level. Results in paired studies]]. 
+* [[MiRNA level. Results in unpaired studies]].</pre>
+</div>
+<div title="MiRNA level, results in paired studies" creator="YourName" modifier="YourName" created="201502231109" changecount="1">
+<pre>
+|sortable|k
+|!|files|links|h
+|!1|res_edger_paired_blca.xlsx|[[res_edger_paired_blca.xlsx|supplementary_files/files/res_edger_paired_blca.xlsx]]|
+|!2|res_edger_paired_brca.xlsx|[[res_edger_paired_brca.xlsx|supplementary_files/files/res_edger_paired_brca.xlsx]]|
+|!3|res_edger_paired_cesc.xlsx|[[res_edger_paired_cesc.xlsx|supplementary_files/files/res_edger_paired_cesc.xlsx]]|
+|!4|res_edger_paired_esca.xlsx|[[res_edger_paired_esca.xlsx|supplementary_files/files/res_edger_paired_esca.xlsx]]|
+|!5|res_edger_paired_hnsc.xlsx|[[res_edger_paired_hnsc.xlsx|supplementary_files/files/res_edger_paired_hnsc.xlsx]]|
+|!6|res_edger_paired_kich.xlsx|[[res_edger_paired_kich.xlsx|supplementary_files/files/res_edger_paired_kich.xlsx]]|
+|!7|res_edger_paired_kirc.xlsx|[[res_edger_paired_kirc.xlsx|supplementary_files/files/res_edger_paired_kirc.xlsx]]|
+|!8|res_edger_paired_kirp.xlsx|[[res_edger_paired_kirp.xlsx|supplementary_files/files/res_edger_paired_kirp.xlsx]]|
+|!9|res_edger_paired_lihc.xlsx|[[res_edger_paired_lihc.xlsx|supplementary_files/files/res_edger_paired_lihc.xlsx]]|
+|!10|res_edger_paired_luad.xlsx|[[res_edger_paired_luad.xlsx|supplementary_files/files/res_edger_paired_luad.xlsx]]|
+|!11|res_edger_paired_lusc.xlsx|[[res_edger_paired_lusc.xlsx|supplementary_files/files/res_edger_paired_lusc.xlsx]]|
+|!12|res_edger_paired_paad.xlsx|[[res_edger_paired_paad.xlsx|supplementary_files/files/res_edger_paired_paad.xlsx]]|
+|!13|res_edger_paired_pcpg.xlsx|[[res_edger_paired_pcpg.xlsx|supplementary_files/files/res_edger_paired_pcpg.xlsx]]|
+|!14|res_edger_paired_prad.xlsx|[[res_edger_paired_prad.xlsx|supplementary_files/files/res_edger_paired_prad.xlsx]]|
+|!15|res_edger_paired_stad.xlsx|[[res_edger_paired_stad.xlsx|supplementary_files/files/res_edger_paired_stad.xlsx]]|
+|!16|res_edger_paired_thca.xlsx|[[res_edger_paired_thca.xlsx|supplementary_files/files/res_edger_paired_thca.xlsx]]|
+|!17|res_edger_paired_ucec.xlsx|[[res_edger_paired_ucec.xlsx|supplementary_files/files/res_edger_paired_ucec.xlsx]]|
+</pre>
+</div>
+<div title="MiRNA level, results in unpaired studies" creator="YourName" modifier="YourName" created="201502231109" changecount="1">
+<pre>TABLA_MIRNA_LEVEL_UNPAIRED</pre>
+</div>
+<div title="MiRNA level. Results in paired studies" creator="YourName" modifier="YourName" created="201502231117" modified="201502231456" changecount="3">
+<pre>Results from the paired miRNA differential expression analysis using edgeR.
 
 
 |sortable|k
-|!|my_files|links|h
-|!1|allStudyInfo.xlsx|[[allStudyInfo.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/allStudyInfo.xlsx]]|
-|!2|common_enrichment_paired.xlsx|[[common_enrichment_paired.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/common_enrichment_paired.xlsx]]|
-|!3|common_enrichment_unpaired.xlsx|[[common_enrichment_unpaired.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/common_enrichment_unpaired.xlsx]]|
-|!4|res_edger_paired_blca.xlsx|[[res_edger_paired_blca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_blca.xlsx]]|
-|!5|res_edger_paired_brca.xlsx|[[res_edger_paired_brca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_brca.xlsx]]|
-|!6|res_edger_paired_cesc.xlsx|[[res_edger_paired_cesc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_cesc.xlsx]]|
-|!7|res_edger_paired_esca.xlsx|[[res_edger_paired_esca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_esca.xlsx]]|
-|!8|res_edger_paired_hnsc.xlsx|[[res_edger_paired_hnsc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_hnsc.xlsx]]|
-|!9|res_edger_paired_kich.xlsx|[[res_edger_paired_kich.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_kich.xlsx]]|
-|!10|res_edger_paired_kirc.xlsx|[[res_edger_paired_kirc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_kirc.xlsx]]|
-|!11|res_edger_paired_kirp.xlsx|[[res_edger_paired_kirp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_kirp.xlsx]]|
-|!12|res_edger_paired_lihc.xlsx|[[res_edger_paired_lihc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_lihc.xlsx]]|
-|!13|res_edger_paired_luad.xlsx|[[res_edger_paired_luad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_luad.xlsx]]|
-|!14|res_edger_paired_lusc.xlsx|[[res_edger_paired_lusc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_lusc.xlsx]]|
-|!15|res_edger_paired_paad.xlsx|[[res_edger_paired_paad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_paad.xlsx]]|
-|!16|res_edger_paired_pcpg.xlsx|[[res_edger_paired_pcpg.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_pcpg.xlsx]]|
-|!17|res_edger_paired_prad.xlsx|[[res_edger_paired_prad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_prad.xlsx]]|
-|!18|res_edger_paired_stad.xlsx|[[res_edger_paired_stad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_stad.xlsx]]|
-|!19|res_edger_paired_thca.xlsx|[[res_edger_paired_thca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_thca.xlsx]]|
-|!20|res_edger_paired_ucec.xlsx|[[res_edger_paired_ucec.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_paired_ucec.xlsx]]|
-|!21|res_edger_unpaired_blca.xlsx|[[res_edger_unpaired_blca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_blca.xlsx]]|
-|!22|res_edger_unpaired_brca.xlsx|[[res_edger_unpaired_brca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_brca.xlsx]]|
-|!23|res_edger_unpaired_cesc.xlsx|[[res_edger_unpaired_cesc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_cesc.xlsx]]|
-|!24|res_edger_unpaired_coad.xlsx|[[res_edger_unpaired_coad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_coad.xlsx]]|
-|!25|res_edger_unpaired_esca.xlsx|[[res_edger_unpaired_esca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_esca.xlsx]]|
-|!26|res_edger_unpaired_hnsc.xlsx|[[res_edger_unpaired_hnsc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_hnsc.xlsx]]|
-|!27|res_edger_unpaired_kich.xlsx|[[res_edger_unpaired_kich.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_kich.xlsx]]|
-|!28|res_edger_unpaired_kirc.xlsx|[[res_edger_unpaired_kirc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_kirc.xlsx]]|
-|!29|res_edger_unpaired_kirp.xlsx|[[res_edger_unpaired_kirp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_kirp.xlsx]]|
-|!30|res_edger_unpaired_lihc.xlsx|[[res_edger_unpaired_lihc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_lihc.xlsx]]|
-|!31|res_edger_unpaired_luad.xlsx|[[res_edger_unpaired_luad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_luad.xlsx]]|
-|!32|res_edger_unpaired_lusc.xlsx|[[res_edger_unpaired_lusc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_lusc.xlsx]]|
-|!33|res_edger_unpaired_paad.xlsx|[[res_edger_unpaired_paad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_paad.xlsx]]|
-|!34|res_edger_unpaired_pcpg.xlsx|[[res_edger_unpaired_pcpg.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_pcpg.xlsx]]|
-|!35|res_edger_unpaired_prad.xlsx|[[res_edger_unpaired_prad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_prad.xlsx]]|
-|!36|res_edger_unpaired_read.xlsx|[[res_edger_unpaired_read.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_read.xlsx]]|
-|!37|res_edger_unpaired_skcm.xlsx|[[res_edger_unpaired_skcm.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_skcm.xlsx]]|
-|!38|res_edger_unpaired_stad.xlsx|[[res_edger_unpaired_stad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_stad.xlsx]]|
-|!39|res_edger_unpaired_thca.xlsx|[[res_edger_unpaired_thca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_thca.xlsx]]|
-|!40|res_edger_unpaired_ucec.xlsx|[[res_edger_unpaired_ucec.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_edger_unpaired_ucec.xlsx]]|
-|!41|res_gsa_paired_blca_bp.xlsx|[[res_gsa_paired_blca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_blca_bp.xlsx]]|
-|!42|res_gsa_paired_blca_cc.xlsx|[[res_gsa_paired_blca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_blca_cc.xlsx]]|
-|!43|res_gsa_paired_blca_mf.xlsx|[[res_gsa_paired_blca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_blca_mf.xlsx]]|
-|!44|res_gsa_paired_brca_bp.xlsx|[[res_gsa_paired_brca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_brca_bp.xlsx]]|
-|!45|res_gsa_paired_brca_cc.xlsx|[[res_gsa_paired_brca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_brca_cc.xlsx]]|
-|!46|res_gsa_paired_brca_mf.xlsx|[[res_gsa_paired_brca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_brca_mf.xlsx]]|
-|!47|res_gsa_paired_cesc_bp.xlsx|[[res_gsa_paired_cesc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]]|
-|!48|res_gsa_paired_cesc_cc.xlsx|[[res_gsa_paired_cesc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]]|
-|!49|res_gsa_paired_cesc_mf.xlsx|[[res_gsa_paired_cesc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]]|
-|!50|res_gsa_paired_esca_bp.xlsx|[[res_gsa_paired_esca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_esca_bp.xlsx]]|
-|!51|res_gsa_paired_esca_cc.xlsx|[[res_gsa_paired_esca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_esca_cc.xlsx]]|
-|!52|res_gsa_paired_esca_mf.xlsx|[[res_gsa_paired_esca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_esca_mf.xlsx]]|
-|!53|res_gsa_paired_hnsc_bp.xlsx|[[res_gsa_paired_hnsc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_hnsc_bp.xlsx]]|
-|!54|res_gsa_paired_hnsc_cc.xlsx|[[res_gsa_paired_hnsc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_hnsc_cc.xlsx]]|
-|!55|res_gsa_paired_hnsc_mf.xlsx|[[res_gsa_paired_hnsc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_hnsc_mf.xlsx]]|
-|!56|res_gsa_paired_kich_bp.xlsx|[[res_gsa_paired_kich_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kich_bp.xlsx]]|
-|!57|res_gsa_paired_kich_cc.xlsx|[[res_gsa_paired_kich_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kich_cc.xlsx]]|
-|!58|res_gsa_paired_kich_mf.xlsx|[[res_gsa_paired_kich_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kich_mf.xlsx]]|
-|!59|res_gsa_paired_kirc_bp.xlsx|[[res_gsa_paired_kirc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirc_bp.xlsx]]|
-|!60|res_gsa_paired_kirc_cc.xlsx|[[res_gsa_paired_kirc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirc_cc.xlsx]]|
-|!61|res_gsa_paired_kirc_mf.xlsx|[[res_gsa_paired_kirc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirc_mf.xlsx]]|
-|!62|res_gsa_paired_kirp_bp.xlsx|[[res_gsa_paired_kirp_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirp_bp.xlsx]]|
-|!63|res_gsa_paired_kirp_cc.xlsx|[[res_gsa_paired_kirp_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirp_cc.xlsx]]|
-|!64|res_gsa_paired_kirp_mf.xlsx|[[res_gsa_paired_kirp_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_kirp_mf.xlsx]]|
-|!65|res_gsa_paired_lihc_bp.xlsx|[[res_gsa_paired_lihc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lihc_bp.xlsx]]|
-|!66|res_gsa_paired_lihc_cc.xlsx|[[res_gsa_paired_lihc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lihc_cc.xlsx]]|
-|!67|res_gsa_paired_lihc_mf.xlsx|[[res_gsa_paired_lihc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lihc_mf.xlsx]]|
-|!68|res_gsa_paired_luad_bp.xlsx|[[res_gsa_paired_luad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_luad_bp.xlsx]]|
-|!69|res_gsa_paired_luad_cc.xlsx|[[res_gsa_paired_luad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_luad_cc.xlsx]]|
-|!70|res_gsa_paired_luad_mf.xlsx|[[res_gsa_paired_luad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_luad_mf.xlsx]]|
-|!71|res_gsa_paired_lusc_bp.xlsx|[[res_gsa_paired_lusc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lusc_bp.xlsx]]|
-|!72|res_gsa_paired_lusc_cc.xlsx|[[res_gsa_paired_lusc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lusc_cc.xlsx]]|
-|!73|res_gsa_paired_lusc_mf.xlsx|[[res_gsa_paired_lusc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_lusc_mf.xlsx]]|
-|!74|res_gsa_paired_paad_bp.xlsx|[[res_gsa_paired_paad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_paad_bp.xlsx]]|
-|!75|res_gsa_paired_paad_cc.xlsx|[[res_gsa_paired_paad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_paad_cc.xlsx]]|
-|!76|res_gsa_paired_paad_mf.xlsx|[[res_gsa_paired_paad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_paad_mf.xlsx]]|
-|!77|res_gsa_paired_pcpg_bp.xlsx|[[res_gsa_paired_pcpg_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_pcpg_bp.xlsx]]|
-|!78|res_gsa_paired_pcpg_cc.xlsx|[[res_gsa_paired_pcpg_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_pcpg_cc.xlsx]]|
-|!79|res_gsa_paired_pcpg_mf.xlsx|[[res_gsa_paired_pcpg_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_pcpg_mf.xlsx]]|
-|!80|res_gsa_paired_prad_bp.xlsx|[[res_gsa_paired_prad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_prad_bp.xlsx]]|
-|!81|res_gsa_paired_prad_cc.xlsx|[[res_gsa_paired_prad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_prad_cc.xlsx]]|
-|!82|res_gsa_paired_prad_mf.xlsx|[[res_gsa_paired_prad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_prad_mf.xlsx]]|
-|!83|res_gsa_paired_stad_bp.xlsx|[[res_gsa_paired_stad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_stad_bp.xlsx]]|
-|!84|res_gsa_paired_stad_cc.xlsx|[[res_gsa_paired_stad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_stad_cc.xlsx]]|
-|!85|res_gsa_paired_stad_mf.xlsx|[[res_gsa_paired_stad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_stad_mf.xlsx]]|
-|!86|res_gsa_paired_thca_bp.xlsx|[[res_gsa_paired_thca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_thca_bp.xlsx]]|
-|!87|res_gsa_paired_thca_cc.xlsx|[[res_gsa_paired_thca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_thca_cc.xlsx]]|
-|!88|res_gsa_paired_thca_mf.xlsx|[[res_gsa_paired_thca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_thca_mf.xlsx]]|
-|!89|res_gsa_paired_ucec_bp.xlsx|[[res_gsa_paired_ucec_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_ucec_bp.xlsx]]|
-|!90|res_gsa_paired_ucec_cc.xlsx|[[res_gsa_paired_ucec_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_ucec_cc.xlsx]]|
-|!91|res_gsa_paired_ucec_mf.xlsx|[[res_gsa_paired_ucec_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_paired_ucec_mf.xlsx]]|
-|!92|res_gsa_unpaired_blca_bp.xlsx|[[res_gsa_unpaired_blca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]]|
-|!93|res_gsa_unpaired_blca_cc.xlsx|[[res_gsa_unpaired_blca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]]|
-|!94|res_gsa_unpaired_blca_mf.xlsx|[[res_gsa_unpaired_blca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]]|
-|!95|res_gsa_unpaired_brca_bp.xlsx|[[res_gsa_unpaired_brca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]]|
-|!96|res_gsa_unpaired_brca_cc.xlsx|[[res_gsa_unpaired_brca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]]|
-|!97|res_gsa_unpaired_brca_mf.xlsx|[[res_gsa_unpaired_brca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]]|
-|!98|res_gsa_unpaired_cesc_bp.xlsx|[[res_gsa_unpaired_cesc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]]|
-|!99|res_gsa_unpaired_cesc_cc.xlsx|[[res_gsa_unpaired_cesc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]]|
-|!100|res_gsa_unpaired_cesc_mf.xlsx|[[res_gsa_unpaired_cesc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]]|
-|!101|res_gsa_unpaired_coad_bp.xlsx|[[res_gsa_unpaired_coad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_coad_bp.xlsx]]|
-|!102|res_gsa_unpaired_coad_cc.xlsx|[[res_gsa_unpaired_coad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_coad_cc.xlsx]]|
-|!103|res_gsa_unpaired_coad_mf.xlsx|[[res_gsa_unpaired_coad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_coad_mf.xlsx]]|
-|!104|res_gsa_unpaired_esca_bp.xlsx|[[res_gsa_unpaired_esca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_esca_bp.xlsx]]|
-|!105|res_gsa_unpaired_esca_cc.xlsx|[[res_gsa_unpaired_esca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_esca_cc.xlsx]]|
-|!106|res_gsa_unpaired_esca_mf.xlsx|[[res_gsa_unpaired_esca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_esca_mf.xlsx]]|
-|!107|res_gsa_unpaired_hnsc_bp.xlsx|[[res_gsa_unpaired_hnsc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_hnsc_bp.xlsx]]|
-|!108|res_gsa_unpaired_hnsc_cc.xlsx|[[res_gsa_unpaired_hnsc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_hnsc_cc.xlsx]]|
-|!109|res_gsa_unpaired_hnsc_mf.xlsx|[[res_gsa_unpaired_hnsc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_hnsc_mf.xlsx]]|
-|!110|res_gsa_unpaired_kich_bp.xlsx|[[res_gsa_unpaired_kich_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kich_bp.xlsx]]|
-|!111|res_gsa_unpaired_kich_cc.xlsx|[[res_gsa_unpaired_kich_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kich_cc.xlsx]]|
-|!112|res_gsa_unpaired_kich_mf.xlsx|[[res_gsa_unpaired_kich_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kich_mf.xlsx]]|
-|!113|res_gsa_unpaired_kirc_bp.xlsx|[[res_gsa_unpaired_kirc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirc_bp.xlsx]]|
-|!114|res_gsa_unpaired_kirc_cc.xlsx|[[res_gsa_unpaired_kirc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirc_cc.xlsx]]|
-|!115|res_gsa_unpaired_kirc_mf.xlsx|[[res_gsa_unpaired_kirc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirc_mf.xlsx]]|
-|!116|res_gsa_unpaired_kirp_bp.xlsx|[[res_gsa_unpaired_kirp_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirp_bp.xlsx]]|
-|!117|res_gsa_unpaired_kirp_cc.xlsx|[[res_gsa_unpaired_kirp_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirp_cc.xlsx]]|
-|!118|res_gsa_unpaired_kirp_mf.xlsx|[[res_gsa_unpaired_kirp_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_kirp_mf.xlsx]]|
-|!119|res_gsa_unpaired_lihc_bp.xlsx|[[res_gsa_unpaired_lihc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lihc_bp.xlsx]]|
-|!120|res_gsa_unpaired_lihc_cc.xlsx|[[res_gsa_unpaired_lihc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lihc_cc.xlsx]]|
-|!121|res_gsa_unpaired_lihc_mf.xlsx|[[res_gsa_unpaired_lihc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lihc_mf.xlsx]]|
-|!122|res_gsa_unpaired_luad_bp.xlsx|[[res_gsa_unpaired_luad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_luad_bp.xlsx]]|
-|!123|res_gsa_unpaired_luad_cc.xlsx|[[res_gsa_unpaired_luad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_luad_cc.xlsx]]|
-|!124|res_gsa_unpaired_luad_mf.xlsx|[[res_gsa_unpaired_luad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_luad_mf.xlsx]]|
-|!125|res_gsa_unpaired_lusc_bp.xlsx|[[res_gsa_unpaired_lusc_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lusc_bp.xlsx]]|
-|!126|res_gsa_unpaired_lusc_cc.xlsx|[[res_gsa_unpaired_lusc_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lusc_cc.xlsx]]|
-|!127|res_gsa_unpaired_lusc_mf.xlsx|[[res_gsa_unpaired_lusc_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_lusc_mf.xlsx]]|
-|!128|res_gsa_unpaired_paad_bp.xlsx|[[res_gsa_unpaired_paad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_paad_bp.xlsx]]|
-|!129|res_gsa_unpaired_paad_cc.xlsx|[[res_gsa_unpaired_paad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_paad_cc.xlsx]]|
-|!130|res_gsa_unpaired_paad_mf.xlsx|[[res_gsa_unpaired_paad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_paad_mf.xlsx]]|
-|!131|res_gsa_unpaired_pcpg_bp.xlsx|[[res_gsa_unpaired_pcpg_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_pcpg_bp.xlsx]]|
-|!132|res_gsa_unpaired_pcpg_cc.xlsx|[[res_gsa_unpaired_pcpg_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_pcpg_cc.xlsx]]|
-|!133|res_gsa_unpaired_pcpg_mf.xlsx|[[res_gsa_unpaired_pcpg_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_pcpg_mf.xlsx]]|
-|!134|res_gsa_unpaired_prad_bp.xlsx|[[res_gsa_unpaired_prad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_prad_bp.xlsx]]|
-|!135|res_gsa_unpaired_prad_cc.xlsx|[[res_gsa_unpaired_prad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_prad_cc.xlsx]]|
-|!136|res_gsa_unpaired_prad_mf.xlsx|[[res_gsa_unpaired_prad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_prad_mf.xlsx]]|
-|!137|res_gsa_unpaired_read_bp.xlsx|[[res_gsa_unpaired_read_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_read_bp.xlsx]]|
-|!138|res_gsa_unpaired_read_cc.xlsx|[[res_gsa_unpaired_read_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_read_cc.xlsx]]|
-|!139|res_gsa_unpaired_read_mf.xlsx|[[res_gsa_unpaired_read_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_read_mf.xlsx]]|
-|!140|res_gsa_unpaired_skcm_bp.xlsx|[[res_gsa_unpaired_skcm_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_skcm_bp.xlsx]]|
-|!141|res_gsa_unpaired_skcm_cc.xlsx|[[res_gsa_unpaired_skcm_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_skcm_cc.xlsx]]|
-|!142|res_gsa_unpaired_skcm_mf.xlsx|[[res_gsa_unpaired_skcm_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_skcm_mf.xlsx]]|
-|!143|res_gsa_unpaired_stad_bp.xlsx|[[res_gsa_unpaired_stad_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_stad_bp.xlsx]]|
-|!144|res_gsa_unpaired_stad_cc.xlsx|[[res_gsa_unpaired_stad_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_stad_cc.xlsx]]|
-|!145|res_gsa_unpaired_stad_mf.xlsx|[[res_gsa_unpaired_stad_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_stad_mf.xlsx]]|
-|!146|res_gsa_unpaired_thca_bp.xlsx|[[res_gsa_unpaired_thca_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_thca_bp.xlsx]]|
-|!147|res_gsa_unpaired_thca_cc.xlsx|[[res_gsa_unpaired_thca_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_thca_cc.xlsx]]|
-|!148|res_gsa_unpaired_thca_mf.xlsx|[[res_gsa_unpaired_thca_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_thca_mf.xlsx]]|
-|!149|res_gsa_unpaired_ucec_bp.xlsx|[[res_gsa_unpaired_ucec_bp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_ucec_bp.xlsx]]|
-|!150|res_gsa_unpaired_ucec_cc.xlsx|[[res_gsa_unpaired_ucec_cc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_ucec_cc.xlsx]]|
-|!151|res_gsa_unpaired_ucec_mf.xlsx|[[res_gsa_unpaired_ucec_mf.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/res_gsa_unpaired_ucec_mf.xlsx]]|
-|!152|transfer_index_paired_blca.xlsx|[[transfer_index_paired_blca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_blca.xlsx]]|
-|!153|transfer_index_paired_brca.xlsx|[[transfer_index_paired_brca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_brca.xlsx]]|
-|!154|transfer_index_paired_cesc.xlsx|[[transfer_index_paired_cesc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_cesc.xlsx]]|
-|!155|transfer_index_paired_esca.xlsx|[[transfer_index_paired_esca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_esca.xlsx]]|
-|!156|transfer_index_paired_hnsc.xlsx|[[transfer_index_paired_hnsc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_hnsc.xlsx]]|
-|!157|transfer_index_paired_kich.xlsx|[[transfer_index_paired_kich.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_kich.xlsx]]|
-|!158|transfer_index_paired_kirc.xlsx|[[transfer_index_paired_kirc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_kirc.xlsx]]|
-|!159|transfer_index_paired_kirp.xlsx|[[transfer_index_paired_kirp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_kirp.xlsx]]|
-|!160|transfer_index_paired_lihc.xlsx|[[transfer_index_paired_lihc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_lihc.xlsx]]|
-|!161|transfer_index_paired_luad.xlsx|[[transfer_index_paired_luad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_luad.xlsx]]|
-|!162|transfer_index_paired_lusc.xlsx|[[transfer_index_paired_lusc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_lusc.xlsx]]|
-|!163|transfer_index_paired_paad.xlsx|[[transfer_index_paired_paad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_paad.xlsx]]|
-|!164|transfer_index_paired_pcpg.xlsx|[[transfer_index_paired_pcpg.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_pcpg.xlsx]]|
-|!165|transfer_index_paired_prad.xlsx|[[transfer_index_paired_prad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_prad.xlsx]]|
-|!166|transfer_index_paired_stad.xlsx|[[transfer_index_paired_stad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_stad.xlsx]]|
-|!167|transfer_index_paired_thca.xlsx|[[transfer_index_paired_thca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_thca.xlsx]]|
-|!168|transfer_index_paired_ucec.xlsx|[[transfer_index_paired_ucec.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_paired_ucec.xlsx]]|
-|!169|transfer_index_unpaired_blca.xlsx|[[transfer_index_unpaired_blca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_blca.xlsx]]|
-|!170|transfer_index_unpaired_brca.xlsx|[[transfer_index_unpaired_brca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_brca.xlsx]]|
-|!171|transfer_index_unpaired_cesc.xlsx|[[transfer_index_unpaired_cesc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_cesc.xlsx]]|
-|!172|transfer_index_unpaired_coad.xlsx|[[transfer_index_unpaired_coad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_coad.xlsx]]|
-|!173|transfer_index_unpaired_esca.xlsx|[[transfer_index_unpaired_esca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_esca.xlsx]]|
-|!174|transfer_index_unpaired_hnsc.xlsx|[[transfer_index_unpaired_hnsc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_hnsc.xlsx]]|
-|!175|transfer_index_unpaired_kich.xlsx|[[transfer_index_unpaired_kich.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_kich.xlsx]]|
-|!176|transfer_index_unpaired_kirc.xlsx|[[transfer_index_unpaired_kirc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_kirc.xlsx]]|
-|!177|transfer_index_unpaired_kirp.xlsx|[[transfer_index_unpaired_kirp.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_kirp.xlsx]]|
-|!178|transfer_index_unpaired_lihc.xlsx|[[transfer_index_unpaired_lihc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_lihc.xlsx]]|
-|!179|transfer_index_unpaired_luad.xlsx|[[transfer_index_unpaired_luad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_luad.xlsx]]|
-|!180|transfer_index_unpaired_lusc.xlsx|[[transfer_index_unpaired_lusc.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_lusc.xlsx]]|
-|!181|transfer_index_unpaired_paad.xlsx|[[transfer_index_unpaired_paad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_paad.xlsx]]|
-|!182|transfer_index_unpaired_pcpg.xlsx|[[transfer_index_unpaired_pcpg.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_pcpg.xlsx]]|
-|!183|transfer_index_unpaired_prad.xlsx|[[transfer_index_unpaired_prad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_prad.xlsx]]|
-|!184|transfer_index_unpaired_read.xlsx|[[transfer_index_unpaired_read.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_read.xlsx]]|
-|!185|transfer_index_unpaired_skcm.xlsx|[[transfer_index_unpaired_skcm.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_skcm.xlsx]]|
-|!186|transfer_index_unpaired_stad.xlsx|[[transfer_index_unpaired_stad.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_stad.xlsx]]|
-|!187|transfer_index_unpaired_thca.xlsx|[[transfer_index_unpaired_thca.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_thca.xlsx]]|
-|!188|transfer_index_unpaired_ucec.xlsx|[[transfer_index_unpaired_ucec.xlsx|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/transfer_index_unpaired_ucec.xlsx]]|
+|!|files|links|h
+|!1|res_edger_paired_blca.xlsx|[[res_edger_paired_blca.xlsx|supplementary_files/files/res_edger_paired_blca.xlsx]]|
+|!2|res_edger_paired_brca.xlsx|[[res_edger_paired_brca.xlsx|supplementary_files/files/res_edger_paired_brca.xlsx]]|
+|!3|res_edger_paired_cesc.xlsx|[[res_edger_paired_cesc.xlsx|supplementary_files/files/res_edger_paired_cesc.xlsx]]|
+|!4|res_edger_paired_esca.xlsx|[[res_edger_paired_esca.xlsx|supplementary_files/files/res_edger_paired_esca.xlsx]]|
+|!5|res_edger_paired_hnsc.xlsx|[[res_edger_paired_hnsc.xlsx|supplementary_files/files/res_edger_paired_hnsc.xlsx]]|
+|!6|res_edger_paired_kich.xlsx|[[res_edger_paired_kich.xlsx|supplementary_files/files/res_edger_paired_kich.xlsx]]|
+|!7|res_edger_paired_kirc.xlsx|[[res_edger_paired_kirc.xlsx|supplementary_files/files/res_edger_paired_kirc.xlsx]]|
+|!8|res_edger_paired_kirp.xlsx|[[res_edger_paired_kirp.xlsx|supplementary_files/files/res_edger_paired_kirp.xlsx]]|
+|!9|res_edger_paired_lihc.xlsx|[[res_edger_paired_lihc.xlsx|supplementary_files/files/res_edger_paired_lihc.xlsx]]|
+|!10|res_edger_paired_luad.xlsx|[[res_edger_paired_luad.xlsx|supplementary_files/files/res_edger_paired_luad.xlsx]]|
+|!11|res_edger_paired_lusc.xlsx|[[res_edger_paired_lusc.xlsx|supplementary_files/files/res_edger_paired_lusc.xlsx]]|
+|!12|res_edger_paired_paad.xlsx|[[res_edger_paired_paad.xlsx|supplementary_files/files/res_edger_paired_paad.xlsx]]|
+|!13|res_edger_paired_pcpg.xlsx|[[res_edger_paired_pcpg.xlsx|supplementary_files/files/res_edger_paired_pcpg.xlsx]]|
+|!14|res_edger_paired_prad.xlsx|[[res_edger_paired_prad.xlsx|supplementary_files/files/res_edger_paired_prad.xlsx]]|
+|!15|res_edger_paired_stad.xlsx|[[res_edger_paired_stad.xlsx|supplementary_files/files/res_edger_paired_stad.xlsx]]|
+|!16|res_edger_paired_thca.xlsx|[[res_edger_paired_thca.xlsx|supplementary_files/files/res_edger_paired_thca.xlsx]]|
+|!17|res_edger_paired_ucec.xlsx|[[res_edger_paired_ucec.xlsx|supplementary_files/files/res_edger_paired_ucec.xlsx]]|
 </pre>
+</div>
+<div title="MiRNA level. Results in unpaired studies" creator="YourName" modifier="YourName" created="201502231117" modified="201502231457" changecount="3">
+<pre>Results from the unpaired miRNA differential expression analysis using edgeR.
+
+
+|sortable|k
+|!|files|links|h
+|!1|res_edger_unpaired_blca.xlsx|[[res_edger_unpaired_blca.xlsx|supplementary_files/files/res_edger_unpaired_blca.xlsx]]|
+|!2|res_edger_unpaired_brca.xlsx|[[res_edger_unpaired_brca.xlsx|supplementary_files/files/res_edger_unpaired_brca.xlsx]]|
+|!3|res_edger_unpaired_cesc.xlsx|[[res_edger_unpaired_cesc.xlsx|supplementary_files/files/res_edger_unpaired_cesc.xlsx]]|
+|!4|res_edger_unpaired_coad.xlsx|[[res_edger_unpaired_coad.xlsx|supplementary_files/files/res_edger_unpaired_coad.xlsx]]|
+|!5|res_edger_unpaired_esca.xlsx|[[res_edger_unpaired_esca.xlsx|supplementary_files/files/res_edger_unpaired_esca.xlsx]]|
+|!6|res_edger_unpaired_hnsc.xlsx|[[res_edger_unpaired_hnsc.xlsx|supplementary_files/files/res_edger_unpaired_hnsc.xlsx]]|
+|!7|res_edger_unpaired_kich.xlsx|[[res_edger_unpaired_kich.xlsx|supplementary_files/files/res_edger_unpaired_kich.xlsx]]|
+|!8|res_edger_unpaired_kirc.xlsx|[[res_edger_unpaired_kirc.xlsx|supplementary_files/files/res_edger_unpaired_kirc.xlsx]]|
+|!9|res_edger_unpaired_kirp.xlsx|[[res_edger_unpaired_kirp.xlsx|supplementary_files/files/res_edger_unpaired_kirp.xlsx]]|
+|!10|res_edger_unpaired_lihc.xlsx|[[res_edger_unpaired_lihc.xlsx|supplementary_files/files/res_edger_unpaired_lihc.xlsx]]|
+|!11|res_edger_unpaired_luad.xlsx|[[res_edger_unpaired_luad.xlsx|supplementary_files/files/res_edger_unpaired_luad.xlsx]]|
+|!12|res_edger_unpaired_lusc.xlsx|[[res_edger_unpaired_lusc.xlsx|supplementary_files/files/res_edger_unpaired_lusc.xlsx]]|
+|!13|res_edger_unpaired_paad.xlsx|[[res_edger_unpaired_paad.xlsx|supplementary_files/files/res_edger_unpaired_paad.xlsx]]|
+|!14|res_edger_unpaired_pcpg.xlsx|[[res_edger_unpaired_pcpg.xlsx|supplementary_files/files/res_edger_unpaired_pcpg.xlsx]]|
+|!15|res_edger_unpaired_prad.xlsx|[[res_edger_unpaired_prad.xlsx|supplementary_files/files/res_edger_unpaired_prad.xlsx]]|
+|!16|res_edger_unpaired_read.xlsx|[[res_edger_unpaired_read.xlsx|supplementary_files/files/res_edger_unpaired_read.xlsx]]|
+|!17|res_edger_unpaired_skcm.xlsx|[[res_edger_unpaired_skcm.xlsx|supplementary_files/files/res_edger_unpaired_skcm.xlsx]]|
+|!18|res_edger_unpaired_stad.xlsx|[[res_edger_unpaired_stad.xlsx|supplementary_files/files/res_edger_unpaired_stad.xlsx]]|
+|!19|res_edger_unpaired_thca.xlsx|[[res_edger_unpaired_thca.xlsx|supplementary_files/files/res_edger_unpaired_thca.xlsx]]|
+|!20|res_edger_unpaired_ucec.xlsx|[[res_edger_unpaired_ucec.xlsx|supplementary_files/files/res_edger_unpaired_ucec.xlsx]]|
+</pre>
+</div>
+<div title="Ranking index correlation" creator="YourName" modifier="YourName" created="201502231224" changecount="1">
+<pre>
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_cor_rindex0.png|[img[supplementary_files/plots/paired_cor_rindex0.png]]|
+|!2|paired_cor_rindexN.png|[img[supplementary_files/plots/paired_cor_rindexN.png]]|
+|!3|paired_cor_rindexT.png|[img[supplementary_files/plots/paired_cor_rindexT.png]]|
+|!4|unpaired_cor_rindex0.png|[img[supplementary_files/plots/unpaired_cor_rindex0.png]]|
+|!5|unpaired_cor_rindexN.png|[img[supplementary_files/plots/unpaired_cor_rindexN.png]]|
+|!6|unpaired_cor_rindexT.png|[img[supplementary_files/plots/unpaired_cor_rindexT.png]]|
+</pre>
+</div>
+<div title="Ranking index correlation vs. correlation" creator="YourName" modifier="YourName" created="201502231447" changecount="1">
+<pre>
+|sortable|k
+|!|my_plots2|links|h
+|!1|paired_rindex_cor_vs_cor.png|[img[supplementary_files/plots/paired_rindex_cor_vs_cor.png]]|
+|!2|unpaired_rindex_cor_vs_cor.png|[img[supplementary_files/plots/unpaired_rindex_cor_vs_cor.png]]|
+</pre>
+</div>
+<div title="Results in paired studies" creator="YourName" modifier="YourName" created="201502160940" modified="201502231022" changecount="5">
+<pre>|common_enrichment|[[results|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/common_enrichment_paired.xlsx]]|
+
+@@~TABLA_RESULTADOS@@</pre>
 </div>
 <div title="SiteSubtitle" creator="YourName" modifier="YourName" created="201502160921" changecount="1">
 <pre></pre>
@@ -779,16 +1046,6 @@ Next results show a global comparison between all studies from several point of 
 &lt;div class='viewer' macro='view text wikified'&gt;&lt;/div&gt;
 &lt;div class='tagClear'&gt;&lt;/div&gt;
 &lt;!--}}}--&gt;
-</pre>
-</div>
-<div title="plots for paired" creator="YourName" modifier="YourName" created="201502161148" changecount="1">
-<pre>
-|sortable|k
-|!|my_plots|links|h
-|!1|boxplot.png|[img[/home/paco/Desktop/plots/boxplot.png]]|
-|!2|density_plot.png|[img[/home/paco/Desktop/plots/density_plot.png]]|
-|!3|scatter.png|[img[/home/paco/Desktop/plots/scatter.png]]|
-|!4|volcano.png|[img[/home/paco/Desktop/plots/volcano.png]]|
 </pre>
 </div>
 </div>
