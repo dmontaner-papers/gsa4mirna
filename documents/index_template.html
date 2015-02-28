@@ -566,6 +566,108 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <div title="Detailed information about  differential expression and functional enrichment for all studies" creator="YourName" modifier="YourName" created="201502231215" changecount="1">
 <pre>@@~TABLE_GENE_SET_LEVEL_ALL_STUDIES@@</pre>
 </div>
+<div title="DisableWikiLinksPlugin" modifier="genometra" created="201309051213" modified="201309271543" tags="systemConfig GenometraPlugin excludeSearch">
+<pre>/***
+|Name|DisableWikiLinksPlugin|
+|Source|http://www.TiddlyTools.com/#DisableWikiLinksPlugin|
+|Version|1.6.0|
+|Author|Eric Shulman|
+|License|http://www.TiddlyTools.com/#LegalStatements|
+|~CoreVersion|2.1|
+|Type|plugin|
+|Description|selectively disable TiddlyWiki's automatic ~WikiWord linking behavior|
+This plugin allows you to disable TiddlyWiki's automatic ~WikiWord linking behavior, so that WikiWords embedded in tiddler content will be rendered as regular text, instead of being automatically converted to tiddler links.  To create a tiddler link when automatic linking is disabled, you must enclose the link text within {{{[[...]]}}}.
+!!!!!Usage
+&lt;&lt;&lt;
+You can block automatic WikiWord linking behavior for any specific tiddler by ''tagging it with&lt;&lt;tag excludeWikiWords&gt;&gt;'' (see configuration below) or, check a plugin option to disable automatic WikiWord links to non-existing tiddler titles, while still linking WikiWords that correspond to existing tiddlers titles or shadow tiddler titles.  You can also block specific selected WikiWords from being automatically linked by listing them in [[DisableWikiLinksList]] (see configuration below), separated by whitespace.  This tiddler is optional and, when present, causes the listed words to always be excluded, even if automatic linking of other WikiWords is being permitted.  
+
+Note: WikiWords contained in default ''shadow'' tiddlers will be automatically linked unless you select an additional checkbox option lets you disable these automatic links as well, though this is not recommended, since it can make it more difficult to access some TiddlyWiki standard default content (such as AdvancedOptions or SideBarTabs)
+&lt;&lt;&lt;
+!!!!!Configuration
+&lt;&lt;&lt;
+&lt;&lt;option chkDisableWikiLinks&gt;&gt; Disable ALL automatic WikiWord tiddler links
+&lt;&lt;option chkAllowLinksFromShadowTiddlers&gt;&gt; ... except for WikiWords //contained in// shadow tiddlers
+&lt;&lt;option chkDisableNonExistingWikiLinks&gt;&gt; Disable automatic WikiWord links for non-existing tiddlers
+Disable automatic WikiWord links for words listed in: &lt;&lt;option txtDisableWikiLinksList&gt;&gt;
+Disable automatic WikiWord links for tiddlers tagged with: &lt;&lt;option txtDisableWikiLinksTag&gt;&gt;
+&lt;&lt;&lt;
+!!!!!Revisions
+&lt;&lt;&lt;
+2008.07.22 [1.6.0] hijack tiddler changed() method to filter disabled wiki words from internal links[] array (so they won't appear in the missing tiddlers list)
+2007.06.09 [1.5.0] added configurable txtDisableWikiLinksTag (default value: &quot;excludeWikiWords&quot;) to allows selective disabling of automatic WikiWord links for any tiddler tagged with that value.
+2006.12.31 [1.4.0] in formatter, test for chkDisableNonExistingWikiLinks
+2006.12.09 [1.3.0] in formatter, test for excluded wiki words specified in DisableWikiLinksList
+2006.12.09 [1.2.2] fix logic in autoLinkWikiWords() (was allowing links TO shadow tiddlers, even when chkDisableWikiLinks is TRUE).  
+2006.12.09 [1.2.1] revised logic for handling links in shadow content
+2006.12.08 [1.2.0] added hijack of Tiddler.prototype.autoLinkWikiWords so regular (non-bracketed) WikiWords won't be added to the missing list
+2006.05.24 [1.1.0] added option to NOT bypass automatic wikiword links when displaying default shadow content (default is to auto-link shadow content)
+2006.02.05 [1.0.1] wrapped wikifier hijack in init function to eliminate globals and avoid FireFox 1.5.0.1 crash bug when referencing globals
+2005.12.09 [1.0.0] initial release
+&lt;&lt;&lt;
+!!!!!Code
+***/
+//{{{
+version.extensions.DisableWikiLinksPlugin= {major: 1, minor: 6, revision: 0, date: new Date(2008,7,22)};
+
+if (config.options.chkDisableNonExistingWikiLinks==undefined) config.options.chkDisableNonExistingWikiLinks= false;
+if (config.options.chkDisableWikiLinks==undefined) config.options.chkDisableWikiLinks=false;
+if (config.options.txtDisableWikiLinksList==undefined) config.options.txtDisableWikiLinksList=&quot;DisableWikiLinksList&quot;;
+if (config.options.chkAllowLinksFromShadowTiddlers==undefined) config.options.chkAllowLinksFromShadowTiddlers=true;
+if (config.options.txtDisableWikiLinksTag==undefined) config.options.txtDisableWikiLinksTag=&quot;excludeWikiWords&quot;;
+
+// find the formatter for wikiLink and replace handler with 'pass-thru' rendering
+initDisableWikiLinksFormatter();
+function initDisableWikiLinksFormatter() {
+	for (var i=0; i&lt;config.formatters.length &amp;&amp; config.formatters[i].name!=&quot;wikiLink&quot;; i++);
+	config.formatters[i].coreHandler=config.formatters[i].handler;
+	config.formatters[i].handler=function(w) {
+		// supress any leading &quot;~&quot; (if present)
+		var skip=(w.matchText.substr(0,1)==config.textPrimitives.unWikiLink)?1:0;
+		var title=w.matchText.substr(skip);
+		var exists=store.tiddlerExists(title);
+		var inShadow=w.tiddler &amp;&amp; store.isShadowTiddler(w.tiddler.title);
+		// check for excluded Tiddler
+		if (w.tiddler &amp;&amp; w.tiddler.isTagged(config.options.txtDisableWikiLinksTag))
+			{ w.outputText(w.output,w.matchStart+skip,w.nextMatch); return; }
+		// check for specific excluded wiki words
+		var t=store.getTiddlerText(config.options.txtDisableWikiLinksList);
+		if (t &amp;&amp; t.length &amp;&amp; t.indexOf(w.matchText)!=-1)
+			{ w.outputText(w.output,w.matchStart+skip,w.nextMatch); return; }
+		// if not disabling links from shadows (default setting)
+		if (config.options.chkAllowLinksFromShadowTiddlers &amp;&amp; inShadow)
+			return this.coreHandler(w);
+		// check for non-existing non-shadow tiddler
+		if (config.options.chkDisableNonExistingWikiLinks &amp;&amp; !exists)
+			{ w.outputText(w.output,w.matchStart+skip,w.nextMatch); return; }
+		// if not enabled, just do standard WikiWord link formatting
+		if (!config.options.chkDisableWikiLinks)
+			return this.coreHandler(w);
+		// just return text without linking
+		w.outputText(w.output,w.matchStart+skip,w.nextMatch)
+	}
+}
+
+Tiddler.prototype.coreAutoLinkWikiWords = Tiddler.prototype.autoLinkWikiWords;
+Tiddler.prototype.autoLinkWikiWords = function()
+{
+	// if all automatic links are not disabled, just return results from core function
+	if (!config.options.chkDisableWikiLinks)
+		return this.coreAutoLinkWikiWords.apply(this,arguments);
+	return false;
+}
+
+Tiddler.prototype.disableWikiLinks_changed = Tiddler.prototype.changed;
+Tiddler.prototype.changed = function()
+{
+	this.disableWikiLinks_changed.apply(this,arguments);
+	// remove excluded wiki words from links array
+	var t=store.getTiddlerText(config.options.txtDisableWikiLinksList,&quot;&quot;).readBracketedList();
+	if (t.length) for (var i=0; i&lt;t.length; i++)
+		if (this.links.contains(t[i]))
+			this.links.splice(this.links.indexOf(t[i]),1);
+};
+//}}}</pre>
+</div>
 <div title="Distribution of ranking index" creator="YourName" modifier="YourName" created="201502231218" modified="201502231750" changecount="3">
 <pre>Comparing distributions of several ranking index by paired / unpaired studies.
 
@@ -649,6 +751,182 @@ For each gene, this transferred index pulls its targeting miRNA information pres
 !!Result plots for HNSC cancer:
 
 @@~PLOTS_hnsc@@</pre>
+</div>
+<div title="ImageSizePlugin" modifier="genometra" created="200801180032" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
+<pre>/***
+|Name|ImageSizePlugin|
+|Source|http://www.TiddlyTools.com/#ImageSizePlugin|
+|Version|1.2.3|
+|Author|Eric Shulman|
+|License|http://www.TiddlyTools.com/#LegalStatements|
+|~CoreVersion|2.1|
+|Type|plugin|
+|Description|adds support for resizing images|
+This plugin adds optional syntax to scale an image to a specified width and height and/or interactively resize the image with the mouse.
+!!!!!Usage
+&lt;&lt;&lt;
+The extended image syntax is:
+{{{
+[img(w+,h+)[...][...]]
+}}}
+where ''(w,h)'' indicates the desired width and height (in CSS units, e.g., px, em, cm, in, or %). Use ''auto'' (or a blank value) for either dimension to scale that dimension proportionally (i.e., maintain the aspect ratio). You can also calculate a CSS value 'on-the-fly' by using a //javascript expression// enclosed between &quot;&quot;&quot;{{&quot;&quot;&quot; and &quot;&quot;&quot;}}&quot;&quot;&quot;. Appending a plus sign (+) to a dimension enables interactive resizing in that dimension (by dragging the mouse inside the image). Use ~SHIFT-click to show the full-sized (un-scaled) image. Use ~CTRL-click to restore the starting size (either scaled or full-sized).
+&lt;&lt;&lt;
+!!!!!Examples
+&lt;&lt;&lt;
+{{{
+[img(100px+,75px+)[images/meow2.jpg]]
+}}}
+[img(100px+,75px+)[images/meow2.jpg]]
+{{{
+[&lt;img(34%+,+)[images/meow.gif]]
+[&lt;img(21% ,+)[images/meow.gif]]
+[&lt;img(13%+, )[images/meow.gif]]
+[&lt;img( 8%+, )[images/meow.gif]]
+[&lt;img( 5% , )[images/meow.gif]]
+[&lt;img( 3% , )[images/meow.gif]]
+[&lt;img( 2% , )[images/meow.gif]]
+[img(  1%+,+)[images/meow.gif]]
+}}}
+[&lt;img(34%+,+)[images/meow.gif]]
+[&lt;img(21% ,+)[images/meow.gif]]
+[&lt;img(13%+, )[images/meow.gif]]
+[&lt;img( 8%+, )[images/meow.gif]]
+[&lt;img( 5% , )[images/meow.gif]]
+[&lt;img( 3% , )[images/meow.gif]]
+[&lt;img( 2% , )[images/meow.gif]]
+[img(  1%+,+)[images/meow.gif]]
+{{tagClear{
+}}}
+&lt;&lt;&lt;
+!!!!!Revisions
+&lt;&lt;&lt;
+2011.09.03 [1.2.3] bypass addStretchHandlers() if no '+' suffix is used (i.e., not resizable)
+2010.07.24 [1.2.2] moved tip/dragtip text to config.formatterHelpers.imageSize object to enable customization
+2009.02.24 [1.2.1] cleanup width/height regexp, use '+' suffix for resizing
+2009.02.22 [1.2.0] added stretchable images
+2008.01.19 [1.1.0] added evaluated width/height values
+2008.01.18 [1.0.1] regexp for &quot;(width,height)&quot; now passes all CSS values to browser for validation
+2008.01.17 [1.0.0] initial release
+&lt;&lt;&lt;
+!!!!!Code
+***/
+//{{{
+version.extensions.ImageSizePlugin= {major: 1, minor: 2, revision: 3, date: new Date(2011,9,3)};
+//}}}
+//{{{
+var f=config.formatters[config.formatters.findByField(&quot;name&quot;,&quot;image&quot;)];
+f.match=&quot;\\[[&lt;&gt;]?[Ii][Mm][Gg](?:\\([^,]*,[^\\)]*\\))?\\[&quot;;
+f.lookaheadRegExp=/\[([&lt;]?)(&gt;?)[Ii][Mm][Gg](?:\(([^,]*),([^\)]*)\))?\[(?:([^\|\]]+)\|)?([^\[\]\|]+)\](?:\[([^\]]*)\])?\]/mg;
+f.handler=function(w) {
+	this.lookaheadRegExp.lastIndex = w.matchStart;
+	var lookaheadMatch = this.lookaheadRegExp.exec(w.source)
+	if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+		var floatLeft=lookaheadMatch[1];
+		var floatRight=lookaheadMatch[2];
+		var width=lookaheadMatch[3];
+		var height=lookaheadMatch[4];
+		var tooltip=lookaheadMatch[5];
+		var src=lookaheadMatch[6];
+		var link=lookaheadMatch[7];
+
+		// Simple bracketted link
+		var e = w.output;
+		if(link) { // LINKED IMAGE
+			if (config.formatterHelpers.isExternalLink(link)) {
+				if (config.macros.attach &amp;&amp; config.macros.attach.isAttachment(link)) {
+					// see [[AttachFilePluginFormatters]]
+					e = createExternalLink(w.output,link);
+					e.href=config.macros.attach.getAttachment(link);
+					e.title = config.macros.attach.linkTooltip + link;
+				} else
+					e = createExternalLink(w.output,link);
+			} else 
+				e = createTiddlyLink(w.output,link,false,null,w.isStatic);
+			addClass(e,&quot;imageLink&quot;);
+		}
+
+		var img = createTiddlyElement(e,&quot;img&quot;);
+		if(floatLeft) img.align=&quot;left&quot;; else if(floatRight) img.align=&quot;right&quot;;
+		if(width||height) {
+			var x=width.trim(); var y=height.trim();
+			var stretchW=(x.substr(x.length-1,1)=='+'); if (stretchW) x=x.substr(0,x.length-1);
+			var stretchH=(y.substr(y.length-1,1)=='+'); if (stretchH) y=y.substr(0,y.length-1);
+			if (x.substr(0,2)==&quot;{{&quot;)
+				{ try{x=eval(x.substr(2,x.length-4))} catch(e){displayMessage(e.description||e.toString())} }
+			if (y.substr(0,2)==&quot;{{&quot;)
+				{ try{y=eval(y.substr(2,y.length-4))} catch(e){displayMessage(e.description||e.toString())} }
+			img.style.width=x.trim(); img.style.height=y.trim();
+			if (stretchW||stretchH) config.formatterHelpers.addStretchHandlers(img,stretchW,stretchH);
+		}
+		if(tooltip) img.title = tooltip;
+
+		// GET IMAGE SOURCE
+		if (config.macros.attach &amp;&amp; config.macros.attach.isAttachment(src))
+			src=config.macros.attach.getAttachment(src); // see [[AttachFilePluginFormatters]]
+		else if (config.formatterHelpers.resolvePath) { // see [[ImagePathPlugin]]
+			if (config.browser.isIE || config.browser.isSafari) {
+				img.onerror=(function(){
+					this.src=config.formatterHelpers.resolvePath(this.src,false);
+					return false;
+				});
+			} else
+				src=config.formatterHelpers.resolvePath(src,true);
+		}
+		img.src=src;
+		w.nextMatch = this.lookaheadRegExp.lastIndex;
+	}
+}
+
+config.formatterHelpers.imageSize={
+	tip: 'SHIFT-CLICK=show full size, CTRL-CLICK=restore initial size',
+	dragtip: 'DRAG=stretch/shrink, '
+}
+
+config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
+	e.title=((stretchW||stretchH)?this.imageSize.dragtip:'')+this.imageSize.tip;
+	e.statusMsg='width=%0, height=%1';
+	e.style.cursor='move';
+	e.originalW=e.style.width;
+	e.originalH=e.style.height;
+	e.minW=Math.max(e.offsetWidth/20,10);
+	e.minH=Math.max(e.offsetHeight/20,10);
+	e.stretchW=stretchW;
+	e.stretchH=stretchH;
+	e.onmousedown=function(ev) { var ev=ev||window.event;
+		this.sizing=true;
+		this.startX=!config.browser.isIE?ev.pageX:(ev.clientX+findScrollX());
+		this.startY=!config.browser.isIE?ev.pageY:(ev.clientY+findScrollY());
+		this.startW=this.offsetWidth;
+		this.startH=this.offsetHeight;
+		return false;
+	};
+	e.onmousemove=function(ev) { var ev=ev||window.event;
+		if (this.sizing) {
+			var s=this.style;
+			var currX=!config.browser.isIE?ev.pageX:(ev.clientX+findScrollX());
+			var currY=!config.browser.isIE?ev.pageY:(ev.clientY+findScrollY());
+			var newW=(currX-this.offsetLeft)/(this.startX-this.offsetLeft)*this.startW;
+			var newH=(currY-this.offsetTop )/(this.startY-this.offsetTop )*this.startH;
+			if (this.stretchW) s.width =Math.floor(Math.max(newW,this.minW))+'px';
+			if (this.stretchH) s.height=Math.floor(Math.max(newH,this.minH))+'px';
+			clearMessage(); displayMessage(this.statusMsg.format([s.width,s.height]));
+		}
+		return false;
+	};
+	e.onmouseup=function(ev) { var ev=ev||window.event;
+		if (ev.shiftKey) { this.style.width=this.style.height=''; }
+		if (ev.ctrlKey)  { this.style.width=this.originalW; this.style.height=this.originalH; }
+		this.sizing=false;
+		clearMessage();
+		return false;
+	};
+	e.onmouseout=function(ev) { var ev=ev||window.event;
+		this.sizing=false;
+		clearMessage();
+		return false;
+	};
+}
+//}}}</pre>
 </div>
 <div title="Inhibition effect correlation distribution by ontology" creator="YourName" modifier="YourName" created="201502231434" changecount="1">
 <pre>@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY@@</pre>
@@ -737,7 +1015,7 @@ Next results show a global comparison between all studies from several point of 
 
 @@~PLOTS_lusc@@</pre>
 </div>
-<div title="MainMenu" creator="YourName" modifier="YourName" created="201502160925" modified="201502231104" changecount="16">
+<div title="MainMenu" creator="YourName" modifier="david" created="201502160925" modified="201502282317" changecount="17">
 <pre>''BY LEVELS:''
 [[MiRNA  level]]
 [[Gene level]]
@@ -766,7 +1044,8 @@ Next results show a global comparison between all studies from several point of 
 [[STAD]]
 [[THCA]]
 [[UCEC]]
-</pre>
+
+&lt;&lt;toggleSideBar &quot;&quot; &quot;show options&quot; hide&gt;&gt;</pre>
 </div>
 <div title="MiRNA  level" creator="YourName" modifier="YourName" created="201502231751" modified="201502231753" changecount="3">
 <pre>Differential expression analysis was carried out for each cancer type using  [[edgeR|http://www.bioconductor.org/packages/release/bioc/html/edgeR.html]] followed for a p-value correction to control the [[false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
@@ -868,6 +1147,250 @@ Next results show a global comparison between all studies from several point of 
 !!Result plots for THCA cancer:
 
 @@~PLOTS_thca@@</pre>
+</div>
+<div title="TableSortingPlugin" modifier="genometra" created="200711280917" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
+<pre>/***
+|''Name:''|TableSortingPlugin|
+|''Description:''|Dynamically sort tables by clicking on column headers|
+|''Author:''|Saq Imtiaz ( lewcid@gmail.com )|
+|''Source:''|http://tw.lewcid.org/#TableSortingPlugin|
+|''Code Repository:''|http://tw.lewcid.org/svn/plugins|
+|''Version:''|2.02|
+|''Date:''|25-01-2008|
+|''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
+|''~CoreVersion:''|2.2.3|
+!!Usage:
+* Make sure your table has a header row
+** {{{|Name|Phone Number|Address|h}}}&lt;br&gt; Note the /h/ that denote a header row 
+* Give the table a class of 'sortable'
+** {{{
+|sortable|k
+|Name|Phone Number|Address|h
+}}}&lt;br&gt;Note the /k/ that denotes a class name being assigned to the table.
+* To disallow sorting by a column, place {{{&lt;&lt;nosort&gt;&gt;}}} in it's header
+* To automatically sort a table by a column, place {{{&lt;&lt;autosort&gt;&gt;}}} in the header for that column
+** Or to sort automatically but in reverse order, use {{{&lt;&lt;autosort reverse&gt;&gt;}}}
+
+!!Example:
+|sortable|k
+|Name |Salary |Extension |Performance |File Size |Start date |h
+|ZBloggs, Fred |$12000.00 |1353 |+1.2 |74.2Kb |Aug 19, 2003 21:34:00 |
+|ABloggs, Fred |$12000.00 |1353 |1.2 |3350b |09/18/2003 |
+|CBloggs, Fred |$12000 |1353 |1.200 |55.2Kb |August 18, 2003 |
+|DBloggs, Fred |$12000.00 |1353 |1.2 |2100b |07/18/2003 |
+|Bloggs, Fred |$12000.00 |1353 |01.20 |6.156Mb |08/17/2003 05:43 |
+|Turvey, Kevin |$191200.00 |2342 |-33 |1b |02/05/1979 |
+|Mbogo, Arnold |$32010.12 |2755 |-21.673 |1.2Gb |09/08/1998 |
+|Shakespeare, Bill |ÃÂ£122000.00|3211 |6 |33.22Gb |12/11/1961 |
+|Shakespeare, Hamlet |ÃÂ£9000 |9005 |-8 |3Gb |01/01/2002 |
+|Fitz, Marvin |Ã¢ÂÂ¬3300.30 |5554 |+5 |4Kb |05/22/1995 |
+
+***/
+// /%
+//!BEGIN-PLUGIN-CODE
+config.tableSorting = {
+	
+	darrow: &quot;\u2193&quot;,
+	
+	uarrow: &quot;\u2191&quot;,
+	
+	getText : function (o) {
+		var p = o.cells[SORT_INDEX];
+		return p.innerText || p.textContent || '';
+	},
+	
+	sortTable : function (o,rev) {
+		SORT_INDEX = o.getAttribute(&quot;index&quot;);
+		var c = config.tableSorting;
+		var T = findRelated(o.parentNode,&quot;TABLE&quot;);
+		if(T.tBodies[0].rows.length&lt;=1) 
+			return;
+		var itm = &quot;&quot;;
+		var i = 0;
+		while (itm == &quot;&quot; &amp;&amp; i &lt; T.tBodies[0].rows.length) {
+			itm = c.getText(T.tBodies[0].rows[i]).trim();
+			i++;
+		}
+		if (itm == &quot;&quot;) 
+			return; 	
+		var r = [];
+		var S = o.getElementsByTagName(&quot;span&quot;)[0];		
+		c.fn = c.sortAlpha; 
+		if(!isNaN(Date.parse(itm)))
+			c.fn = c.sortDate; 
+		else if(itm.match(/^[$|ÃÂ£|Ã¢ÂÂ¬|\+|\-]{0,1}\d*\.{0,1}\d+$/)) 
+			c.fn = c.sortNumber; 
+		else if(itm.match(/^\d*\.{0,1}\d+[K|M|G]{0,1}b$/)) 
+			c.fn = c.sortFile; 
+		for(i=0; i&lt;T.tBodies[0].rows.length; i++) {
+			 r[i]=T.tBodies[0].rows[i]; 
+		} 
+		r.sort(c.reSort);
+		if(S.firstChild.nodeValue==c.darrow || rev) {
+			r.reverse();
+			S.firstChild.nodeValue=c.uarrow;
+		} 
+		else 
+			S.firstChild.nodeValue=c.darrow;
+		var thead = T.getElementsByTagName('thead')[0]; 
+		var headers = thead.rows[thead.rows.length-1].cells;
+		for(var k=0; k&lt;headers.length; k++) {
+			if(!hasClass(headers[k],&quot;nosort&quot;))
+				addClass(headers[k].getElementsByTagName(&quot;span&quot;)[0],&quot;hidden&quot;);
+		}
+		removeClass(S,&quot;hidden&quot;);
+		for(i=0; i&lt;r.length; i++) { 
+			T.tBodies[0].appendChild(r[i]);
+			c.stripe(r[i],i);
+			for(var j=0; j&lt;r[i].cells.length;j++){
+				removeClass(r[i].cells[j],&quot;sortedCol&quot;);
+			}
+			addClass(r[i].cells[SORT_INDEX],&quot;sortedCol&quot;);
+		}
+	},
+	
+	stripe : function (e,i){
+		var cl = [&quot;oddRow&quot;,&quot;evenRow&quot;];
+		i&amp;1? cl.reverse() : cl;
+		removeClass(e,cl[1]);
+		addClass(e,cl[0]);
+	},
+	
+	sortNumber : function(v) {
+		var x = parseFloat(this.getText(v).replace(/[^0-9.-]/g,''));
+		return isNaN(x)? 0: x;
+	},
+	
+	sortDate : function(v) {
+		return Date.parse(this.getText(v));
+	},
+
+	sortAlpha : function(v) {
+		return this.getText(v).toLowerCase();
+	},
+	
+	sortFile : function(v) { 		
+		var j, q = config.messages.sizeTemplates, s = this.getText(v);
+		for (var i=0; i&lt;q.length; i++) {
+			if ((j = s.toLowerCase().indexOf(q[i].template.replace(&quot;%0\u00a0&quot;,&quot;&quot;).toLowerCase())) != -1)
+				return q[i].unit * s.substr(0,j);
+		}
+		return parseFloat(s);
+	},
+	
+	reSort : function(a,b){
+		var c = config.tableSorting;
+		var aa = c.fn(a);
+		var bb = c.fn(b);
+		return ((aa==bb)? 0 : ((aa&lt;bb)? -1:1));
+	}
+};
+
+Story.prototype.tSort_refreshTiddler = Story.prototype.refreshTiddler;
+Story.prototype.refreshTiddler = function(title,template,force,customFields,defaultText){
+	var elem = this.tSort_refreshTiddler.apply(this,arguments);
+	if(elem){
+		var tables = elem.getElementsByTagName(&quot;TABLE&quot;);
+		var c = config.tableSorting;
+		for(var i=0; i&lt;tables.length; i++){
+			if(hasClass(tables[i],&quot;sortable&quot;)){
+				var x = null, rev, table = tables[i], thead = table.getElementsByTagName('thead')[0], headers = thead.rows[thead.rows.length-1].cells;
+				for (var j=0; j&lt;headers.length; j++){
+					var h = headers[j];
+					if (hasClass(h,&quot;nosort&quot;))
+						continue;
+					h.setAttribute(&quot;index&quot;,j);
+					h.onclick = function(){c.sortTable(this); return false;};
+					h.ondblclick = stopEvent;
+					if(h.getElementsByTagName(&quot;span&quot;).length == 0)
+						createTiddlyElement(h,&quot;span&quot;,null,&quot;hidden&quot;,c.uarrow); 
+					if(!x &amp;&amp; hasClass(h,&quot;autosort&quot;)) {
+						x = j;
+						rev = hasClass(h,&quot;reverse&quot;);
+					}
+				}
+				if(x)
+					c.sortTable(headers[x],rev);		
+			}
+		}
+	}
+	return elem; 
+};
+
+setStylesheet(&quot;table.sortable span.hidden {visibility:hidden;}\n&quot;+
+	&quot;table.sortable thead {cursor:pointer;}\n&quot;+
+	&quot;table.sortable .nosort {cursor:default;}\n&quot;+
+	&quot;table.sortable td.sortedCol {background:#ffc;}&quot;,&quot;TableSortingPluginStyles&quot;);
+
+function stopEvent(e){
+	var ev = e? e : window.event;
+	ev.cancelBubble = true;
+	if (ev.stopPropagation) ev.stopPropagation();
+	return false;	
+}	
+
+config.macros.nosort={
+	handler : function(place){
+		addClass(place,&quot;nosort&quot;);
+	}	
+};
+
+config.macros.autosort={
+	handler : function(place,m,p,w,pS){
+		addClass(place,&quot;autosort&quot;+&quot; &quot;+pS);		
+	}	
+};
+//!END-PLUGIN-CODE
+// %/</pre>
+</div>
+<div title="ToggleSideBarMacro" modifier="david" created="201309032205" modified="201502282318" tags="systemConfig GenometraPlugin excludeSearch" changecount="1">
+<pre>// Created by Saq. Taken from tw.lewcid.org
+
+config.macros.toggleSideBar={};
+
+config.macros.toggleSideBar.settings={
+         styleHide :  &quot;#sidebar { display: none;}\n&quot;+&quot;#contentWrapper #displayArea { margin-right: 1em;}\n&quot;+&quot;&quot;,
+         styleShow : &quot; &quot;,
+         arrow1: &quot;&lt;&lt;&quot;,
+         arrow2: &quot;&gt;&gt;&quot;
+         //arrow1: &quot;�&quot;,
+         //arrow2: &quot;�&quot;
+};
+
+config.macros.toggleSideBar.handler=function (place,macroName,params,wikifier,paramString,tiddler)
+{
+          var tooltip= params[1]||'toggle sidebar';
+          var mode = (params[2] &amp;&amp; params[2]==&quot;hide&quot;)? &quot;hide&quot;:&quot;show&quot;;
+          var arrow = (mode == &quot;hide&quot;)? this.settings.arrow1:this.settings.arrow2;
+          var label= (params[0]&amp;&amp;params[0]!='.')?params[0]+&quot; &quot;+arrow:arrow;
+          var theBtn = createTiddlyButton(place,label,tooltip,this.onToggleSideBar,&quot;button HideSideBarButton&quot;);
+          if (mode == &quot;hide&quot;)
+             { 
+             (document.getElementById(&quot;sidebar&quot;)).setAttribute(&quot;toggle&quot;,&quot;hide&quot;);
+              setStylesheet(this.settings.styleHide,&quot;ToggleSideBarStyles&quot;);
+             }
+};
+
+config.macros.toggleSideBar.onToggleSideBar = function(){
+          var sidebar = document.getElementById(&quot;sidebar&quot;);
+          var settings = config.macros.toggleSideBar.settings;
+          if (sidebar.getAttribute(&quot;toggle&quot;)=='hide')
+             {
+              setStylesheet(settings.styleShow,&quot;ToggleSideBarStyles&quot;);
+              sidebar.setAttribute(&quot;toggle&quot;,&quot;show&quot;);
+              this.firstChild.data= (this.firstChild.data).replace(settings.arrow1,settings.arrow2);
+              }
+          else
+              {    
+               setStylesheet(settings.styleHide,&quot;ToggleSideBarStyles&quot;);
+               sidebar.setAttribute(&quot;toggle&quot;,&quot;hide&quot;);
+               this.firstChild.data= (this.firstChild.data).replace(settings.arrow2,settings.arrow1);
+              }
+
+     return false;
+}
+
+</pre>
 </div>
 <div title="UCEC" creator="YourName" modifier="YourName" created="201502241757" modified="201502241813" changecount="4">
 <pre>!!Result files for UCEC cancer:
