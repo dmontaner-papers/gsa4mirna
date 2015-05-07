@@ -1,6 +1,6 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ##This script prints some tables for the report
 > 
 > date ()
-[1] "Thu Feb 12 14:24:38 2015"
+[1] "Thu May  7 02:16:04 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -38,10 +38,10 @@ Type 'q()' to quit R.
 [8] "--no-restore"                                                            
 > rm (list = ls ())
 > R.version.string ##"R version 3.1.0 (2014-04-10)"
-[1] "R version 3.1.2 (2014-10-31)"
+[1] "R version 3.2.0 (2015-04-16)"
 > #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
 > library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
-[1] "1.8"
+[1] "1.10"
 > library (xtable); packageDescription ("xtable", fields = "Version") #"1.7-3"
 [1] "1.7-4"
 > library (tables); packageDescription ("tables", fields = "Version") #"0.7.79"
@@ -49,8 +49,8 @@ Loading required package: Hmisc
 Loading required package: grid
 Loading required package: lattice
 Loading required package: survival
-Loading required package: splines
 Loading required package: Formula
+Loading required package: ggplot2
 
 Attaching package: ‘Hmisc’
 
@@ -63,100 +63,8 @@ The following objects are masked from ‘package:base’:
     format.pval, round.POSIXt, trunc.POSIXt, units
 
 [1] "0.7.79"
-> help (package = xtable)
-
-		Information on package ‘xtable’
-
-Description:
-
-Package:            xtable
-Version:            1.7-4
-Date:               2014/08/17
-Title:              Export tables to LaTeX or HTML
-Author:             David B. Dahl <dahl@stat.byu.edu>
-Maintainer:         David Scott <d.scott@auckland.ac.nz>
-Description:        Coerce data to LaTeX and HTML tables
-URL:                http://xtable.r-forge.r-project.org/
-Depends:            R (>= 2.10.0)
-License:            GPL (>= 2)
-Repository:         CRAN
-Packaged:           2014-09-11 22:38:16 UTC; dsco036
-NeedsCompilation:   no
-Date/Publication:   2014-09-12 14:30:04
-Built:              R 3.1.1; ; 2014-09-30 21:54:01 UTC; unix
-
-Index:
-
-caption                 Retrieve and Set Options for Export Tables
-print.xtable            Print Export Tables
-string                  String handling functions
-tli                     Math scores from Texas Assessment of Academic
-                        Skills (TAAS)
-toLatex.xtable          Convert Table to Latex
-xtable                  Create Export Tables
-
-Further information is available in the following vignettes in
-directory ‘/usr/local/lib/R/site-library/xtable/doc’:
-
-margintable: xtable margintable (source, pdf)
-xtableGallery: xtable Gallery (source, pdf)
-
-> help (package = tables)
-
-		Information on package ‘tables’
-
-Description:
-
-Package:                            tables
-Title:                              Formula-driven table generation
-Version:                            0.7.79
-Author:                             Duncan Murdoch
-Description:                        Computes and displays complex
-                                    tables of summary statistics
-Maintainer:                         Duncan Murdoch
-                                    <murdoch@stats.uwo.ca>
-License:                            GPL-2
-Depends:                            R (>= 2.12.0), Hmisc
-Repository:                         CRAN
-Repository/R-Forge/Project:         tables
-Repository/R-Forge/Revision:        79
-Repository/R-Forge/DateTimeStamp:   2014-05-22 01:40:15
-Date/Publication:                   2014-07-24 15:04:15
-Packaged:                           2014-05-22 02:35:16 UTC; rforge
-NeedsCompilation:                   no
-Built:                              R 3.1.2; ; 2014-12-04 16:04:33 UTC;
-                                    unix
-
-Index:
-
-All                     Include all columns of a dataframe.
-Arguments               'Arguments' pseudo-function
-Format                  'Format' pseudo-function
-Heading                 'Heading' pseudo-function
-Hline                   Add a horizontal line to a LaTeX table.
-Justify                 'Justify' pseudo-function
-Literal                 Insert a literal entry into a table margin.
-Paste                   Generate terms to paste values together in
-                        table.
-Percent                 'Percent' pseudo-function
-PlusMinus               Generate 'x +/- y' terms in table.
-RowFactor               Use a variable as a factor to give rows in a
-                        table.
-as.matrix.tabular       Convert tabular object to matrix
-as.tabular              Convert matrix or dataframe to tabular object.
-html.tabular            Display a tabular object using HTML.
-labelSubset             Add a label to a logical vector.
-latex.tabular           Display a tabular object using LaTeX.
-latexNumeric            Process numeric LaTeX or HTML values.
-table_options           Set or query options for the table formatting.
-tabular                 Compute complex table
-write.csv.tabular       Write table to file in CSV or other format.
-
-Further information is available in the following vignettes in
-directory ‘/usr/local/lib/R/site-library/tables/doc’:
-
-tables: About the tables package (source, pdf)
-
+> #help (package = xtable)
+> #help (package = tables)
 > 
 > try (source (".job.r")); try (.job)
 
@@ -330,9 +238,13 @@ ucec UCEC   418   386       32     19  Uterine Corpus Endometrial Carcinoma
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 > ##
-> print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+> xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+> align (xt)[2] <- paste0 ("@{}", align (xt)[2])
+> print (xt,
 +        include.rownames = FALSE, table.placement = placement,
 +        size = "scriptsize",
++        tabular.environment = "tabular*",
++        width = "\\columnwidth",
 +        file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
 > 
 > ## kable (tabla, format = "markdown", caption = tabla.capt)
@@ -382,18 +294,20 @@ ucec UCEC  243   284 347  211   272 229
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 > ##
-> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+> xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+> align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+> tableLines <- print (xt,
 +                      include.rownames = FALSE, table.placement = placement,
 +                      size = "footnotesize",
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 14:24:38 2015
+% latex table generated in R 3.2.0 by xtable 1.7-4 package
+% Thu May  7 02:16:05 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
-\begin{tabular*}{\columnwidth}{lrrrrrr}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
 ID & Down & noDif & Up & Down & noDif & Up \\ 
   \midrule
@@ -471,18 +385,20 @@ ucec UCEC 9182  7171 8436 9338  7069 8201
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 > ##
-> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+> xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+> align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+> tableLines <- print (xt,
 +                      include.rownames = FALSE, table.placement = placement,
 +                      size = "footnotesize",
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 14:24:38 2015
+% latex table generated in R 3.2.0 by xtable 1.7-4 package
+% Thu May  7 02:16:05 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
-\begin{tabular*}{\columnwidth}{lrrrrrr}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
 ID & Down & Inter & Up & Down & Inter & Up \\ 
   \midrule
@@ -562,18 +478,20 @@ ucec UCEC 5169  5169 5169 5169  5169 5169
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 > ##
-> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+> xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+> align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+> tableLines <- print (xt,
 +                      include.rownames = FALSE, table.placement = placement,
 +                      size = "footnotesize",
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 14:24:38 2015
+% latex table generated in R 3.2.0 by xtable 1.7-4 package
+% Thu May  7 02:16:05 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
-\begin{tabular*}{\columnwidth}{lrrrrrr}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
 ID & Down & Inter & Up & Down & Inter & Up \\ 
   \midrule
@@ -656,18 +574,20 @@ ucec UCEC    89  5080    0     9  5160    0
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 > ##
-> tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+> xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+> align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+> tableLines <- print (xt,
 +                      include.rownames = FALSE, table.placement = placement,
 +                      size = "footnotesize",
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.1.2 by xtable 1.7-4 package
-% Thu Feb 12 14:24:38 2015
+% latex table generated in R 3.2.0 by xtable 1.7-4 package
+% Thu May  7 02:16:05 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
-\begin{tabular*}{\columnwidth}{lrrrrrr}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
 ID & Derg. & noDif & Inh. & Derg. & noDif & Inh. \\ 
   \midrule
@@ -720,24 +640,26 @@ Columns noDif indicate the number of GOs with a not significant slope coefficien
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.1.2 (2014-10-31)
+R version 3.2.0 (2015-04-16)
 Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.2 LTS
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
  [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] splines   grid      stats     graphics  grDevices utils     datasets  methods   base     
+[1] grid      stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] tables_0.7.79   Hmisc_3.14-6    Formula_1.1-2   survival_2.37-7 lattice_0.20-29 xtable_1.7-4    knitr_1.8      
+[1] tables_0.7.79   Hmisc_3.16-0    ggplot2_1.0.1   Formula_1.2-1   survival_2.38-1 lattice_0.20-31 xtable_1.7-4    knitr_1.10     
 
 loaded via a namespace (and not attached):
- [1] acepack_1.3-3.3     cluster_2.0.1       evaluate_0.5.5      foreign_0.8-62      formatR_1.0         latticeExtra_0.6-26 nnet_7.3-8          RColorBrewer_1.0-5 
- [9] rpart_4.1-8         stringr_0.6.2       tools_3.1.2        
+ [1] Rcpp_0.11.6         cluster_2.0.1       magrittr_1.5        splines_3.2.0       MASS_7.3-40         munsell_0.4.2       colorspace_1.2-6    highr_0.5          
+ [9] stringr_1.0.0       plyr_1.8.2          tools_3.2.0         nnet_7.3-9          gtable_0.1.2        latticeExtra_0.6-26 digest_0.6.8        gridExtra_0.9.1    
+[17] RColorBrewer_1.1-2  reshape2_1.4.1      acepack_1.3-3.3     rpart_4.1-9         stringi_0.4-1       scales_0.2.4        foreign_0.8-63      proto_0.3-10       
 > #q ("no")
 > 
 > proc.time()
    user  system elapsed 
-  0.629   0.042   0.663 
+  0.679   0.046   0.719 

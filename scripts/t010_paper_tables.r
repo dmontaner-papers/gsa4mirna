@@ -12,8 +12,8 @@ R.version.string ##"R version 3.1.0 (2014-04-10)"
 library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
 library (xtable); packageDescription ("xtable", fields = "Version") #"1.7-3"
 library (tables); packageDescription ("tables", fields = "Version") #"0.7.79"
-help (package = xtable)
-help (package = tables)
+#help (package = xtable)
+#help (package = tables)
 
 try (source (".job.r")); try (.job)
 
@@ -51,9 +51,13 @@ tabla
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 ##
-print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+align (xt)[2] <- paste0 ("@{}", align (xt)[2])
+print (xt,
        include.rownames = FALSE, table.placement = placement,
        size = "scriptsize",
+       tabular.environment = "tabular*",
+       width = "\\columnwidth",
        file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
 
 ## kable (tabla, format = "markdown", caption = tabla.capt)
@@ -82,7 +86,9 @@ tabla
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 ##
-tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+tableLines <- print (xt,
                      include.rownames = FALSE, table.placement = placement,
                      size = "footnotesize",
                      tabular.environment = "tabular*",
@@ -115,7 +121,9 @@ tabla
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 ##
-tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+tableLines <- print (xt,
                      include.rownames = FALSE, table.placement = placement,
                      size = "footnotesize",
                      tabular.environment = "tabular*",
@@ -149,7 +157,9 @@ tabla
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 ##
-tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+tableLines <- print (xt,
                      include.rownames = FALSE, table.placement = placement,
                      size = "footnotesize",
                      tabular.environment = "tabular*",
@@ -185,7 +195,9 @@ tabla
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
 ##
-tableLines <- print (xtable (tabla, caption = tabla.capt, label = tabla.labe),
+xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
+align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
+tableLines <- print (xt,
                      include.rownames = FALSE, table.placement = placement,
                      size = "footnotesize",
                      tabular.environment = "tabular*",
