@@ -124,7 +124,7 @@ tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 
 #adding links to TCGA:
-tcga_links <- read.csv(file.path (.job$dir$proces, "tcga_links.csv"), sep = "\t", row.names = 1)
+tcga_links <- read.csv(file.path (.job$dir$docs, "tcga_links.csv"), sep = "\t", row.names = 1)
 tcga_links <- tcga_links[rownames(tabla),]
 tcga_links[,"mlinks"] <- paste0("[[", tcga_links[,"description"], "|", tcga_links[,"tcga_links"], "]]")
 head(tcga_links) 

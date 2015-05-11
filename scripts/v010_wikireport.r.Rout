@@ -1,0 +1,770 @@
+
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> date ()
+[1] "Mon May 11 11:31:18 2015"
+> Sys.info ()[c("nodename", "user")]
+nodename     user 
+  "paco"   "paco" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R" "-f"                    "v010_wikireport.r"    
+[4] "--restore"             "--save"                "--no-readline"        
+> rm (list = ls ())
+> R.version.string #"R version 3.0.0 RC (2013-03-26 r62418)"
+[1] "R version 3.0.2 (2013-09-25)"
+> library (Biobase); packageDescription ("Biobase", fields = "Version") #"2.22.0"
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following object is masked from ‘package:stats’:
+
+    xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
+    duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted,
+    lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int,
+    pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames,
+    sapply, setdiff, sort, table, tapply, union, unique, unlist
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+[1] "2.22.0"
+> #library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+> library (TiddlyWikiR); packageDescription ("TiddlyWikiR", fields = "Version") #"1.0.4"
+[1] "1.0.4"
+> #help (package = TiddlyWikiR)
+> 
+> source (".job.r"); .job
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/Desktop/papers/gsa4mirna/datos"
+
+$dir$code
+[1] "~/Desktop/papers/gsa4mirna"
+
+$dir$scripts
+[1] "~/Desktop/papers/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/Desktop/papers/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/Desktop/papers/gsa4mirna/datos/data_raw"
+
+$dir$annotation
+[1] "~/Desktop/papers/gsa4mirna/datos/data_annotation"
+
+$dir$proces
+[1] "~/Desktop/papers/gsa4mirna/datos/data_processed"
+
+$dir$plots
+[1] "~/Desktop/papers/gsa4mirna/datos/results/plots"
+
+$dir$res
+[1] "~/Desktop/papers/gsa4mirna/datos/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ### DATA
+> load (file.path (.job$dir$proces, "report", "allStudyInfo.RData"))  #this object includes all necessary data to prepare tables
+> ls ()
+[1] "datos"
+> datos[1:3,]
+       ID N.cases N.controls N.total case.cont.ratio N.paired.samples
+blca BLCA     252         19     271       13.263158               19
+brca BRCA     720         87     807        8.275862               86
+cesc CESC     215          3     218       71.666667                3
+                          cancer.type miRNA.Down.unpa miRNA.noDif.unpa
+blca     Bladder Urothelial Carcinoma             128              337
+brca        Breast invasive carcinoma             200              244
+cesc Cervical squamous cell carcinoma              92              621
+     miRNA.Up.unpa miRNA.Down.pair miRNA.noDif.pair miRNA.Up.pair
+blca           353             127              343           219
+brca           396             202              215           269
+cesc            73              29              537            65
+     targets.Down.unpa targets.Intersect.unpa targets.Up.unpa targets.Down.pair
+blca              8345                   6763            8599              8087
+brca              8968                   7700            9465              9305
+cesc              7834                   5201            6525              4877
+     targets.Intersect.pair targets.Up.pair targetGOs.Down.unpa
+blca                   5955            7528                5169
+brca                   7724            9001                5169
+cesc                   3178            5431                5169
+     targetGOs.Intersect.unpa targetGOs.Up.unpa targetGOs.Down.pair
+blca                     5169              5169                5169
+brca                     5169              5169                5169
+cesc                     5168              5168                5144
+     targetGOs.Intersect.pair targetGOs.Up.pair bp.Down.unpa bp.noDif.unpa
+blca                     5168              5168            0          3976
+brca                     5169              5169            0          3976
+cesc                     5138              5160            0          3976
+     bp.UP.unpa cc.Down.unpa cc.noDif.unpa cc.UP.unpa mf.Down.unpa
+blca          0            2           444          0            0
+brca          0            3           443          0            0
+cesc          0            0           446          0            0
+     mf.noDif.unpa mf.UP.unpa go.Down.unpa go.noDif.unpa go.UP.unpa
+blca           747          0            2          5167          0
+brca           747          0            3          5166          0
+cesc           747          0            0          5169          0
+     bp.Down.pair bp.noDif.pair bp.UP.pair cc.Down.pair cc.noDif.pair
+blca            0          3976          0            2           444
+brca            0          3976          0            0           444
+cesc            0          3976          0            1           444
+     cc.UP.pair mf.Down.pair mf.noDif.pair mf.UP.pair go.Down.pair
+blca          0            0           747          0            2
+brca          2            0           747          0            0
+cesc          1            0           747          0            1
+     go.noDif.pair go.UP.pair
+blca          5167          0
+brca          5167          2
+cesc          5167          1
+> dim(datos)
+[1] 20 49
+> 
+> t (t (colnames (datos)))
+      [,1]                      
+ [1,] "ID"                      
+ [2,] "N.cases"                 
+ [3,] "N.controls"              
+ [4,] "N.total"                 
+ [5,] "case.cont.ratio"         
+ [6,] "N.paired.samples"        
+ [7,] "cancer.type"             
+ [8,] "miRNA.Down.unpa"         
+ [9,] "miRNA.noDif.unpa"        
+[10,] "miRNA.Up.unpa"           
+[11,] "miRNA.Down.pair"         
+[12,] "miRNA.noDif.pair"        
+[13,] "miRNA.Up.pair"           
+[14,] "targets.Down.unpa"       
+[15,] "targets.Intersect.unpa"  
+[16,] "targets.Up.unpa"         
+[17,] "targets.Down.pair"       
+[18,] "targets.Intersect.pair"  
+[19,] "targets.Up.pair"         
+[20,] "targetGOs.Down.unpa"     
+[21,] "targetGOs.Intersect.unpa"
+[22,] "targetGOs.Up.unpa"       
+[23,] "targetGOs.Down.pair"     
+[24,] "targetGOs.Intersect.pair"
+[25,] "targetGOs.Up.pair"       
+[26,] "bp.Down.unpa"            
+[27,] "bp.noDif.unpa"           
+[28,] "bp.UP.unpa"              
+[29,] "cc.Down.unpa"            
+[30,] "cc.noDif.unpa"           
+[31,] "cc.UP.unpa"              
+[32,] "mf.Down.unpa"            
+[33,] "mf.noDif.unpa"           
+[34,] "mf.UP.unpa"              
+[35,] "go.Down.unpa"            
+[36,] "go.noDif.unpa"           
+[37,] "go.UP.unpa"              
+[38,] "bp.Down.pair"            
+[39,] "bp.noDif.pair"           
+[40,] "bp.UP.pair"              
+[41,] "cc.Down.pair"            
+[42,] "cc.noDif.pair"           
+[43,] "cc.UP.pair"              
+[44,] "mf.Down.pair"            
+[45,] "mf.noDif.pair"           
+[46,] "mf.UP.pair"              
+[47,] "go.Down.pair"            
+[48,] "go.noDif.pair"           
+[49,] "go.UP.pair"              
+> 
+> 
+> ################################################################################
+> ### WIKI REPORT: START the wiki
+> ################################################################################
+> infile  <- file.path (.job$dir$docs, "index_template.html")
+> outfile <- file.path (.job$dir$code, "index.html")
+> infile
+[1] "~/Desktop/papers/gsa4mirna/documents/index_template.html"
+> outfile
+[1] "~/Desktop/papers/gsa4mirna/index.html"
+> 
+> writeTiddlers (infile = infile, outfile = outfile)
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> ################################################################################
+> ### WIKI REPORT: REPLACE TAGS
+> ################################################################################
+> mistags <- list ()
+> 
+> # mistags[["@@~COMPLETION_DATE@@"]] <- as.character (format (Sys.Date(), format="%d %B %Y"))
+> # 
+> # mistags[["@@~NUMBER_OF_SAMPLES@@"]] <- as.character ('17')
+> # 
+> # mistags[["@@~WORK_AUTHORS@@"]] <- twList (c("''Francisco Garcia''", "''David Montaner''"))
+> 
+> # my_files <- dir('/media/FGG/tiddly/gsa4mirna/supplementary_files/files')
+> # my_plots <- dir('/home/paco/Desktop/plots')
+> 
+> my_files <- dir(file.path (.job$dir$code, "supplementary_files", "files"))
+> my_plots <- dir(file.path (.job$dir$code, "supplementary_files", "plots"))
+> 
+> 
+> ## 0. Table with full information for all tumors
+> ################################################################################
+> 
+> tabla.cols <- c ("ID", "miRNA.Down.unpa", "miRNA.noDif.unpa", "miRNA.Up.unpa",
++                  "miRNA.Down.pair", "miRNA.noDif.pair", "miRNA.Up.pair",
++                  "go.Down.unpa", "go.noDif.unpa", "go.UP.unpa",
++                  "go.Down.pair", "go.noDif.pair", "go.UP.pair",
++                  "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
++                  "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
++                  "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
++                  "bp.Down.pair",  "bp.noDif.pair", "bp.UP.pair",
++                  "cc.Down.pair",  "cc.noDif.pair", "cc.UP.pair",
++                  "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair") 
+> 
+> tabla.nams <- c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired", 
++                  "Down.paired",  "noDif.paired", "Up.paired",
++                  "Derg.unpaired",  "noDif.unpaired",  "Inh.unpaired",
++                  "Derg.paired",  "noDif.paired", "Inh.paired",
++                  "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
++                  "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
++                  "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
++                  "bp.Down.pair",  "bp.noDif.pair", "bp.UP.pair",
++                  "cc.Down.pair",  "cc.noDif.pair", "cc.UP.pair",
++                  "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair") 
+> 
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> 
+> 
+> tabla[,"resPaired"]   <- paste0 ("res_edger_paired_",   rownames (tabla), ".xlsx")
+> tabla[,"resUnpaired"] <- paste0 ("res_edger_unpaired_", rownames (tabla), ".xlsx")
+> 
+> tabla[,"resPaired_gsa_cc"]   <- paste0 ("res_gsa_paired_",     rownames (tabla), "_cc.xlsx")
+> tabla[,"resPaired_gsa_mf"]   <- paste0 ("res_gsa_paired_",     rownames (tabla), "_mf.xlsx")
+> tabla[,"resPaired_gsa_bp"]   <- paste0 ("res_gsa_paired_",     rownames (tabla), "_bp.xlsx")
+> tabla[,"resUnpaired_gsa_cc"] <- paste0 ("res_gsa_unpaired_",   rownames (tabla), "_cc.xlsx")
+> tabla[,"resUnpaired_gsa_mf"] <- paste0 ("res_gsa_unpaired_",   rownames (tabla), "_mf.xlsx")
+> tabla[,"resUnpaired_gsa_bp"] <- paste0 ("res_gsa_unpaired_",   rownames (tabla), "_bp.xlsx")
+> 
+> ##
+> links <- tabla  
+> links[] <- NA  ## vaciado   #the same structure to TABLA but full of NA
+> links[,"resPaired"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired"])
+> links[,"resUnpaired"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired"])
+> 
+> links[,"resPaired_gsa_cc"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired_gsa_cc"])
+> links[,"resUnpaired_gsa_cc"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired_gsa_cc"])
+> links[,"resPaired_gsa_mf"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired_gsa_mf"])
+> links[,"resUnpaired_gsa_mf"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired_gsa_mf"])
+> links[,"resPaired_gsa_bp"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired_gsa_bp"])
+> links[,"resUnpaired_gsa_bp"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired_gsa_bp"])
+> 
+> 
+> 
+> links <- as.matrix (links)
+> #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
+> #For this case, the tag is: @@~TABLA_all@@
+> mistags[["@@~TABLA_all@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",39)))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> #save this general table:
+> tabla0 <- tabla
+> links0 <- links
+> 
+> 
+> 
+> ## 1. Analyzed datasets
+> ################################################################################
+> 
+> tabla.cols <- c ("ID", "N.total" , "N.cases", "N.controls", "N.paired.samples", "cancer.type")
+> tabla.nams <- c ("ID", "total",  "cases",  "controls",  "paired",  "description")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> 
+> #adding links to TCGA:
+> tcga_links <- read.csv(file.path (.job$dir$docs, "tcga_links.csv"), sep = "\t", row.names = 1)
+> tcga_links <- tcga_links[rownames(tabla),]
+> tcga_links[,"mlinks"] <- paste0("[[", tcga_links[,"description"], "|", tcga_links[,"tcga_links"], "]]")
+> head(tcga_links) 
+       ID total cases controls paired                           description
+blca BLCA   271   252       19     19          Bladder Urothelial Carcinoma
+brca BRCA   807   720       87     86             Breast invasive carcinoma
+cesc CESC   218   215        3      3      Cervical squamous cell carcinoma
+coad COAD   243   235        8      0                  Colon adenocarcinoma
+esca ESCA   113   102       11     11                  Esophageal carcinoma
+hnsc HNSC   519   475       44     43 Head and Neck squamous cell carcinoma
+                                                                                                                                                             tcga_links
+blca                                             https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BLCA&diseaseName=Bladder%20Urothelial%20Carcinoma
+brca                                                https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BRCA&diseaseName=Breast%20invasive%20carcinoma
+cesc https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=CESC&diseaseName=Cervical%20squamous%20cell%20carcinoma%20and%20endocervical%20adenocarcinoma
+coad                                                       https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=COAD&diseaseName=Colon%20adenocarcinoma
+esca                                                       https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=ESCA&diseaseName=Esophageal%20carcinoma
+hnsc                              https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=HNSC&diseaseName=Head%20and%20Neck%20squamous%20cell%20carcinoma
+                                                                                                                                                                                                      mlinks
+blca                                                 [[Bladder Urothelial Carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BLCA&diseaseName=Bladder%20Urothelial%20Carcinoma]]
+brca                                                       [[Breast invasive carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BRCA&diseaseName=Breast%20invasive%20carcinoma]]
+cesc [[Cervical squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=CESC&diseaseName=Cervical%20squamous%20cell%20carcinoma%20and%20endocervical%20adenocarcinoma]]
+coad                                                                   [[Colon adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=COAD&diseaseName=Colon%20adenocarcinoma]]
+esca                                                                   [[Esophageal carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=ESCA&diseaseName=Esophageal%20carcinoma]]
+hnsc                         [[Head and Neck squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=HNSC&diseaseName=Head%20and%20Neck%20squamous%20cell%20carcinoma]]
+> tabla1 <- cbind(tabla[, c("ID", "total", "cases", "controls", "paired")], tcga_links[,"mlinks"])
+> colnames(tabla1) <-  c("ID", "total", "cases", "controls", "paired", "description")
+> head(tabla1)
+       ID total cases controls paired
+blca BLCA   271   252       19     19
+brca BRCA   807   720       87     86
+cesc CESC   218   215        3      3
+coad COAD   243   235        8      0
+esca ESCA   113   102       11     11
+hnsc HNSC   519   475       44     43
+                                                                                                                                                                                                 description
+blca                                                 [[Bladder Urothelial Carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BLCA&diseaseName=Bladder%20Urothelial%20Carcinoma]]
+brca                                                       [[Breast invasive carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BRCA&diseaseName=Breast%20invasive%20carcinoma]]
+cesc [[Cervical squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=CESC&diseaseName=Cervical%20squamous%20cell%20carcinoma%20and%20endocervical%20adenocarcinoma]]
+coad                                                                   [[Colon adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=COAD&diseaseName=Colon%20adenocarcinoma]]
+esca                                                                   [[Esophageal carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=ESCA&diseaseName=Esophageal%20carcinoma]]
+hnsc                         [[Head and Neck squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=HNSC&diseaseName=Head%20and%20Neck%20squamous%20cell%20carcinoma]]
+> 
+> 
+> #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
+> #For this case, the tag is: @@~TABLA1_DATASETS@@
+> mistags[["@@~TABLA1_DATASETS@@"]] <-  twTable (dat = tabla1, sortable = TRUE, align = c("r", rep("c",4),"l"))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> 
+> 
+> ## 2. MiRNA level
+> ################################################################################
+> 
+> tabla.cols <- c ("ID", "miRNA.Down.unpa", "miRNA.noDif.unpa", "miRNA.Up.unpa", "miRNA.Down.pair", "miRNA.noDif.pair", "miRNA.Up.pair")
+> tabla.nams <- c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired",  "Down.paired",  "noDif.paired", "Up.paired")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> 
+> tabla[,"resPaired"]   <- paste0 ("res_edger_paired_",   rownames (tabla), ".xlsx")
+> tabla[,"resUnpaired"] <- paste0 ("res_edger_unpaired_", rownames (tabla), ".xlsx")
+> ##
+> links <- tabla  
+> links[] <- NA  ## vaciado   #the same structure to TABLA but full of NA
+> links[,"resPaired"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired"])
+> links[,"resUnpaired"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired"])
+> links <- as.matrix (links)
+> #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
+> #For this case, the tag is: @@~TABLA_MIRNAS@@
+> mistags[["@@~TABLA2_MIRNAS@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",9)))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> 
+> 
+> # ############################################################################################## 
+> # ## MiRNA level
+> # 
+> # my_files2 <- my_files[grep("res_edger_paired", my_files)]
+> # my_files2
+> # links <- rep('NA', length(my_files2))
+> # data <- cbind(my_files2, links)
+> # class(data)
+> # data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> # colnames(data) <- c("files", "links")
+> # mistags[["@@~TABLA_MIRNA_LEVEL_PAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> # 
+> # my_files2 <- my_files[grep("res_edger_unpaired", my_files)]
+> # my_files2
+> # links <- rep('NA', length(my_files2))
+> # data <- cbind(my_files2, links)
+> # class(data)
+> # data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> # colnames(data) <- c("files", "links")
+> # mistags[["@@~TABLA_MIRNA_LEVEL_UNPAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> # 
+> 
+> 
+> ## 3. GENE level
+> ################################################################################
+> 
+> # tabla 3
+> ######################
+> 
+> tabla.cols <- c ("ID", "targets.Down.unpa", "targets.Intersect.unpa", "targets.Up.unpa", "targets.Down.pair",
++                  "targets.Intersect.pair", "targets.Up.pair")
+> tabla.nams <- c ("ID", "Down.unpaired",  "Inter.unpaired",  "Up.unpaired",  "Down.paired",  "Inter.paired", "Up.paired")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> 
+> # tabla[,"resPaired"]   <- paste0 ("res_edger_paired_",   rownames (tabla), ".xlsx")
+> # tabla[,"resUnpaired"] <- paste0 ("res_edger_unpaired_", rownames (tabla), ".xlsx")
+> # ##
+> # links <- tabla  
+> # links[] <- NA  ## vaciado   #the same structure to TABLA but full of NA
+> # links[,"resPaired"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired"])
+> # links[,"resUnpaired"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired"])
+> # links <- as.matrix (links)
+> 
+> #NOTE: this table doesn't contain xls files for target genes
+> #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
+> #For this case, the tag is: @@~TABLA_GENES@@
+> mistags[["@@~TABLA3_GENES@@"]] <-  twTable (dat = tabla, sortable = TRUE, align = c(rep("c",7)))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> 
+> 
+> # and more information: 
+> ######################
+> 
+> my_files2 <- my_files[grep("transfer_index_paired", my_files)]
+> my_files2
+ [1] "transfer_index_paired_blca.xlsx" "transfer_index_paired_brca.xlsx"
+ [3] "transfer_index_paired_cesc.xlsx" "transfer_index_paired_esca.xlsx"
+ [5] "transfer_index_paired_hnsc.xlsx" "transfer_index_paired_kich.xlsx"
+ [7] "transfer_index_paired_kirc.xlsx" "transfer_index_paired_kirp.xlsx"
+ [9] "transfer_index_paired_lihc.xlsx" "transfer_index_paired_luad.xlsx"
+[11] "transfer_index_paired_lusc.xlsx" "transfer_index_paired_paad.xlsx"
+[13] "transfer_index_paired_pcpg.xlsx" "transfer_index_paired_prad.xlsx"
+[15] "transfer_index_paired_stad.xlsx" "transfer_index_paired_thca.xlsx"
+[17] "transfer_index_paired_ucec.xlsx"
+> links <- rep('NA', length(my_files2))
+> data <- cbind(my_files2, links)
+> class(data)
+[1] "matrix"
+> data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> colnames(data) <- c("files", "links")
+> mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_PAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> 
+> my_files2 <- my_files[grep("transfer_index_unpaired", my_files)]
+> my_files2
+ [1] "transfer_index_unpaired_blca.xlsx" "transfer_index_unpaired_brca.xlsx"
+ [3] "transfer_index_unpaired_cesc.xlsx" "transfer_index_unpaired_coad.xlsx"
+ [5] "transfer_index_unpaired_esca.xlsx" "transfer_index_unpaired_hnsc.xlsx"
+ [7] "transfer_index_unpaired_kich.xlsx" "transfer_index_unpaired_kirc.xlsx"
+ [9] "transfer_index_unpaired_kirp.xlsx" "transfer_index_unpaired_lihc.xlsx"
+[11] "transfer_index_unpaired_luad.xlsx" "transfer_index_unpaired_lusc.xlsx"
+[13] "transfer_index_unpaired_paad.xlsx" "transfer_index_unpaired_pcpg.xlsx"
+[15] "transfer_index_unpaired_prad.xlsx" "transfer_index_unpaired_read.xlsx"
+[17] "transfer_index_unpaired_skcm.xlsx" "transfer_index_unpaired_stad.xlsx"
+[19] "transfer_index_unpaired_thca.xlsx" "transfer_index_unpaired_ucec.xlsx"
+> links <- rep('NA', length(my_files2))
+> data <- cbind(my_files2, links)
+> class(data)
+[1] "matrix"
+> data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> colnames(data) <- c("files", "links")
+> mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> 
+> my_plots2 <- my_plots[grep("paired_explore_transfer", my_plots)]
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_LEVEL@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> 
+> 
+> 
+> ## 4. Gene Set 
+> ############################################################################################## 
+> 
+> 
+> ## TABLE 4
+> ######################
+> 
+> tabla.cols <- c ("ID", "targetGOs.Down.unpa", "targetGOs.Intersect.unpa", "targetGOs.Up.unpa", "targetGOs.Down.pair",
++                  "targetGOs.Intersect.pair", "targetGOs.Up.pair")
+> tabla.nams <- c ("ID", "Down.unpaired",  "Inter.unpaired",  "Up.unpaired",  "Down.paired",  "Inter.paired", "Up.paired")
+> tabla <- datos[,tabla.cols]
+> colnames (tabla) <- tabla.nams
+> 
+> #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
+> mistags[["@@~TABLA4_GOS@@"]] <-  twTable (dat = tabla, sortable = TRUE, align = c(rep("c",7)))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> ## TABLE 5
+> ######################
+> 
+> tabla <- tabla0[, c ("ID", "Derg.unpaired",  "noDif.unpaired",  "Inh.unpaired", 
++                            "Derg.paired", "noDif.paired", "Inh.paired", 
++                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
++                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
++                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
++                      "bp.Down.pair",  "bp.noDif.pair", "bp.UP.pair",
++                      "cc.Down.pair",  "cc.noDif.pair", "cc.UP.pair",
++                      "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair",
++                      "resPaired_gsa_cc", "resUnpaired_gsa_cc", "resPaired_gsa_mf",
++                      "resUnpaired_gsa_mf", "resPaired_gsa_bp",   "resUnpaired_gsa_bp")] 
+> 
+> links <- links0[, c ("ID", "Derg.unpaired",  "noDif.unpaired",  "Inh.unpaired", 
++                      "Derg.paired", "noDif.paired", "Inh.paired", 
++                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
++                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
++                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
++                      "bp.Down.pair",  "bp.noDif.pair", "bp.UP.pair",
++                      "cc.Down.pair",  "cc.noDif.pair", "cc.UP.pair",
++                      "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair",
++                      "resPaired_gsa_cc", "resUnpaired_gsa_cc", "resPaired_gsa_mf",
++                      "resUnpaired_gsa_mf", "resPaired_gsa_bp",   "resUnpaired_gsa_bp")]
+> 
+> mistags[["@@~TABLA5_GOS@@"]] <-  twTable (dat = tabla,  ref = links, sortable = TRUE, align = c(rep("c",31)))
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+>                                        
+> 
+> 
+> 
+> 
+> ## Gene Set level
+> ######################
+> 
+> # my_files2 <- my_files[grep("res_gsa_paired", my_files)]
+> # my_files2
+> # links <- rep('NA', length(my_files2))
+> # data <- cbind(my_files2, links)
+> # class(data)
+> # data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> # colnames(data) <- c("files", "links")
+> # mistags[["@@~TABLA_GENE_SET_LEVEL_GO_PAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> # 
+> # 
+> # my_files2 <- my_files[grep("res_gsa_unpaired", my_files)]
+> # my_files2
+> # links <- rep('NA', length(my_files2))
+> # data <- cbind(my_files2, links)
+> # class(data)
+> # data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> # colnames(data) <- c("files", "links")
+> # mistags[["@@~TABLA_GENE_SET_LEVEL_GO_UNPAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+> 
+> my_files2 <- c("common_enrichment_paired.xlsx", "common_enrichment_unpaired.xlsx" )
+> links <- rep('NA', length(my_files2))
+> data <- cbind(my_files2, links)
+> class(data)
+[1] "matrix"
+> data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+> colnames(data) <- c("files", "links")
+> mistags[["@@~TABLE_GENE_SET_LEVEL_ALL_STUDIES@@"]] <- twTable (dat = data, sortable = TRUE)
+> 
+> 
+> my_plots2 <- my_plots[grep("paired_size_effect", my_plots)]
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> my_plots2 <- my_plots[grep("unpaired_size_effect", my_plots)]
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> 
+> 
+> 
+> 
+> ## Gene Set level
+> ######################
+> 
+> my_plots2 <- c("paired_rindex_boxplot.png", "unpaired_rindex_boxplot.png")
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> my_plots2 <- c("paired_rindex_boxplot.png", "unpaired_rindex_boxplot.png")
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> 
+> my_plots2 <- c("paired_cor_rindex0.png", "paired_cor_rindexN.png", "paired_cor_rindexT.png", 
++   "unpaired_cor_rindex0.png", "unpaired_cor_rindexN.png", "unpaired_cor_rindexT.png")
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> my_plots2 <- my_plots[grep("_dist_of_", my_plots)]
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> 
+> my_plots2 <- c("paired_rindex_cor_vs_cor.png", "unpaired_rindex_cor_vs_cor.png")
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION@@"]] <- twTable (dat = plots, sortable = TRUE)
+> 
+> 
+> 
+> 
+> ############################################################################################## 
+> ## by cancer
+> 
+> canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kick", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
++               "read", "skcm", "stad", "thca", "ucec")
+>   
+> for (i in 1:length(canceres)) {
++   
++   tabla <- tabla0[canceres[i],]
++   links <- as.data.frame(links0)[canceres[i],]
++   mistags[[paste("@@~SUMMARY_", canceres[i], "@@", sep ="")]] <-  twTable (dat = tabla,  ref = links, sortable = TRUE,
++                                                                            align = c(rep("c",39)))
++   
++   my_plots2 <- my_plots[grep(canceres[i], my_plots)]
++   links <- rep('NA', length(my_plots2))
++   plots <- cbind(my_plots2, links)
++   class(plots)
++   plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
++   mistags[[paste("@@~PLOTS_", canceres[i], "@@", sep ="")]] <- twTable (dat = plots, sortable = TRUE)
++ 
++   
++   my_files2 <- my_files[grep(canceres[i], my_files)]
++   my_files2
++   links <- rep('NA', length(my_files2))
++   data <- cbind(my_files2, links)
++   class(data)
++   data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
++   colnames(data) <- c("files", "links")
++   mistags[[paste("@@~FILES_", canceres[i], "@@", sep ="")]] <- twTable (dat = data, sortable = TRUE)
++   
++ }             
+> 
+> writeTags (mistags, file = outfile)
+Reading file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/papers/gsa4mirna/index.html
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> # #TO CHECK:
+> # 
+> # 
+> # tabla1<-twTable (dat = tabla, ref = links, sortable = TRUE, title = "TABLE2")
+> # mistiddlers <- list ()
+> # mistiddlers[["dos"]] <- newTiddler (title = "BLCA2", content = list ("!dfañsdfja", tabla1, "sdafsdf", tabla1))
+> # writeTiddlers (mistiddlers, outfile = outfile)
+> # 
+> 
+> 
+> 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.0.2 (2013-09-25)
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] TiddlyWikiR_1.0.4  Biobase_2.22.0     BiocGenerics_0.8.0
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  8.800   0.032   8.856 
