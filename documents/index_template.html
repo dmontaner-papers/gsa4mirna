@@ -528,40 +528,44 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>''Table 1''.   Analyzed datasets. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
 @@~TABLA1_DATASETS@@</pre>
 </div>
-<div title="BLCA" creator="FGarcia" modifier="FGarcia" created="201502241740" modified="201502241820" changecount="2">
-<pre>!!Result files for BLCA cancer:
+<div title="BLCA" creator="FGarcia" modifier="YourName" created="201502241740" modified="201505101850" changecount="3">
+<pre>!!Summary for BLCA cancer:
+@@~SUMMARY_blca@@
 
+!!Result files for BLCA cancer:
 @@~FILES_blca@@
 
 !!Result plots for BLCA cancer:
-
 @@~PLOTS_blca@@</pre>
 </div>
-<div title="BRCA" creator="FGarcia" modifier="FGarcia" created="201502241741" modified="201502241820" changecount="2">
-<pre>!!Result files for BRCA cancer:
+<div title="BRCA" creator="FGarcia" modifier="YourName" created="201502241741" modified="201505101850" changecount="3">
+<pre>!!Summary  for BRCA cancer:
+@@~SUMMARY_brca@@
 
+!!Result files for BRCA cancer:
 @@~FILES_brca@@
 
 !!Result plots for BRCA cancer:
-
 @@~PLOTS_brca@@</pre>
 </div>
-<div title="CESC" creator="FGarcia" modifier="FGarcia" created="201502241741" modified="201502241820" changecount="2">
-<pre>!!Result files for CESC cancer:
+<div title="CESC" creator="FGarcia" modifier="YourName" created="201502241741" modified="201505101851" changecount="4">
+<pre>!!Summary for CESC cancer:
+@@~SUMMARY_cesc@@
 
+!!Result files for CESC cancer:
 @@~FILES_cesc@@
 
 !!Result plots for CESC cancer:
-
 @@~PLOTS_cesc@@</pre>
 </div>
-<div title="COAD" creator="FGarcia" modifier="FGarcia" created="201502241742" modified="201502241819" changecount="3">
-<pre>!!Result files for COAD cancer:
+<div title="COAD" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101852" changecount="4">
+<pre>!!Summary for COAD cancer:
+@@~SUMMARY_coad@@
 
+!!Result files for COAD cancer:
 @@~FILES_coad@@
 
 !!Result plots for COAD cancer:
-
 @@~PLOTS_coad@@</pre>
 </div>
 <div title="DefaultTiddlers" creator="FGarcia" modifier="FGarcia" created="201502160923" changecount="1">
@@ -677,13 +681,14 @@ Tiddler.prototype.changed = function()
 
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@</pre>
 </div>
-<div title="ESCA" creator="FGarcia" modifier="FGarcia" created="201502241742" modified="201502241819" changecount="2">
-<pre>!!Result files for ESCA cancer:
+<div title="ESCA" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="3">
+<pre>!!Summary for ESCA cancer:
+@@~SUMMARY_esca@@
 
+!!Result files for ESCA cancer:
 @@~FILES_esca@@
 
 !!Result plots for ESCA cancer:
-
 @@~PLOTS_esca@@</pre>
 </div>
 <div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505081604" changecount="4">
@@ -759,13 +764,14 @@ More detailed information:
 * [[Ranking index correlation vs. correlation]].
 </pre>
 </div>
-<div title="HNSC" creator="FGarcia" modifier="FGarcia" created="201502241742" modified="201502241819" changecount="3">
-<pre>!!Result files for HNSC cancer:
+<div title="HNSC" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="4">
+<pre>!!Summary files for HNSC cancer:
+@@~SUMMARY_hnsc@@
 
+!!Result files for HNSC cancer:
 @@~FILES_hnsc@@
 
 !!Result plots for HNSC cancer:
-
 @@~PLOTS_hnsc@@</pre>
 </div>
 <div title="ImageSizePlugin" modifier="genometra" created="200801180032" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
@@ -950,7 +956,7 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 <div title="Inhibition index correlation by ontology" creator="FGarcia" modifier="FGarcia" created="201502231435" changecount="1">
 <pre>@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION@@</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="genometra" created="201502151053" modified="201505081600" changecount="68">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="YourName" created="201502151053" modified="201505101917" changecount="73">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -989,14 +995,15 @@ In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to def
 ''Table 5''. Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis.  Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value.  Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
 @@~TABLA5_GOS@@
 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison]]. 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
+* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].
 
 !!Global results
-Next results show a global comparison between all studies from several point of interest:
-* [[Detailed information about  differential expression and functional enrichment for all studies]].
+This table shows  global results for all studies:
+@@~TABLA_all@@
+
+More detailed information:
 * [[Distribution of ranking index]]. 
 * [[Ranking index correlation]]. 
 * [[Inhibition index correlation by ontology]]. 
@@ -1005,35 +1012,51 @@ Next results show a global comparison between all studies from several point of 
 
 </pre>
 </div>
-<div title="KICH" creator="FGarcia" modifier="FGarcia" created="201502241743" modified="201502241818" changecount="2">
-<pre>!!Result files for  KICH cancer:
+<div title="KICH" creator="FGarcia" modifier="YourName" created="201502241743" modified="201505101857" changecount="3">
+<pre>!!Summary for  KICH cancer:
+@@~SUMMARY_kich@@
 
+!!Result files for  KICH cancer:
 @@~FILES_kich@@
 
 !!Result plots for  KICH cancer:
-
 @@~PLOTS_kich@@</pre>
 </div>
-<div title="KIRC" creator="FGarcia" modifier="FGarcia" created="201502241743" modified="201502241833" changecount="3">
-<pre>!!Result files for KIRC cancer:
+<div title="KIRC" creator="FGarcia" modifier="YourName" created="201502241743" modified="201505101857" changecount="4">
+<pre>!!Summary for KIRC cancer:
+@@~SUMMARY_kirc@@
 
+!!Result files for KIRC cancer:
 @@~FILES_kirc@@
 
 !!Result plots for KIRC cancer:
-
 @@~PLOTS_kirc@@</pre>
 </div>
-<div title="LIHC" creator="FGarcia" modifier="FGarcia" created="201502241744" modified="201502241818" changecount="2">
-<pre>!!Result files for LIHC cancer:
+<div title="KIRP" creator="YourName" modifier="YourName" created="201505101900" changecount="1">
+<pre>!!Summary for KIRP cancer:
+@@~SUMMARY_kirp@@
 
+!!Result files for KIRP cancer:
+@@~FILES_kirp@@
+
+!!Result plots for KIRP cancer:
+@@~PLOTS_kirp@@</pre>
+</div>
+<div title="LIHC" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101901" changecount="3">
+<pre>!!Summary for LIHC cancer:
+@@~SUMMARY_lihc@@
+
+!!Result files for LIHC cancer:
 @@~FILES_lihc@@
 
 !!Result plots for LIHC cancer:
-
 @@~PLOTS_lihc@@</pre>
 </div>
-<div title="LUAD" creator="FGarcia" modifier="FGarcia" created="201502241744" modified="201502241817" changecount="2">
-<pre>!!Result files for  LUAD cancer:
+<div title="LUAD" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101901" changecount="3">
+<pre>!!Summary for LUAD cancer:
+@@~SUMMARY_luad@@
+
+!!Result files for  LUAD cancer:
 
 @@~FILES_luad@@
 
@@ -1041,13 +1064,14 @@ Next results show a global comparison between all studies from several point of 
 
 @@~PLOTS_luad@@</pre>
 </div>
-<div title="LUSC" creator="FGarcia" modifier="FGarcia" created="201502241744" modified="201502241817" changecount="2">
-<pre>!!Result files for LUSC cancer:
+<div title="LUSC" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101902" changecount="3">
+<pre>!!Summary for LUSC cancer:
+@@~SUMMARY_lusc@@
 
+!!Result files for LUSC cancer:
 @@~FILES_lusc@@
 
 !!Result plots for LUSC cancer:
-
 @@~PLOTS_lusc@@</pre>
 </div>
 <div title="MainMenu" creator="FGarcia" modifier="genometra" created="201502160925" modified="201505081559" changecount="18">
@@ -1104,40 +1128,44 @@ Next results show a global comparison between all studies from several point of 
 
 @@~TABLA_MIRNA_LEVEL_UNPAIRED@@</pre>
 </div>
-<div title="PAAD" creator="FGarcia" modifier="FGarcia" created="201502241745" modified="201502241816" changecount="2">
-<pre>!!Result files for  PAAD cancer:
+<div title="PAAD" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101902" changecount="3">
+<pre>!!Summary for  PAAD cancer:
+@@~SUMMARY_paad@@
 
+!!Result files for  PAAD cancer:
 @@~FILES_paad@@
 
 !!Result plots for  PAAD cancer:
-
 @@~PLOTS_paad@@</pre>
 </div>
-<div title="PCPG" creator="FGarcia" modifier="FGarcia" created="201502241745" modified="201502241816" changecount="3">
-<pre>!!Result files for PCPG cancer:
+<div title="PCPG" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101903" changecount="4">
+<pre>!!Summary for PCPG cancer:
+@@~SUMMARY_pcpg@@
 
+!!Result files for PCPG cancer:
 @@~FILES_pcpg@@
 
 !!Result plots for PCPG cancer:
-
 @@~PLOTS_pcpg@@</pre>
 </div>
-<div title="PRAD" creator="FGarcia" modifier="FGarcia" created="201502241745" modified="201502241816" changecount="3">
-<pre>!!Result files for PRAD cancer:
+<div title="PRAD" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101903" changecount="4">
+<pre>!!Summary for PRAD cancer:
+@@~SUMMARY_prad@@
 
+!!Result files for PRAD cancer:
 @@~FILES_prad@@
 
 !!Result plots for PRAD cancer:
-
 @@~PLOTS_prad@@</pre>
 </div>
-<div title="READ" creator="FGarcia" modifier="FGarcia" created="201502241746" modified="201502241815" changecount="2">
-<pre>!!Result files for READ cancer:
+<div title="READ" creator="FGarcia" modifier="YourName" created="201502241746" modified="201505101903" changecount="3">
+<pre>!!Summary for READ cancer:
+@@~SUMMARY_read@@
 
+!!Result files for READ cancer:
 @@~FILES_read@@
 
 !!Result plots for READ cancer:
-
 @@~PLOTS_read@@</pre>
 </div>
 <div title="Ranking index correlation" creator="FGarcia" modifier="FGarcia" created="201502231224" changecount="1">
@@ -1151,22 +1179,24 @@ Next results show a global comparison between all studies from several point of 
 
 @@~TABLA_RESULTADOS@@</pre>
 </div>
-<div title="SKCM" creator="FGarcia" modifier="FGarcia" created="201502241746" modified="201502241815" changecount="3">
-<pre>!!Result files for  SKCM cancer:
+<div title="SKCM" creator="FGarcia" modifier="YourName" created="201502241746" modified="201505101904" changecount="4">
+<pre>!!Summary for  SKCM cancer:
+@@~SUMMARY_skcm@@
 
+!!Result files for  SKCM cancer:
 @@~FILES_skcm@@
 
 !!Result plots for  SKCM cancer:
-
 @@~PLOTS_skcm@@</pre>
 </div>
-<div title="STAD" creator="FGarcia" modifier="FGarcia" created="201502241756" modified="201502241814" changecount="2">
-<pre>!!Result files for  STAD cancer:
+<div title="STAD" creator="FGarcia" modifier="YourName" created="201502241756" modified="201505101904" changecount="3">
+<pre>!!Summary for  STAD cancer:
+@@~SUMMARY_stad@@
 
+!!Result files for  STAD cancer:
 @@~FILES_stad@@
 
 !!Result plots for  STAD cancer:
-
 @@~PLOTS_stad@@</pre>
 </div>
 <div title="SiteSubtitle" creator="FGarcia" modifier="FGarcia" created="201502160921" changecount="1">
@@ -1175,13 +1205,14 @@ Next results show a global comparison between all studies from several point of 
 <div title="SiteTitle" creator="FGarcia" modifier="FGarcia" created="201502160920" modified="201502160920" changecount="2">
 <pre>''Integrated Gene Set Analysis for microRNA Studies''</pre>
 </div>
-<div title="THCA" creator="FGarcia" modifier="FGarcia" created="201502241757" modified="201502241814" changecount="3">
-<pre>!!Result files for THCA cancer:
+<div title="THCA" creator="FGarcia" modifier="YourName" created="201502241757" modified="201505101905" changecount="4">
+<pre>!!Summary for THCA cancer:
+@@~SUMMARY_thca@@
 
+!!Result files for THCA cancer:
 @@~FILES_thca@@
 
 !!Result plots for THCA cancer:
-
 @@~PLOTS_thca@@</pre>
 </div>
 <div title="TableSortingPlugin" modifier="genometra" created="200711280917" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
@@ -1428,13 +1459,14 @@ config.macros.toggleSideBar.onToggleSideBar = function(){
 
 </pre>
 </div>
-<div title="UCEC" creator="FGarcia" modifier="FGarcia" created="201502241757" modified="201502241813" changecount="4">
-<pre>!!Result files for UCEC cancer:
+<div title="UCEC" creator="FGarcia" modifier="YourName" created="201502241757" modified="201505101905" changecount="5">
+<pre>!!Summary for UCEC cancer:
+@@~SUMMARY_ucec@@
 
+!!Result files for UCEC cancer:
 @@~FILES_ucec@@
 
 !!Result plots for UCEC cancer:
-
 @@~PLOTS_ucec@@</pre>
 </div>
 <div title="ViewTemplate" creator="FGarcia" modifier="FGarcia" created="201502160934" changecount="1">
