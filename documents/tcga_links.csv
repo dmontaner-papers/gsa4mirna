@@ -1,0 +1,21 @@
+ID0	ID	total	cases	controls	paired	description	tcga_links
+blca	BLCA	271	252	19	19	Bladder Urothelial Carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BLCA&diseaseName=Bladder%20Urothelial%20Carcinoma
+brca	BRCA	807	720	87	86	Breast invasive carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BRCA&diseaseName=Breast%20invasive%20carcinoma
+cesc	CESC	218	215	3	3	Cervical squamous cell carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=CESC&diseaseName=Cervical%20squamous%20cell%20carcinoma%20and%20endocervical%20adenocarcinoma
+coad	COAD	243	235	8	0	Colon adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=COAD&diseaseName=Colon%20adenocarcinoma
+esca	ESCA	113	102	11	11	Esophageal carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=ESCA&diseaseName=Esophageal%20carcinoma
+hnsc	HNSC	519	475	44	43	Head and Neck squamous cell carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=HNSC&diseaseName=Head%20and%20Neck%20squamous%20cell%20carcinoma
+kich	KICH	91	66	25	25	Kidney Chromophobe	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KICH&diseaseName=Kidney%20Chromophobe
+kirc	KIRC	311	240	71	68	Kidney renal clear cell carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KIRC&diseaseName=Kidney%20renal%20clear%20cell%20carcinoma
+kirp	KIRP	245	211	34	34	Kidney renal papillary cell carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KIRP&diseaseName=Kidney%20renal%20papillary%20cell%20carcinoma
+lihc	LIHC	283	233	50	49	Liver hepatocellular carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LIHC&diseaseName=Liver%20hepatocellular%20carcinoma
+luad	LUAD	474	428	46	39	Lung adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LUAD&diseaseName=Lung%20adenocarcinoma
+lusc	LUSC	376	331	45	45	Lung squamous cell carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LUSC&diseaseName=Lung%20squamous%20cell%20carcinoma
+paad	PAAD	100	96	4	4	Pancreatic adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PAAD&diseaseName=Pancreatic%20adenocarcinoma
+pcpg	PCPG	182	179	3	3	Pheochromocytoma and Paraganglioma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PAAD&diseaseName=Pancreatic%20adenocarcinoma
+prad	PRAD	117	100	17	17	Prostate adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PRAD&diseaseName=Prostate%20adenocarcinoma
+read	READ	93	90	3	0	Rectum adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=READ&diseaseName=Rectum%20adenocarcinoma
+skcm	SKCM	75	74	1	0	Skin Cutaneous Melanoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=SKCM&diseaseName=Skin%20Cutaneous%20Melanoma
+stad	STAD	345	306	39	39	Stomach adenocarcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=STAD&diseaseName=Stomach%20adenocarcinoma
+thca	THCA	558	499	59	59	Thyroid carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=THCA&diseaseName=Thyroid%20carcinoma
+ucec	UCEC	418	386	32	19	Uterine Corpus Endometrial Carcinoma	https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=UCEC&diseaseName=Uterine%20Corpus%20Endometrial%20Carcinoma
