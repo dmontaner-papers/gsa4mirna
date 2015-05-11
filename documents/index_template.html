@@ -691,21 +691,21 @@ Tiddler.prototype.changed = function()
 !!Result plots for ESCA cancer:
 @@~PLOTS_esca@@</pre>
 </div>
-<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505081604" changecount="4">
+<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="5">
 <pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
 
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
-TABLA4_GO
+@@~TABLA4_GOS@@
 
-''Table 5''. Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
-TABLA5_GO
+''Table 5''. Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons.
+Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis.  Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value.  Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+@@~TABLA5_GOS@@
 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison]]. 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
-* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. </pre>
+* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
+* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].</pre>
 </div>
 <div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="FGarcia" created="201502231206" modified="201502231727" changecount="4">
 <pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
@@ -754,14 +754,17 @@ More detailed information:
 
 @@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@</pre>
 </div>
-<div title="Global results" creator="FGarcia" modifier="FGarcia" created="201502231752" modified="201502241833" changecount="3">
-<pre>Next results show a global comparison between all studies from several point of interest:
-* [[Detailed information about  differential expression and functional enrichment for all studies]]. 
+<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="4">
+<pre>This table shows  global results for all studies:
+@@~TABLA_all@@
+
+More detailed information:
 * [[Distribution of ranking index]]. 
 * [[Ranking index correlation]]. 
 * [[Inhibition index correlation by ontology]]. 
-* [[Inhibition effect correlation distribution by ontology]]. 
-* [[Ranking index correlation vs. correlation]].
+* [[Inhibition effect correlation distribution by ontology]].
+* [[Ranking index correlation vs. correlation]]. 
+
 </pre>
 </div>
 <div title="HNSC" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="4">

@@ -64,8 +64,8 @@ tabla.cols <- c ("ID", "miRNA.Down.unpa", "miRNA.noDif.unpa", "miRNA.Up.unpa",
 
 tabla.nams <- c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired", 
                  "Down.paired",  "noDif.paired", "Up.paired",
-                 "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh.unpaired",
-                 "GOs.Derg.paired",    "GOs.noDif.paired",    "GOs.Inh.paired",
+                 "gos.Derg.unpaired",  "gos.noDif.unpaired",  "gos.Inh.unpaired",
+                 "gos.Derg.paired",    "gos.noDif.paired",    "gos.Inh.paired",
                  "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
                  "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
                  "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
@@ -276,8 +276,8 @@ writeTags (mistags, file = outfile)
 ## TABLE 5
 ######################
 
-tabla <- tabla0[, c ("ID", "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh.unpaired", 
-                           "GOs.Derg.paired", "GOs.noDif.paired", "GOs.Inh.paired", 
+tabla <- tabla0[, c ("ID", "gos.Derg.unpaired",  "gos.noDif.unpaired",  "gos.Inh.unpaired", 
+                           "gos.Derg.paired", "gos.noDif.paired", "gos.Inh.paired", 
                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
@@ -287,8 +287,8 @@ tabla <- tabla0[, c ("ID", "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh
                      "resPaired_gsa_cc", "resUnpaired_gsa_cc", "resPaired_gsa_mf",
                      "resUnpaired_gsa_mf", "resPaired_gsa_bp",   "resUnpaired_gsa_bp")] 
 
-links <- links0[, c ("ID", "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh.unpaired", 
-                     "GOs.Derg.paired", "GOs.noDif.paired", "GOs.Inh.paired", 
+links <- links0[, c ("ID", "gos.Derg.unpaired",  "gos.noDif.unpaired",  "gos.Inh.unpaired", 
+                     "gos.Derg.paired", "gos.noDif.paired", "gos.Inh.paired", 
                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
@@ -413,8 +413,8 @@ canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kick", "kirc", "ki
 
 tabla <- tabla0[, c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired",
                      "Down.paired",  "noDif.paired", "Up.paired",
-                     "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh.unpaired", 
-                     "GOs.Derg.paired", "GOs.noDif.paired", "GOs.Inh.paired", 
+                     "gos.Derg.unpaired",  "gos.noDif.unpaired",  "gos.Inh.unpaired", 
+                     "gos.Derg.paired", "gos.noDif.paired", "gos.Inh.paired", 
                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa",
@@ -423,13 +423,13 @@ tabla <- tabla0[, c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired",
                      "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair")] 
 
 tablai <- tabla[, c ("ID", "Down.unpaired",  "noDif.unpaired",  "Up.unpaired",
-                     "GOs.Derg.unpaired",  "GOs.noDif.unpaired",  "GOs.Inh.unpaired", 
+                     "gos.Derg.unpaired",  "gos.noDif.unpaired",  "gos.Inh.unpaired", 
                      "bp.Down.unpa",  "bp.noDif.unpa", "bp.UP.unpa",
                      "cc.Down.unpa",  "cc.noDif.unpa", "cc.UP.unpa",
                      "mf.Down.unpa",  "mf.noDif.unpa", "mf.UP.unpa")] 
 rownames(tablai) <- paste0(rownames(tablai), "_unpaired")
 colnames(tablai) <- c ("ID", "miRNA.down",  "miRNA.noDif",  "miRNA.up",
-                       "GOs.derg",  "GOs.noDif",  "GOs.inh", 
+                       "gos.derg",  "gos.noDif",  "gos.inh", 
                        "bp.Down",  "bp.noDif", "bp.UP",
                        "cc.Down",  "cc.noDif", "cc.UP",
                        "mf.Down",  "mf.noDif", "mf.UP") 
@@ -437,13 +437,13 @@ colnames(tablai) <- c ("ID", "miRNA.down",  "miRNA.noDif",  "miRNA.up",
 
 
 tablap <- tabla0[, c ("ID", "Down.paired",  "noDif.paired", "Up.paired",
-                      "GOs.Derg.paired", "GOs.noDif.paired", "GOs.Inh.paired", 
+                      "gos.Derg.paired", "gos.noDif.paired", "gos.Inh.paired", 
                       "bp.Down.pair",  "bp.noDif.pair", "bp.UP.pair",
                       "cc.Down.pair",  "cc.noDif.pair", "cc.UP.pair",
                       "mf.Down.pair",  "mf.noDif.pair", "mf.UP.pair")] 
 rownames(tablap) <- paste0(rownames(tablap), "_paired")
 colnames(tablap) <- c ("ID", "miRNA.down",  "miRNA.noDif",  "miRNA.up",
-                       "GOs.derg",  "GOs.noDif",  "GOs.inh", 
+                       "gos.derg",  "gos.noDif",  "gos.inh", 
                        "bp.Down",  "bp.noDif", "bp.UP",
                        "cc.Down",  "cc.noDif", "cc.UP",
                        "mf.Down",  "mf.noDif", "mf.UP") 

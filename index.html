@@ -555,7 +555,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>!!Summary for BLCA cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!blca_unpaired| BLCA | 128 | 337 | 353 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 |
 |!blca_paired| BLCA | 127 | 343 | 219 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 |
 
@@ -589,7 +589,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>!!Summary  for BRCA cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!brca_unpaired| BRCA | 200 | 244 | 396 | 3 | 5166 | 0 | 0 | 3976 | 0 | 3 | 443 | 0 | 0 | 747 | 0 |
 |!brca_paired| BRCA | 202 | 215 | 269 | 0 | 5167 | 2 | 0 | 3976 | 0 | 0 | 444 | 2 | 0 | 747 | 0 |
 
@@ -623,7 +623,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>!!Summary for CESC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!cesc_unpaired| CESC | 92 | 621 | 73 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!cesc_paired| CESC | 29 | 537 | 65 | 1 | 5167 | 1 | 0 | 3976 | 0 | 1 | 444 | 1 | 0 | 747 | 0 |
 
@@ -657,7 +657,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>!!Summary for COAD cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!coad_unpaired| COAD | 174 | 291 | 262 | 18 | 4930 | 221 | 9 | 3770 | 197 | 6 | 430 | 10 | 3 | 730 | 14 |
 |!coad_paired| COAD |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
@@ -807,7 +807,7 @@ Tiddler.prototype.changed = function()
 <pre>!!Summary for ESCA cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!esca_unpaired| ESCA | 98 | 443 | 152 | 2 | 5167 | 0 | 2 | 3974 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!esca_paired| ESCA | 62 | 464 | 133 | 1 | 5168 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 0 | 747 | 0 |
 
@@ -837,21 +837,67 @@ Tiddler.prototype.changed = function()
 |!3|unpaired_size_effect_esca.png|[img[supplementary_files/plots/unpaired_size_effect_esca.png]]|
 </pre>
 </div>
-<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505081604" changecount="4">
+<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="5">
 <pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
 
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
-TABLA4_GO
 
-''Table 5''. Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons. Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
-TABLA5_GO
+|sortable|k
+|!| ID | Down.unpaired | Inter.unpaired | Up.unpaired | Down.paired | Inter.paired | Up.paired |h
+|!blca| BLCA | 5169 | 5169 | 5169 | 5169 | 5168 | 5168 |
+|!brca| BRCA | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!cesc| CESC | 5169 | 5168 | 5168 | 5144 | 5138 | 5160 |
+|!coad| COAD | 5168 | 5168 | 5169 |  |  |  |
+|!esca| ESCA | 5169 | 5168 | 5168 | 5169 | 5167 | 5167 |
+|!hnsc| HNSC | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!kich| KICH | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!kirc| KIRC | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!kirp| KIRP | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!lihc| LIHC | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!luad| LUAD | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!lusc| LUSC | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!paad| PAAD | 5129 | 4578 | 4590 | 4870 | 4681 | 4915 |
+|!pcpg| PCPG | 5166 | 5161 | 5164 | 5150 | 5146 | 5165 |
+|!prad| PRAD | 5169 | 5169 | 5169 | 5159 | 4981 | 4990 |
+|!read| READ | 5168 | 5168 | 5169 |  |  |  |
+|!skcm| SKCM | 5169 | 4385 | 4385 |  |  |  |
+|!stad| STAD | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!thca| THCA | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
+|!ucec| UCEC | 5169 | 5169 | 5169 | 5169 | 5169 | 5169 |
 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the paired comparison]]. 
-* [[Gene Set level. Results from the gene set analysis of the Gene Ontology  in the unpaired comparison]]. 
+
+''Table 5''. Number significant GO terms in the functional profiling analysis for the paired and unpaired comparisons.
+Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis.  Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value.  Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+
+|sortable|k
+|!| ID | gos.Derg.unpaired | gos.noDif.unpaired | gos.Inh.unpaired | gos.Derg.paired | gos.noDif.paired | gos.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired_gsa_cc | resUnpaired_gsa_cc | resPaired_gsa_mf | resUnpaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_bp |h
+|!blca| BLCA | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | [[res_gsa_paired_blca_cc.xlsx|supplementary_files/files/res_gsa_paired_blca_cc.xlsx]] | [[res_gsa_unpaired_blca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]] | [[res_gsa_paired_blca_mf.xlsx|supplementary_files/files/res_gsa_paired_blca_mf.xlsx]] | [[res_gsa_unpaired_blca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]] | [[res_gsa_paired_blca_bp.xlsx|supplementary_files/files/res_gsa_paired_blca_bp.xlsx]] | [[res_gsa_unpaired_blca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]] |
+|!brca| BRCA | 3 | 5166 | 0 | 0 | 5167 | 2 | 0 | 3976 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 444 | 2 | 0 | 747 | 0 | [[res_gsa_paired_brca_cc.xlsx|supplementary_files/files/res_gsa_paired_brca_cc.xlsx]] | [[res_gsa_unpaired_brca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]] | [[res_gsa_paired_brca_mf.xlsx|supplementary_files/files/res_gsa_paired_brca_mf.xlsx]] | [[res_gsa_unpaired_brca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]] | [[res_gsa_paired_brca_bp.xlsx|supplementary_files/files/res_gsa_paired_brca_bp.xlsx]] | [[res_gsa_unpaired_brca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]] |
+|!cesc| CESC | 0 | 5169 | 0 | 1 | 5167 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 444 | 1 | 0 | 747 | 0 | [[res_gsa_paired_cesc_cc.xlsx|supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]] | [[res_gsa_unpaired_cesc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]] | [[res_gsa_paired_cesc_mf.xlsx|supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]] | [[res_gsa_unpaired_cesc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]] | [[res_gsa_paired_cesc_bp.xlsx|supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]] | [[res_gsa_unpaired_cesc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]] |
+|!coad| COAD | 18 | 4930 | 221 |  |  |  | 9 | 3770 | 197 | 6 | 430 | 10 | 3 | 730 | 14 |  |  |  |  |  |  |  |  |  | [[res_gsa_paired_coad_cc.xlsx|supplementary_files/files/res_gsa_paired_coad_cc.xlsx]] | [[res_gsa_unpaired_coad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_coad_cc.xlsx]] | [[res_gsa_paired_coad_mf.xlsx|supplementary_files/files/res_gsa_paired_coad_mf.xlsx]] | [[res_gsa_unpaired_coad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_coad_mf.xlsx]] | [[res_gsa_paired_coad_bp.xlsx|supplementary_files/files/res_gsa_paired_coad_bp.xlsx]] | [[res_gsa_unpaired_coad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_coad_bp.xlsx]] |
+|!esca| ESCA | 2 | 5167 | 0 | 1 | 5168 | 0 | 2 | 3974 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 0 | 747 | 0 | [[res_gsa_paired_esca_cc.xlsx|supplementary_files/files/res_gsa_paired_esca_cc.xlsx]] | [[res_gsa_unpaired_esca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_esca_cc.xlsx]] | [[res_gsa_paired_esca_mf.xlsx|supplementary_files/files/res_gsa_paired_esca_mf.xlsx]] | [[res_gsa_unpaired_esca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_esca_mf.xlsx]] | [[res_gsa_paired_esca_bp.xlsx|supplementary_files/files/res_gsa_paired_esca_bp.xlsx]] | [[res_gsa_unpaired_esca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_esca_bp.xlsx]] |
+|!hnsc| HNSC | 53 | 5116 | 0 | 0 | 5169 | 0 | 48 | 3928 | 0 | 0 | 446 | 0 | 5 | 742 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_paired_hnsc_cc.xlsx]] | [[res_gsa_unpaired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_cc.xlsx]] | [[res_gsa_paired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_paired_hnsc_mf.xlsx]] | [[res_gsa_unpaired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_mf.xlsx]] | [[res_gsa_paired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_paired_hnsc_bp.xlsx]] | [[res_gsa_unpaired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_bp.xlsx]] |
+|!kich| KICH | 1 | 5167 | 1 | 30 | 5138 | 1 | 0 | 3975 | 1 | 1 | 445 | 0 | 0 | 747 | 0 | 18 | 3957 | 1 | 1 | 445 | 0 | 11 | 736 | 0 | [[res_gsa_paired_kich_cc.xlsx|supplementary_files/files/res_gsa_paired_kich_cc.xlsx]] | [[res_gsa_unpaired_kich_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kich_cc.xlsx]] | [[res_gsa_paired_kich_mf.xlsx|supplementary_files/files/res_gsa_paired_kich_mf.xlsx]] | [[res_gsa_unpaired_kich_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kich_mf.xlsx]] | [[res_gsa_paired_kich_bp.xlsx|supplementary_files/files/res_gsa_paired_kich_bp.xlsx]] | [[res_gsa_unpaired_kich_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kich_bp.xlsx]] |
+|!kirc| KIRC | 0 | 5159 | 10 | 5 | 5163 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 737 | 10 | 1 | 3975 | 0 | 0 | 446 | 0 | 4 | 742 | 1 | [[res_gsa_paired_kirc_cc.xlsx|supplementary_files/files/res_gsa_paired_kirc_cc.xlsx]] | [[res_gsa_unpaired_kirc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_cc.xlsx]] | [[res_gsa_paired_kirc_mf.xlsx|supplementary_files/files/res_gsa_paired_kirc_mf.xlsx]] | [[res_gsa_unpaired_kirc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_mf.xlsx]] | [[res_gsa_paired_kirc_bp.xlsx|supplementary_files/files/res_gsa_paired_kirc_bp.xlsx]] | [[res_gsa_unpaired_kirc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_bp.xlsx]] |
+|!kirp| KIRP | 4 | 5165 | 0 | 13 | 5155 | 1 | 1 | 3975 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 13 | 3963 | 0 | 0 | 446 | 0 | 0 | 746 | 1 | [[res_gsa_paired_kirp_cc.xlsx|supplementary_files/files/res_gsa_paired_kirp_cc.xlsx]] | [[res_gsa_unpaired_kirp_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_cc.xlsx]] | [[res_gsa_paired_kirp_mf.xlsx|supplementary_files/files/res_gsa_paired_kirp_mf.xlsx]] | [[res_gsa_unpaired_kirp_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_mf.xlsx]] | [[res_gsa_paired_kirp_bp.xlsx|supplementary_files/files/res_gsa_paired_kirp_bp.xlsx]] | [[res_gsa_unpaired_kirp_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_bp.xlsx]] |
+|!lihc| LIHC | 7 | 5080 | 82 | 0 | 5169 | 0 | 1 | 3929 | 46 | 4 | 429 | 13 | 2 | 722 | 23 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_lihc_cc.xlsx|supplementary_files/files/res_gsa_paired_lihc_cc.xlsx]] | [[res_gsa_unpaired_lihc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_cc.xlsx]] | [[res_gsa_paired_lihc_mf.xlsx|supplementary_files/files/res_gsa_paired_lihc_mf.xlsx]] | [[res_gsa_unpaired_lihc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_mf.xlsx]] | [[res_gsa_paired_lihc_bp.xlsx|supplementary_files/files/res_gsa_paired_lihc_bp.xlsx]] | [[res_gsa_unpaired_lihc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_bp.xlsx]] |
+|!luad| LUAD | 0 | 5169 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_luad_cc.xlsx|supplementary_files/files/res_gsa_paired_luad_cc.xlsx]] | [[res_gsa_unpaired_luad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_luad_cc.xlsx]] | [[res_gsa_paired_luad_mf.xlsx|supplementary_files/files/res_gsa_paired_luad_mf.xlsx]] | [[res_gsa_unpaired_luad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_luad_mf.xlsx]] | [[res_gsa_paired_luad_bp.xlsx|supplementary_files/files/res_gsa_paired_luad_bp.xlsx]] | [[res_gsa_unpaired_luad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_luad_bp.xlsx]] |
+|!lusc| LUSC | 0 | 5169 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_lusc_cc.xlsx|supplementary_files/files/res_gsa_paired_lusc_cc.xlsx]] | [[res_gsa_unpaired_lusc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_cc.xlsx]] | [[res_gsa_paired_lusc_mf.xlsx|supplementary_files/files/res_gsa_paired_lusc_mf.xlsx]] | [[res_gsa_unpaired_lusc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_mf.xlsx]] | [[res_gsa_paired_lusc_bp.xlsx|supplementary_files/files/res_gsa_paired_lusc_bp.xlsx]] | [[res_gsa_unpaired_lusc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_bp.xlsx]] |
+|!paad| PAAD | 3 | 5165 | 1 | 0 | 5169 | 0 | 3 | 3973 | 0 | 0 | 445 | 1 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_paad_cc.xlsx|supplementary_files/files/res_gsa_paired_paad_cc.xlsx]] | [[res_gsa_unpaired_paad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_paad_cc.xlsx]] | [[res_gsa_paired_paad_mf.xlsx|supplementary_files/files/res_gsa_paired_paad_mf.xlsx]] | [[res_gsa_unpaired_paad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_paad_mf.xlsx]] | [[res_gsa_paired_paad_bp.xlsx|supplementary_files/files/res_gsa_paired_paad_bp.xlsx]] | [[res_gsa_unpaired_paad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_paad_bp.xlsx]] |
+|!pcpg| PCPG | 0 | 5169 | 0 | 0 | 5166 | 3 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 745 | 2 | [[res_gsa_paired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_paired_pcpg_cc.xlsx]] | [[res_gsa_unpaired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_cc.xlsx]] | [[res_gsa_paired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_paired_pcpg_mf.xlsx]] | [[res_gsa_unpaired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_mf.xlsx]] | [[res_gsa_paired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_paired_pcpg_bp.xlsx]] | [[res_gsa_unpaired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_bp.xlsx]] |
+|!prad| PRAD | 0 | 5168 | 1 | 1 | 5168 | 0 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 1 | 746 | 0 | [[res_gsa_paired_prad_cc.xlsx|supplementary_files/files/res_gsa_paired_prad_cc.xlsx]] | [[res_gsa_unpaired_prad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_prad_cc.xlsx]] | [[res_gsa_paired_prad_mf.xlsx|supplementary_files/files/res_gsa_paired_prad_mf.xlsx]] | [[res_gsa_unpaired_prad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_prad_mf.xlsx]] | [[res_gsa_paired_prad_bp.xlsx|supplementary_files/files/res_gsa_paired_prad_bp.xlsx]] | [[res_gsa_unpaired_prad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_prad_bp.xlsx]] |
+|!read| READ | 0 | 5157 | 12 |  |  |  | 0 | 3964 | 12 | 0 | 446 | 0 | 0 | 747 | 0 |  |  |  |  |  |  |  |  |  | [[res_gsa_paired_read_cc.xlsx|supplementary_files/files/res_gsa_paired_read_cc.xlsx]] | [[res_gsa_unpaired_read_cc.xlsx|supplementary_files/files/res_gsa_unpaired_read_cc.xlsx]] | [[res_gsa_paired_read_mf.xlsx|supplementary_files/files/res_gsa_paired_read_mf.xlsx]] | [[res_gsa_unpaired_read_mf.xlsx|supplementary_files/files/res_gsa_unpaired_read_mf.xlsx]] | [[res_gsa_paired_read_bp.xlsx|supplementary_files/files/res_gsa_paired_read_bp.xlsx]] | [[res_gsa_unpaired_read_bp.xlsx|supplementary_files/files/res_gsa_unpaired_read_bp.xlsx]] |
+|!skcm| SKCM | 121 | 5043 | 5 |  |  |  | 108 | 3864 | 4 | 2 | 444 | 0 | 11 | 735 | 1 |  |  |  |  |  |  |  |  |  | [[res_gsa_paired_skcm_cc.xlsx|supplementary_files/files/res_gsa_paired_skcm_cc.xlsx]] | [[res_gsa_unpaired_skcm_cc.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_cc.xlsx]] | [[res_gsa_paired_skcm_mf.xlsx|supplementary_files/files/res_gsa_paired_skcm_mf.xlsx]] | [[res_gsa_unpaired_skcm_mf.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_mf.xlsx]] | [[res_gsa_paired_skcm_bp.xlsx|supplementary_files/files/res_gsa_paired_skcm_bp.xlsx]] | [[res_gsa_unpaired_skcm_bp.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_bp.xlsx]] |
+|!stad| STAD | 5 | 5164 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 5 | 441 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_gsa_paired_stad_cc.xlsx|supplementary_files/files/res_gsa_paired_stad_cc.xlsx]] | [[res_gsa_unpaired_stad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_stad_cc.xlsx]] | [[res_gsa_paired_stad_mf.xlsx|supplementary_files/files/res_gsa_paired_stad_mf.xlsx]] | [[res_gsa_unpaired_stad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_stad_mf.xlsx]] | [[res_gsa_paired_stad_bp.xlsx|supplementary_files/files/res_gsa_paired_stad_bp.xlsx]] | [[res_gsa_unpaired_stad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_stad_bp.xlsx]] |
+|!thca| THCA | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 | [[res_gsa_paired_thca_cc.xlsx|supplementary_files/files/res_gsa_paired_thca_cc.xlsx]] | [[res_gsa_unpaired_thca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_thca_cc.xlsx]] | [[res_gsa_paired_thca_mf.xlsx|supplementary_files/files/res_gsa_paired_thca_mf.xlsx]] | [[res_gsa_unpaired_thca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_thca_mf.xlsx]] | [[res_gsa_paired_thca_bp.xlsx|supplementary_files/files/res_gsa_paired_thca_bp.xlsx]] | [[res_gsa_unpaired_thca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_thca_bp.xlsx]] |
+|!ucec| UCEC | 89 | 5080 | 0 | 9 | 5160 | 0 | 83 | 3893 | 0 | 1 | 445 | 0 | 5 | 742 | 0 | 3 | 3973 | 0 | 5 | 441 | 0 | 1 | 746 | 0 | [[res_gsa_paired_ucec_cc.xlsx|supplementary_files/files/res_gsa_paired_ucec_cc.xlsx]] | [[res_gsa_unpaired_ucec_cc.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_cc.xlsx]] | [[res_gsa_paired_ucec_mf.xlsx|supplementary_files/files/res_gsa_paired_ucec_mf.xlsx]] | [[res_gsa_unpaired_ucec_mf.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_mf.xlsx]] | [[res_gsa_paired_ucec_bp.xlsx|supplementary_files/files/res_gsa_paired_ucec_bp.xlsx]] | [[res_gsa_unpaired_ucec_bp.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_bp.xlsx]] |
+
+
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
-* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. </pre>
+* [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
+* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].</pre>
 </div>
 <div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="FGarcia" created="201502231206" modified="201502231727" changecount="4">
 <pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
@@ -1049,21 +1095,47 @@ More detailed information:
 |!20|transfer_index_unpaired_ucec.xlsx|[[transfer_index_unpaired_ucec.xlsx|supplementary_files/files/transfer_index_unpaired_ucec.xlsx]]|
 </pre>
 </div>
-<div title="Global results" creator="FGarcia" modifier="FGarcia" created="201502231752" modified="201502241833" changecount="3">
-<pre>Next results show a global comparison between all studies from several point of interest:
-* [[Detailed information about  differential expression and functional enrichment for all studies]]. 
+<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="4">
+<pre>This table shows  global results for all studies:
+
+|sortable|k
+|!| ID | Down.unpaired | noDif.unpaired | Up.unpaired | Down.paired | noDif.paired | Up.paired | gos.Derg.unpaired | gos.noDif.unpaired | gos.Inh.unpaired | gos.Derg.paired | gos.noDif.paired | gos.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired | resUnpaired | resPaired_gsa_cc | resPaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_cc | resUnpaired_gsa_mf | resUnpaired_gsa_bp |h
+|!blca| BLCA | 128 | 337 | 353 | 127 | 343 | 219 | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | [[res_edger_paired_blca.xlsx|supplementary_files/files/res_edger_paired_blca.xlsx]] | [[res_edger_unpaired_blca.xlsx|supplementary_files/files/res_edger_unpaired_blca.xlsx]] | [[res_gsa_paired_blca_cc.xlsx|supplementary_files/files/res_gsa_paired_blca_cc.xlsx]] | [[res_gsa_paired_blca_mf.xlsx|supplementary_files/files/res_gsa_paired_blca_mf.xlsx]] | [[res_gsa_paired_blca_bp.xlsx|supplementary_files/files/res_gsa_paired_blca_bp.xlsx]] | [[res_gsa_unpaired_blca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]] | [[res_gsa_unpaired_blca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]] | [[res_gsa_unpaired_blca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]] |
+|!brca| BRCA | 200 | 244 | 396 | 202 | 215 | 269 | 3 | 5166 | 0 | 0 | 5167 | 2 | 0 | 3976 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 444 | 2 | 0 | 747 | 0 | [[res_edger_paired_brca.xlsx|supplementary_files/files/res_edger_paired_brca.xlsx]] | [[res_edger_unpaired_brca.xlsx|supplementary_files/files/res_edger_unpaired_brca.xlsx]] | [[res_gsa_paired_brca_cc.xlsx|supplementary_files/files/res_gsa_paired_brca_cc.xlsx]] | [[res_gsa_paired_brca_mf.xlsx|supplementary_files/files/res_gsa_paired_brca_mf.xlsx]] | [[res_gsa_paired_brca_bp.xlsx|supplementary_files/files/res_gsa_paired_brca_bp.xlsx]] | [[res_gsa_unpaired_brca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]] | [[res_gsa_unpaired_brca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]] | [[res_gsa_unpaired_brca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]] |
+|!cesc| CESC | 92 | 621 | 73 | 29 | 537 | 65 | 0 | 5169 | 0 | 1 | 5167 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 444 | 1 | 0 | 747 | 0 | [[res_edger_paired_cesc.xlsx|supplementary_files/files/res_edger_paired_cesc.xlsx]] | [[res_edger_unpaired_cesc.xlsx|supplementary_files/files/res_edger_unpaired_cesc.xlsx]] | [[res_gsa_paired_cesc_cc.xlsx|supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]] | [[res_gsa_paired_cesc_mf.xlsx|supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]] | [[res_gsa_paired_cesc_bp.xlsx|supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]] | [[res_gsa_unpaired_cesc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]] | [[res_gsa_unpaired_cesc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]] | [[res_gsa_unpaired_cesc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]] |
+|!coad| COAD | 174 | 291 | 262 |  |  |  | 18 | 4930 | 221 |  |  |  | 9 | 3770 | 197 | 6 | 430 | 10 | 3 | 730 | 14 |  |  |  |  |  |  |  |  |  | [[res_edger_paired_coad.xlsx|supplementary_files/files/res_edger_paired_coad.xlsx]] | [[res_edger_unpaired_coad.xlsx|supplementary_files/files/res_edger_unpaired_coad.xlsx]] | [[res_gsa_paired_coad_cc.xlsx|supplementary_files/files/res_gsa_paired_coad_cc.xlsx]] | [[res_gsa_paired_coad_mf.xlsx|supplementary_files/files/res_gsa_paired_coad_mf.xlsx]] | [[res_gsa_paired_coad_bp.xlsx|supplementary_files/files/res_gsa_paired_coad_bp.xlsx]] | [[res_gsa_unpaired_coad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_coad_cc.xlsx]] | [[res_gsa_unpaired_coad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_coad_mf.xlsx]] | [[res_gsa_unpaired_coad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_coad_bp.xlsx]] |
+|!esca| ESCA | 98 | 443 | 152 | 62 | 464 | 133 | 2 | 5167 | 0 | 1 | 5168 | 0 | 2 | 3974 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 0 | 747 | 0 | [[res_edger_paired_esca.xlsx|supplementary_files/files/res_edger_paired_esca.xlsx]] | [[res_edger_unpaired_esca.xlsx|supplementary_files/files/res_edger_unpaired_esca.xlsx]] | [[res_gsa_paired_esca_cc.xlsx|supplementary_files/files/res_gsa_paired_esca_cc.xlsx]] | [[res_gsa_paired_esca_mf.xlsx|supplementary_files/files/res_gsa_paired_esca_mf.xlsx]] | [[res_gsa_paired_esca_bp.xlsx|supplementary_files/files/res_gsa_paired_esca_bp.xlsx]] | [[res_gsa_unpaired_esca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_esca_cc.xlsx]] | [[res_gsa_unpaired_esca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_esca_mf.xlsx]] | [[res_gsa_unpaired_esca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_esca_bp.xlsx]] |
+|!hnsc| HNSC | 204 | 285 | 360 | 164 | 305 | 222 | 53 | 5116 | 0 | 0 | 5169 | 0 | 48 | 3928 | 0 | 0 | 446 | 0 | 5 | 742 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_hnsc.xlsx|supplementary_files/files/res_edger_paired_hnsc.xlsx]] | [[res_edger_unpaired_hnsc.xlsx|supplementary_files/files/res_edger_unpaired_hnsc.xlsx]] | [[res_gsa_paired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_paired_hnsc_cc.xlsx]] | [[res_gsa_paired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_paired_hnsc_mf.xlsx]] | [[res_gsa_paired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_paired_hnsc_bp.xlsx]] | [[res_gsa_unpaired_hnsc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_cc.xlsx]] | [[res_gsa_unpaired_hnsc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_mf.xlsx]] | [[res_gsa_unpaired_hnsc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_hnsc_bp.xlsx]] |
+|!kich| KICH | 166 | 297 | 199 | 217 | 252 | 169 | 1 | 5167 | 1 | 30 | 5138 | 1 | 0 | 3975 | 1 | 1 | 445 | 0 | 0 | 747 | 0 | 18 | 3957 | 1 | 1 | 445 | 0 | 11 | 736 | 0 | [[res_edger_paired_kich.xlsx|supplementary_files/files/res_edger_paired_kich.xlsx]] | [[res_edger_unpaired_kich.xlsx|supplementary_files/files/res_edger_unpaired_kich.xlsx]] | [[res_gsa_paired_kich_cc.xlsx|supplementary_files/files/res_gsa_paired_kich_cc.xlsx]] | [[res_gsa_paired_kich_mf.xlsx|supplementary_files/files/res_gsa_paired_kich_mf.xlsx]] | [[res_gsa_paired_kich_bp.xlsx|supplementary_files/files/res_gsa_paired_kich_bp.xlsx]] | [[res_gsa_unpaired_kich_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kich_cc.xlsx]] | [[res_gsa_unpaired_kich_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kich_mf.xlsx]] | [[res_gsa_unpaired_kich_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kich_bp.xlsx]] |
+|!kirc| KIRC | 169 | 191 | 323 | 213 | 180 | 215 | 0 | 5159 | 10 | 5 | 5163 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 737 | 10 | 1 | 3975 | 0 | 0 | 446 | 0 | 4 | 742 | 1 | [[res_edger_paired_kirc.xlsx|supplementary_files/files/res_edger_paired_kirc.xlsx]] | [[res_edger_unpaired_kirc.xlsx|supplementary_files/files/res_edger_unpaired_kirc.xlsx]] | [[res_gsa_paired_kirc_cc.xlsx|supplementary_files/files/res_gsa_paired_kirc_cc.xlsx]] | [[res_gsa_paired_kirc_mf.xlsx|supplementary_files/files/res_gsa_paired_kirc_mf.xlsx]] | [[res_gsa_paired_kirc_bp.xlsx|supplementary_files/files/res_gsa_paired_kirc_bp.xlsx]] | [[res_gsa_unpaired_kirc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_cc.xlsx]] | [[res_gsa_unpaired_kirc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_mf.xlsx]] | [[res_gsa_unpaired_kirc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirc_bp.xlsx]] |
+|!kirp| KIRP | 221 | 262 | 295 | 223 | 242 | 237 | 4 | 5165 | 0 | 13 | 5155 | 1 | 1 | 3975 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 13 | 3963 | 0 | 0 | 446 | 0 | 0 | 746 | 1 | [[res_edger_paired_kirp.xlsx|supplementary_files/files/res_edger_paired_kirp.xlsx]] | [[res_edger_unpaired_kirp.xlsx|supplementary_files/files/res_edger_unpaired_kirp.xlsx]] | [[res_gsa_paired_kirp_cc.xlsx|supplementary_files/files/res_gsa_paired_kirp_cc.xlsx]] | [[res_gsa_paired_kirp_mf.xlsx|supplementary_files/files/res_gsa_paired_kirp_mf.xlsx]] | [[res_gsa_paired_kirp_bp.xlsx|supplementary_files/files/res_gsa_paired_kirp_bp.xlsx]] | [[res_gsa_unpaired_kirp_cc.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_cc.xlsx]] | [[res_gsa_unpaired_kirp_mf.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_mf.xlsx]] | [[res_gsa_unpaired_kirp_bp.xlsx|supplementary_files/files/res_gsa_unpaired_kirp_bp.xlsx]] |
+|!lihc| LIHC | 120 | 278 | 407 | 200 | 283 | 213 | 7 | 5080 | 82 | 0 | 5169 | 0 | 1 | 3929 | 46 | 4 | 429 | 13 | 2 | 722 | 23 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_lihc.xlsx|supplementary_files/files/res_edger_paired_lihc.xlsx]] | [[res_edger_unpaired_lihc.xlsx|supplementary_files/files/res_edger_unpaired_lihc.xlsx]] | [[res_gsa_paired_lihc_cc.xlsx|supplementary_files/files/res_gsa_paired_lihc_cc.xlsx]] | [[res_gsa_paired_lihc_mf.xlsx|supplementary_files/files/res_gsa_paired_lihc_mf.xlsx]] | [[res_gsa_paired_lihc_bp.xlsx|supplementary_files/files/res_gsa_paired_lihc_bp.xlsx]] | [[res_gsa_unpaired_lihc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_cc.xlsx]] | [[res_gsa_unpaired_lihc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_mf.xlsx]] | [[res_gsa_unpaired_lihc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lihc_bp.xlsx]] |
+|!luad| LUAD | 152 | 292 | 405 | 130 | 264 | 259 | 0 | 5169 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_luad.xlsx|supplementary_files/files/res_edger_paired_luad.xlsx]] | [[res_edger_unpaired_luad.xlsx|supplementary_files/files/res_edger_unpaired_luad.xlsx]] | [[res_gsa_paired_luad_cc.xlsx|supplementary_files/files/res_gsa_paired_luad_cc.xlsx]] | [[res_gsa_paired_luad_mf.xlsx|supplementary_files/files/res_gsa_paired_luad_mf.xlsx]] | [[res_gsa_paired_luad_bp.xlsx|supplementary_files/files/res_gsa_paired_luad_bp.xlsx]] | [[res_gsa_unpaired_luad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_luad_cc.xlsx]] | [[res_gsa_unpaired_luad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_luad_mf.xlsx]] | [[res_gsa_unpaired_luad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_luad_bp.xlsx]] |
+|!lusc| LUSC | 169 | 215 | 462 | 180 | 313 | 244 | 0 | 5169 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_lusc.xlsx|supplementary_files/files/res_edger_paired_lusc.xlsx]] | [[res_edger_unpaired_lusc.xlsx|supplementary_files/files/res_edger_unpaired_lusc.xlsx]] | [[res_gsa_paired_lusc_cc.xlsx|supplementary_files/files/res_gsa_paired_lusc_cc.xlsx]] | [[res_gsa_paired_lusc_mf.xlsx|supplementary_files/files/res_gsa_paired_lusc_mf.xlsx]] | [[res_gsa_paired_lusc_bp.xlsx|supplementary_files/files/res_gsa_paired_lusc_bp.xlsx]] | [[res_gsa_unpaired_lusc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_cc.xlsx]] | [[res_gsa_unpaired_lusc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_mf.xlsx]] | [[res_gsa_unpaired_lusc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_lusc_bp.xlsx]] |
+|!paad| PAAD | 23 | 607 | 11 | 8 | 606 | 14 | 3 | 5165 | 1 | 0 | 5169 | 0 | 3 | 3973 | 0 | 0 | 445 | 1 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_paad.xlsx|supplementary_files/files/res_edger_paired_paad.xlsx]] | [[res_edger_unpaired_paad.xlsx|supplementary_files/files/res_edger_unpaired_paad.xlsx]] | [[res_gsa_paired_paad_cc.xlsx|supplementary_files/files/res_gsa_paired_paad_cc.xlsx]] | [[res_gsa_paired_paad_mf.xlsx|supplementary_files/files/res_gsa_paired_paad_mf.xlsx]] | [[res_gsa_paired_paad_bp.xlsx|supplementary_files/files/res_gsa_paired_paad_bp.xlsx]] | [[res_gsa_unpaired_paad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_paad_cc.xlsx]] | [[res_gsa_unpaired_paad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_paad_mf.xlsx]] | [[res_gsa_unpaired_paad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_paad_bp.xlsx]] |
+|!pcpg| PCPG | 70 | 608 | 43 | 40 | 507 | 55 | 0 | 5169 | 0 | 0 | 5166 | 3 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 745 | 2 | [[res_edger_paired_pcpg.xlsx|supplementary_files/files/res_edger_paired_pcpg.xlsx]] | [[res_edger_unpaired_pcpg.xlsx|supplementary_files/files/res_edger_unpaired_pcpg.xlsx]] | [[res_gsa_paired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_paired_pcpg_cc.xlsx]] | [[res_gsa_paired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_paired_pcpg_mf.xlsx]] | [[res_gsa_paired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_paired_pcpg_bp.xlsx]] | [[res_gsa_unpaired_pcpg_cc.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_cc.xlsx]] | [[res_gsa_unpaired_pcpg_mf.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_mf.xlsx]] | [[res_gsa_unpaired_pcpg_bp.xlsx|supplementary_files/files/res_gsa_unpaired_pcpg_bp.xlsx]] |
+|!prad| PRAD | 76 | 429 | 104 | 38 | 513 | 31 | 0 | 5168 | 1 | 1 | 5168 | 0 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 1 | 746 | 0 | [[res_edger_paired_prad.xlsx|supplementary_files/files/res_edger_paired_prad.xlsx]] | [[res_edger_unpaired_prad.xlsx|supplementary_files/files/res_edger_unpaired_prad.xlsx]] | [[res_gsa_paired_prad_cc.xlsx|supplementary_files/files/res_gsa_paired_prad_cc.xlsx]] | [[res_gsa_paired_prad_mf.xlsx|supplementary_files/files/res_gsa_paired_prad_mf.xlsx]] | [[res_gsa_paired_prad_bp.xlsx|supplementary_files/files/res_gsa_paired_prad_bp.xlsx]] | [[res_gsa_unpaired_prad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_prad_cc.xlsx]] | [[res_gsa_unpaired_prad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_prad_mf.xlsx]] | [[res_gsa_unpaired_prad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_prad_bp.xlsx]] |
+|!read| READ | 136 | 307 | 204 |  |  |  | 0 | 5157 | 12 |  |  |  | 0 | 3964 | 12 | 0 | 446 | 0 | 0 | 747 | 0 |  |  |  |  |  |  |  |  |  | [[res_edger_paired_read.xlsx|supplementary_files/files/res_edger_paired_read.xlsx]] | [[res_edger_unpaired_read.xlsx|supplementary_files/files/res_edger_unpaired_read.xlsx]] | [[res_gsa_paired_read_cc.xlsx|supplementary_files/files/res_gsa_paired_read_cc.xlsx]] | [[res_gsa_paired_read_mf.xlsx|supplementary_files/files/res_gsa_paired_read_mf.xlsx]] | [[res_gsa_paired_read_bp.xlsx|supplementary_files/files/res_gsa_paired_read_bp.xlsx]] | [[res_gsa_unpaired_read_cc.xlsx|supplementary_files/files/res_gsa_unpaired_read_cc.xlsx]] | [[res_gsa_unpaired_read_mf.xlsx|supplementary_files/files/res_gsa_unpaired_read_mf.xlsx]] | [[res_gsa_unpaired_read_bp.xlsx|supplementary_files/files/res_gsa_unpaired_read_bp.xlsx]] |
+|!skcm| SKCM | 46 | 680 | 6 |  |  |  | 121 | 5043 | 5 |  |  |  | 108 | 3864 | 4 | 2 | 444 | 0 | 11 | 735 | 1 |  |  |  |  |  |  |  |  |  | [[res_edger_paired_skcm.xlsx|supplementary_files/files/res_edger_paired_skcm.xlsx]] | [[res_edger_unpaired_skcm.xlsx|supplementary_files/files/res_edger_unpaired_skcm.xlsx]] | [[res_gsa_paired_skcm_cc.xlsx|supplementary_files/files/res_gsa_paired_skcm_cc.xlsx]] | [[res_gsa_paired_skcm_mf.xlsx|supplementary_files/files/res_gsa_paired_skcm_mf.xlsx]] | [[res_gsa_paired_skcm_bp.xlsx|supplementary_files/files/res_gsa_paired_skcm_bp.xlsx]] | [[res_gsa_unpaired_skcm_cc.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_cc.xlsx]] | [[res_gsa_unpaired_skcm_mf.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_mf.xlsx]] | [[res_gsa_unpaired_skcm_bp.xlsx|supplementary_files/files/res_gsa_unpaired_skcm_bp.xlsx]] |
+|!stad| STAD | 152 | 308 | 356 | 138 | 307 | 206 | 5 | 5164 | 0 | 0 | 5169 | 0 | 0 | 3976 | 0 | 5 | 441 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | [[res_edger_paired_stad.xlsx|supplementary_files/files/res_edger_paired_stad.xlsx]] | [[res_edger_unpaired_stad.xlsx|supplementary_files/files/res_edger_unpaired_stad.xlsx]] | [[res_gsa_paired_stad_cc.xlsx|supplementary_files/files/res_gsa_paired_stad_cc.xlsx]] | [[res_gsa_paired_stad_mf.xlsx|supplementary_files/files/res_gsa_paired_stad_mf.xlsx]] | [[res_gsa_paired_stad_bp.xlsx|supplementary_files/files/res_gsa_paired_stad_bp.xlsx]] | [[res_gsa_unpaired_stad_cc.xlsx|supplementary_files/files/res_gsa_unpaired_stad_cc.xlsx]] | [[res_gsa_unpaired_stad_mf.xlsx|supplementary_files/files/res_gsa_unpaired_stad_mf.xlsx]] | [[res_gsa_unpaired_stad_bp.xlsx|supplementary_files/files/res_gsa_unpaired_stad_bp.xlsx]] |
+|!thca| THCA | 218 | 351 | 257 | 226 | 347 | 145 | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 | [[res_edger_paired_thca.xlsx|supplementary_files/files/res_edger_paired_thca.xlsx]] | [[res_edger_unpaired_thca.xlsx|supplementary_files/files/res_edger_unpaired_thca.xlsx]] | [[res_gsa_paired_thca_cc.xlsx|supplementary_files/files/res_gsa_paired_thca_cc.xlsx]] | [[res_gsa_paired_thca_mf.xlsx|supplementary_files/files/res_gsa_paired_thca_mf.xlsx]] | [[res_gsa_paired_thca_bp.xlsx|supplementary_files/files/res_gsa_paired_thca_bp.xlsx]] | [[res_gsa_unpaired_thca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_thca_cc.xlsx]] | [[res_gsa_unpaired_thca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_thca_mf.xlsx]] | [[res_gsa_unpaired_thca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_thca_bp.xlsx]] |
+|!ucec| UCEC | 243 | 284 | 347 | 211 | 272 | 229 | 89 | 5080 | 0 | 9 | 5160 | 0 | 83 | 3893 | 0 | 1 | 445 | 0 | 5 | 742 | 0 | 3 | 3973 | 0 | 5 | 441 | 0 | 1 | 746 | 0 | [[res_edger_paired_ucec.xlsx|supplementary_files/files/res_edger_paired_ucec.xlsx]] | [[res_edger_unpaired_ucec.xlsx|supplementary_files/files/res_edger_unpaired_ucec.xlsx]] | [[res_gsa_paired_ucec_cc.xlsx|supplementary_files/files/res_gsa_paired_ucec_cc.xlsx]] | [[res_gsa_paired_ucec_mf.xlsx|supplementary_files/files/res_gsa_paired_ucec_mf.xlsx]] | [[res_gsa_paired_ucec_bp.xlsx|supplementary_files/files/res_gsa_paired_ucec_bp.xlsx]] | [[res_gsa_unpaired_ucec_cc.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_cc.xlsx]] | [[res_gsa_unpaired_ucec_mf.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_mf.xlsx]] | [[res_gsa_unpaired_ucec_bp.xlsx|supplementary_files/files/res_gsa_unpaired_ucec_bp.xlsx]] |
+
+
+More detailed information:
 * [[Distribution of ranking index]]. 
 * [[Ranking index correlation]]. 
 * [[Inhibition index correlation by ontology]]. 
-* [[Inhibition effect correlation distribution by ontology]]. 
-* [[Ranking index correlation vs. correlation]].
+* [[Inhibition effect correlation distribution by ontology]].
+* [[Ranking index correlation vs. correlation]]. 
+
 </pre>
 </div>
 <div title="HNSC" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="4">
 <pre>!!Summary files for HNSC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!hnsc_unpaired| HNSC | 204 | 285 | 360 | 53 | 5116 | 0 | 48 | 3928 | 0 | 0 | 446 | 0 | 5 | 742 | 0 |
 |!hnsc_paired| HNSC | 164 | 305 | 222 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1426,7 +1498,7 @@ In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to def
 Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis.  Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value.  Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
 
 |sortable|k
-|!| ID | GOs.Derg.unpaired | GOs.noDif.unpaired | GOs.Inh.unpaired | GOs.Derg.paired | GOs.noDif.paired | GOs.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired_gsa_cc | resUnpaired_gsa_cc | resPaired_gsa_mf | resUnpaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_bp |h
+|!| ID | gos.Derg.unpaired | gos.noDif.unpaired | gos.Inh.unpaired | gos.Derg.paired | gos.noDif.paired | gos.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired_gsa_cc | resUnpaired_gsa_cc | resPaired_gsa_mf | resUnpaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_bp |h
 |!blca| BLCA | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | [[res_gsa_paired_blca_cc.xlsx|supplementary_files/files/res_gsa_paired_blca_cc.xlsx]] | [[res_gsa_unpaired_blca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]] | [[res_gsa_paired_blca_mf.xlsx|supplementary_files/files/res_gsa_paired_blca_mf.xlsx]] | [[res_gsa_unpaired_blca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]] | [[res_gsa_paired_blca_bp.xlsx|supplementary_files/files/res_gsa_paired_blca_bp.xlsx]] | [[res_gsa_unpaired_blca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]] |
 |!brca| BRCA | 3 | 5166 | 0 | 0 | 5167 | 2 | 0 | 3976 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 444 | 2 | 0 | 747 | 0 | [[res_gsa_paired_brca_cc.xlsx|supplementary_files/files/res_gsa_paired_brca_cc.xlsx]] | [[res_gsa_unpaired_brca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]] | [[res_gsa_paired_brca_mf.xlsx|supplementary_files/files/res_gsa_paired_brca_mf.xlsx]] | [[res_gsa_unpaired_brca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]] | [[res_gsa_paired_brca_bp.xlsx|supplementary_files/files/res_gsa_paired_brca_bp.xlsx]] | [[res_gsa_unpaired_brca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]] |
 |!cesc| CESC | 0 | 5169 | 0 | 1 | 5167 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 444 | 1 | 0 | 747 | 0 | [[res_gsa_paired_cesc_cc.xlsx|supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]] | [[res_gsa_unpaired_cesc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]] | [[res_gsa_paired_cesc_mf.xlsx|supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]] | [[res_gsa_unpaired_cesc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]] | [[res_gsa_paired_cesc_bp.xlsx|supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]] | [[res_gsa_unpaired_cesc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]] |
@@ -1457,7 +1529,7 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 This table shows  global results for all studies:
 
 |sortable|k
-|!| ID | Down.unpaired | noDif.unpaired | Up.unpaired | Down.paired | noDif.paired | Up.paired | GOs.Derg.unpaired | GOs.noDif.unpaired | GOs.Inh.unpaired | GOs.Derg.paired | GOs.noDif.paired | GOs.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired | resUnpaired | resPaired_gsa_cc | resPaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_cc | resUnpaired_gsa_mf | resUnpaired_gsa_bp |h
+|!| ID | Down.unpaired | noDif.unpaired | Up.unpaired | Down.paired | noDif.paired | Up.paired | gos.Derg.unpaired | gos.noDif.unpaired | gos.Inh.unpaired | gos.Derg.paired | gos.noDif.paired | gos.Inh.paired | bp.Down.unpa | bp.noDif.unpa | bp.UP.unpa | cc.Down.unpa | cc.noDif.unpa | cc.UP.unpa | mf.Down.unpa | mf.noDif.unpa | mf.UP.unpa | bp.Down.pair | bp.noDif.pair | bp.UP.pair | cc.Down.pair | cc.noDif.pair | cc.UP.pair | mf.Down.pair | mf.noDif.pair | mf.UP.pair | resPaired | resUnpaired | resPaired_gsa_cc | resPaired_gsa_mf | resPaired_gsa_bp | resUnpaired_gsa_cc | resUnpaired_gsa_mf | resUnpaired_gsa_bp |h
 |!blca| BLCA | 128 | 337 | 353 | 127 | 343 | 219 | 2 | 5167 | 0 | 2 | 5167 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 2 | 444 | 0 | 0 | 747 | 0 | [[res_edger_paired_blca.xlsx|supplementary_files/files/res_edger_paired_blca.xlsx]] | [[res_edger_unpaired_blca.xlsx|supplementary_files/files/res_edger_unpaired_blca.xlsx]] | [[res_gsa_paired_blca_cc.xlsx|supplementary_files/files/res_gsa_paired_blca_cc.xlsx]] | [[res_gsa_paired_blca_mf.xlsx|supplementary_files/files/res_gsa_paired_blca_mf.xlsx]] | [[res_gsa_paired_blca_bp.xlsx|supplementary_files/files/res_gsa_paired_blca_bp.xlsx]] | [[res_gsa_unpaired_blca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_blca_cc.xlsx]] | [[res_gsa_unpaired_blca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_blca_mf.xlsx]] | [[res_gsa_unpaired_blca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_blca_bp.xlsx]] |
 |!brca| BRCA | 200 | 244 | 396 | 202 | 215 | 269 | 3 | 5166 | 0 | 0 | 5167 | 2 | 0 | 3976 | 0 | 3 | 443 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 0 | 444 | 2 | 0 | 747 | 0 | [[res_edger_paired_brca.xlsx|supplementary_files/files/res_edger_paired_brca.xlsx]] | [[res_edger_unpaired_brca.xlsx|supplementary_files/files/res_edger_unpaired_brca.xlsx]] | [[res_gsa_paired_brca_cc.xlsx|supplementary_files/files/res_gsa_paired_brca_cc.xlsx]] | [[res_gsa_paired_brca_mf.xlsx|supplementary_files/files/res_gsa_paired_brca_mf.xlsx]] | [[res_gsa_paired_brca_bp.xlsx|supplementary_files/files/res_gsa_paired_brca_bp.xlsx]] | [[res_gsa_unpaired_brca_cc.xlsx|supplementary_files/files/res_gsa_unpaired_brca_cc.xlsx]] | [[res_gsa_unpaired_brca_mf.xlsx|supplementary_files/files/res_gsa_unpaired_brca_mf.xlsx]] | [[res_gsa_unpaired_brca_bp.xlsx|supplementary_files/files/res_gsa_unpaired_brca_bp.xlsx]] |
 |!cesc| CESC | 92 | 621 | 73 | 29 | 537 | 65 | 0 | 5169 | 0 | 1 | 5167 | 1 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 | 0 | 3976 | 0 | 1 | 444 | 1 | 0 | 747 | 0 | [[res_edger_paired_cesc.xlsx|supplementary_files/files/res_edger_paired_cesc.xlsx]] | [[res_edger_unpaired_cesc.xlsx|supplementary_files/files/res_edger_unpaired_cesc.xlsx]] | [[res_gsa_paired_cesc_cc.xlsx|supplementary_files/files/res_gsa_paired_cesc_cc.xlsx]] | [[res_gsa_paired_cesc_mf.xlsx|supplementary_files/files/res_gsa_paired_cesc_mf.xlsx]] | [[res_gsa_paired_cesc_bp.xlsx|supplementary_files/files/res_gsa_paired_cesc_bp.xlsx]] | [[res_gsa_unpaired_cesc_cc.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_cc.xlsx]] | [[res_gsa_unpaired_cesc_mf.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_mf.xlsx]] | [[res_gsa_unpaired_cesc_bp.xlsx|supplementary_files/files/res_gsa_unpaired_cesc_bp.xlsx]] |
@@ -1503,7 +1575,7 @@ More detailed information:
 <pre>!!Summary for KIRC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!kirc_unpaired| KIRC | 169 | 191 | 323 | 0 | 5159 | 10 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 737 | 10 |
 |!kirc_paired| KIRC | 213 | 180 | 215 | 5 | 5163 | 1 | 1 | 3975 | 0 | 0 | 446 | 0 | 4 | 742 | 1 |
 
@@ -1537,7 +1609,7 @@ More detailed information:
 <pre>!!Summary for KIRP cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!kirp_unpaired| KIRP | 221 | 262 | 295 | 4 | 5165 | 0 | 1 | 3975 | 0 | 3 | 443 | 0 | 0 | 747 | 0 |
 |!kirp_paired| KIRP | 223 | 242 | 237 | 13 | 5155 | 1 | 13 | 3963 | 0 | 0 | 446 | 0 | 0 | 746 | 1 |
 
@@ -1571,7 +1643,7 @@ More detailed information:
 <pre>!!Summary for LIHC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!lihc_unpaired| LIHC | 120 | 278 | 407 | 7 | 5080 | 82 | 1 | 3929 | 46 | 4 | 429 | 13 | 2 | 722 | 23 |
 |!lihc_paired| LIHC | 200 | 283 | 213 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1605,7 +1677,7 @@ More detailed information:
 <pre>!!Summary for LUAD cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!luad_unpaired| LUAD | 152 | 292 | 405 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!luad_paired| LUAD | 130 | 264 | 259 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1641,7 +1713,7 @@ More detailed information:
 <pre>!!Summary for LUSC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!lusc_unpaired| LUSC | 169 | 215 | 462 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!lusc_paired| LUSC | 180 | 313 | 244 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1752,7 +1824,7 @@ More detailed information:
 <pre>!!Summary for  PAAD cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!paad_unpaired| PAAD | 23 | 607 | 11 | 3 | 5165 | 1 | 3 | 3973 | 0 | 0 | 445 | 1 | 0 | 747 | 0 |
 |!paad_paired| PAAD | 8 | 606 | 14 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1786,7 +1858,7 @@ More detailed information:
 <pre>!!Summary for PCPG cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!pcpg_unpaired| PCPG | 70 | 608 | 43 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!pcpg_paired| PCPG | 40 | 507 | 55 | 0 | 5166 | 3 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 745 | 2 |
 
@@ -1820,7 +1892,7 @@ More detailed information:
 <pre>!!Summary for PRAD cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!prad_unpaired| PRAD | 76 | 429 | 104 | 0 | 5168 | 1 | 0 | 3976 | 0 | 0 | 445 | 1 | 0 | 747 | 0 |
 |!prad_paired| PRAD | 38 | 513 | 31 | 1 | 5168 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 1 | 746 | 0 |
 
@@ -1854,7 +1926,7 @@ More detailed information:
 <pre>!!Summary for READ cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!read_unpaired| READ | 136 | 307 | 204 | 0 | 5157 | 12 | 0 | 3964 | 12 | 0 | 446 | 0 | 0 | 747 | 0 |
 |!read_paired| READ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
@@ -1906,7 +1978,7 @@ More detailed information:
 <pre>!!Summary for  SKCM cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!skcm_unpaired| SKCM | 46 | 680 | 6 | 121 | 5043 | 5 | 108 | 3864 | 4 | 2 | 444 | 0 | 11 | 735 | 1 |
 |!skcm_paired| SKCM |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
@@ -1933,7 +2005,7 @@ More detailed information:
 <pre>!!Summary for  STAD cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!stad_unpaired| STAD | 152 | 308 | 356 | 5 | 5164 | 0 | 0 | 3976 | 0 | 5 | 441 | 0 | 0 | 747 | 0 |
 |!stad_paired| STAD | 138 | 307 | 206 | 0 | 5169 | 0 | 0 | 3976 | 0 | 0 | 446 | 0 | 0 | 747 | 0 |
 
@@ -1973,7 +2045,7 @@ More detailed information:
 <pre>!!Summary for THCA cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!thca_unpaired| THCA | 218 | 351 | 257 | 2 | 5167 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 |
 |!thca_paired| THCA | 226 | 347 | 145 | 2 | 5167 | 0 | 0 | 3976 | 0 | 1 | 445 | 0 | 1 | 746 | 0 |
 
@@ -2251,7 +2323,7 @@ config.macros.toggleSideBar.onToggleSideBar = function(){
 <pre>!!Summary for UCEC cancer:
 
 |sortable|k
-|!| ID | miRNA.down | miRNA.noDif | miRNA.up | GOs.derg | GOs.noDif | GOs.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
+|!| ID | miRNA.down | miRNA.noDif | miRNA.up | gos.derg | gos.noDif | gos.inh | bp.Down | bp.noDif | bp.UP | cc.Down | cc.noDif | cc.UP | mf.Down | mf.noDif | mf.UP |h
 |!ucec_unpaired| UCEC | 243 | 284 | 347 | 89 | 5080 | 0 | 83 | 3893 | 0 | 1 | 445 | 0 | 5 | 742 | 0 |
 |!ucec_paired| UCEC | 211 | 272 | 229 | 9 | 5160 | 0 | 3 | 3973 | 0 | 5 | 441 | 0 | 1 | 746 | 0 |
 
