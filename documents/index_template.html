@@ -528,44 +528,144 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <pre>''Table 1''.   Analyzed datasets. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
 @@~TABLA1_DATASETS@@</pre>
 </div>
-<div title="BLCA" creator="FGarcia" modifier="YourName" created="201502241740" modified="201505101850" changecount="3">
+<div title="BLCA" creator="FGarcia" modifier="genometra" created="201502241740" modified="201505121704" changecount="10">
 <pre>!!Summary for BLCA cancer:
 @@~SUMMARY_blca@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
+
 !!Result files for BLCA cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_blca@@
 
 !!Result plots for BLCA cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_blca@@</pre>
 </div>
-<div title="BRCA" creator="FGarcia" modifier="YourName" created="201502241741" modified="201505101850" changecount="3">
+<div title="BRCA" creator="FGarcia" modifier="genometra" created="201502241741" modified="201505121732" changecount="4">
 <pre>!!Summary  for BRCA cancer:
 @@~SUMMARY_brca@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for BRCA cancer:
+
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_brca@@
 
 !!Result plots for BRCA cancer:
+
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_brca@@</pre>
 </div>
-<div title="CESC" creator="FGarcia" modifier="YourName" created="201502241741" modified="201505101851" changecount="4">
+<div title="CESC" creator="FGarcia" modifier="genometra" created="201502241741" modified="201505121731" changecount="6">
 <pre>!!Summary for CESC cancer:
 @@~SUMMARY_cesc@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for CESC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_cesc@@
 
 !!Result plots for CESC cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_cesc@@</pre>
 </div>
-<div title="COAD" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101852" changecount="4">
+<div title="COAD" creator="FGarcia" modifier="genometra" created="201502241742" modified="201505121730" changecount="6">
 <pre>!!Summary for COAD cancer:
 @@~SUMMARY_coad@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for COAD cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
 @@~FILES_coad@@
 
 !!Result plots for COAD cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_coad@@</pre>
 </div>
 <div title="DefaultTiddlers" creator="FGarcia" modifier="FGarcia" created="201502160923" changecount="1">
@@ -676,26 +776,51 @@ Tiddler.prototype.changed = function()
 };
 //}}}</pre>
 </div>
-<div title="Distribution of ranking index" creator="FGarcia" modifier="genometra" created="201502231218" modified="201505121114" changecount="4">
+<div title="Distribution of ranking index" creator="FGarcia" modifier="genometra" created="201502231218" modified="201505121322" changecount="5">
 <pre>Comparing distributions of several ranking index. 
 
-Paired studies:
+''Paired studies:''
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_PAIRED@@
 
-Unpaired studies:
+''Unpaired studies:''
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_UNPAIRED@@</pre>
 </div>
-<div title="ESCA" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="3">
+<div title="ESCA" creator="FGarcia" modifier="genometra" created="201502241742" modified="201505121728" changecount="4">
 <pre>!!Summary for ESCA cancer:
 @@~SUMMARY_esca@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for ESCA cancer:
+
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_esca@@
 
 !!Result plots for ESCA cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_esca@@</pre>
 </div>
-<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="5">
+<div title="Gene Set level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505121338" changecount="7">
 <pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
@@ -731,18 +856,21 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 
 @@~TABLA_GENE_SET_LEVEL_GO_UNPAIRED@@</pre>
 </div>
-<div title="Gene level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111246" changecount="5">
+<div title="Gene level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505121338" changecount="6">
 <pre>After miRNA differential expression analysis,  we translate  this miRNA differential expression evidence to a gene differential inhibition scale. 
 For each gene, this transferred index pulls its targeting miRNA information preserving two characteristics suitable for the functional interpretation of the experiment: it accounts for the multiple miRNA cancellation effect and incorporates the additivity of several small inhibitory events into a relevant one.
 
 ''Table 3''. Number of genes targeted by the up and down regulated miRNAs. The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.
 @@~TABLA3_GENES@@
 
-More detailed information: 
-*  [[Gene level. Exploring the transfer between miRNA and gene]]. </pre>
+
+*  [[Gene level. Exploring the transfer between miRNA and gene]]. 
+</pre>
 </div>
-<div title="Gene level. Exploring the transfer between miRNA and gene" creator="FGarcia" modifier="genometra" created="201502231144" modified="201505121114" changecount="3">
-<pre>Exploring the transferred index for miRNA and gene for each paired study.
+<div title="Gene level. Exploring the transfer between miRNA and gene" creator="FGarcia" modifier="genometra" created="201502231144" modified="201505121247" changecount="4">
+<pre>Exploring the transferred index for miRNA and gene for each paired study.  
+Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
 
 @@~PLOTS_GENE_LEVEL@@</pre>
 </div>
@@ -756,27 +884,68 @@ More detailed information:
 
 @@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@</pre>
 </div>
-<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111246" changecount="5">
+<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505121650" changecount="15">
 <pre>This table shows  global results for all studies:
+
+
+''miRNA level''.
+*  Number of up, down and not differentially regulated miRNAs in each cancer type. 
+*  Columns:	Down.unpaired, noDif.unpaired,	Up.unpaired,	Down.paired,	noDif.paired,	Up.paired. 
+*  Detailed information in xlsx files: resPaired	resUnpaired. 
+''Gene Set level''.
+* Number significant GO terms in the functional profiling analysis for this study.
+*  Bp, cc and mf represent biological process, cellular component and molecular function.
+*  Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases.  Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. NoDif indicates the number of GOs with a not significant slope coefficient.
+*  Columns:	gos.Derg.unpaired, gos.noDif.unpaired	, gos.Inh.unpaired,	gos.Derg.paired,	gos.noDif.paired,	gos.Inh.paired,	bp.Down.unpa,	bp.noDif.unpa,	bp.UP.unpa,	cc.Down.unpa,	cc.noDif.unpa,	cc.UP.unpa,	mf.Down.unpa,	mf.noDif.unpa,	mf.UP.unpa,	bp.Down.pair,	bp.noDif.pair,	bp.UP.pair,	 cc.Down.pair,	cc.noDif.pair,	cc.UP.pair,	 mf.Down.pair,	mf.noDif.pair,	mf.UP.pair. 
+*  Detailed information in xlsx files: resPaired_gsa_cc, resPaired_gsa_mf, 	resPaired_gsa_bp,	resUnpaired_gsa_cc,	resUnpaired_gsa_mf,	resUnpaired_gsa_bp.
+
+
+
+
 @@~TABLA_all@@
 
 More detailed information:
 * [[Distribution of ranking index]]. 
 * [[Ranking index correlation]]. 
-* [[Inhibition index correlation by ontology]]. 
 * [[Inhibition effect correlation distribution by ontology]].
 * [[Ranking index correlation vs. correlation]]. 
 
 </pre>
 </div>
-<div title="HNSC" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="4">
+<div title="HNSC" creator="FGarcia" modifier="genometra" created="201502241742" modified="201505121727" changecount="5">
 <pre>!!Summary files for HNSC cancer:
 @@~SUMMARY_hnsc@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for HNSC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_hnsc@@
 
 !!Result plots for HNSC cancer:
+
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_hnsc@@</pre>
 </div>
 <div title="ImageSizePlugin" modifier="genometra" created="200801180032" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
@@ -955,11 +1124,14 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 }
 //}}}</pre>
 </div>
-<div title="Inhibition effect correlation distribution by ontology" creator="FGarcia" modifier="genometra" created="201502231434" modified="201505121129" changecount="2">
-<pre>Paired studies:
+<div title="Inhibition effect correlation distribution by ontology" creator="FGarcia" modifier="genometra" created="201502231434" modified="201505121334" changecount="3">
+<pre>These plots show the inhibition effect correlation for biological process, cellular component and molecular function  between cancer types. 
+
+''Paired studies'':
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_PAIRED@@
 
-Unpaired studies:
+
+''Unpaired studies'':
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@</pre>
 </div>
 <div title="Inhibition index correlation by ontology" creator="FGarcia" modifier="genometra" created="201502231435" modified="201505121121" changecount="3">
@@ -969,7 +1141,7 @@ Unpaired studies:
 Unpaired studies:
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="genometra" created="201502151053" modified="201505121127" changecount="79">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="genometra" created="201502151053" modified="201505121634" changecount="88">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -1014,6 +1186,17 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 
 !!Global results
 This table shows  global results for all studies:
+
+''miRNA level''.
+*  Number of up, down and not differentially regulated miRNAs in each cancer type. 
+*  Columns:	Down.unpaired, noDif.unpaired,	Up.unpaired,	Down.paired,	noDif.paired,	Up.paired. 
+*  Detailed information in xlsx files: resPaired	resUnpaired. 
+''Gene Set level''.
+*  Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter). 
+*  Bp, cc and mf represent biological process, cellular component and molecular function.
+*  Columns:	gos.Derg.unpaired, gos.noDif.unpaired	, gos.Inh.unpaired,	gos.Derg.paired,	gos.noDif.paired,	gos.Inh.paired,	bp.Down.unpa,	bp.noDif.unpa,	bp.UP.unpa,	cc.Down.unpa,	cc.noDif.unpa,	cc.UP.unpa,	mf.Down.unpa,	mf.noDif.unpa,	mf.UP.unpa,	bp.Down.pair,	bp.noDif.pair,	bp.UP.pair,	 cc.Down.pair,	cc.noDif.pair,	cc.UP.pair,	 mf.Down.pair,	mf.noDif.pair,	mf.UP.pair. 
+*  Detailed information in xlsx files: resPaired_gsa_cc, resPaired_gsa_mf, 	resPaired_gsa_bp,	resUnpaired_gsa_cc,	resUnpaired_gsa_mf,	resUnpaired_gsa_bp.
+
 @@~TABLA_all@@
 
 More detailed information:
@@ -1024,66 +1207,212 @@ More detailed information:
 
 </pre>
 </div>
-<div title="KICH" creator="FGarcia" modifier="YourName" created="201502241743" modified="201505101857" changecount="3">
+<div title="KICH" creator="FGarcia" modifier="genometra" created="201502241743" modified="201505121726" changecount="4">
 <pre>!!Summary for  KICH cancer:
 @@~SUMMARY_kich@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for  KICH cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_kich@@
 
 !!Result plots for  KICH cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_kich@@</pre>
 </div>
-<div title="KIRC" creator="FGarcia" modifier="YourName" created="201502241743" modified="201505101857" changecount="4">
+<div title="KIRC" creator="FGarcia" modifier="genometra" created="201502241743" modified="201505121725" changecount="5">
 <pre>!!Summary for KIRC cancer:
 @@~SUMMARY_kirc@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for KIRC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_kirc@@
 
 !!Result plots for KIRC cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_kirc@@</pre>
 </div>
-<div title="KIRP" creator="YourName" modifier="YourName" created="201505101900" changecount="1">
+<div title="KIRP" creator="YourName" modifier="genometra" created="201505101900" modified="201505121723" changecount="2">
 <pre>!!Summary for KIRP cancer:
 @@~SUMMARY_kirp@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for KIRP cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_kirp@@
 
 !!Result plots for KIRP cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_kirp@@</pre>
 </div>
-<div title="LIHC" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101901" changecount="3">
+<div title="LIHC" creator="FGarcia" modifier="genometra" created="201502241744" modified="201505121723" changecount="4">
 <pre>!!Summary for LIHC cancer:
 @@~SUMMARY_lihc@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for LIHC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_lihc@@
 
 !!Result plots for LIHC cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_lihc@@</pre>
 </div>
-<div title="LUAD" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101901" changecount="3">
+<div title="LUAD" creator="FGarcia" modifier="genometra" created="201502241744" modified="201505121722" changecount="4">
 <pre>!!Summary for LUAD cancer:
 @@~SUMMARY_luad@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for  LUAD cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
 
 @@~FILES_luad@@
 
+
 !!Result plots for  LUAD cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
 @@~PLOTS_luad@@</pre>
 </div>
-<div title="LUSC" creator="FGarcia" modifier="YourName" created="201502241744" modified="201505101902" changecount="3">
+<div title="LUSC" creator="FGarcia" modifier="genometra" created="201502241744" modified="201505121720" changecount="4">
 <pre>!!Summary for LUSC cancer:
 @@~SUMMARY_lusc@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for LUSC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_lusc@@
 
+
 !!Result plots for LUSC cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_lusc@@</pre>
 </div>
 <div title="MainMenu" creator="FGarcia" modifier="genometra" created="201502160925" modified="201505081559" changecount="18">
@@ -1140,58 +1469,158 @@ More detailed information:
 
 @@~TABLA_MIRNA_LEVEL_UNPAIRED@@</pre>
 </div>
-<div title="PAAD" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101902" changecount="3">
+<div title="PAAD" creator="FGarcia" modifier="genometra" created="201502241745" modified="201505121719" changecount="4">
 <pre>!!Summary for  PAAD cancer:
 @@~SUMMARY_paad@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for  PAAD cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_paad@@
 
 !!Result plots for  PAAD cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_paad@@</pre>
 </div>
-<div title="PCPG" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101903" changecount="4">
+<div title="PCPG" creator="FGarcia" modifier="genometra" created="201502241745" modified="201505121718" changecount="5">
 <pre>!!Summary for PCPG cancer:
 @@~SUMMARY_pcpg@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for PCPG cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_pcpg@@
 
 !!Result plots for PCPG cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_pcpg@@</pre>
 </div>
-<div title="PRAD" creator="FGarcia" modifier="YourName" created="201502241745" modified="201505101903" changecount="4">
+<div title="PRAD" creator="FGarcia" modifier="genometra" created="201502241745" modified="201505121717" changecount="5">
 <pre>!!Summary for PRAD cancer:
 @@~SUMMARY_prad@@
+
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
 
 !!Result files for PRAD cancer:
 @@~FILES_prad@@
 
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 !!Result plots for PRAD cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_prad@@</pre>
 </div>
-<div title="READ" creator="FGarcia" modifier="YourName" created="201502241746" modified="201505101903" changecount="3">
+<div title="READ" creator="FGarcia" modifier="genometra" created="201502241746" modified="201505121715" changecount="4">
 <pre>!!Summary for READ cancer:
 @@~SUMMARY_read@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for READ cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_read@@
 
+
 !!Result plots for READ cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_read@@</pre>
 </div>
-<div title="Ranking index correlation" creator="FGarcia" modifier="genometra" created="201502231224" modified="201505121116" changecount="2">
-<pre>Paired studies:
+<div title="Ranking index correlation" creator="FGarcia" modifier="genometra" created="201502231224" modified="201505121335" changecount="4">
+<pre>These plots show the ranking index correlation for miRNAs, genes and transferred index between cancer types. 
+
+''Paired studies'':
 @@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_PAIRED@@
 
-Unpaired studies:
+''Unpaired studies'':
 @@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_UNPAIRED@@</pre>
 </div>
-<div title="Ranking index correlation vs. correlation" creator="FGarcia" modifier="genometra" created="201502231447" modified="201505121130" changecount="3">
-<pre>Paired studies:
+<div title="Ranking index correlation vs. correlation" creator="FGarcia" modifier="genometra" created="201502231447" modified="201505121336" changecount="4">
+<pre>''Paired studies'':
 @@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_PAIRED@@
 
-Unpaired studies:
+''Unpaired studies'':
 @@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_UNPAIRED@@</pre>
 </div>
 <div title="Results in paired studies" creator="FGarcia" modifier="FGarcia" created="201502160940" modified="201502231022" changecount="5">
@@ -1199,24 +1628,75 @@ Unpaired studies:
 
 @@~TABLA_RESULTADOS@@</pre>
 </div>
-<div title="SKCM" creator="FGarcia" modifier="YourName" created="201502241746" modified="201505101904" changecount="4">
+<div title="SKCM" creator="FGarcia" modifier="genometra" created="201502241746" modified="201505121714" changecount="5">
 <pre>!!Summary for  SKCM cancer:
 @@~SUMMARY_skcm@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for  SKCM cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_skcm@@
 
 !!Result plots for  SKCM cancer:
+
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_skcm@@</pre>
 </div>
-<div title="STAD" creator="FGarcia" modifier="YourName" created="201502241756" modified="201505101904" changecount="3">
+<div title="STAD" creator="FGarcia" modifier="genometra" created="201502241756" modified="201505121713" changecount="4">
 <pre>!!Summary for  STAD cancer:
 @@~SUMMARY_stad@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
+
 !!Result files for  STAD cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_stad@@
 
 !!Result plots for  STAD cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_stad@@</pre>
 </div>
 <div title="SiteSubtitle" creator="FGarcia" modifier="FGarcia" created="201502160921" changecount="1">
@@ -1225,14 +1705,38 @@ Unpaired studies:
 <div title="SiteTitle" creator="FGarcia" modifier="FGarcia" created="201502160920" modified="201502160920" changecount="2">
 <pre>''Integrated Gene Set Analysis for microRNA Studies''</pre>
 </div>
-<div title="THCA" creator="FGarcia" modifier="YourName" created="201502241757" modified="201505101905" changecount="4">
+<div title="THCA" creator="FGarcia" modifier="genometra" created="201502241757" modified="201505121711" changecount="5">
 <pre>!!Summary for THCA cancer:
 @@~SUMMARY_thca@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for THCA cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_thca@@
 
 !!Result plots for THCA cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_thca@@</pre>
 </div>
 <div title="TableSortingPlugin" modifier="genometra" created="200711280917" modified="201309271544" tags="systemConfig GenometraPlugin excludeSearch">
@@ -1479,14 +1983,38 @@ config.macros.toggleSideBar.onToggleSideBar = function(){
 
 </pre>
 </div>
-<div title="UCEC" creator="FGarcia" modifier="YourName" created="201502241757" modified="201505101905" changecount="5">
+<div title="UCEC" creator="FGarcia" modifier="genometra" created="201502241757" modified="201505121710" changecount="7">
 <pre>!!Summary for UCEC cancer:
 @@~SUMMARY_ucec@@
 
+''miRNA level''
+*  Number of up, down and not differentially regulated miRNAs for this  cancer type. 
+*  Columns:	miRNA.down,	miRNA.noDif,	miRNA.up.
+
+''Gene Set level''
+* Number significant GO terms in the functional profiling analysis for this study.
+* Columns Inh. indicates the number of terms with a positive alfa coefficient in the logistic regression analysis. Those are the terms inhibited or intercepted in cases. Columns Derg. indicates the number of terms with a negative alfa value. Those are the terms inhibited in controls or deregulated in cases. Columns noDif indicate the number of GOs with a not significant slope coefficient.
+* Bp, cc and mf represent biological process, cellular component and molecular function. 
+
 !!Result files for UCEC cancer:
+
+''miRNA level''
+*  Differential Expression Analysis: res_edger.xlsx
+
+''Gene Set level''
+*  Functional Profiling Analysis: res_gsa_(bp,cc,mf).xlsx
+*  Transferred Index: transfer_index.xlsx
+
 @@~FILES_ucec@@
 
 !!Result plots for UCEC cancer:
+
+''Gene  level''
+*   Exploring the transferred index for miRNA and gene for this study. Two plots for each cancer type:  distribution of transferred index and distribution of number or miRNas (log scale) by transferred index (gene level).
+
+''Gene Set level''
+*  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
+
 @@~PLOTS_ucec@@</pre>
 </div>
 <div title="ViewTemplate" creator="FGarcia" modifier="FGarcia" created="201502160934" changecount="1">
