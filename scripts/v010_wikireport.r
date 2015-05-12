@@ -6,7 +6,7 @@ R.version.string #"R version 3.0.0 RC (2013-03-26 r62418)"
 library (Biobase); packageDescription ("Biobase", fields = "Version") #"2.22.0"
 #library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
 library (TiddlyWikiR); packageDescription ("TiddlyWikiR", fields = "Version") #"1.0.4"
-#help (package = TiddlyWikiR)
+help (package = TiddlyWikiR)
 
 source (".job.r"); .job
 
@@ -200,19 +200,17 @@ tabla.nams <- c ("ID", "Down.unpaired",  "Inter.unpaired",  "Up.unpaired",  "Dow
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 
-# tabla[,"resPaired"]   <- paste0 ("res_edger_paired_",   rownames (tabla), ".xlsx")
-# tabla[,"resUnpaired"] <- paste0 ("res_edger_unpaired_", rownames (tabla), ".xlsx")
-# ##
-# links <- tabla  
-# links[] <- NA  ## vaciado   #the same structure to TABLA but full of NA
-# links[,"resPaired"]   <- paste0 ("supplementary_files/files/", tabla[,"resPaired"])
-# links[,"resUnpaired"] <- paste0 ("supplementary_files/files/", tabla[,"resUnpaired"])
-# links <- as.matrix (links)
+tabla[,"transfer_index_paired"]   <- paste0 ("transfer_index_paired_",   rownames (tabla), ".xlsx")
+tabla[,"transfer_index_unpaired"] <- paste0 ("transfer_index_unpaired_", rownames (tabla), ".xlsx")
+##
+##
+links <- tabla  
+links[] <- NA  ## vaciado   #the same structure to TABLA but full of NA
+links[,"transfer_index_paired"]   <- paste0 ("supplementary_files/files/", tabla[,"transfer_index_paired"])
+links[,"transfer_index_unpaired"] <- paste0 ("supplementary_files/files/", tabla[,"transfer_index_unpaired"])
+links <- as.matrix (links)
 
-#NOTE: this table doesn't contain xls files for target genes
-#After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
-#For this case, the tag is: @@~TABLA_GENES@@
-mistags[["@@~TABLA3_GENES@@"]] <-  twTable (dat = tabla, sortable = TRUE, align = c(rep("c",7)))
+mistags[["@@~TABLA3_GENES@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",9)))
 writeTags (mistags, file = outfile)
 
 
@@ -221,32 +219,37 @@ writeTags (mistags, file = outfile)
 # and more information: 
 ######################
 
-my_files2 <- my_files[grep("transfer_index_paired", my_files)]
-my_files2
-links <- rep('NA', length(my_files2))
-data <- cbind(my_files2, links)
-class(data)
-data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
-colnames(data) <- c("files", "links")
-mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_PAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
-
-my_files2 <- my_files[grep("transfer_index_unpaired", my_files)]
-my_files2
-links <- rep('NA', length(my_files2))
-data <- cbind(my_files2, links)
-class(data)
-data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
-colnames(data) <- c("files", "links")
-mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+# my_files2 <- my_files[grep("transfer_index_paired", my_files)]
+# my_files2
+# links <- rep('NA', length(my_files2))
+# data <- cbind(my_files2, links)
+# class(data)
+# data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+# colnames(data) <- c("files", "links")
+# mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_PAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+# 
+# my_files2 <- my_files[grep("transfer_index_unpaired", my_files)]
+# my_files2
+# links <- rep('NA', length(my_files2))
+# data <- cbind(my_files2, links)
+# class(data)
+# data[,"links"] <- paste ("[[",file.path (paste(my_files2,"supplementary_files/files",sep='|'), my_files2),"]]",sep="")
+# colnames(data) <- c("files", "links")
+# mistags[["@@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@"]] <- twTable (dat = data, sortable = TRUE)
+# 
 
 my_plots2 <- my_plots[grep("paired_explore_transfer", my_plots)]
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_LEVEL@@"]] <- twTable (dat = plots, sortable = TRUE)
+# mistags[["@@~PLOTS_GENE_LEVEL@@"]] <- twTable (dat = plots, sortable = TRUE)
+ mistags[["@@~PLOTS_GENE_LEVEL@@"]] <- plots[,"links"]
 
-
+# TO CHECK:
+# [img(80%+,)[Boxplot of the data BEFORE normalization|results/plots/raw_boxplot.png]]
+# my_plots2 <- my_plots[grep("paired_explore_transfer", my_plots)]
+# plots.links <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
 
 
 
@@ -264,7 +267,7 @@ tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 
 #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
-mistags[["@@~TABLA4_GOS@@"]] <-  twTable (dat = tabla, sortable = TRUE, align = c(rep("c",7)))
+mistags[["@@~TABLA4_GOS@@"]] <-  twTable (dat = tabla,   sortable = TRUE, align = c(rep("c",7)))
 writeTags (mistags, file = outfile)
 
 
@@ -336,12 +339,14 @@ colnames(data) <- c("files", "links")
 mistags[["@@~TABLE_GENE_SET_LEVEL_ALL_STUDIES@@"]] <- twTable (dat = data, sortable = TRUE)
 
 
-my_plots2 <- my_plots[grep("paired_size_effect", my_plots)]
+my_plots2 <- my_plots[grep("paired_size_effect", my_plots)]  #paired and unpaired
+my_plots2 <- my_plots2[grep("un", my_plots2, invert= T)]     #only paired
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- plots[,"links"]
 
 
 my_plots2 <- my_plots[grep("unpaired_size_effect", my_plots)]
@@ -349,58 +354,84 @@ links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- plots[,"links"]
 
 
 
 
 
-
-## Gene Set level
+## Global results
 ######################
 
-my_plots2 <- c("paired_rindex_boxplot.png", "unpaired_rindex_boxplot.png")
+# Distribution of ranking index 
+my_plots2 <- "paired_rindex_boxplot.png"
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@"]] <- twTable (dat = plots, sortable = TRUE)
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_PAIRED@@"]] <- plots[,"links"]
 
-
-my_plots2 <- c("paired_rindex_boxplot.png", "unpaired_rindex_boxplot.png")
+my_plots2 <- "unpaired_rindex_boxplot.png"
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@"]] <- twTable (dat = plots, sortable = TRUE)
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_UNPAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_UNPAIRED@@"]] <- plots[,"links"]
 
 
 
-my_plots2 <- c("paired_cor_rindex0.png", "paired_cor_rindexN.png", "paired_cor_rindexT.png", 
-  "unpaired_cor_rindex0.png", "unpaired_cor_rindexN.png", "unpaired_cor_rindexT.png")
+# Ranking index correlation
+my_plots2 <- c("paired_cor_rindex0.png", "paired_cor_rindexN.png", "paired_cor_rindexT.png")
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_PAIRED@@"]] <- plots[,"links"]
 
+my_plots2 <- c("unpaired_cor_rindex0.png", "unpaired_cor_rindexN.png", "unpaired_cor_rindexT.png")
+links <- rep('NA', length(my_plots2))
+plots <- cbind(my_plots2, links)
+class(plots)
+plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_UNPAIRED@@"]] <- plots[,"links"]
+
+
+# Inhibition effect correlation distribution by ontology
+my_plots2 <- my_plots[grep("_dist_of_", my_plots)]
+my_plots2 <- my_plots[grep("un", my_plots2, invert = T)]
+links <- rep('NA', length(my_plots2))
+plots <- cbind(my_plots2, links)
+class(plots)
+plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_PAIRED@@"]] <- plots[,"links"]
 
 my_plots2 <- my_plots[grep("_dist_of_", my_plots)]
+my_plots2 <- my_plots2[grep("un", my_plots2)]
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@"]] <-  plots[,"links"]
 
 
 
-my_plots2 <- c("paired_rindex_cor_vs_cor.png", "unpaired_rindex_cor_vs_cor.png")
+# Ranking index correlation vs. correlation
+my_plots2 <- "paired_rindex_cor_vs_cor.png"
 links <- rep('NA', length(my_plots2))
 plots <- cbind(my_plots2, links)
 class(plots)
 plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_PAIRED@@"]] <-  plots[,"links"]
 
+my_plots2 <- "unpaired_rindex_cor_vs_cor.png"
+links <- rep('NA', length(my_plots2))
+plots <- cbind(my_plots2, links)
+class(plots)
+plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_UNPAIRED@@"]] <- plots[,"links"]
 
 
 
@@ -465,9 +496,11 @@ for (i in 1:length(canceres)) {
   links <- rep('NA', length(my_plots2))
   plots <- cbind(my_plots2, links)
   class(plots)
-  plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
-  mistags[[paste("@@~PLOTS_", canceres[i], "@@", sep ="")]] <- twTable (dat = plots, sortable = TRUE)
+  #plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+  #mistags[[paste("@@~PLOTS_", canceres[i], "@@", sep ="")]] <- twTable (dat = plots, sortable = TRUE)
 
+  plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+  mistags[[paste("@@~PLOTS_", canceres[i], "@@", sep ="")]] <- plots[,"links"]
   
   my_files2 <- my_files[grep(canceres[i], my_files)]
   my_files2

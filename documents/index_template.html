@@ -676,10 +676,14 @@ Tiddler.prototype.changed = function()
 };
 //}}}</pre>
 </div>
-<div title="Distribution of ranking index" creator="FGarcia" modifier="FGarcia" created="201502231218" modified="201502231750" changecount="3">
-<pre>Comparing distributions of several ranking index by paired / unpaired studies.
+<div title="Distribution of ranking index" creator="FGarcia" modifier="genometra" created="201502231218" modified="201505121114" changecount="4">
+<pre>Comparing distributions of several ranking index. 
 
-@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX@@</pre>
+Paired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_PAIRED@@
+
+Unpaired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_RANKING_INDEX_UNPAIRED@@</pre>
 </div>
 <div title="ESCA" creator="FGarcia" modifier="YourName" created="201502241742" modified="201505101853" changecount="3">
 <pre>!!Summary for ESCA cancer:
@@ -727,7 +731,7 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 
 @@~TABLA_GENE_SET_LEVEL_GO_UNPAIRED@@</pre>
 </div>
-<div title="Gene level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505081604" changecount="4">
+<div title="Gene level" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111246" changecount="5">
 <pre>After miRNA differential expression analysis,  we translate  this miRNA differential expression evidence to a gene differential inhibition scale. 
 For each gene, this transferred index pulls its targeting miRNA information preserving two characteristics suitable for the functional interpretation of the experiment: it accounts for the multiple miRNA cancellation effect and incorporates the additivity of several small inhibitory events into a relevant one.
 
@@ -735,11 +739,9 @@ For each gene, this transferred index pulls its targeting miRNA information pres
 @@~TABLA3_GENES@@
 
 More detailed information: 
-*  [[Gene level. Results about gene transferred statistics for the paired analysis]]. 
-*  [[Gene level. Results about gene transferred statistics for the unpaired analysis]]. 
 *  [[Gene level. Exploring the transfer between miRNA and gene]]. </pre>
 </div>
-<div title="Gene level. Exploring the transfer between miRNA and gene" creator="FGarcia" modifier="FGarcia" created="201502231144" modified="201502231725" changecount="2">
+<div title="Gene level. Exploring the transfer between miRNA and gene" creator="FGarcia" modifier="genometra" created="201502231144" modified="201505121114" changecount="3">
 <pre>Exploring the transferred index for miRNA and gene for each paired study.
 
 @@~PLOTS_GENE_LEVEL@@</pre>
@@ -754,7 +756,7 @@ More detailed information:
 
 @@~TABLA_GENE_LEVEL_TRANSFER_UNPAIRED@@</pre>
 </div>
-<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111119" changecount="4">
+<div title="Global results" creator="FGarcia" modifier="genometra" created="201502231752" modified="201505111246" changecount="5">
 <pre>This table shows  global results for all studies:
 @@~TABLA_all@@
 
@@ -953,13 +955,21 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 }
 //}}}</pre>
 </div>
-<div title="Inhibition effect correlation distribution by ontology" creator="FGarcia" modifier="FGarcia" created="201502231434" changecount="1">
-<pre>@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY@@</pre>
+<div title="Inhibition effect correlation distribution by ontology" creator="FGarcia" modifier="genometra" created="201502231434" modified="201505121129" changecount="2">
+<pre>Paired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_PAIRED@@
+
+Unpaired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@</pre>
 </div>
-<div title="Inhibition index correlation by ontology" creator="FGarcia" modifier="FGarcia" created="201502231435" changecount="1">
-<pre>@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION@@</pre>
+<div title="Inhibition index correlation by ontology" creator="FGarcia" modifier="genometra" created="201502231435" modified="201505121121" changecount="3">
+<pre>Paired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_PAIRED@@
+
+Unpaired studies:
+@@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="genometra" created="201502151053" modified="201505110948" changecount="76">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="genometra" created="201502151053" modified="201505121127" changecount="79">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -983,9 +993,7 @@ For each gene, this transferred index pulls its targeting miRNA information pres
 ''Table 3''. Number of genes targeted by the up and down regulated miRNAs. The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.
 @@~TABLA3_GENES@@
 
-More detailed information:
-*  [[Gene level. Results about gene transferred statistics for the paired analysis]]. 
-*  [[Gene level. Results about gene transferred statistics for the unpaired analysis]]. 
+
 *  [[Gene level. Exploring the transfer between miRNA and gene]]. 
 
 !!Gene Set level
@@ -1011,7 +1019,6 @@ This table shows  global results for all studies:
 More detailed information:
 * [[Distribution of ranking index]]. 
 * [[Ranking index correlation]]. 
-* [[Inhibition index correlation by ontology]]. 
 * [[Inhibition effect correlation distribution by ontology]].
 * [[Ranking index correlation vs. correlation]]. 
 
@@ -1173,11 +1180,19 @@ More detailed information:
 !!Result plots for READ cancer:
 @@~PLOTS_read@@</pre>
 </div>
-<div title="Ranking index correlation" creator="FGarcia" modifier="FGarcia" created="201502231224" changecount="1">
-<pre>@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION@@</pre>
+<div title="Ranking index correlation" creator="FGarcia" modifier="genometra" created="201502231224" modified="201505121116" changecount="2">
+<pre>Paired studies:
+@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_PAIRED@@
+
+Unpaired studies:
+@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_UNPAIRED@@</pre>
 </div>
-<div title="Ranking index correlation vs. correlation" creator="FGarcia" modifier="FGarcia" created="201502231447" changecount="1">
-<pre>@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION@@</pre>
+<div title="Ranking index correlation vs. correlation" creator="FGarcia" modifier="genometra" created="201502231447" modified="201505121130" changecount="3">
+<pre>Paired studies:
+@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_PAIRED@@
+
+Unpaired studies:
+@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_UNPAIRED@@</pre>
 </div>
 <div title="Results in paired studies" creator="FGarcia" modifier="FGarcia" created="201502160940" modified="201502231022" changecount="5">
 <pre>|common_enrichment|[[results|/media/FGG/tiddly/gsa4mirna/supplementary_files/files/common_enrichment_paired.xlsx]]|
