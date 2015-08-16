@@ -1,6 +1,6 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -26,7 +26,7 @@ Type 'q()' to quit R.
 > ## We create the figure in EPS format for the NAR submission
 > 
 > date ()
-[1] "Fri Feb 13 17:38:10 2015"
+[1] "Sun Aug 16 17:51:05 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -41,54 +41,12 @@ Type 'q()' to quit R.
 [8] "--no-restore"                                                                           
 > rm (list = ls ())
 > R.version.string #"R version 3.1.0 (2014-04-10)"
-[1] "R version 3.1.2 (2014-10-31)"
+[1] "R version 3.2.1 (2015-06-18)"
 > library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
 [1] "0.3-8"
 > library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
 Loading required package: DBI
-Loading required package: AnnotationDbi
-Loading required package: stats4
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
-    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
-    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
-    rownames, sapply, setdiff, sort, table, tapply, union, unique,
-    unlist, unsplit
-
-Loading required package: Biobase
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-Loading required package: GenomeInfoDb
-Loading required package: S4Vectors
-Loading required package: IRanges
-
-Attaching package: ‘AnnotationDbi’
-
-The following object is masked from ‘package:GenomeInfoDb’:
-
-    species
-
 
 
 KEGG.db contains mappings based on older data because the original
@@ -98,7 +56,7 @@ KEGG.db contains mappings based on older data because the original
   available.  Users who want more current data are encouraged to look
   at the KEGGREST or reactome.db packages
 
-[1] "0.99.2"
+[1] "1.0.0"
 > library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
 [1] "0.0.2"
 > #help (package = mirbaseID)
@@ -246,7 +204,7 @@ blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca 
 > tag <- "brca"
 > go <- "GO:0060053"
 > getGOnames (go)
-Using GO.db version: 3.0.0
+Using GO.db version: 3.1.2
                   GO:0060053 
 "neurofilament cytoskeleton" 
 > 
@@ -299,7 +257,7 @@ TRUE
 > plot (1:(length (genes) + 1), c (0, indT[genes]), col = c ("black", colores), pch = 15, xlim = xlimite, ylim = c (-20, 20 + max (indT)), ylab = "Transferred   Index   (gene level)", xlab = "", xaxt = "n",
 +       main = paste0 (getGOnames (go), " (", go, ")"),
 +       cex = 2, cex.main = 3, cex.axis = 1.7, cex.lab = 2)
-Using GO.db version: 3.0.0
+Using GO.db version: 3.1.2
 > axis (side = 1, at = 1:(length (genes)+1), labels = c ("All", genes), tick = TRUE, cex.axis = 1.7)
 > abline (h = 0, col = "blue", lty = 2)
 > text (1.5 + length (genes), y = 1300, labels = "B", col = "brown", cex = 4)
@@ -314,7 +272,9 @@ Using GO.db version: 3.0.0
 > ##
 > boxplot (indT, indT[genes], names = c("All genes", go), ylab = "Transferred   Index   (gene level)", cex.axis = 1.7, cex.lab = 2)
 > abline (h = 0, col = "blue", lty = 2)
-> points (seq (1.25, 1.75, length.out = length (genes)), indT[genes], col = colores, pch = 15, cex = 2)
+> ##points (seq (1.25, 1.75, length.out = length (genes)), indT[genes], col = colores, pch = 15, cex = 2)
+> ##points (seq (1.49, 1.51, length.out = length (genes)), indT[genes], col = colores, pch = 15, cex = 2)
+> points (rep (1.5, times = length (genes)) , indT[genes], col = colores, pch = 15, cex = 1.5)
 > text (2.4, y = 1300, labels = "C", col = "brown", cex = 4)
 > #abline (h = 1000)
 > dev.off ()
@@ -326,23 +286,24 @@ null device
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.1.2 (2014-10-31)
+R version 3.2.1 (2015-06-18)
 Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=es_ES.UTF-8      
  [8] LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
+[1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] mirbaseID_0.0.2      mdgsa_0.99.2         AnnotationDbi_1.28.1 GenomeInfoDb_1.2.3   IRanges_2.0.0        S4Vectors_0.4.0      Biobase_2.26.0       BiocGenerics_0.12.1  RSQLite_1.0.0       
-[10] DBI_0.3.1            ellipse_0.3-8       
+[1] mirbaseID_0.0.2 mdgsa_1.0.0     RSQLite_1.0.0   DBI_0.3.1       ellipse_0.3-8  
 
 loaded via a namespace (and not attached):
-[1] cluster_2.0.1   GO.db_3.0.0     grid_3.1.2      KEGG.db_3.0.0   lattice_0.20-29 Matrix_1.1-5   
+ [1] lattice_0.20-33      IRanges_2.2.7        GO.db_3.1.2          GenomeInfoDb_1.4.1   grid_3.2.1           stats4_3.2.1         S4Vectors_0.6.3      KEGG.db_3.1.2        Matrix_1.2-2        
+[10] Biobase_2.28.0       parallel_3.2.1       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
 > q ("no")
 > proc.time()
    user  system elapsed 
- 28.006   0.110  28.178 
+ 23.529   0.120  23.673 
