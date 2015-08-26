@@ -49,7 +49,7 @@ colnames (tabla) <- tabla.nams
 tabla
 ##
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-            con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+            con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 ##
 xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 align (xt)[2] <- paste0 ("@{}", align (xt)[2])
@@ -58,7 +58,7 @@ print (xt,
        size = "scriptsize",
        tabular.environment = "tabular*",
        width = "\\columnwidth",
-       file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+       file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 
 ## kable (tabla, format = "markdown", caption = tabla.capt)
 ## kable (tabla, format = "pandoc",   caption = tabla.capt)
@@ -84,7 +84,7 @@ colnames (tabla) <- tabla.nams
 tabla
 ##
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-            con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+            con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 ##
 xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -95,10 +95,10 @@ tableLines <- print (xt,
                      width = "\\columnwidth",
                      booktabs = TRUE)
                      ## add.to.row = my.add.to.row,
-                     ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+                     ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 
 
 ################################################################################
@@ -120,7 +120,7 @@ colnames (tabla) <- tabla.nams
 tabla
 ##
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-            con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+            con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 ##
 xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -131,10 +131,10 @@ tableLines <- print (xt,
                      width = "\\columnwidth",
                      booktabs = TRUE)
                      ## add.to.row = my.add.to.row,
-                     ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+                     ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 
 
 ################################################################################
@@ -157,7 +157,7 @@ colnames (tabla) <- tabla.nams
 tabla
 ##
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-            con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+            con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 ##
 xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -168,10 +168,10 @@ tableLines <- print (xt,
                      width = "\\columnwidth",
                      booktabs = TRUE)
                      ## add.to.row = my.add.to.row,
-                     ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+                     ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 
 
 ################################################################################
@@ -195,7 +195,7 @@ colnames (tabla) <- tabla.nams
 tabla
 ##
 writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-            con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
+            con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 ##
 xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -206,10 +206,10 @@ tableLines <- print (xt,
                      width = "\\columnwidth",
                      booktabs = TRUE)
                      ## add.to.row = my.add.to.row,
-## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 
 
 

@@ -1,5 +1,5 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -26,7 +26,7 @@ Type 'q()' to quit R.
 > ## We create the figure in EPS format for the NAR submission
 > 
 > date ()
-[1] "Sun Aug 16 17:51:05 2015"
+[1] "Wed Aug 26 11:27:34 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -41,7 +41,7 @@ Type 'q()' to quit R.
 [8] "--no-restore"                                                                           
 > rm (list = ls ())
 > R.version.string #"R version 3.1.0 (2014-04-10)"
-[1] "R version 3.2.1 (2015-06-18)"
+[1] "R version 3.2.2 (2015-08-14)"
 > library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
 [1] "0.3-8"
 > library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.4"
@@ -245,11 +245,11 @@ TRUE
 > 
 > graphics.off ()
 > por <- 2
-> #png (filename = file.path (.job$dir$code, "paper", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
-> #pdf (file = file.path (.job$dir$code, "paper", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
+> #png (filename = file.path (.job$dir$code, "paper", "draft", "images", "diagram.png"), width = por * 480 * 1.5, height = por * 480)
+> #pdf (file = file.path (.job$dir$code, "paper", "draft", "images", "diagram.pdf"), width = por * 7 * 1.5, height = por * 7)
 > ##par (mfcol = c(2, 1))
 > setEPS ()  # sets parameters for printing EPS 
-> postscript (file = file.path (.job$dir$code, "paper", "images", "diagram.eps"), width = por * 7 * 1.5, height = por * 7) ## width, height: the width and height of the graphics region in inches. Default to ‘0’.
+> postscript (file = file.path (.job$dir$code, "paper", "draft", "images", "diagram.eps"), width = por * 7 * 1.5, height = por * 7) ## width, height: the width and height of the graphics region in inches. Default to ‘0’.
 > layout (mat = matrix (c (1,1,1,1, 2,2,2,2,2,2,  3,3,3,3,3,3,  4,4,4,4), ncol = 2), widths = c(2,1), heights = 1)
 > par (mar = c (5.1, 6, 4.1, 2.1)) #A vector of the form ‘c(bottom, left, top, right)
 > ##
@@ -286,7 +286,7 @@ null device
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.2.1 (2015-06-18)
+R version 3.2.2 (2015-08-14)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 14.04.3 LTS
 
@@ -301,9 +301,9 @@ other attached packages:
 [1] mirbaseID_0.0.2 mdgsa_1.0.0     RSQLite_1.0.0   DBI_0.3.1       ellipse_0.3-8  
 
 loaded via a namespace (and not attached):
- [1] lattice_0.20-33      IRanges_2.2.7        GO.db_3.1.2          GenomeInfoDb_1.4.1   grid_3.2.1           stats4_3.2.1         S4Vectors_0.6.3      KEGG.db_3.1.2        Matrix_1.2-2        
-[10] Biobase_2.28.0       parallel_3.2.1       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
+ [1] lattice_0.20-33      IRanges_2.2.7        GO.db_3.1.2          GenomeInfoDb_1.4.1   grid_3.2.2           stats4_3.2.2         S4Vectors_0.6.3      KEGG.db_3.1.2        Matrix_1.2-2        
+[10] Biobase_2.28.0       parallel_3.2.2       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
 > q ("no")
 > proc.time()
    user  system elapsed 
- 23.529   0.120  23.673 
+ 23.543   0.147  24.584 

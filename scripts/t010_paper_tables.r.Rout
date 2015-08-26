@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ##This script prints some tables for the report
 > 
 > date ()
-[1] "Tue Aug 25 14:00:51 2015"
+[1] "Wed Aug 26 11:26:10 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -236,7 +236,7 @@ thca THCA   558   499       59     59                     Thyroid carcinoma
 ucec UCEC   418   386       32     19  Uterine Corpus Endometrial Carcinoma
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-+             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
++             con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 > ##
 > xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 > align (xt)[2] <- paste0 ("@{}", align (xt)[2])
@@ -245,7 +245,7 @@ ucec UCEC   418   386       32     19  Uterine Corpus Endometrial Carcinoma
 +        size = "scriptsize",
 +        tabular.environment = "tabular*",
 +        width = "\\columnwidth",
-+        file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
++        file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > 
 > ## kable (tabla, format = "markdown", caption = tabla.capt)
 > ## kable (tabla, format = "pandoc",   caption = tabla.capt)
@@ -292,7 +292,7 @@ thca THCA  218   351 257  226   347 145
 ucec UCEC  243   284 347  211   272 229
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-+             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
++             con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 > ##
 > xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 > align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -303,7 +303,7 @@ ucec UCEC  243   284 347  211   272 229
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Tue Aug 25 14:00:52 2015
+% Wed Aug 26 11:26:12 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -338,10 +338,10 @@ BLCA & 128 & 337 & 353 & 127 & 343 & 219 \\
 \label{tab:table2}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
->                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+>                      ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 > tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > 
 > 
 > ################################################################################
@@ -384,7 +384,7 @@ thca THCA 8763   7244 8702 9064   7065 8056
 ucec UCEC 9182   7171 8436 9338   7069 8201
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-+             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
++             con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 > ##
 > xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 > align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -395,7 +395,7 @@ ucec UCEC 9182   7171 8436 9338   7069 8201
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Tue Aug 25 14:00:52 2015
+% Wed Aug 26 11:26:12 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -432,10 +432,10 @@ The total number of genes which are targets of at least one miRNA is \textbf{120
 \label{tab:table3}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
->                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+>                      ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 > tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > 
 > 
 > ################################################################################
@@ -479,7 +479,7 @@ thca THCA 5169   5169 5169 5169   5169 5169
 ucec UCEC 5169   5169 5169 5169   5169 5169
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-+             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
++             con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 > ##
 > xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 > align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -490,7 +490,7 @@ ucec UCEC 5169   5169 5169 5169   5169 5169
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Tue Aug 25 14:00:52 2015
+% Wed Aug 26 11:26:12 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -528,10 +528,10 @@ The total number of GO terms annotated for the targeted genes is \textbf{16494}.
 \label{tab:table4}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
->                      ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+>                      ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 > tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > 
 > 
 > ################################################################################
@@ -576,7 +576,7 @@ thca THCA     2  5167    0     2  5167    0
 ucec UCEC    89  5080    0     9  5160    0
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
-+             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
++             con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".md")))
 > ##
 > xt <- xtable (tabla, caption = tabla.capt, label = tabla.labe)
 > align (xt)[2] <- paste0 ("@{\\extracolsep{\\fill}}", align (xt)[2])
@@ -587,7 +587,7 @@ ucec UCEC    89  5080    0     9  5160    0
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Tue Aug 25 14:00:52 2015
+% Wed Aug 26 11:26:12 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -627,10 +627,10 @@ Columns noDif indicate the number of GOs with a not significant slope coefficien
 \label{tab:table5}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
-> ## file = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> ## file = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > tableLines <- sub ("\\\\toprule\\n", paste0 ("\\\\toprule\n", multicolumns, "\n"), tableLines) ## booktabs = TRUE
 > tableLines <- sub ("\\\\hline\\n",   paste0 ("\\\\hline\n",   multicolumns, "\n"), tableLines) ## booktabs = FALSE
-> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".tex")))
+> writeLines (tableLines, con = file.path (.job$dir$code, "paper", "draft", "tables", paste0 (tabla.file, ".tex")))
 > 
 > 
 > 
@@ -666,4 +666,4 @@ loaded via a namespace (and not attached):
 > 
 > proc.time()
    user  system elapsed 
-  0.725   0.032   0.749 
+  0.819   0.052   1.935 
