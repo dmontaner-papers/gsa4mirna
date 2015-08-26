@@ -59,3 +59,7 @@ Where #:  0 (ranking index correlation miRNA), N (ranking index correlation gene
 
 - paired_rindex_cor_vs_cor.png:    correlation between cancer types at gene transferred level plotted against correlation at miRNA level; __paired__ studies.
 - unpaired_rindex_cor_vs_cor.png:  correlation between cancer types at gene transferred level plotted against correlation at miRNA level; __unpaired__ studies.
+
+
+- inhibition_effect_cor_paired_vs_unpaired_@@@.png: displays correlation between the paired and the unpaired results at gene set level.
+- inhibition_effect_paired_vs_unpaired_###.png:     displays, for each cancer, scatter plots of paired vs. unpaired results at gene set level.
