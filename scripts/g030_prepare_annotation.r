@@ -82,6 +82,7 @@ system.time (annot <- propagateGO (annot))
 ## Split Ontologies
 annot <- splitOntologies (annot, na.rm = TRUE, verbose = TRUE)
 sapply (annot, length)
+sum (sapply (annot, length))
 
 ## SAVING
 save (list = "annot", file = file.path (.job$dir$proces, "annot_for_paired_data.RData"))

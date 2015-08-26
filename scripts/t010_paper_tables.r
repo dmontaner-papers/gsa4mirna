@@ -108,12 +108,13 @@ writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste
 tabla.file <-     "table3"
 tabla.labe <- "tab:table3"
 tabla.cols <- c ("ID", "targets.Down.unpa", "targets.Intersect.unpa", "targets.Up.unpa", "targets.Down.pair", "targets.Intersect.pair", "targets.Up.pair")
-tabla.nams <- c ("ID",         "Down",               "Inter",                 "Up",              "Down",               "Inter",                 "Up")
+tabla.nams <- c ("ID",         "Down",               "Common",                 "Up",              "Down",               "Common",                 "Up")
 ##tabla.nams <- tabla.cols
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 tabla.capt <- c ("Number of genes targeted by the up and down regulated miRNAS.
-The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
+The \\textit{Common} column shows the number of genes which are targets of both, the up and down regulated miRNAs.
+The total number of genes which are targets of at least one miRNA is \\textbf{12084}.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
@@ -143,13 +144,14 @@ writeLines (tableLines, con = file.path (.job$dir$code, "paper", "tables", paste
 tabla.file <-     "table4"
 tabla.labe <- "tab:table4"
 tabla.cols <- c ("ID", "targetGOs.Down.unpa", "targetGOs.Intersect.unpa", "targetGOs.Up.unpa", "targetGOs.Down.pair", "targetGOs.Intersect.pair", "targetGOs.Up.pair")
-tabla.nams <- c ("ID",           "Down",                "Inter",                    "Up",                "Down",                "Inter",                    "Up")
+tabla.nams <- c ("ID",           "Down",                "Common",                    "Up",                "Down",                "Common",                    "Up")
 #tabla.nams <- tabla.cols
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 Most GO terms are targeted in cases and controls at the same time
-as it can be seen in the intersection column (Inter).")
+as it can be seen in the \\textit{Common} column.
+The total number of GO terms annotated for the targeted genes is \\textbf{16494}.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla

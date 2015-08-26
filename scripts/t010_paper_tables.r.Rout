@@ -1,5 +1,5 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ##This script prints some tables for the report
 > 
 > date ()
-[1] "Thu May  7 02:16:04 2015"
+[1] "Tue Aug 25 14:00:51 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -38,10 +38,10 @@ Type 'q()' to quit R.
 [8] "--no-restore"                                                            
 > rm (list = ls ())
 > R.version.string ##"R version 3.1.0 (2014-04-10)"
-[1] "R version 3.2.0 (2015-04-16)"
+[1] "R version 3.2.2 (2015-08-14)"
 > #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
 > library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
-[1] "1.10"
+[1] "1.11"
 > library (xtable); packageDescription ("xtable", fields = "Version") #"1.7-3"
 [1] "1.7-4"
 > library (tables); packageDescription ("tables", fields = "Version") #"0.7.79"
@@ -302,8 +302,8 @@ ucec UCEC  243   284 347  211   272 229
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.2.0 by xtable 1.7-4 package
-% Thu May  7 02:16:05 2015
+% latex table generated in R 3.2.2 by xtable 1.7-4 package
+% Tue Aug 25 14:00:52 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -351,36 +351,37 @@ BLCA & 128 & 337 & 353 & 127 & 343 & 219 \\
 > tabla.file <-     "table3"
 > tabla.labe <- "tab:table3"
 > tabla.cols <- c ("ID", "targets.Down.unpa", "targets.Intersect.unpa", "targets.Up.unpa", "targets.Down.pair", "targets.Intersect.pair", "targets.Up.pair")
-> tabla.nams <- c ("ID",         "Down",               "Inter",                 "Up",              "Down",               "Inter",                 "Up")
+> tabla.nams <- c ("ID",         "Down",               "Common",                 "Up",              "Down",               "Common",                 "Up")
 > ##tabla.nams <- tabla.cols
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 > ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 > tabla.capt <- c ("Number of genes targeted by the up and down regulated miRNAS.
-+ The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.")
++ The \\textit{Common} column shows the number of genes which are targets of both, the up and down regulated miRNAs.
++ The total number of genes which are targets of at least one miRNA is \\textbf{12084}.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
-       ID Down Inter   Up Down Inter   Up
-blca BLCA 8345  6763 8599 8087  5955 7528
-brca BRCA 8968  7700 9465 9305  7724 9001
-cesc CESC 7834  5201 6525 4877  3178 5431
-coad COAD 6981  6418 9998   NA    NA   NA
-esca ESCA 7992  5646 6959 8233  5207 6212
-hnsc HNSC 9090  7496 8976 9065  7006 8013
-kich KICH 8998  7044 8252 9594  7125 7902
-kirc KIRC 8838  7351 9056 9575  7543 8681
-kirp KIRP 9169  7388 8629 9311  7025 8267
-lihc LIHC 7466  6848 9560 8896  6851 7720
-luad LUAD 8255  7354 9898 8150  6843 8848
-lusc LUSC 8535  7265 9447 8844  6710 8166
-paad PAAD 3759   616 1169 1529   442 1748
-pcpg PCPG 6303  4033 5295 4102  3110 5652
-prad PRAD 7422  5932 8039 4997  1600 2374
-read READ 6938  6225 9672   NA    NA   NA
-skcm SKCM 5983   631  857   NA    NA   NA
-stad STAD 8921  6761 8041 8947  6731 7855
-thca THCA 8763  7244 8702 9064  7065 8056
-ucec UCEC 9182  7171 8436 9338  7069 8201
+       ID Down Common   Up Down Common   Up
+blca BLCA 8345   6763 8599 8087   5955 7528
+brca BRCA 8968   7700 9465 9305   7724 9001
+cesc CESC 7834   5201 6525 4877   3178 5431
+coad COAD 6981   6418 9998   NA     NA   NA
+esca ESCA 7992   5646 6959 8233   5207 6212
+hnsc HNSC 9090   7496 8976 9065   7006 8013
+kich KICH 8998   7044 8252 9594   7125 7902
+kirc KIRC 8838   7351 9056 9575   7543 8681
+kirp KIRP 9169   7388 8629 9311   7025 8267
+lihc LIHC 7466   6848 9560 8896   6851 7720
+luad LUAD 8255   7354 9898 8150   6843 8848
+lusc LUSC 8535   7265 9447 8844   6710 8166
+paad PAAD 3759    616 1169 1529    442 1748
+pcpg PCPG 6303   4033 5295 4102   3110 5652
+prad PRAD 7422   5932 8039 4997   1600 2374
+read READ 6938   6225 9672   NA     NA   NA
+skcm SKCM 5983    631  857   NA     NA   NA
+stad STAD 8921   6761 8041 8947   6731 7855
+thca THCA 8763   7244 8702 9064   7065 8056
+ucec UCEC 9182   7171 8436 9338   7069 8201
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
@@ -393,14 +394,14 @@ ucec UCEC 9182  7171 8436 9338  7069 8201
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.2.0 by xtable 1.7-4 package
-% Thu May  7 02:16:05 2015
+% latex table generated in R 3.2.2 by xtable 1.7-4 package
+% Tue Aug 25 14:00:52 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
-ID & Down & Inter & Up & Down & Inter & Up \\ 
+ID & Down & Common & Up & Down & Common & Up \\ 
   \midrule
 BLCA & 8345 & 6763 & 8599 & 8087 & 5955 & 7528 \\ 
   BRCA & 8968 & 7700 & 9465 & 9305 & 7724 & 9001 \\ 
@@ -426,7 +427,8 @@ BLCA & 8345 & 6763 & 8599 & 8087 & 5955 & 7528 \\
 \end{tabular*}
 }
 \caption{Number of genes targeted by the up and down regulated miRNAS.
-The intersection column (Inter) shows the number of genes which are targets of both, the up and down regulated miRNAs.} 
+The \textit{Common} column shows the number of genes which are targets of both, the up and down regulated miRNAs.
+The total number of genes which are targets of at least one miRNA is \textbf{12084}.} 
 \label{tab:table3}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -443,37 +445,38 @@ The intersection column (Inter) shows the number of genes which are targets of b
 > tabla.file <-     "table4"
 > tabla.labe <- "tab:table4"
 > tabla.cols <- c ("ID", "targetGOs.Down.unpa", "targetGOs.Intersect.unpa", "targetGOs.Up.unpa", "targetGOs.Down.pair", "targetGOs.Intersect.pair", "targetGOs.Up.pair")
-> tabla.nams <- c ("ID",           "Down",                "Inter",                    "Up",                "Down",                "Inter",                    "Up")
+> tabla.nams <- c ("ID",           "Down",                "Common",                    "Up",                "Down",                "Common",                    "Up")
 > #tabla.nams <- tabla.cols
 > multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 > ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
 > tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 + Most GO terms are targeted in cases and controls at the same time
-+ as it can be seen in the intersection column (Inter).")
++ as it can be seen in the \\textit{Common} column.
++ The total number of GO terms annotated for the targeted genes is \\textbf{16494}.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
-       ID Down Inter   Up Down Inter   Up
-blca BLCA 5169  5169 5169 5169  5168 5168
-brca BRCA 5169  5169 5169 5169  5169 5169
-cesc CESC 5169  5168 5168 5144  5138 5160
-coad COAD 5168  5168 5169   NA    NA   NA
-esca ESCA 5169  5168 5168 5169  5167 5167
-hnsc HNSC 5169  5169 5169 5169  5169 5169
-kich KICH 5169  5169 5169 5169  5169 5169
-kirc KIRC 5169  5169 5169 5169  5169 5169
-kirp KIRP 5169  5169 5169 5169  5169 5169
-lihc LIHC 5169  5169 5169 5169  5169 5169
-luad LUAD 5169  5169 5169 5169  5169 5169
-lusc LUSC 5169  5169 5169 5169  5169 5169
-paad PAAD 5129  4578 4590 4870  4681 4915
-pcpg PCPG 5166  5161 5164 5150  5146 5165
-prad PRAD 5169  5169 5169 5159  4981 4990
-read READ 5168  5168 5169   NA    NA   NA
-skcm SKCM 5169  4385 4385   NA    NA   NA
-stad STAD 5169  5169 5169 5169  5169 5169
-thca THCA 5169  5169 5169 5169  5169 5169
-ucec UCEC 5169  5169 5169 5169  5169 5169
+       ID Down Common   Up Down Common   Up
+blca BLCA 5169   5169 5169 5169   5168 5168
+brca BRCA 5169   5169 5169 5169   5169 5169
+cesc CESC 5169   5168 5168 5144   5138 5160
+coad COAD 5168   5168 5169   NA     NA   NA
+esca ESCA 5169   5168 5168 5169   5167 5167
+hnsc HNSC 5169   5169 5169 5169   5169 5169
+kich KICH 5169   5169 5169 5169   5169 5169
+kirc KIRC 5169   5169 5169 5169   5169 5169
+kirp KIRP 5169   5169 5169 5169   5169 5169
+lihc LIHC 5169   5169 5169 5169   5169 5169
+luad LUAD 5169   5169 5169 5169   5169 5169
+lusc LUSC 5169   5169 5169 5169   5169 5169
+paad PAAD 5129   4578 4590 4870   4681 4915
+pcpg PCPG 5166   5161 5164 5150   5146 5165
+prad PRAD 5169   5169 5169 5159   4981 4990
+read READ 5168   5168 5169   NA     NA   NA
+skcm SKCM 5169   4385 4385   NA     NA   NA
+stad STAD 5169   5169 5169 5169   5169 5169
+thca THCA 5169   5169 5169 5169   5169 5169
+ucec UCEC 5169   5169 5169 5169   5169 5169
 > ##
 > writeLines (kable (tabla, caption = tabla.capt, format = "pandoc", row.names = FALSE), 
 +             con = file.path (.job$dir$code, "paper", "tables", paste0 (tabla.file, ".md")))
@@ -486,14 +489,14 @@ ucec UCEC 5169  5169 5169 5169  5169 5169
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.2.0 by xtable 1.7-4 package
-% Thu May  7 02:16:05 2015
+% latex table generated in R 3.2.2 by xtable 1.7-4 package
+% Tue Aug 25 14:00:52 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrr}
   \toprule
-ID & Down & Inter & Up & Down & Inter & Up \\ 
+ID & Down & Common & Up & Down & Common & Up \\ 
   \midrule
 BLCA & 5169 & 5169 & 5169 & 5169 & 5168 & 5168 \\ 
   BRCA & 5169 & 5169 & 5169 & 5169 & 5169 & 5169 \\ 
@@ -520,7 +523,8 @@ BLCA & 5169 & 5169 & 5169 & 5169 & 5168 & 5168 \\
 }
 \caption{Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 Most GO terms are targeted in cases and controls at the same time
-as it can be seen in the intersection column (Inter).} 
+as it can be seen in the \textit{Common} column.
+The total number of GO terms annotated for the targeted genes is \textbf{16494}.} 
 \label{tab:table4}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -582,8 +586,8 @@ ucec UCEC    89  5080    0     9  5160    0
 +                      tabular.environment = "tabular*",
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
-% latex table generated in R 3.2.0 by xtable 1.7-4 package
-% Thu May  7 02:16:05 2015
+% latex table generated in R 3.2.2 by xtable 1.7-4 package
+% Tue Aug 25 14:00:52 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -640,9 +644,9 @@ Columns noDif indicate the number of GOs with a not significant slope coefficien
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.2.0 (2015-04-16)
+R version 3.2.2 (2015-08-14)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 14.04.2 LTS
+Running under: Ubuntu 14.04.3 LTS
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
@@ -652,14 +656,14 @@ attached base packages:
 [1] grid      stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] tables_0.7.79   Hmisc_3.16-0    ggplot2_1.0.1   Formula_1.2-1   survival_2.38-1 lattice_0.20-31 xtable_1.7-4    knitr_1.10     
+[1] tables_0.7.79   Hmisc_3.16-0    ggplot2_1.0.1   Formula_1.2-1   survival_2.38-3 lattice_0.20-33 xtable_1.7-4    knitr_1.11     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_0.11.6         cluster_2.0.1       magrittr_1.5        splines_3.2.0       MASS_7.3-40         munsell_0.4.2       colorspace_1.2-6    highr_0.5          
- [9] stringr_1.0.0       plyr_1.8.2          tools_3.2.0         nnet_7.3-9          gtable_0.1.2        latticeExtra_0.6-26 digest_0.6.8        gridExtra_0.9.1    
-[17] RColorBrewer_1.1-2  reshape2_1.4.1      acepack_1.3-3.3     rpart_4.1-9         stringi_0.4-1       scales_0.2.4        foreign_0.8-63      proto_0.3-10       
+ [1] Rcpp_0.12.0         cluster_2.0.3       magrittr_1.5        splines_3.2.2       MASS_7.3-43         munsell_0.4.2       colorspace_1.2-6    highr_0.5          
+ [9] stringr_1.0.0       plyr_1.8.3          tools_3.2.2         nnet_7.3-10         gtable_0.1.2        latticeExtra_0.6-26 digest_0.6.8        gridExtra_2.0.0    
+[17] RColorBrewer_1.1-2  reshape2_1.4.1      acepack_1.3-3.3     rpart_4.1-10        stringi_0.5-5       scales_0.2.5        foreign_0.8-65      proto_0.3-10       
 > #q ("no")
 > 
 > proc.time()
    user  system elapsed 
-  0.679   0.046   0.719 
+  0.725   0.032   0.749 
