@@ -1,6 +1,6 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -26,68 +26,26 @@ Type 'q()' to quit R.
 > ## Gene Set "evidence" is not related to Block Size
 > 
 > date ()
-[1] "Thu Dec  4 14:19:21 2014"
+[1] "Wed Aug 26 13:42:50 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
 > commandArgs ()
-[1] "/usr/lib/R/bin/exec/R"                                                                           
-[2] "-f"                                                                                              
-[3] "/home/dmontaner/trabajos_mios/2014/mirna_gsa_total/scripts/i030_compare_uvgsa_parired_unpaired.r"
-[4] "--restore"                                                                                       
-[5] "--save"                                                                                          
-[6] "--no-readline"                                                                                   
-[7] "--no-save"                                                                                       
-[8] "--no-restore"                                                                                    
+[1] "/usr/lib/R/bin/exec/R"                                                                     
+[2] "-f"                                                                                        
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts/i030_compare_uvgsa_parired_unpaired.r"
+[4] "--restore"                                                                                 
+[5] "--save"                                                                                    
+[6] "--no-readline"                                                                             
+[7] "--no-save"                                                                                 
+[8] "--no-restore"                                                                              
 > rm (list = ls ())
 > R.version.string ##"R version 3.0.2 (2013-09-25)"
-[1] "R version 3.1.2 (2014-10-31)"
+[1] "R version 3.2.2 (2015-08-14)"
 > #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
 > library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.99.2"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
 Loading required package: DBI
-Loading required package: AnnotationDbi
-Loading required package: stats4
-Loading required package: BiocGenerics
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following object is masked from ‘package:stats’:
-
-    xtabs
-
-The following objects are masked from ‘package:base’:
-
-    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
-    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
-    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
-    rownames, sapply, setdiff, sort, table, tapply, union, unique,
-    unlist, unsplit
-
-Loading required package: Biobase
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-Loading required package: GenomeInfoDb
-Loading required package: S4Vectors
-Loading required package: IRanges
-
-Attaching package: ‘AnnotationDbi’
-
-The following object is masked from ‘package:GenomeInfoDb’:
-
-    species
-
 
 
 KEGG.db contains mappings based on older data because the original
@@ -97,7 +55,7 @@ KEGG.db contains mappings based on older data because the original
   available.  Users who want more current data are encouraged to look
   at the KEGGREST or reactome.db packages
 
-[1] "0.99.2"
+[1] "1.0.0"
 > library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
 [1] "0.3-8"
 > #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
@@ -109,35 +67,35 @@ KEGG.db contains mappings based on older data because the original
 .job.r has been sourced
 
 $name
-[1] "mirna_gsa_total"
+[1] "gsa4mirna"
 
 $dir
 $dir$data
-[1] "~/datos/2014/mirna_gsa_total"
+[1] "~/datos/2014/gsa4mirna"
 
 $dir$code
-[1] "~/trabajos_mios/2014/mirna_gsa_total"
+[1] "~/trabajos_mios/2014/gsa4mirna"
 
 $dir$scripts
-[1] "~/trabajos_mios/2014/mirna_gsa_total/scripts"
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
 
 $dir$docs
-[1] "~/trabajos_mios/2014/mirna_gsa_total/documents"
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
 
 $dir$rawdat
-[1] "~/datos/2014/mirna_gsa_total/data_raw"
+[1] "~/datos/2014/gsa4mirna/data_raw"
 
 $dir$annotation
-[1] "~/datos/2014/mirna_gsa_total/data_annotation"
+[1] "~/datos/2014/gsa4mirna/data_annotation"
 
 $dir$proces
-[1] "~/datos/2014/mirna_gsa_total/data_processed"
+[1] "~/datos/2014/gsa4mirna/data_processed"
 
 $dir$plots
-[1] "~/datos/2014/mirna_gsa_total/results/plots"
+[1] "~/datos/2014/gsa4mirna/results/plots"
 
 $dir$res
-[1] "~/datos/2014/mirna_gsa_total/results/files"
+[1] "~/datos/2014/gsa4mirna/results/files"
 
 
 $testmode
@@ -215,7 +173,7 @@ $idsep
 > pair.unpa.gsa.res.cor <- list ()
 > for (onto in ontologias) {
 +     fichero.png <- paste0 ("inhibition_effect_cor_paired_vs_unpaired_", onto, ".png")
-+     png ("paired_cor_rindex0.png", width = por * 480, height = por * 480, pointsize = 12, bg = "white")
++     png (file = fichero.png, width = por * 480, height = por * 480, pointsize = 12, bg = "white")
 +     mico <- cor (mat.gsa.unpa[[onto]][["index"]][,ids],
 +                  mat.gsa.pair[[onto]][["index"]])
 +     plotcorr (mico)
@@ -247,7 +205,31 @@ thca 0.7587302 0.7939959 0.7618736
 ucec 0.8288424 0.8423826 0.8040245
 > 
 > ###SAVE
-> save (list = "pair.unpa.gsa.res.cor", file.path (.job$dir$proces, "gsa_res_corelation_paired_unpaired.RData"))
-Error in save(list = "pair.unpa.gsa.res.cor", file.path(.job$dir$proces,  : 
-  object ‘file.path(.job$dir$proces, "gsa_res_corelation_paired_unpaired.RData")’ not found
-Execution halted
+> save (list = "pair.unpa.gsa.res.cor", file = file.path (.job$dir$proces, "gsa_res_corelation_paired_unpaired.RData"))
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ellipse_0.3-8 mdgsa_1.0.0   RSQLite_1.0.0 DBI_0.3.1    
+
+loaded via a namespace (and not attached):
+ [1] lattice_0.20-33      IRanges_2.2.7        GO.db_3.1.2          GenomeInfoDb_1.4.1   grid_3.2.2           stats4_3.2.2         S4Vectors_0.6.3     
+ [8] KEGG.db_3.1.2        Matrix_1.2-2         Biobase_2.28.0       parallel_3.2.2       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  5.533   0.106   5.645 

@@ -65,7 +65,7 @@ ids <- mat.gsa.pair[["tags"]]
 pair.unpa.gsa.res.cor <- list ()
 for (onto in ontologias) {
     fichero.png <- paste0 ("inhibition_effect_cor_paired_vs_unpaired_", onto, ".png")
-    png ("paired_cor_rindex0.png", width = por * 480, height = por * 480, pointsize = 12, bg = "white")
+    png (file = fichero.png, width = por * 480, height = por * 480, pointsize = 12, bg = "white")
     mico <- cor (mat.gsa.unpa[[onto]][["index"]][,ids],
                  mat.gsa.pair[[onto]][["index"]])
     plotcorr (mico)
@@ -79,7 +79,7 @@ for (onto in ontologias) {
 sapply (pair.unpa.gsa.res.cor, diag)
 
 ###SAVE
-save (list = "pair.unpa.gsa.res.cor", file.path (.job$dir$proces, "gsa_res_corelation_paired_unpaired.RData"))
+save (list = "pair.unpa.gsa.res.cor", file = file.path (.job$dir$proces, "gsa_res_corelation_paired_unpaired.RData"))
 
 
 ###EXIT
