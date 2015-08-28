@@ -1,6 +1,6 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -18,16 +18,16 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > date ()
-[1] "Wed May 13 11:07:49 2015"
+[1] "Fri Aug 28 14:07:13 2015"
 > Sys.info ()[c("nodename", "user")]
-nodename     user 
-  "paco"   "paco" 
+        nodename             user 
+"fgarcia-laptop"        "fgarcia" 
 > commandArgs ()
 [1] "/usr/lib/R/bin/exec/R" "-f"                    "v010_wikireport.r"    
 [4] "--restore"             "--save"                "--no-readline"        
 > rm (list = ls ())
 > R.version.string #"R version 3.0.0 RC (2013-03-26 r62418)"
-[1] "R version 3.0.2 (2013-09-25)"
+[1] "R version 3.2.1 (2015-06-18)"
 > library (Biobase); packageDescription ("Biobase", fields = "Version") #"2.22.0"
 Loading required package: BiocGenerics
 Loading required package: parallel
@@ -47,10 +47,11 @@ The following object is masked from ‘package:stats’:
 The following objects are masked from ‘package:base’:
 
     anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted,
-    lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int,
-    pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames,
-    sapply, setdiff, sort, table, tapply, union, unique, unlist
+    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
+    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
+    rownames, sapply, setdiff, sort, table, tapply, union, unique,
+    unlist
 
 Welcome to Bioconductor
 
@@ -58,7 +59,7 @@ Welcome to Bioconductor
     'browseVignettes()'. To cite Bioconductor, see
     'citation("Biobase")', and for packages 'citation("pkgname")'.
 
-[1] "2.22.0"
+[1] "2.24.0"
 > #library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
 > library (TiddlyWikiR); packageDescription ("TiddlyWikiR", fields = "Version") #"1.0.4"
 [1] "1.0.4"
@@ -84,17 +85,8 @@ VignetteBuilder:   knitr
 Depends:           R (>= 2.14),
 Imports:           methods
 Suggests:          knitr
-RemoteType:        github
-RemoteHost:        api.github.com
-RemoteRepo:        TiddlyWikiR
-RemoteUsername:    dmontaner
-RemoteRef:         master
-RemoteSha:         e3638b40b4396c0b6566ed69f990acfc96274d8a
-GithubRepo:        TiddlyWikiR
-GithubUsername:    dmontaner
-GithubRef:         master
-GithubSHA1:        e3638b40b4396c0b6566ed69f990acfc96274d8a
-Built:             R 3.0.2; ; 2015-05-08 12:59:09 UTC; unix
+Packaged:          2014-11-24 12:20:13 UTC; dmontaner
+Built:             R 3.2.0; ; 2015-05-09 08:11:03 UTC; unix
 
 Index:
 
@@ -121,7 +113,7 @@ writeTiddlers           Inserts one or more tiddlers into a TiddlyWiki
 
 Further information is available in the following vignettes in
 directory
-‘/home/paco/R/x86_64-pc-linux-gnu-library/3.0/TiddlyWikiR/doc’:
+‘/home/fgarcia/R/x86_64-pc-linux-gnu-library/3.2/TiddlyWikiR/doc’:
 
 TiddlyWikiR_getting_started: Getting started with TiddlyWikiR (source,
         pdf)
@@ -675,6 +667,24 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- plots[,"links"]
 > 
 > 
+> my_plots2 <- my_plots[grep("clust_paired_correlationd", my_plots)]  
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> # mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_CLUST_PAIRED@@"]] <- plots[,"links"]
+> 
+> my_plots2 <- my_plots[grep("clust_unpaired_correlationd", my_plots)]  
+> links <- rep('NA', length(my_plots2))
+> plots <- cbind(my_plots2, links)
+> class(plots)
+[1] "matrix"
+> plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+> # mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+> mistags[["@@~PLOTS_GENE_SET_LEVEL_CLUST_UNPAIRED@@"]] <- plots[,"links"]
+> 
 > 
 > 
 > 
@@ -869,8 +879,9 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.0.2 (2013-09-25)
+R version 3.2.1 (2015-06-18)
 Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu precise (12.04.3 LTS)
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -885,8 +896,8 @@ attached base packages:
 [8] base     
 
 other attached packages:
-[1] TiddlyWikiR_1.0.4  Biobase_2.22.0     BiocGenerics_0.8.0
+[1] TiddlyWikiR_1.0.4   Biobase_2.24.0      BiocGenerics_0.10.0
 > q ("no")
 > proc.time()
    user  system elapsed 
-  8.844   0.048   8.911 
+  9.012   0.084   9.102 

@@ -603,6 +603,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_blca.png]]
 [img[supplementary_files/plots/paired_explore_transfer_blca.png]]
 [img[supplementary_files/plots/paired_size_effect_blca.png]]
 [img[supplementary_files/plots/unpaired_size_effect_blca.png]]</pre>
@@ -659,6 +660,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_brca.png]]
 [img[supplementary_files/plots/paired_explore_transfer_brca.png]]
 [img[supplementary_files/plots/paired_size_effect_brca.png]]
 [img[supplementary_files/plots/unpaired_size_effect_brca.png]]</pre>
@@ -713,6 +715,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_cesc.png]]
 [img[supplementary_files/plots/paired_explore_transfer_cesc.png]]
 [img[supplementary_files/plots/paired_size_effect_cesc.png]]
 [img[supplementary_files/plots/unpaired_size_effect_cesc.png]]</pre>
@@ -763,6 +766,42 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
 [img[supplementary_files/plots/unpaired_size_effect_coad.png]]</pre>
+</div>
+<div title="Clustering analysis for enrichment results" creator="YourName" modifier="fgarcia" created="201508281046" modified="201508281205" changecount="10">
+<pre>The goal is to detect similar cancer groups from functional enrichment results.
+
+We generated  a combined indicator (-log p-value * sign (log OR)) for each ontology (biological process, cellular component and molecular function)  from the Bioconductor package: [[mdgsa|http://www.bioconductor.org/packages/release/bioc/html/mdgsa.html]]. 
+
+Complete linkage method was used for hierarchical clustering.  This particular clustering method defines the cluster distance between two clusters to be the maximum distance between their individual components. At every stage of the clustering process, the two nearest clusters are merged into a new cluster. The process is repeated until the whole data set is agglomerated into one single cluster. Pearson correlation distance was used.
+
+In general, for each ontology and type of study (paired / unpaired),  tumors that affect the same organ  are grouped. Thus,  KICH, KIRC, KIRP (different variants of kidney cancer) are clustered. Analogous for  LUAD and LUSC (lung cancer).
+
+There are several cancer types with known similarities:
+
+
+''Clustering results for paired studies'':
+
+* For cellular components and molecular functions,  KIRK, KIRP and PRAD  (urogenital cancers) were grouped. 
+* KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
+* For all ontologies, CESC (cervix) and BRCA (breast) tumors were clustered.
+
+
+[img[supplementary_files/plots/clust_paired_correlationd_bp.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_cc.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_mf.png]]
+
+
+''Clustering results for unpaired studies'':
+* COAD (colon) and READ (rectum) tumors were clustered in any of the groups of different ontologies.
+* KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
+
+
+
+
+
+[img[supplementary_files/plots/clust_unpaired_correlationd_bp.png]]
+[img[supplementary_files/plots/clust_unpaired_correlationd_cc.png]]
+[img[supplementary_files/plots/clust_unpaired_correlationd_mf.png]]</pre>
 </div>
 <div title="DefaultTiddlers" creator="FGarcia" modifier="FGarcia" created="201502160923" changecount="1">
 <pre>[[Integrated Gene Set Analysis for microRNA Studies]]</pre>
@@ -937,6 +976,7 @@ Tiddler.prototype.changed = function()
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_esca.png]]
 [img[supplementary_files/plots/paired_explore_transfer_esca.png]]
 [img[supplementary_files/plots/paired_size_effect_esca.png]]
 [img[supplementary_files/plots/unpaired_size_effect_esca.png]]</pre>
@@ -1003,7 +1043,7 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
 * [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].</pre>
 </div>
-<div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="fgarcia" created="201502231206" modified="201505130902" changecount="5">
+<div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="YourName" created="201502231206" modified="201508281051" changecount="6">
 <pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
 
 [img[supplementary_files/plots/paired_size_effect_blca.png]]
@@ -1228,6 +1268,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_hnsc.png]]
 [img[supplementary_files/plots/paired_explore_transfer_hnsc.png]]
 [img[supplementary_files/plots/paired_size_effect_hnsc.png]]
 [img[supplementary_files/plots/unpaired_size_effect_hnsc.png]]</pre>
@@ -1412,9 +1453,9 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 <pre>These plots show the inhibition effect correlation for biological process, cellular component and molecular function  between cancer types. 
 
 ''Paired studies'':
-[img[supplementary_files/plots/paired_cor_bp.png]]
-[img[supplementary_files/plots/paired_cor_cc.png]]
-[img[supplementary_files/plots/paired_cor_mf.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_bp.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_cc.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_mf.png]]
 
 
 ''Unpaired studies'':
@@ -1424,16 +1465,16 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 </div>
 <div title="Inhibition index correlation by ontology" creator="FGarcia" modifier="genometra" created="201502231435" modified="201505121121" changecount="3">
 <pre>Paired studies:
-[img[supplementary_files/plots/paired_cor_bp.png]]
-[img[supplementary_files/plots/paired_cor_cc.png]]
-[img[supplementary_files/plots/paired_cor_mf.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_bp.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_cc.png]]
+[img[supplementary_files/plots/clust_paired_correlationd_mf.png]]
 
 Unpaired studies:
 [img[supplementary_files/plots/unpaired_dist_of_corbp.png]]
 [img[supplementary_files/plots/unpaired_dist_of_corcc.png]]
 [img[supplementary_files/plots/unpaired_dist_of_cormf.png]]</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201505130855" changecount="90">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201508281156" changecount="98">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -1534,6 +1575,9 @@ Once the evidence of miRNA differential expression transferred to genes, the ran
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
 
+A ''clustering analysis for enrichment results'' was performed in order to detect cancer types with known similarities.
+
+
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
 
 |sortable|k
@@ -1590,6 +1634,7 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
 * [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].
+* [[Clustering analysis for enrichment results]].
 
 !!Global results
 This table shows  global results for all studies:
@@ -1722,6 +1767,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_kirc.png]]
 [img[supplementary_files/plots/paired_explore_transfer_kirc.png]]
 [img[supplementary_files/plots/paired_size_effect_kirc.png]]
 [img[supplementary_files/plots/unpaired_size_effect_kirc.png]]</pre>
@@ -1776,6 +1822,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_kirp.png]]
 [img[supplementary_files/plots/paired_explore_transfer_kirp.png]]
 [img[supplementary_files/plots/paired_size_effect_kirp.png]]
 [img[supplementary_files/plots/unpaired_size_effect_kirp.png]]</pre>
@@ -1831,6 +1878,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_lihc.png]]
 [img[supplementary_files/plots/paired_explore_transfer_lihc.png]]
 [img[supplementary_files/plots/paired_size_effect_lihc.png]]
 [img[supplementary_files/plots/unpaired_size_effect_lihc.png]]</pre>
@@ -1886,6 +1934,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_luad.png]]
 [img[supplementary_files/plots/paired_explore_transfer_luad.png]]
 [img[supplementary_files/plots/paired_size_effect_luad.png]]
 [img[supplementary_files/plots/unpaired_size_effect_luad.png]]</pre>
@@ -1941,6 +1990,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_lusc.png]]
 [img[supplementary_files/plots/paired_explore_transfer_lusc.png]]
 [img[supplementary_files/plots/paired_size_effect_lusc.png]]
 [img[supplementary_files/plots/unpaired_size_effect_lusc.png]]</pre>
@@ -2073,6 +2123,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_paad.png]]
 [img[supplementary_files/plots/paired_explore_transfer_paad.png]]
 [img[supplementary_files/plots/paired_size_effect_paad.png]]
 [img[supplementary_files/plots/unpaired_size_effect_paad.png]]</pre>
@@ -2127,6 +2178,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_pcpg.png]]
 [img[supplementary_files/plots/paired_explore_transfer_pcpg.png]]
 [img[supplementary_files/plots/paired_size_effect_pcpg.png]]
 [img[supplementary_files/plots/unpaired_size_effect_pcpg.png]]</pre>
@@ -2180,6 +2232,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_prad.png]]
 [img[supplementary_files/plots/paired_explore_transfer_prad.png]]
 [img[supplementary_files/plots/paired_size_effect_prad.png]]
 [img[supplementary_files/plots/unpaired_size_effect_prad.png]]</pre>
@@ -2358,6 +2411,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_stad.png]]
 [img[supplementary_files/plots/paired_explore_transfer_stad.png]]
 [img[supplementary_files/plots/paired_size_effect_stad.png]]
 [img[supplementary_files/plots/unpaired_size_effect_stad.png]]</pre>
@@ -2418,6 +2472,7 @@ More detailed information:
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_thca.png]]
 [img[supplementary_files/plots/paired_explore_transfer_thca.png]]
 [img[supplementary_files/plots/paired_size_effect_thca.png]]
 [img[supplementary_files/plots/unpaired_size_effect_thca.png]]</pre>
@@ -2716,6 +2771,7 @@ config.macros.toggleSideBar.onToggleSideBar = function(){
 ''Gene Set level''
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
+[img[supplementary_files/plots/inhibition_effect_paired_vs_unpaired_ucec.png]]
 [img[supplementary_files/plots/paired_explore_transfer_ucec.png]]
 [img[supplementary_files/plots/paired_size_effect_ucec.png]]
 [img[supplementary_files/plots/unpaired_size_effect_ucec.png]]</pre>
