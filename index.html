@@ -524,7 +524,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <div title="17 plots for paired" creator="FGarcia" modifier="FGarcia" created="201502231023" changecount="1">
 <pre>@@~PLOTS_TABLE@@</pre>
 </div>
-<div title="Analyzed datasets" creator="genometra" modifier="fgarcia" created="201505081559" modified="201505130855" changecount="3">
+<div title="Analyzed datasets" creator="genometra" modifier="fgarcia" created="201505081559" modified="201508291417" changecount="4">
 <pre>''Table 1''.   Analyzed datasets. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
 
 |sortable|k
@@ -767,24 +767,47 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 
 [img[supplementary_files/plots/unpaired_size_effect_coad.png]]</pre>
 </div>
-<div title="Clustering analysis for enrichment results" creator="YourName" modifier="fgarcia" created="201508281046" modified="201508281205" changecount="10">
-<pre>The goal is to detect similar cancer groups from functional enrichment results.
+<div title="Clustering analysis for enrichment results" creator="YourName" modifier="fgarcia" created="201508281046" modified="201508291419" changecount="15">
+<pre>The ''goal'' is to detect similar cancer groups from functional enrichment results.
 
-We generated  a combined indicator (-log p-value * sign (log OR)) for each ontology (biological process, cellular component and molecular function)  from the Bioconductor package: [[mdgsa|http://www.bioconductor.org/packages/release/bioc/html/mdgsa.html]]. 
+''METHODS''
+* We generated  a combined indicator (-log p-value * sign (log OR)) for each ontology (biological process, cellular component and molecular function)  from the Bioconductor package: [[mdgsa|http://www.bioconductor.org/packages/release/bioc/html/mdgsa.html]]. 
+* Complete linkage method was used for hierarchical clustering.  This particular clustering method defines the cluster distance between two clusters to be the maximum distance between their individual components. At every stage of the clustering process, the two nearest clusters are merged into a new cluster. The process is repeated until the whole data set is agglomerated into one single cluster. Pearson correlation distance was used.
+* ''Description of samples''. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
 
-Complete linkage method was used for hierarchical clustering.  This particular clustering method defines the cluster distance between two clusters to be the maximum distance between their individual components. At every stage of the clustering process, the two nearest clusters are merged into a new cluster. The process is repeated until the whole data set is agglomerated into one single cluster. Pearson correlation distance was used.
+|sortable|k
+|!| ID| total | cases | controls | paired |description |h
+|!blca| BLCA| 271 | 252 | 19 | 19 |[[Bladder Urothelial Carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BLCA&diseaseName=Bladder%20Urothelial%20Carcinoma]] |
+|!brca| BRCA| 807 | 720 | 87 | 86 |[[Breast invasive carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=BRCA&diseaseName=Breast%20invasive%20carcinoma]] |
+|!cesc| CESC| 218 | 215 | 3 | 3 |[[Cervical squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=CESC&diseaseName=Cervical%20squamous%20cell%20carcinoma%20and%20endocervical%20adenocarcinoma]] |
+|!coad| COAD| 243 | 235 | 8 | 0 |[[Colon adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=COAD&diseaseName=Colon%20adenocarcinoma]] |
+|!esca| ESCA| 113 | 102 | 11 | 11 |[[Esophageal carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=ESCA&diseaseName=Esophageal%20carcinoma]] |
+|!hnsc| HNSC| 519 | 475 | 44 | 43 |[[Head and Neck squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=HNSC&diseaseName=Head%20and%20Neck%20squamous%20cell%20carcinoma]] |
+|!kich| KICH| 91 | 66 | 25 | 25 |[[Kidney Chromophobe|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KICH&diseaseName=Kidney%20Chromophobe]] |
+|!kirc| KIRC| 311 | 240 | 71 | 68 |[[Kidney renal clear cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KIRC&diseaseName=Kidney%20renal%20clear%20cell%20carcinoma]] |
+|!kirp| KIRP| 245 | 211 | 34 | 34 |[[Kidney renal papillary cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=KIRP&diseaseName=Kidney%20renal%20papillary%20cell%20carcinoma]] |
+|!lihc| LIHC| 283 | 233 | 50 | 49 |[[Liver hepatocellular carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LIHC&diseaseName=Liver%20hepatocellular%20carcinoma]] |
+|!luad| LUAD| 474 | 428 | 46 | 39 |[[Lung adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LUAD&diseaseName=Lung%20adenocarcinoma]] |
+|!lusc| LUSC| 376 | 331 | 45 | 45 |[[Lung squamous cell carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=LUSC&diseaseName=Lung%20squamous%20cell%20carcinoma]] |
+|!paad| PAAD| 100 | 96 | 4 | 4 |[[Pancreatic adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PAAD&diseaseName=Pancreatic%20adenocarcinoma]] |
+|!pcpg| PCPG| 182 | 179 | 3 | 3 |[[Pheochromocytoma and Paraganglioma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PAAD&diseaseName=Pancreatic%20adenocarcinoma]] |
+|!prad| PRAD| 117 | 100 | 17 | 17 |[[Prostate adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=PRAD&diseaseName=Prostate%20adenocarcinoma]] |
+|!read| READ| 93 | 90 | 3 | 0 |[[Rectum adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=READ&diseaseName=Rectum%20adenocarcinoma]] |
+|!skcm| SKCM| 75 | 74 | 1 | 0 |[[Skin Cutaneous Melanoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=SKCM&diseaseName=Skin%20Cutaneous%20Melanoma]] |
+|!stad| STAD| 345 | 306 | 39 | 39 |[[Stomach adenocarcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=STAD&diseaseName=Stomach%20adenocarcinoma]] |
+|!thca| THCA| 558 | 499 | 59 | 59 |[[Thyroid carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=THCA&diseaseName=Thyroid%20carcinoma]] |
+|!ucec| UCEC| 418 | 386 | 32 | 19 |[[Uterine Corpus Endometrial Carcinoma|https://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=UCEC&diseaseName=Uterine%20Corpus%20Endometrial%20Carcinoma]] |
 
-In general, for each ontology and type of study (paired / unpaired),  tumors that affect the same organ  are grouped. Thus,  KICH, KIRC, KIRP (different variants of kidney cancer) are clustered. Analogous for  LUAD and LUSC (lung cancer).
 
-There are several cancer types with known similarities:
 
+''RESULTS''
+* In general, for each ontology and type of study (paired / unpaired),  tumors that affect the same organ  are grouped. Thus,  KICH, KIRC, KIRP (different variants of kidney cancer) are clustered. Analogous for  LUAD and LUSC (lung cancer).
+* There are several cancer types with known similarities:
 
 ''Clustering results for paired studies'':
-
 * For cellular components and molecular functions,  KIRK, KIRP and PRAD  (urogenital cancers) were grouped. 
 * KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
 * For all ontologies, CESC (cervix) and BRCA (breast) tumors were clustered.
-
 
 [img[supplementary_files/plots/clust_paired_correlationd_bp.png]]
 [img[supplementary_files/plots/clust_paired_correlationd_cc.png]]
@@ -794,9 +817,6 @@ There are several cancer types with known similarities:
 ''Clustering results for unpaired studies'':
 * COAD (colon) and READ (rectum) tumors were clustered in any of the groups of different ontologies.
 * KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
-
-
-
 
 
 [img[supplementary_files/plots/clust_unpaired_correlationd_bp.png]]
@@ -981,10 +1001,12 @@ Tiddler.prototype.changed = function()
 [img[supplementary_files/plots/paired_size_effect_esca.png]]
 [img[supplementary_files/plots/unpaired_size_effect_esca.png]]</pre>
 </div>
-<div title="Gene Set level" creator="FGarcia" modifier="fgarcia" created="201502231752" modified="201505130856" changecount="8">
+<div title="Gene Set level" creator="FGarcia" modifier="fgarcia" created="201502231752" modified="201508291430" changecount="10">
 <pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
+
+A [[Clustering analysis for enrichment results]] was performed in order to detect cancer types with known similarities.
 
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
 
@@ -1041,7 +1063,10 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
-* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].</pre>
+* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].
+* [[Clustering analysis for enrichment results]].
+
+</pre>
 </div>
 <div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="YourName" created="201502231206" modified="201508281051" changecount="6">
 <pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
@@ -1474,7 +1499,7 @@ Unpaired studies:
 [img[supplementary_files/plots/unpaired_dist_of_corcc.png]]
 [img[supplementary_files/plots/unpaired_dist_of_cormf.png]]</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201508281156" changecount="98">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201508291430" changecount="100">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -1575,7 +1600,7 @@ Once the evidence of miRNA differential expression transferred to genes, the ran
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
 
-A ''clustering analysis for enrichment results'' was performed in order to detect cancer types with known similarities.
+A [[Clustering analysis for enrichment results]] was performed in order to detect cancer types with known similarities.
 
 
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).

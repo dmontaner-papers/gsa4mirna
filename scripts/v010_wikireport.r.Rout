@@ -18,7 +18,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > date ()
-[1] "Fri Aug 28 14:07:13 2015"
+[1] "Sat Aug 29 16:31:21 2015"
 > Sys.info ()[c("nodename", "user")]
         nodename             user 
 "fgarcia-laptop"        "fgarcia" 
@@ -900,4 +900,4 @@ other attached packages:
 > q ("no")
 > proc.time()
    user  system elapsed 
-  9.012   0.084   9.102 
+  8.984   0.088   9.077 
