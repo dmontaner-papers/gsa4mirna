@@ -26,11 +26,13 @@
 .job$dir <- list ()
 
 ### rootDir: Location in MY COMPUTER
-.job$dir$data <- file.path ("~", "datos",         "2014", .job$name) #starting with ("~") if working in your home directory
-.job$dir$code <- file.path ("~", "trabajos_mios", "2014", .job$name) #or ("") if working in the root directory !!!
+## .job$dir$data <- file.path ("~", "datos",         "2014", .job$name) #starting with ("~") if working in your home directory
+## .job$dir$code <- file.path ("~", "trabajos_mios", "2014", .job$name) #or ("") if working in the root directory !!!
 
-## .job$dir$data <- file.path ("~", "Desktop", "papers", .job$name, "datos") #starting with ("~") if working in your home directory
-## .job$dir$code <- file.path ("~", "Desktop", "papers", .job$name) #or ("") if working in the root directory !!!
+.job$dir$data <- file.path ("~", "Desktop", "papers", .job$name, "datos") #starting with ("~") if working in your home directory
+.job$dir$code <- file.path ("~", "Desktop", "papers", .job$name) #or ("") if working in the root directory !!!
+
+
 
 ### MORE directories
 .job$dir$scripts <- file.path (.job$dir$code, "scripts")

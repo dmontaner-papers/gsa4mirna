@@ -524,7 +524,7 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <div title="17 plots for paired" creator="FGarcia" modifier="FGarcia" created="201502231023" changecount="1">
 <pre>@@~PLOTS_TABLE@@</pre>
 </div>
-<div title="Analyzed datasets" creator="genometra" modifier="fgarcia" created="201505081559" modified="201505130855" changecount="3">
+<div title="Analyzed datasets" creator="genometra" modifier="fgarcia" created="201505081559" modified="201508291417" changecount="4">
 <pre>''Table 1''.   Analyzed datasets. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
 @@~TABLA1_DATASETS@@</pre>
 </div>
@@ -667,6 +667,35 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 *  Evaluation of size effect for functional terms for the analysis. These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)).
 
 @@~PLOTS_coad@@</pre>
+</div>
+<div title="Clustering analysis for enrichment results" creator="YourName" modifier="fgarcia" created="201508281046" modified="201508291419" changecount="15">
+<pre>The ''goal'' is to detect similar cancer groups from functional enrichment results.
+
+''METHODS''
+* We generated  a combined indicator (-log p-value * sign (log OR)) for each ontology (biological process, cellular component and molecular function)  from the Bioconductor package: [[mdgsa|http://www.bioconductor.org/packages/release/bioc/html/mdgsa.html]]. 
+* Complete linkage method was used for hierarchical clustering.  This particular clustering method defines the cluster distance between two clusters to be the maximum distance between their individual components. At every stage of the clustering process, the two nearest clusters are merged into a new cluster. The process is repeated until the whole data set is agglomerated into one single cluster. Pearson correlation distance was used.
+* ''Description of samples''. Columns of the table display: TCGA disease ID, the total number of samples in the analysis, the number of tumoral samples, the number of control samples (solid normal tissue), the number of paired samples available in the dataset and the cancer type. Number of up, down and not differentially regulated miRNAs in each cancer type.
+@@~TABLA1_DATASETS@@
+
+
+''RESULTS''
+* In general, for each ontology and type of study (paired / unpaired),  tumors that affect the same organ  are grouped. Thus,  KICH, KIRC, KIRP (different variants of kidney cancer) are clustered. Analogous for  LUAD and LUSC (lung cancer).
+* There are several cancer types with known similarities:
+
+''Clustering results for paired studies'':
+* For cellular components and molecular functions,  KIRK, KIRP and PRAD  (urogenital cancers) were grouped. 
+* KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
+* For all ontologies, CESC (cervix) and BRCA (breast) tumors were clustered.
+
+@@~PLOTS_GENE_SET_LEVEL_CLUST_PAIRED@@
+
+
+''Clustering results for unpaired studies'':
+* COAD (colon) and READ (rectum) tumors were clustered in any of the groups of different ontologies.
+* KICH (kidney) and THCA (thyroid) tumors also grouped for each ontology. There are reported associations between both cancers: &quot;Synchronous triple primary cancers occurring in the stomach, kidney, and thyroid&quot;. Oh SJ, DS Bae Suh BJ. Ann Surg Res Treat 2015 June; 88 (6):. 345-8. doi: 10.4174 / astr.2015.88.6.345. Epub 2015 May 14.PMID: 26,029,681
+
+
+@@~PLOTS_GENE_SET_LEVEL_CLUST_UNPAIRED@@</pre>
 </div>
 <div title="DefaultTiddlers" creator="FGarcia" modifier="FGarcia" created="201502160923" changecount="1">
 <pre>[[Integrated Gene Set Analysis for microRNA Studies]]</pre>
@@ -820,10 +849,12 @@ Tiddler.prototype.changed = function()
 
 @@~PLOTS_esca@@</pre>
 </div>
-<div title="Gene Set level" creator="FGarcia" modifier="fgarcia" created="201502231752" modified="201505130856" changecount="8">
+<div title="Gene Set level" creator="FGarcia" modifier="fgarcia" created="201502231752" modified="201508291430" changecount="10">
 <pre>Once the evidence of miRNA differential expression transferred to genes, the ranking index accounting for differential inhibition, may be easily analyzed in terms of gene sets using the logistic regression approach. 
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
+
+A [[Clustering analysis for enrichment results]] was performed in order to detect cancer types with known similarities.
 
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
 @@~TABLA4_GOS@@
@@ -834,9 +865,12 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
-* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].</pre>
+* [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].
+* [[Clustering analysis for enrichment results]].
+
+</pre>
 </div>
-<div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="fgarcia" created="201502231206" modified="201505130902" changecount="5">
+<div title="Gene Set level.  Evaluation of size effect for functional terms for the paired analysis" creator="FGarcia" modifier="YourName" created="201502231206" modified="201508281051" changecount="6">
 <pre>These plots show the relationship between the functional block size and its significance, evaluating p-values and a combined indicator (-log p-value * sign (log OR)), in paired studies.
 
 @@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@</pre>
@@ -1141,7 +1175,7 @@ config.formatterHelpers.addStretchHandlers=function(e,stretchW,stretchH) {
 Unpaired studies:
 @@~PLOTS_GENE_SET_LEVEL_DISTRIBUTION_BY_ONTOLOGY_UNPAIRED@@</pre>
 </div>
-<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201505130855" changecount="90">
+<div title="Integrated Gene Set Analysis for microRNA Studies" creator="fgardos" modifier="fgarcia" created="201502151053" modified="201508291430" changecount="100">
 <pre>This wiki contains supplementary materials for the paper entitled ''Integrated Gene Set Analysis for microRNA Studies'' by ~Garcia-Garcia F, Panadero J, Dopazo J and Montaner D.
 
 !!Analyzed datasets 
@@ -1173,6 +1207,9 @@ Once the evidence of miRNA differential expression transferred to genes, the ran
 
 In our study we used [[Gene Ontology| http://geneontology.org/  ]]  terms to define gene sets. Gene annotation was downloaded from the [[Ensembl web page| http://www.ensembl.org]]. Biological process, cellular component and molecular function ontologies where analyzed.  We corrected p-values for multiple testing in order to control the [[ false discovery  rate|https://www.umassmed.edu/PageFiles/39435/Controlling%20the%20False%20Discovery%20Rate%20manuscript.pdf]].
 
+A [[Clustering analysis for enrichment results]] was performed in order to detect cancer types with known similarities.
+
+
 ''Table 4''. Number of GO terms associated to the genes targeted by the up and down regulated miRNAs. Most GO terms are targeted in cases and controls at the same time as it can be seen in the intersection column (Inter).
 @@~TABLA4_GOS@@
 
@@ -1183,6 +1220,7 @@ Columns Inh. indicates the number of terms with a positive alfa coefficient in t
 * [[Gene Set level.  Evaluation of size effect for functional terms for the paired analysis]]. 
 * [[Gene Set level.  Evaluation of size effect for functional terms for the unpaired analysis]]. 
 * [[Common Enrichment for all studies|Detailed information about  differential expression and functional enrichment for all studies]].
+* [[Clustering analysis for enrichment results]].
 
 !!Global results
 This table shows  global results for all studies:

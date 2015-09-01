@@ -358,6 +358,22 @@ plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",s
 mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_UNPAIRED@@"]] <- plots[,"links"]
 
 
+my_plots2 <- my_plots[grep("clust_paired_correlationd", my_plots)]  
+links <- rep('NA', length(my_plots2))
+plots <- cbind(my_plots2, links)
+class(plots)
+plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_CLUST_PAIRED@@"]] <- plots[,"links"]
+
+my_plots2 <- my_plots[grep("clust_unpaired_correlationd", my_plots)]  
+links <- rep('NA', length(my_plots2))
+plots <- cbind(my_plots2, links)
+class(plots)
+plots[,"links"] <- paste ("[img[","supplementary_files/plots/", my_plots2,"]]",sep="")
+# mistags[["@@~PLOTS_GENE_SET_LEVEL_SIZE_EFFECT_PAIRED@@"]] <- twTable (dat = plots, sortable = TRUE)
+mistags[["@@~PLOTS_GENE_SET_LEVEL_CLUST_UNPAIRED@@"]] <- plots[,"links"]
+
 
 
 
