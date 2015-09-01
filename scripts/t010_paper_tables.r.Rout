@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > ##This script prints some tables for the report
 > 
 > date ()
-[1] "Wed Aug 26 11:26:10 2015"
+[1] "Fri Aug 28 17:39:04 2015"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "lap" "dmontaner" 
@@ -303,7 +303,7 @@ ucec UCEC  243   284 347  211   272 229
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Wed Aug 26 11:26:12 2015
+% Fri Aug 28 17:39:07 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -395,7 +395,7 @@ ucec UCEC 9182   7171 8436 9338   7069 8201
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Wed Aug 26 11:26:12 2015
+% Fri Aug 28 17:39:07 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -452,7 +452,7 @@ The total number of genes which are targets of at least one miRNA is \textbf{120
 > tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 + Most GO terms are targeted in cases and controls at the same time
 + as it can be seen in the \\textit{Common} column.
-+ The total number of GO terms annotated for the targeted genes is \\textbf{16494}.")
++ The total number of GO terms annotated for the targeted genes is \\textbf{5169}.")
 > tabla <- datos[,tabla.cols]
 > colnames (tabla) <- tabla.nams
 > tabla
@@ -490,7 +490,7 @@ ucec UCEC 5169   5169 5169 5169   5169 5169
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Wed Aug 26 11:26:12 2015
+% Fri Aug 28 17:39:07 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -524,7 +524,7 @@ BLCA & 5169 & 5169 & 5169 & 5169 & 5168 & 5168 \\
 \caption{Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 Most GO terms are targeted in cases and controls at the same time
 as it can be seen in the \textit{Common} column.
-The total number of GO terms annotated for the targeted genes is \textbf{16494}.} 
+The total number of GO terms annotated for the targeted genes is \textbf{5169}.} 
 \label{tab:table4}
 \end{table}
 >                      ## add.to.row = my.add.to.row,
@@ -587,7 +587,7 @@ ucec UCEC    89  5080    0     9  5160    0
 +                      width = "\\columnwidth",
 +                      booktabs = TRUE)
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
-% Wed Aug 26 11:26:12 2015
+% Fri Aug 28 17:39:07 2015
 \begin{table}[hbt]
 \centering
 {\footnotesize
@@ -666,4 +666,4 @@ loaded via a namespace (and not attached):
 > 
 > proc.time()
    user  system elapsed 
-  0.819   0.052   1.935 
+  2.051   0.117   3.672 
