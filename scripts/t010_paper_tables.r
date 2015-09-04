@@ -151,7 +151,7 @@ multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paire
 tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
 Most GO terms are targeted in cases and controls at the same time
 as it can be seen in the \\textit{Common} column.
-The total number of GO terms annotated for the targeted genes is \\textbf{16494}.")
+The total number of GO terms annotated for the targeted genes is \\textbf{5169}.")
 tabla <- datos[,tabla.cols]
 colnames (tabla) <- tabla.nams
 tabla
