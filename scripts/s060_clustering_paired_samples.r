@@ -20,14 +20,14 @@ options (width = 170)
 ########################################################################################
 
 library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
-library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
+# library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
 library(mdgsa); packageDescription ("mdgsa", fields = "Version")
 
-library(parallel); packageDescription ("parallel", fields = "Version") #"3.2.1"
-library(pvclust); packageDescription ("pvclust", fields = "Version")# "1.3-2"
+# library(parallel); packageDescription ("parallel", fields = "Version") #"3.2.1"
+# library(pvclust); packageDescription ("pvclust", fields = "Version")# "1.3-2"
 
-source ("function_arbol_2.r")
-source ("function_pcaGenes_2.r")
+source("000_function_arbol_2.r")
+source("000_function_pcaGenes_2.r")
 fun0 <- function (x) {
   y <- unlist (strsplit (as.vector(x), split = "paired_")) [2]
   z <- unlist (strsplit (as.vector(y), split = "_")) [1]
@@ -55,14 +55,13 @@ p_bp <- array(0, dim =c(nrow(bp), length(listap_bp)))
 rownames(p_bp) <- rownames(bp)
 colnames(p_bp) <- as.vector(sapply (listap_bp, fun0))
 for (i in 1:length(listap_bp)){
-  print(listap_bp[i])
+ print(listap_bp[i])
   datos <- read.xlsx(listap_bp[i], row.names = 1,stringsAsFactors = FALSE,sheetIndex = 1)
-  datos[,"rindex"]<- pval2index(pvaAhora el tamaño todavía es más importantel = datos[,"pval"], sign = datos[, "lor"])
+  datos[,"rindex"]<- pval2index(pval = datos[,"pval"], sign = datos[, "lor"])
   datos <- datos[rownames(p_bp),]
   print(table(row.names(datos)==row.names(p_bp)))
   p_bp[,i] <- datos[,"rindex"]
 }
-
 
 
 
@@ -96,9 +95,6 @@ for (i in 1:length(listap_mf)){
 }
 
 
-#TO DELETE:
-load("/home/fgarcia/Desktop/papers/gsa4mirna/datos/data_processed/clustering_paired_data.RData")
-ls()
 
 
 #Convert colnames from lowercase to uppercase
@@ -167,42 +163,42 @@ dev.off ()
 
 
 
-### SIGNIFICANT cluster with correlation distance, BP 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- p_bp
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_bp_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Paired. BP")
-pvrect(trans.pv)
-dev.off ()
-
-### SIGNIFICANT cluster with correlation distance, CCP 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- p_cc
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_cc_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Paired. CC")
-pvrect(trans.pv)
-dev.off ()
-
-### SIGNIFICANT cluster with correlation distance, MF 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- p_mf
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_mf_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Paired. MF")
-pvrect(trans.pv)
-dev.off ()
-
+# ### SIGNIFICANT cluster with correlation distance, BP 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- p_bp
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_bp_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Paired. BP")
+# pvrect(trans.pv)
+# dev.off ()
+# 
+# ### SIGNIFICANT cluster with correlation distance, CCP 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- p_cc
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_cc_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Paired. CC")
+# pvrect(trans.pv)
+# dev.off ()
+# 
+# ### SIGNIFICANT cluster with correlation distance, MF 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- p_mf
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_mf_paired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Paired. MF")
+# pvrect(trans.pv)
+# dev.off ()
+# 
 
 
 

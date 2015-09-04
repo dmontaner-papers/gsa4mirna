@@ -20,14 +20,14 @@ options (width = 170)
 ########################################################################################
 
 library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
-library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
+# library (knitr); packageDescription ("knitr", fields = "Version") #"1.6"
 library(mdgsa); packageDescription ("mdgsa", fields = "Version")
 
-library(parallel); packageDescription ("parallel", fields = "Version") #"3.2.1"
-library(pvclust); packageDescription ("pvclust", fields = "Version")# "1.3-2"
+# library(parallel); packageDescription ("parallel", fields = "Version") #"3.2.1"
+# library(pvclust); packageDescription ("pvclust", fields = "Version")# "1.3-2"
 
-source ("function_arbol_2.r")
-source ("function_pcaGenes_2.r")
+source ("000_function_arbol_2.r")
+source ("000_function_pcaGenes_2.r")
 fun0 <- function (x) {
   y <- unlist (strsplit (as.vector(x), split = "paired_")) [2]
   z <- unlist (strsplit (as.vector(y), split = "_")) [1]
@@ -94,9 +94,6 @@ for (i in 1:length(listau_mf)){
 }
 
 
-#TO DELETE:
-load("/home/fgarcia/Desktop/papers/gsa4mirna/datos/data_processed/clustering_unpaired_data.RData")
-ls()
 
 
 #Convert colnames from lowercase to uppercase
@@ -165,42 +162,42 @@ dev.off ()
 
 
 
-### SIGNIFICANT cluster with correlation distance, BP 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- u_bp
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_bp_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Unpaired.BP")
-pvrect(trans.pv)
-dev.off ()
-
-### SIGNIFICANT cluster with correlation distance, CCP 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- u_cc
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_cc_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Unpaired. CC")
-pvrect(trans.pv)
-dev.off ()
-
-### SIGNIFICANT cluster with correlation distance, MF 
-setwd (file.path (.job$dir$plots))
-cl<- makeCluster(2, type = "PSOCK")
-x.por <- 4; y.por <- 2
-mydat <- u_mf
-trans.pv <- parPvclust(cl, mydat, nboot=10000)
-## highlight clusters with high au p-values
-png (filename = "sigcluster_corelationd_mf_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
-plot(trans.pv, main = "Clustering. Correlation distance. Unpaired.MF")
-pvrect(trans.pv)
-dev.off ()
-
+# ### SIGNIFICANT cluster with correlation distance, BP 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- u_bp
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_bp_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Unpaired.BP")
+# pvrect(trans.pv)
+# dev.off ()
+# 
+# ### SIGNIFICANT cluster with correlation distance, CCP 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- u_cc
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_cc_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Unpaired. CC")
+# pvrect(trans.pv)
+# dev.off ()
+# 
+# ### SIGNIFICANT cluster with correlation distance, MF 
+# setwd (file.path (.job$dir$plots))
+# cl<- makeCluster(2, type = "PSOCK")
+# x.por <- 4; y.por <- 2
+# mydat <- u_mf
+# trans.pv <- parPvclust(cl, mydat, nboot=10000)
+# ## highlight clusters with high au p-values
+# png (filename = "sigcluster_corelationd_mf_unpaired.png", width = 480 * x.por, height = 480 * y.por, res = 200)
+# plot(trans.pv, main = "Clustering. Correlation distance. Unpaired.MF")
+# pvrect(trans.pv)
+# dev.off ()
+# 
 
 
 

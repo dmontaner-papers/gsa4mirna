@@ -29,8 +29,12 @@
 ## .job$dir$data <- file.path ("~", "datos",         "2014", .job$name) #starting with ("~") if working in your home directory
 ## .job$dir$code <- file.path ("~", "trabajos_mios", "2014", .job$name) #or ("") if working in the root directory !!!
 
-.job$dir$data <- file.path ("~", "Desktop", "papers", .job$name, "datos") #starting with ("~") if working in your home directory
-.job$dir$code <- file.path ("~", "Desktop", "papers", .job$name) #or ("") if working in the root directory !!!
+# .job$dir$data <- file.path ("~", "Desktop", "papers", .job$name, "datos") #starting with ("~") if working in your home directory
+# .job$dir$code <- file.path ("~", "Desktop", "papers", .job$name) #or ("") if working in the root directory !!!
+
+#from rambo:
+.job$dir$data <- file.path ("~", .job$name, "datos") #starting with ("~") if working in your home directory
+.job$dir$code <- file.path ("~", .job$name) #or ("") if working in the root directory !!!
 
 
 
