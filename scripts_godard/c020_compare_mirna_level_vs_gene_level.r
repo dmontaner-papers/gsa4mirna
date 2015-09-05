@@ -84,7 +84,7 @@ tags
 tag <- "blca"
 for (tag in tags) {
     print (tag)
-    png (filename = paste0 ("gene_vs_mirna_level_gsa", tag, ".png"), width = 480 * por, height = 480 * por)
+    png (filename = paste0 ("gene_vs_mirna_level_gsa_", tag, ".png"), width = 480 * por, height = 480 * por)
     par (mfrow = c (2, 2))
     ##
     try ({plot (gen.unpa[comunes.unpa, tag], mir.unpa   [comunes.unpa, tag], xlab = "gene level", ylab = "miRNA level",             main = paste (tag, "(unpa)")); title (sub = paste ("cor:", round (cor (gen.unpa[comunes.unpa, tag], mir.unpa   [comunes.unpa, tag], use = "pairwise.complete.obs"), 2))); abline (h = 0, v = 0, col = "blue")})

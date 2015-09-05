@@ -63,3 +63,8 @@ Where #:  0 (ranking index correlation miRNA), N (ranking index correlation gene
 
 - inhibition_effect_cor_paired_vs_unpaired_@@@.png: displays correlation between the paired and the unpaired results at gene set level.
 - inhibition_effect_paired_vs_unpaired_###.png:     displays, for each cancer, scatter plots of paired vs. unpaired results at gene set level.
+
+
+- gene_vs_mirna_level_gsa_###.png: display the correlation between the GSA analysis carried out at miRNA level (Godard's paradigm) and at gene level after "transference".
+  Each dot represents a GO term. X and Y values are derived from p-values and signs of the log odds ratios resulting from the mdgsa analysis
+  (similar to equation 1 of the paper but at GO level instead of at miRNA level). 
