@@ -1,0 +1,437 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i050_count_significant_gos.r
+> ##2014-12-04 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script counts the number of significant GO terms in all cancers
+> 
+> date ()
+[1] "Fri Aug 28 17:18:10 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                        
+[2] "-f"                                                                                           
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_permutation/i050_count_significant_gos.r"
+[4] "--restore"                                                                                    
+[5] "--save"                                                                                       
+[6] "--no-readline"                                                                                
+[7] "--no-save"                                                                                    
+[8] "--no-restore"                                                                                 
+> rm (list = ls ())
+> R.version.string ##"R version 3.1.2 (2014-10-31)"
+[1] "R version 3.2.2 (2015-08-14)"
+> #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.7"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.99.2"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> #library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_permutation"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_permutation/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_permutation/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> #options (width = 250)
+> 
+> corte <- 0.05
+> por <- 1
+> ontologias <- c ("bp", "cc", "mf")
+> 
+> ## DATOS
+> load (file.path (.job$dir$proces, "res_gsa_paired.RData"))
+> load (file.path (.job$dir$proces, "res_gsa_unpaired.RData"))
+> #load (file.path (.job$dir$proces, "res_dif_exp_unpaired.RData"))
+> ls ()
+[1] "corte"        "mat.gsa.pair" "mat.gsa.unpa" "ontologias"   "por"          "res.gsa.pair" "res.gsa.unpa"
+> names (mat.gsa.unpa)
+[1] "bp"   "cc"   "mf"   "tags" "TAGS" "desc"
+> names (mat.gsa.pair)
+[1] "bp"   "cc"   "mf"   "tags" "TAGS" "desc"
+> 
+> mat.gsa.unpa[["desc"]]
+                                                              blca                                                               brca 
+                                    "Bladder Urothelial Carcinoma"                                        "Breast invasive carcinoma" 
+                                                              cesc                                                               coad 
+"Cervical squamous cell carcinoma and endocervical adenocarcinoma"                                             "Colon adenocarcinoma" 
+                                                              esca                                                               hnsc 
+                                            "Esophageal carcinoma"                            "Head and Neck squamous cell carcinoma" 
+                                                              kich                                                               kirc 
+                                              "Kidney Chromophobe"                                "Kidney renal clear cell carcinoma" 
+                                                              kirp                                                               lihc 
+                           "Kidney renal papillary cell carcinoma"                                   "Liver hepatocellular carcinoma" 
+                                                              luad                                                               lusc 
+                                             "Lung adenocarcinoma"                                     "Lung squamous cell carcinoma" 
+                                                              paad                                                               pcpg 
+                                       "Pancreatic adenocarcinoma"                               "Pheochromocytoma and Paraganglioma" 
+                                                              prad                                                               read 
+                                         "Prostate adenocarcinoma"                                            "Rectum adenocarcinoma" 
+                                                              skcm                                                               stad 
+                                         "Skin Cutaneous Melanoma"                                           "Stomach adenocarcinoma" 
+                                                              thca                                                               ucec 
+                                               "Thyroid carcinoma"                             "Uterine Corpus Endometrial Carcinoma" 
+> 
+> setwd (.job$dir$res)
+> 
+> ################################################################################
+> 
+> ##function
+> conteo <- function (x) {
++     up = sum (x == 1)
++     do = sum (x ==-1)
++     no = sum (x == 0)
++     return (c(deregulated = do, noDif = no, inhibited = up))
++ }
+> 
+> 
+> ## unpa
+> gsa.res.count.bp.unpa <- t (apply (mat.gsa.unpa[["bp"]][["pat"]], 2, conteo))
+> gsa.res.count.cc.unpa <- t (apply (mat.gsa.unpa[["cc"]][["pat"]], 2, conteo))
+> gsa.res.count.mf.unpa <- t (apply (mat.gsa.unpa[["mf"]][["pat"]], 2, conteo))
+> 
+> gsa.res.count.bp.unpa
+     deregulated noDif inhibited
+blca           0  3976         0
+brca           0  3976         0
+cesc           0  3976         0
+coad           6  3767       203
+esca           4  3972         0
+hnsc           7  3969         0
+kich           0  3976         0
+kirc           0  3878        98
+kirp           4  3972         0
+lihc           4  3788       184
+luad           0  3976         0
+lusc          45  3930         1
+paad           0  3976         0
+pcpg           3  3973         0
+prad           0  3976         0
+read           1  3933        42
+skcm          48  3927         1
+stad           0  3976         0
+thca           0  3976         0
+ucec          62  3913         1
+> gsa.res.count.cc.unpa
+     deregulated noDif inhibited
+blca           0   446         0
+brca           0   446         0
+cesc           0   446         0
+coad           1   433        12
+esca           1   445         0
+hnsc           0   446         0
+kich           0   446         0
+kirc           0   446         0
+kirp           1   445         0
+lihc           3   439         4
+luad           0   446         0
+lusc           0   446         0
+paad           0   446         0
+pcpg           0   446         0
+prad           0   446         0
+read           0   445         1
+skcm           1   445         0
+stad           1   445         0
+thca           0   446         0
+ucec           6   440         0
+> gsa.res.count.mf.unpa
+     deregulated noDif inhibited
+blca           0   747         0
+brca           0   747         0
+cesc           1   746         0
+coad           2   711        34
+esca           4   743         0
+hnsc           5   740         2
+kich           1   746         0
+kirc           0   741         6
+kirp           0   747         0
+lihc           4   715        28
+luad           0   747         0
+lusc           1   746         0
+paad           0   747         0
+pcpg           1   746         0
+prad           0   747         0
+read           0   747         0
+skcm          11   730         6
+stad           0   747         0
+thca           0   747         0
+ucec           6   741         0
+> 
+> total.unpa <- as.data.frame (gsa.res.count.bp.unpa + gsa.res.count.cc.unpa + gsa.res.count.mf.unpa)
+> total.unpa
+     deregulated noDif inhibited
+blca           0  5169         0
+brca           0  5169         0
+cesc           1  5168         0
+coad           9  4911       249
+esca           9  5160         0
+hnsc          12  5155         2
+kich           1  5168         0
+kirc           0  5065       104
+kirp           5  5164         0
+lihc          11  4942       216
+luad           0  5169         0
+lusc          46  5122         1
+paad           0  5169         0
+pcpg           4  5165         0
+prad           0  5169         0
+read           1  5125        43
+skcm          60  5102         7
+stad           1  5168         0
+thca           0  5169         0
+ucec          74  5094         1
+> 
+> ## pair
+> gsa.res.count.bp.pair <- t (apply (mat.gsa.pair[["bp"]][["pat"]], 2, conteo))
+> gsa.res.count.cc.pair <- t (apply (mat.gsa.pair[["cc"]][["pat"]], 2, conteo))
+> gsa.res.count.mf.pair <- t (apply (mat.gsa.pair[["mf"]][["pat"]], 2, conteo))
+> 
+> gsa.res.count.bp.pair
+     deregulated noDif inhibited
+blca           0  3976         0
+brca           0  3976         0
+cesc           0  3969         7
+esca           2  3974         0
+hnsc           7  3969         0
+kich           9  3967         0
+kirc           9  3967         0
+kirp          17  3959         0
+lihc           0  3976         0
+luad          32  3944         0
+lusc          50  3926         0
+paad           0  3976         0
+pcpg           0  3976         0
+prad           0  3976         0
+stad           8  3968         0
+thca           0  3976         0
+ucec           4  3972         0
+> gsa.res.count.cc.pair
+     deregulated noDif inhibited
+blca           0   446         0
+brca           0   446         0
+cesc           0   446         0
+esca           0   446         0
+hnsc           0   446         0
+kich           0   446         0
+kirc           1   445         0
+kirp           0   446         0
+lihc           1   445         0
+luad           0   446         0
+lusc           0   446         0
+paad           0   446         0
+pcpg           0   446         0
+prad           0   446         0
+stad           0   446         0
+thca           0   446         0
+ucec           0   446         0
+> gsa.res.count.mf.pair
+     deregulated noDif inhibited
+blca           0   747         0
+brca           0   747         0
+cesc           0   747         0
+esca           0   747         0
+hnsc           0   747         0
+kich           0   747         0
+kirc           0   747         0
+kirp           4   743         0
+lihc           0   747         0
+luad           0   747         0
+lusc           3   744         0
+paad           0   747         0
+pcpg           0   747         0
+prad           1   746         0
+stad           2   745         0
+thca           0   747         0
+ucec           0   746         1
+> 
+> total.pair <- as.data.frame (gsa.res.count.bp.pair + gsa.res.count.cc.pair + gsa.res.count.mf.pair)
+> total.pair
+     deregulated noDif inhibited
+blca           0  5169         0
+brca           0  5169         0
+cesc           0  5162         7
+esca           2  5167         0
+hnsc           7  5162         0
+kich           9  5160         0
+kirc          10  5159         0
+kirp          21  5148         0
+lihc           1  5168         0
+luad          32  5137         0
+lusc          53  5116         0
+paad           0  5169         0
+pcpg           0  5169         0
+prad           1  5168         0
+stad          10  5159         0
+thca           0  5169         0
+ucec           4  5164         1
+> 
+> ###
+> 
+> touse <- rownames (total.unpa) %in% rownames (total.pair)
+> total.unpa[touse,]
+     deregulated noDif inhibited
+blca           0  5169         0
+brca           0  5169         0
+cesc           1  5168         0
+esca           9  5160         0
+hnsc          12  5155         2
+kich           1  5168         0
+kirc           0  5065       104
+kirp           5  5164         0
+lihc          11  4942       216
+luad           0  5169         0
+lusc          46  5122         1
+paad           0  5169         0
+pcpg           4  5165         0
+prad           0  5169         0
+stad           1  5168         0
+thca           0  5169         0
+ucec          74  5094         1
+> total.unpa[!touse,]
+     deregulated noDif inhibited
+coad           9  4911       249
+read           1  5125        43
+skcm          60  5102         7
+> 
+> cbind (total.unpa, total.pair[rownames (total.unpa),])
+     deregulated noDif inhibited deregulated noDif inhibited
+blca           0  5169         0           0  5169         0
+brca           0  5169         0           0  5169         0
+cesc           1  5168         0           0  5162         7
+coad           9  4911       249          NA    NA        NA
+esca           9  5160         0           2  5167         0
+hnsc          12  5155         2           7  5162         0
+kich           1  5168         0           9  5160         0
+kirc           0  5065       104          10  5159         0
+kirp           5  5164         0          21  5148         0
+lihc          11  4942       216           1  5168         0
+luad           0  5169         0          32  5137         0
+lusc          46  5122         1          53  5116         0
+paad           0  5169         0           0  5169         0
+pcpg           4  5165         0           0  5169         0
+prad           0  5169         0           1  5168         0
+read           1  5125        43          NA    NA        NA
+skcm          60  5102         7          NA    NA        NA
+stad           1  5168         0          10  5159         0
+thca           0  5169         0           0  5169         0
+ucec          74  5094         1           4  5164         1
+> 
+> sort (100 * rowSums (total.unpa[,-2]) / rowSums (total.unpa))
+      blca       brca       luad       paad       prad       thca       cesc       kich       stad       pcpg       kirp       esca       hnsc       read       lusc 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.01934610 0.01934610 0.01934610 0.07738441 0.09673051 0.17411492 0.27084542 0.85122848 0.90926678 
+      skcm       ucec       kirc       lihc       coad 
+1.29618882 1.45095763 2.01199458 4.39156510 4.99129425 
+> summary (100 * rowSums (total.unpa[,-2]) / rowSums (total.unpa))
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.00000 0.08706 0.82900 1.00600 4.99100 
+> 
+> sort (100 * rowSums (total.pair[,-2]) / rowSums (total.pair))
+      blca       brca       paad       pcpg       thca       lihc       prad       esca       ucec       cesc       hnsc       kich       kirc       stad       kirp 
+0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.01934610 0.01934610 0.03869220 0.09673051 0.13542271 0.13542271 0.17411492 0.19346102 0.19346102 0.40626814 
+      luad       lusc 
+0.61907526 1.02534339 
+> summary (100 * rowSums (total.pair[,-2]) / rowSums (total.pair))
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.00000 0.09673 0.17980 0.19350 1.02500 
+> 
+> 
+> ### SAVE for the wiki
+> save (list = c (
++           "gsa.res.count.bp.unpa", "gsa.res.count.cc.unpa", "gsa.res.count.mf.unpa", "total.unpa",
++           "gsa.res.count.bp.pair", "gsa.res.count.cc.pair", "gsa.res.count.mf.pair", "total.pair"),
++       file = file.path (.job$dir$proces, "res_gsa_conteos.RData"))
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.0.0   RSQLite_1.0.0 DBI_0.3.1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-2         IRanges_2.2.7        parallel_3.2.2       Biobase_2.28.0       AnnotationDbi_1.30.1 KEGG.db_2.14.0       grid_3.2.2          
+ [8] S4Vectors_0.6.3      BiocGenerics_0.14.0  GenomeInfoDb_1.4.1   stats4_3.2.2         cluster_2.0.3        GO.db_2.14.0         lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  8.900   0.226   9.121 

@@ -1,0 +1,125 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i010_explore_res_uvgsa_paired.r
+> ##2014-11-26 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script explores the GSA ressults
+> 
+> ###NOTES:
+> ## Gene Set "evidence" is not related to Block Size
+> 
+> date ()
+[1] "Fri Aug 28 17:14:14 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                           
+[2] "-f"                                                                                              
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_permutation/i020_explore_res_uvgsa_paired.r"
+[4] "--restore"                                                                                       
+[5] "--save"                                                                                          
+[6] "--no-readline"                                                                                   
+[7] "--no-save"                                                                                       
+[8] "--no-restore"                                                                                    
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.2.2 (2015-08-14)"
+> #library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.99.2"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
+[1] "0.3-8"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_permutation"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_permutation/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_permutation/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> #options (width = 250)
+> 
+> corte <- 0.05
+> 
+> ontologias <- c ("bp", "cc", "mf")
+> 
+> ## DATOS
+> load (file.path (.job$dir$proces, "res_gsa_paired.RData"))
+Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
+Calls: load -> readChar
+In addition: Warning message:
+In readChar(con, 5L, useBytes = TRUE) :
+  cannot open compressed file '/home/dmontaner/datos/2014/gsa4mirna/data_processed_permutation/res_gsa_paired.RData', probable reason 'No such file or directory'
+Execution halted

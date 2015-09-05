@@ -1,0 +1,408 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i010_format_res_uvgsa_paired.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##2014-11-26 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script collects all GSA results
+> 
+> date ()
+[1] "Fri Aug 28 17:13:59 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                          
+[2] "-f"                                                                                             
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_permutation/i010_format_res_uvgsa_paired.r"
+[4] "--restore"                                                                                      
+[5] "--save"                                                                                         
+[6] "--no-readline"                                                                                  
+[7] "--no-save"                                                                                      
+[8] "--no-restore"                                                                                   
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.2.2 (2015-08-14)"
+> library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+Loading required package: rJava
+Loading required package: xlsxjars
+[1] "0.5.7"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.99.2"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_permutation"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_permutation/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_permutation/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> 
+> corte <- 0.05
+> 
+> ontologias <- c ("bp", "cc", "mf")
+> 
+> 
+> ## INDEX
+> load (file.path (.job$dir$proces, "rindex_paired.RData"))
+> ls ()
+[1] "corte"      "ontologias" "rindex"    
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> 
+> ### DATA DESCRIPTION
+> estudios <- read.xlsx (file = file.path (.job$dir$docs, "lista_estudios.xls"), sheetIndex = 1, stringsAsFactors = FALSE)
+> rownames (estudios) <- tolower (estudios$ID)
+> estudios
+       ID                                                  Available.Cancer.Types N.Cases.Shipped.by.BCR N.Cases.with.Data Date.Last.Updated..mm.dd.yy.
+acc   ACC                                          Adrenocortical carcinoma [ACC]                     80                80                        41764
+blca BLCA                                     Bladder Urothelial Carcinoma [BLCA]                    367               252                        41764
+brca BRCA                                        Breast invasive carcinoma [BRCA]                   1066              1063                        41764
+cesc CESC Cervical squamous cell carcinoma and endocervical adenocarcinoma [CESC]                    257               211                        41764
+chol CHOL                                               Cholangiocarcinoma [CHOL]                      0                 0                             
+coad COAD                                             Colon adenocarcinoma [COAD]                    450               441                        41748
+dlbc DLBC                  Lymphoid Neoplasm Diffuse Large B-cell Lymphoma [DLBC]                     48                29                        41764
+esca ESCA                                             Esophageal carcinoma [ESCA]                    176               126                        41764
+gbm   GBM                                           Glioblastoma multiforme [GBM]                    531               521                        41764
+hnsc HNSC                            Head and Neck squamous cell carcinoma [HNSC]                    528               517                        41764
+kich KICH                                               Kidney Chromophobe [KICH]                     66                93                        41749
+kirc KIRC                                Kidney renal clear cell carcinoma [KIRC]                    536               522                        41764
+kirp KIRP                            Kidney renal papillary cell carcinoma [KIRP]                    242               203                        41754
+laml LAML                                           Acute Myeloid Leukemia [LAML]                    200               200                        41674
+lgg   LGG                                          Brain Lower Grade Glioma [LGG]                    516               516                        41764
+lihc LIHC                                   Liver hepatocellular carcinoma [LIHC]                    291               208                        41764
+luad LUAD                                              Lung adenocarcinoma [LUAD]                    513               499                        41764
+lusc LUSC                                     Lung squamous cell carcinoma [LUSC]                    500               493                        41754
+meso MESO                                                     Mesothelioma [MESO]                     37                37                        41764
+ov     OV                                  Ovarian serous cystadenocarcinoma [OV]                    572               570                        41764
+paad PAAD                                        Pancreatic adenocarcinoma [PAAD]                    147                94                        41764
+pcpg PCPG                               Pheochromocytoma and Paraganglioma [PCPG]                    179               179                        41764
+prad PRAD                                          Prostate adenocarcinoma [PRAD]                    419               341                        41764
+read READ                                            Rectum adenocarcinoma [READ]                    172               171                        41764
+sarc SARC                                                          Sarcoma [SARC]                    242               170                        41764
+skcm SKCM                                          Skin Cutaneous Melanoma [SKCM]                    459               392                        41764
+stad STAD                                           Stomach adenocarcinoma [STAD]                    421               390                        41765
+tgct TGCT                                      Testicular Germ Cell Tumors [TGCT]                      0                 0                             
+thca THCA                                                Thyroid carcinoma [THCA]                    507               500                        41764
+thym THYM                                                          Thymoma [THYM]                      0                 0                             
+ucec UCEC                             Uterine Corpus Endometrial Carcinoma [UCEC]                    544               533                        41755
+ucs   UCS                                            Uterine Carcinosarcoma [UCS]                     57                57                        41759
+uvm   UVM                                                    Uveal Melanoma [UVM]                      0                 0                             
+                             notes
+acc               without controls
+blca                          <NA>
+brca                          <NA>
+cesc                          <NA>
+chol                          <NA>
+coad                          <NA>
+dlbc                          <NA>
+esca                          <NA>
+gbm         Without miRNA seq data
+hnsc                          <NA>
+kich                          <NA>
+kirc                          <NA>
+kirp                          <NA>
+laml All control samples. No cases
+lgg                           <NA>
+lihc                          <NA>
+luad                          <NA>
+lusc                          <NA>
+meso                          <NA>
+ov                            <NA>
+paad                          <NA>
+pcpg                          <NA>
+prad                          <NA>
+read                          <NA>
+sarc                          <NA>
+skcm                          <NA>
+stad                          <NA>
+tgct                          <NA>
+thca                          <NA>
+thym                          <NA>
+ucec                          <NA>
+ucs                           <NA>
+uvm                           <NA>
+> 
+> tags.desc <- estudios[tags, "Available.Cancer.Types"]
+> tags.desc <- sapply (strsplit (tags.desc, split = " \\["), function (x) x[[1]])
+> names (tags.desc) <- tags
+> tags.desc
+                                                              blca                                                               brca 
+                                    "Bladder Urothelial Carcinoma"                                        "Breast invasive carcinoma" 
+                                                              cesc                                                               esca 
+"Cervical squamous cell carcinoma and endocervical adenocarcinoma"                                             "Esophageal carcinoma" 
+                                                              hnsc                                                               kich 
+                           "Head and Neck squamous cell carcinoma"                                               "Kidney Chromophobe" 
+                                                              kirc                                                               kirp 
+                               "Kidney renal clear cell carcinoma"                            "Kidney renal papillary cell carcinoma" 
+                                                              lihc                                                               luad 
+                                  "Liver hepatocellular carcinoma"                                              "Lung adenocarcinoma" 
+                                                              lusc                                                               paad 
+                                    "Lung squamous cell carcinoma"                                        "Pancreatic adenocarcinoma" 
+                                                              pcpg                                                               prad 
+                              "Pheochromocytoma and Paraganglioma"                                          "Prostate adenocarcinoma" 
+                                                              stad                                                               thca 
+                                          "Stomach adenocarcinoma"                                                "Thyroid carcinoma" 
+                                                              ucec 
+                            "Uterine Corpus Endometrial Carcinoma" 
+> 
+> ################################################################################
+> 
+> ## GSA list format
+> setwd (file.path (.job$dir$proces, "res_uvgsa_paired"))
+> dir ()
+ [1] "blca_bp.RData" "blca_cc.RData" "blca_mf.RData" "brca_bp.RData" "brca_cc.RData" "brca_mf.RData" "cesc_bp.RData" "cesc_cc.RData" "cesc_mf.RData" "esca_bp.RData"
+[11] "esca_cc.RData" "esca_mf.RData" "hnsc_bp.RData" "hnsc_cc.RData" "hnsc_mf.RData" "kich_bp.RData" "kich_cc.RData" "kich_mf.RData" "kirc_bp.RData" "kirc_cc.RData"
+[21] "kirc_mf.RData" "kirp_bp.RData" "kirp_cc.RData" "kirp_mf.RData" "lihc_bp.RData" "lihc_cc.RData" "lihc_mf.RData" "luad_bp.RData" "luad_cc.RData" "luad_mf.RData"
+[31] "lusc_bp.RData" "lusc_cc.RData" "lusc_mf.RData" "paad_bp.RData" "paad_cc.RData" "paad_mf.RData" "pcpg_bp.RData" "pcpg_cc.RData" "pcpg_mf.RData" "prad_bp.RData"
+[41] "prad_cc.RData" "prad_mf.RData" "stad_bp.RData" "stad_cc.RData" "stad_mf.RData" "thca_bp.RData" "thca_cc.RData" "thca_mf.RData" "ucec_bp.RData" "ucec_cc.RData"
+[51] "ucec_mf.RData"
+> 
+> res.gsa.pair <- list ()
+> for (tag in tags) {
++     cat ("\n", tag, fill = TRUE, sep = "")
++     cat ("====================================================================================================", fill = TRUE)
++     for (onto in ontologias) {
++         fichero <- paste (tag, "_", onto, ".RData", sep = "")
++         load (fichero)
++         res[,"pat"] <- uvPat (res, cutoff = corte)
++         res[,"index"] <- pval2index (pval = res[,"pval"], sign = res[,"lor"])
++         res[,"Name"] <- getGOnames (res, verbose = FALSE)
++         res.gsa.pair[[onto]][[tag]] <- res
++     }
++ }
+
+blca
+====================================================================================================
+
+brca
+====================================================================================================
+
+cesc
+====================================================================================================
+
+esca
+====================================================================================================
+
+hnsc
+====================================================================================================
+
+kich
+====================================================================================================
+
+kirc
+====================================================================================================
+
+kirp
+====================================================================================================
+
+lihc
+====================================================================================================
+
+luad
+====================================================================================================
+
+lusc
+====================================================================================================
+
+paad
+====================================================================================================
+
+pcpg
+====================================================================================================
+
+prad
+====================================================================================================
+
+stad
+====================================================================================================
+
+thca
+====================================================================================================
+
+ucec
+====================================================================================================
+> 
+> res[1:3,]
+            N        lor      pval padj        sd         t conv pat     index                         Name
+GO:0000030 10 0.07593197 0.8101609    1 0.3160886 0.2402237    1   0 0.2105224 mannosyltransferase activity
+GO:0000049 25 0.19453398 0.3300885    1 0.1997320 0.9739749    1   0 1.1083944                 tRNA binding
+GO:0000062 15 0.19234220 0.4550422    1 0.2574657 0.7470595    1   0 0.7873651       fatty-acyl-CoA binding
+> res.gsa.pair[[onto]][[tag]][1:3,]
+            N        lor      pval padj        sd         t conv pat     index                         Name
+GO:0000030 10 0.07593197 0.8101609    1 0.3160886 0.2402237    1   0 0.2105224 mannosyltransferase activity
+GO:0000049 25 0.19453398 0.3300885    1 0.1997320 0.9739749    1   0 1.1083944                 tRNA binding
+GO:0000062 15 0.19234220 0.4550422    1 0.2574657 0.7470595    1   0 0.7873651       fatty-acyl-CoA binding
+> 
+> ## SOME CHECKINGS
+> sapply (res.gsa.pair, length)
+bp cc mf 
+17 17 17 
+> 
+> for (onto in ontologias) {  
++     cat ("\n")
++     print (onto)
++     print (sapply (res.gsa.pair[[onto]], dim))  ##OK all equal dimensions
++     print (unique (sapply (res.gsa.pair[[onto]], function (x) sum (rownames (x) == rownames (res.gsa.pair[[onto]][[1]]))))) ##OK all equal rownames
++     print (unique (sapply (res.gsa.pair[[onto]], function (x) sum (x[,"N"] == res.gsa.pair[[onto]][[1]][,"N"])))) ##OK all equal go sizes
++     print (unique (sapply (res.gsa.pair[[onto]], function (x) sum (x[,"conv"])))) ## OK all converged
++ }
+
+[1] "bp"
+     blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec
+[1,] 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976 3976
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 3976
+[1] 3976
+[1] 3976
+
+[1] "cc"
+     blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec
+[1,]  446  446  446  446  446  446  446  446  446  446  446  446  446  446  446  446  446
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 446
+[1] 446
+[1] 446
+
+[1] "mf"
+     blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec
+[1,]  747  747  747  747  747  747  747  747  747  747  747  747  747  747  747  747  747
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 747
+[1] 747
+[1] 747
+> 
+> 
+> ################################################################################
+> 
+> ### Matrix Format
+> 
+> mat.gsa.pair <- list ()
+> 
+> for (onto in ontologias) {
++     N <- res.gsa.pair[[onto]][[1]][,"N"]
++     names (N) <- rownames (res.gsa.pair[[onto]][[1]])
++     mat.gsa.pair[[onto]][["N"]] <- N
++     
++     mat.gsa.pair[[onto]][["lor"]]   <- sapply (res.gsa.pair[[onto]], function (x) {s <- x[,"lor"];   names (s) <- rownames (x); s})
++     mat.gsa.pair[[onto]][["pval"]]  <- sapply (res.gsa.pair[[onto]], function (x) {s <- x[,"pval"];  names (s) <- rownames (x); s})
++     mat.gsa.pair[[onto]][["padj"]]  <- sapply (res.gsa.pair[[onto]], function (x) {s <- x[,"padj"];  names (s) <- rownames (x); s})
++     mat.gsa.pair[[onto]][["pat"]]   <- sapply (res.gsa.pair[[onto]], function (x) {s <- x[,"pat"];   names (s) <- rownames (x); s})
++     mat.gsa.pair[[onto]][["index"]] <- sapply (res.gsa.pair[[onto]], function (x) {s <- x[,"index"]; names (s) <- rownames (x); s})
++ }
+> 
+> mat.gsa.pair[["tags"]] <- tolower (names (res.gsa.pair[[onto]]))
+> mat.gsa.pair[["TAGS"]] <- toupper (names (res.gsa.pair[[onto]]))
+> mat.gsa.pair[["desc"]] <- tags.desc[mat.gsa.pair[["tags"]]]
+> 
+> 
+> ###SALVAMOS
+> save (list = c ("res.gsa.pair", "mat.gsa.pair"), file = file.path (.job$dir$proces, "res_gsa_paired.RData"))
+> 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                  LC_TIME=es_ES.UTF-8           LC_COLLATE=en_US.UTF-8        LC_MONETARY=es_ES.UTF-8      
+ [6] LC_MESSAGES=en_US.UTF-8       LC_PAPER=es_ES.UTF-8          LC_NAME=es_ES.UTF-8           LC_ADDRESS=es_ES.UTF-8        LC_TELEPHONE=es_ES.UTF-8     
+[11] LC_MEASUREMENT=es_ES.UTF-8    LC_IDENTIFICATION=es_ES.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.0.0    RSQLite_1.0.0  DBI_0.3.1      xlsx_0.5.7     xlsxjars_0.6.1 rJava_0.9-6   
+
+loaded via a namespace (and not attached):
+ [1] lattice_0.20-33      IRanges_2.2.7        GO.db_2.14.0         GenomeInfoDb_1.4.1   grid_3.2.2           stats4_3.2.2         S4Vectors_0.6.3     
+ [8] KEGG.db_2.14.0       Matrix_1.2-2         Biobase_2.28.0       parallel_3.2.2       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 27.780   0.460  27.434 

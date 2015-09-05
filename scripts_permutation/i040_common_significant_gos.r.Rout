@@ -1,0 +1,1424 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i040_common_significatn_gos.r
+> ##2014-12-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script explores the GSA significant terms
+> 
+> date ()
+[1] "Fri Aug 28 17:14:30 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                         
+[2] "-f"                                                                                            
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_permutation/i040_common_significant_gos.r"
+[4] "--restore"                                                                                     
+[5] "--save"                                                                                        
+[6] "--no-readline"                                                                                 
+[7] "--no-save"                                                                                     
+[8] "--no-restore"                                                                                  
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.2.2 (2015-08-14)"
+> library (xlsx); packageDescription ("xlsx", fields = "Version") #"0.5.5"
+Loading required package: rJava
+Loading required package: xlsxjars
+[1] "0.5.7"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.99.2"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> #library (ellipse); packageDescription ("ellipse", fields = "Version") #"0.3-8"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_permutation"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_permutation/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_permutation/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> #options (width = 250)
+> 
+> corte <- 0.05
+> por <- 1
+> ontologias <- c ("bp", "cc", "mf")
+> 
+> ## DATOS
+> load (file.path (.job$dir$proces, "res_gsa_paired.RData"))
+> load (file.path (.job$dir$proces, "res_gsa_unpaired.RData"))
+> #load (file.path (.job$dir$proces, "res_dif_exp_unpaired.RData"))
+> ls ()
+[1] "corte"        "mat.gsa.pair" "mat.gsa.unpa" "ontologias"   "por"          "res.gsa.pair" "res.gsa.unpa"
+> names (mat.gsa.unpa)
+[1] "bp"   "cc"   "mf"   "tags" "TAGS" "desc"
+> names (mat.gsa.pair)
+[1] "bp"   "cc"   "mf"   "tags" "TAGS" "desc"
+> 
+> mat.gsa.unpa[["desc"]]
+                                                              blca                                                               brca 
+                                    "Bladder Urothelial Carcinoma"                                        "Breast invasive carcinoma" 
+                                                              cesc                                                               coad 
+"Cervical squamous cell carcinoma and endocervical adenocarcinoma"                                             "Colon adenocarcinoma" 
+                                                              esca                                                               hnsc 
+                                            "Esophageal carcinoma"                            "Head and Neck squamous cell carcinoma" 
+                                                              kich                                                               kirc 
+                                              "Kidney Chromophobe"                                "Kidney renal clear cell carcinoma" 
+                                                              kirp                                                               lihc 
+                           "Kidney renal papillary cell carcinoma"                                   "Liver hepatocellular carcinoma" 
+                                                              luad                                                               lusc 
+                                             "Lung adenocarcinoma"                                     "Lung squamous cell carcinoma" 
+                                                              paad                                                               pcpg 
+                                       "Pancreatic adenocarcinoma"                               "Pheochromocytoma and Paraganglioma" 
+                                                              prad                                                               read 
+                                         "Prostate adenocarcinoma"                                            "Rectum adenocarcinoma" 
+                                                              skcm                                                               stad 
+                                         "Skin Cutaneous Melanoma"                                           "Stomach adenocarcinoma" 
+                                                              thca                                                               ucec 
+                                               "Thyroid carcinoma"                             "Uterine Corpus Endometrial Carcinoma" 
+> 
+> setwd (.job$dir$res)
+> 
+> ################################################################################
+> 
+> pat.unpa <- as.data.frame (rbind (mat.gsa.unpa[["bp"]][["pat"]],
++                                   mat.gsa.unpa[["cc"]][["pat"]],
++                                   mat.gsa.unpa[["mf"]][["pat"]]))
+> pat.unpa[,"SUM"] <- rowSums (abs (pat.unpa))
+> pat.unpa[,"onto"] <- rep (ontologias, sapply (ontologias, function (x) nrow (mat.gsa.unpa[[x]][["pat"]])))
+> pat.unpa[,"name"] <- getGOnames (pat.unpa)
+Using row names of the input matrix.
+Using GO.db version: 2.14.0
+> pat.unpa[1:3,]
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto                                         name
+GO:0000002    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp             mitochondrial genome maintenance
+GO:0000018    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp              regulation of DNA recombination
+GO:0000038    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp very long-chain fatty acid metabolic process
+> table (pat.unpa[,"SUM"])
+
+   0    1    2    3    4    5    6    7    8    9 
+4745  219   94   57   24   10   10    8    1    1 
+> table (pat.unpa[,"SUM"], pat.unpa[,"onto"])
+   
+      bp   cc   mf
+  0 3637  424  684
+  1  166   18   35
+  2   74    2   18
+  3   53    1    3
+  4   20    0    4
+  5    8    0    2
+  6    8    1    1
+  7    8    0    0
+  8    1    0    0
+  9    1    0    0
+> 
+> 
+> pat.pair <- as.data.frame (rbind (mat.gsa.pair[["bp"]][["pat"]],
++                                   mat.gsa.pair[["cc"]][["pat"]],
++                                   mat.gsa.pair[["mf"]][["pat"]]))
+> pat.pair[,"SUM"] <- rowSums (abs (pat.pair))
+> pat.pair[,"onto"] <- rep (ontologias, sapply (ontologias, function (x) nrow (mat.gsa.pair[[x]][["pat"]])))
+> pat.pair[,"name"] <- getGOnames (pat.pair)
+Using row names of the input matrix.
+Using GO.db version: 2.14.0
+> pat.pair[1:3,]
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto                                         name
+GO:0000002    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp             mitochondrial genome maintenance
+GO:0000018    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp              regulation of DNA recombination
+GO:0000038    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   0   bp very long-chain fatty acid metabolic process
+> table (pat.pair[,"SUM"])
+
+   0    1    2    3    4    6 
+5076   47   35    5    5    1 
+> table (pat.pair[,"SUM"], pat.pair[,"onto"])
+   
+      bp   cc   mf
+  0 3896  444  736
+  1   34    2   11
+  2   35    0    0
+  3    5    0    0
+  4    5    0    0
+  6    1    0    0
+> 
+> ###
+> 
+> table (rownames (pat.unpa) == rownames (pat.pair)) ## OK same order
+
+TRUE 
+5169 
+> table (unpa = pat.unpa[,"SUM"], pair = pat.pair[,"SUM"])
+    pair
+unpa    0    1    2    3    4    6
+   0 4720   18    5    0    2    0
+   1  203    7    6    3    0    0
+   2   79    9    4    0    2    0
+   3   43    6    7    0    1    0
+   4   17    4    2    0    0    1
+   5    8    1    1    0    0    0
+   6    4    2    3    1    0    0
+   7    2    0    6    0    0    0
+   8    0    0    1    0    0    0
+   9    0    0    0    1    0    0
+> 
+> ################################################################################
+> 
+> file.unpa <- "common_enrichment_unpaired.xlsx"
+> unlink (file.unpa)
+> order.unpa <- order (pat.unpa[,"SUM"], pat.unpa[,"onto"], pat.unpa[,"name"], decreasing = TRUE)
+> order.unpa <- pat.unpa[order.unpa,]
+> order.unpa[1:3,]
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0008543    0    0    0    1   -1    0    0    1   -1    1    0   -1    0    0    0    1   -1    0    0   -1   9   bp
+GO:0044344    0    0    0    1   -1    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0   -1   8   bp
+GO:0071774    0    0    0    1   -1    0    0    0    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+                                                             name
+GO:0008543    fibroblast growth factor receptor signaling pathway
+GO:0044344 cellular response to fibroblast growth factor stimulus
+GO:0071774                   response to fibroblast growth factor
+> 
+> suma.unpa <- sort (setdiff (unique (pat.unpa[,"SUM"]), 0), decreasing = TRUE)
+> suma.unpa
+[1] 9 8 7 6 5 4 3 2 1
+> comen.unpa <- list ()  ## common enrichment
+> for (su in suma.unpa) {
++     print (su)
++     touse <- pat.unpa[,"SUM"] == su
++     mat <- pat.unpa[touse,]
++     comen.unpa[[su]] <- mat
++     print (mat)
++     write.xlsx2 (mat, file = file.unpa, sheetName = paste ("common", su),
++                  col.names = TRUE, row.names = TRUE, append = TRUE)
++ }
+[1] 9
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0008543    0    0    0    1   -1    0    0    1   -1    1    0   -1    0    0    0    1   -1    0    0   -1   9   bp
+                                                          name
+GO:0008543 fibroblast growth factor receptor signaling pathway
+[1] 8
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0044344    0    0    0    1   -1    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0   -1   8   bp
+                                                             name
+GO:0044344 cellular response to fibroblast growth factor stimulus
+[1] 7
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0016569    0    0    0    1    0   -1    0    0    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+GO:0016570    0    0    0    1    0   -1    0    0    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+GO:0038179    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+GO:0048011    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+GO:0048736    0    0    0    1    0   -1    0    1    0    1    0   -1    0    0    0    0   -1    0    0   -1   7   bp
+GO:0060173    0    0    0    1    0   -1    0    1    0    1    0   -1    0    0    0    0   -1    0    0   -1   7   bp
+GO:0071774    0    0    0    1   -1    0    0    0    0    1    0   -1    0    0    0    1   -1    0    0   -1   7   bp
+GO:0090287    0    0    0    1   -1    0    0    0   -1    1    0   -1    0    0    0    0   -1    0    0   -1   7   bp
+                                                                name
+GO:0016569                           covalent chromatin modification
+GO:0016570                                      histone modification
+GO:0038179                            neurotrophin signaling pathway
+GO:0048011               neurotrophin TRK receptor signaling pathway
+GO:0048736                                     appendage development
+GO:0060173                                          limb development
+GO:0071774                      response to fibroblast growth factor
+GO:0090287 regulation of cellular response to growth factor stimulus
+[1] 6
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0001701    0    0    0    1    0    0    0    1   -1    1    0    0    0    0    0    0   -1    0    0   -1   6   bp
+GO:0007173    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0    0   6   bp
+GO:0030900    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1   -1    0    0   -1   6   bp
+GO:0035107    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0   -1    0    0   -1   6   bp
+GO:0035108    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0   -1    0    0   -1   6   bp
+GO:0038127    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0    0   6   bp
+GO:0048863    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    1   -1    0    0    0   6   bp
+GO:0060537    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0   -1    0    0   -1   6   bp
+GO:0017053    0    0    0    0   -1    0    0    0   -1    1    0    0    0    0    0    0   -1   -1    0   -1   6   cc
+GO:0000982    0    0    0    1   -1    0    0    1    0    1    0    0    0    0    0    0   -1    0    0   -1   6   mf
+                                                                                                                  name
+GO:0001701                                                                              in utero embryonic development
+GO:0007173                                                          epidermal growth factor receptor signaling pathway
+GO:0030900                                                                                       forebrain development
+GO:0035107                                                                                     appendage morphogenesis
+GO:0035108                                                                                          limb morphogenesis
+GO:0038127                                                                                      ERBB signaling pathway
+GO:0048863                                                                                   stem cell differentiation
+GO:0060537                                                                                   muscle tissue development
+GO:0017053                                                                           transcriptional repressor complex
+GO:0000982 RNA polymerase II core promoter proximal region sequence-specific DNA binding transcription factor activity
+[1] 5
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0001655    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0   -1   5   bp
+GO:0007517    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0   -1   5   bp
+GO:0035239    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0   -1   5   bp
+GO:0038095    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0   -1   5   bp
+GO:0050678    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0   -1   5   bp
+GO:0060562    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0   -1   5   bp
+GO:0071559    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1   -1    0    0    0   5   bp
+GO:0071560    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1   -1    0    0    0   5   bp
+GO:0000981    0    0    0    1   -1    0    0    0    0    1    0    0    0    0    0    0   -1    0    0   -1   5   mf
+GO:0042826    0    0   -1    0   -1   -1    0    0    0    0    0    0    0    0    0    0   -1    0    0   -1   5   mf
+                                                                                    name
+GO:0001655                                                 urogenital system development
+GO:0007517                                                      muscle organ development
+GO:0035239                                                            tube morphogenesis
+GO:0038095                                         Fc-epsilon receptor signaling pathway
+GO:0050678                                   regulation of epithelial cell proliferation
+GO:0060562                                                 epithelial tube morphogenesis
+GO:0071559                                   response to transforming growth factor beta
+GO:0071560                 cellular response to transforming growth factor beta stimulus
+GO:0000981 sequence-specific DNA binding RNA polymerase II transcription factor activity
+GO:0042826                                                   histone deacetylase binding
+[1] 4
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0007178    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1   -1    0    0    0   4   bp
+GO:0007179    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1   -1    0    0    0   4   bp
+GO:0007219    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0007611    0    0    0    1    0    0    0    0    0    0    0    0    0   -1    0    0   -1    0    0   -1   4   bp
+GO:0014706    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0   -1   4   bp
+GO:0016311    0    0    0    1    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0    0   4   bp
+GO:0021953    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0030326    0    0    0    1    0    0    0    1    0    0    0   -1    0    0    0    0   -1    0    0    0   4   bp
+GO:0031344    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0031589    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0    0   4   bp
+GO:0035113    0    0    0    1    0    0    0    1    0    0    0   -1    0    0    0    0   -1    0    0    0   4   bp
+GO:0038093    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0048589    0    0    0    1    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0   -1   4   bp
+GO:0048864    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0050890    0    0    0    1    0    0    0    0    0    0    0    0    0   -1    0    0   -1    0    0   -1   4   bp
+GO:0060485    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    1    0    0    0    0   4   bp
+GO:0072001    0    0    0    1    0    0    0    1    0    0    0   -1    0    0    0    0    0    0    0   -1   4   bp
+GO:0090092    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1   -1    0    0    0   4   bp
+GO:0090101    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1   -1    0    0    0   4   bp
+GO:1901861    0    0    0    0    0    0    0    1    0    1    0   -1    0    0    0    0    0    0    0   -1   4   bp
+GO:0001228    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0    0   4   mf
+GO:0003714    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0    0   4   mf
+GO:0019199    0    0    0    1    0   -1    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   4   mf
+GO:0046332    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0   -1    0    0    0   4   mf
+                                                                                                                                                                     name
+GO:0007178                                                                                       transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0007179                                                                                                     transforming growth factor beta receptor signaling pathway
+GO:0007219                                                                                                                                        Notch signaling pathway
+GO:0007611                                                                                                                                             learning or memory
+GO:0014706                                                                                                                             striated muscle tissue development
+GO:0016311                                                                                                                                              dephosphorylation
+GO:0021953                                                                                                                  central nervous system neuron differentiation
+GO:0030326                                                                                                                                   embryonic limb morphogenesis
+GO:0031344                                                                                                                     regulation of cell projection organization
+GO:0031589                                                                                                                                        cell-substrate adhesion
+GO:0035113                                                                                                                              embryonic appendage morphogenesis
+GO:0038093                                                                                                                                  Fc receptor signaling pathway
+GO:0048589                                                                                                                                           developmental growth
+GO:0048864                                                                                                                                          stem cell development
+GO:0050890                                                                                                                                                      cognition
+GO:0060485                                                                                                                                         mesenchyme development
+GO:0072001                                                                                                                                       renal system development
+GO:0090092                                                                         regulation of transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0090101                                                                negative regulation of transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:1901861                                                                                                                        regulation of muscle tissue development
+GO:0001228 RNA polymerase II transcription regulatory region sequence-specific DNA binding transcription factor activity involved in positive regulation of transcription
+GO:0003714                                                                                                                             transcription corepressor activity
+GO:0019199                                                                                                                 transmembrane receptor protein kinase activity
+GO:0046332                                                                                                                                                   SMAD binding
+[1] 3
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0001570    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0001654    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0001657    0    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   3   bp
+GO:0001667    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0001763    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0001822    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0003002    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0003007    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0003205    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0006479    0    0    0    1    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   3   bp
+GO:0006520    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0   -1    1    0    0    0   3   bp
+GO:0006607    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0   -1    0    0   -1   3   bp
+GO:0007160    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0007519    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0008213    0    0    0    1    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   3   bp
+GO:0009952    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0010769    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0010975    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0010976    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0016055    0    0    0    1    0    0    0    1    0    0    0   -1    0    0    0    0    0    0    0    0   3   bp
+GO:0016202    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0016571    0    0    0    1    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   3   bp
+GO:0016575    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0017015    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0021537    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0021543    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0021915    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0022604    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0030512    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0031056    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0031098    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0031346    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0032956    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0034330    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1   -1    0    0    0   3   bp
+GO:0034660    0    0    0   -1    0    0    0    0    0   -1    0    1    0    0    0    0    0    0    0    0   3   bp
+GO:0034968    0    0    0    1    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   3   bp
+GO:0035148    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0040013    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0042692    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0045165    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0046578    0    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0   -1    0    0    0   3   bp
+GO:0046777    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0048562    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0048634    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0048732    0    0    0    1    0    0    0    0   -1    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0048738    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0050673    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0051146    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0051403    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    1    0    0    0    0   3   bp
+GO:0060021    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0061138    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0   -1   3   bp
+GO:0072089    0    0    0    1    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   3   bp
+GO:0090288    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   bp
+GO:0031252    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   -1   3   cc
+GO:0001077    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   mf
+GO:0001105    0    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   3   mf
+GO:0005057    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   3   mf
+                                                                                                                                                                   name
+GO:0001570                                                                                                                                               vasculogenesis
+GO:0001654                                                                                                                                              eye development
+GO:0001657                                                                                                                                     ureteric bud development
+GO:0001667                                                                                                                                     ameboidal cell migration
+GO:0001763                                                                                                                       morphogenesis of a branching structure
+GO:0001822                                                                                                                                           kidney development
+GO:0003002                                                                                                                                              regionalization
+GO:0003007                                                                                                                                          heart morphogenesis
+GO:0003205                                                                                                                                  cardiac chamber development
+GO:0006479                                                                                                                                          protein methylation
+GO:0006520                                                                                                                        cellular amino acid metabolic process
+GO:0006607                                                                                                                      NLS-bearing protein import into nucleus
+GO:0007160                                                                                                                                         cell-matrix adhesion
+GO:0007519                                                                                                                           skeletal muscle tissue development
+GO:0008213                                                                                                                                           protein alkylation
+GO:0009952                                                                                                                     anterior/posterior pattern specification
+GO:0010769                                                                                                 regulation of cell morphogenesis involved in differentiation
+GO:0010975                                                                                                                  regulation of neuron projection development
+GO:0010976                                                                                                         positive regulation of neuron projection development
+GO:0016055                                                                                                                                        Wnt signaling pathway
+GO:0016202                                                                                                             regulation of striated muscle tissue development
+GO:0016571                                                                                                                                          histone methylation
+GO:0016575                                                                                                                                        histone deacetylation
+GO:0017015                                                                                     regulation of transforming growth factor beta receptor signaling pathway
+GO:0021537                                                                                                                                    telencephalon development
+GO:0021543                                                                                                                                          pallium development
+GO:0021915                                                                                                                                      neural tube development
+GO:0022604                                                                                                                             regulation of cell morphogenesis
+GO:0030512                                                                            negative regulation of transforming growth factor beta receptor signaling pathway
+GO:0031056                                                                                                                           regulation of histone modification
+GO:0031098                                                                                                            stress-activated protein kinase signaling cascade
+GO:0031346                                                                                                          positive regulation of cell projection organization
+GO:0032956                                                                                                                regulation of actin cytoskeleton organization
+GO:0034330                                                                                                                                   cell junction organization
+GO:0034660                                                                                                                                      ncRNA metabolic process
+GO:0034968                                                                                                                                   histone lysine methylation
+GO:0035148                                                                                                                                               tube formation
+GO:0040013                                                                                                                            negative regulation of locomotion
+GO:0042692                                                                                                                                  muscle cell differentiation
+GO:0045165                                                                                                                                         cell fate commitment
+GO:0046578                                                                                                                regulation of Ras protein signal transduction
+GO:0046777                                                                                                                                  protein autophosphorylation
+GO:0048562                                                                                                                                embryonic organ morphogenesis
+GO:0048634                                                                                                                       regulation of muscle organ development
+GO:0048732                                                                                                                                            gland development
+GO:0048738                                                                                                                            cardiac muscle tissue development
+GO:0050673                                                                                                                                epithelial cell proliferation
+GO:0051146                                                                                                                         striated muscle cell differentiation
+GO:0051403                                                                                                                                stress-activated MAPK cascade
+GO:0060021                                                                                                                                           palate development
+GO:0061138                                                                                                                      morphogenesis of a branching epithelium
+GO:0072089                                                                                                                                      stem cell proliferation
+GO:0090288                                                                                           negative regulation of cellular response to growth factor stimulus
+GO:0031252                                                                                                                                            cell leading edge
+GO:0001077 RNA polymerase II core promoter proximal region sequence-specific DNA binding transcription factor activity involved in positive regulation of transcription
+GO:0001105                                                                                                         RNA polymerase II transcription coactivator activity
+GO:0005057                                                                                                                          receptor signaling protein activity
+[1] 2
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0001704    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   2   bp
+GO:0001706    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   2   bp
+GO:0001764    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0001838    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0001841    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0002064    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0002768    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0003279    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0006352    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0006367    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0006417    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0006476    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   2   bp
+GO:0007265    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0007369    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   2   bp
+GO:0007492    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   -1   2   bp
+GO:0007626    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0008544    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0009791    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0009880    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0009896    0    0    0    0    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   2   bp
+GO:0010001    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0   -1    0    0    0   2   bp
+GO:0010506    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0010631    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0016358    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0017148    0    0    0    0    0    0    0    0    0    1    0   -1    0    0    0    0    0    0    0    0   2   bp
+GO:0018105    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0018107    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0018209    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0018210    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0019827    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0021872    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0021954    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0022037    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0030032    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0030218    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0030336    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0030509    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0030510    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0030902    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0032411    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0033135    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0034329    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   2   bp
+GO:0034332    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0034470    0    0    0   -1    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0035264    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   2   bp
+GO:0035265    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   2   bp
+GO:0035329    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0040029    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0043010    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0043414    0    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0   2   bp
+GO:0043487    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0043488    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0043588    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0044708    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0045216    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0045444    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0048592    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   bp
+GO:0048762    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0048813    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0050768    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0050770    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0051147    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0051153    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0051216    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0051271    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0055017    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0   -1    0    0    0   2   bp
+GO:0060627    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0061448    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0072175    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:0097581    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0   2   bp
+GO:1902275    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:2000027    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:2000146    0    0    0    1    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:2000736    0    0    0    0    0    0    0    1    0    1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0030424    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   cc
+GO:0031519    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   cc
+GO:0000976    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0000977    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0000987    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0001012    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0001047    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   mf
+GO:0001076    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0001190    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0003729    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0004252    0    0    0   -1    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0004675    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0004842    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0005024    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0016879    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0016881    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0017091    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   2   mf
+GO:0019787    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+GO:0030371    0    0    0    0   -1    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   2   mf
+GO:0044822    0    0    0    1    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   2   mf
+                                                                                                                                    name
+GO:0001704                                                                                               formation of primary germ layer
+GO:0001706                                                                                                            endoderm formation
+GO:0001764                                                                                                              neuron migration
+GO:0001838                                                                                           embryonic epithelial tube formation
+GO:0001841                                                                                                         neural tube formation
+GO:0002064                                                                                                   epithelial cell development
+GO:0002768                                                            immune response-regulating cell surface receptor signaling pathway
+GO:0003279                                                                                                    cardiac septum development
+GO:0006352                                                                                       DNA-templated transcription, initiation
+GO:0006367                                                                      transcription initiation from RNA polymerase II promoter
+GO:0006417                                                                                                     regulation of translation
+GO:0006476                                                                                                         protein deacetylation
+GO:0007265                                                                                               Ras protein signal transduction
+GO:0007369                                                                                                                  gastrulation
+GO:0007492                                                                                                          endoderm development
+GO:0007626                                                                                                           locomotory behavior
+GO:0008544                                                                                                         epidermis development
+GO:0009791                                                                                                    post-embryonic development
+GO:0009880                                                                                               embryonic pattern specification
+GO:0009896                                                                                      positive regulation of catabolic process
+GO:0010001                                                                                                    glial cell differentiation
+GO:0010506                                                                                                       regulation of autophagy
+GO:0010631                                                                                                     epithelial cell migration
+GO:0016358                                                                                                          dendrite development
+GO:0017148                                                                                            negative regulation of translation
+GO:0018105                                                                                               peptidyl-serine phosphorylation
+GO:0018107                                                                                            peptidyl-threonine phosphorylation
+GO:0018209                                                                                                  peptidyl-serine modification
+GO:0018210                                                                                               peptidyl-threonine modification
+GO:0019827                                                                                                         stem cell maintenance
+GO:0021872                                                                                               forebrain generation of neurons
+GO:0021954                                                                                     central nervous system neuron development
+GO:0022037                                                                                                     metencephalon development
+GO:0030032                                                                                                        lamellipodium assembly
+GO:0030218                                                                                                   erythrocyte differentiation
+GO:0030336                                                                                         negative regulation of cell migration
+GO:0030509                                                                                                         BMP signaling pathway
+GO:0030510                                                                                           regulation of BMP signaling pathway
+GO:0030902                                                                                                         hindbrain development
+GO:0032411                                                                                   positive regulation of transporter activity
+GO:0033135                                                                                 regulation of peptidyl-serine phosphorylation
+GO:0034329                                                                                                        cell junction assembly
+GO:0034332                                                                                                adherens junction organization
+GO:0034470                                                                                                              ncRNA processing
+GO:0035264                                                                                                 multicellular organism growth
+GO:0035265                                                                                                                  organ growth
+GO:0035329                                                                                                               hippo signaling
+GO:0040029                                                                                     regulation of gene expression, epigenetic
+GO:0043010                                                                                                   camera-type eye development
+GO:0043414                                                                                                     macromolecule methylation
+GO:0043487                                                                                                   regulation of RNA stability
+GO:0043488                                                                                                  regulation of mRNA stability
+GO:0043588                                                                                                              skin development
+GO:0044708                                                                                                      single-organism behavior
+GO:0045216                                                                                               cell-cell junction organization
+GO:0045444                                                                                                      fat cell differentiation
+GO:0048592                                                                                                             eye morphogenesis
+GO:0048762                                                                                              mesenchymal cell differentiation
+GO:0048813                                                                                                        dendrite morphogenesis
+GO:0050768                                                                                           negative regulation of neurogenesis
+GO:0050770                                                                                                    regulation of axonogenesis
+GO:0051147                                                                                     regulation of muscle cell differentiation
+GO:0051153                                                                            regulation of striated muscle cell differentiation
+GO:0051216                                                                                                         cartilage development
+GO:0051271                                                                            negative regulation of cellular component movement
+GO:0055017                                                                                                  cardiac muscle tissue growth
+GO:0060627                                                                                      regulation of vesicle-mediated transport
+GO:0061448                                                                                                 connective tissue development
+GO:0072175                                                                                                     epithelial tube formation
+GO:0097581                                                                                                    lamellipodium organization
+GO:1902275                                                                                          regulation of chromatin organization
+GO:2000027                                                                                             regulation of organ morphogenesis
+GO:2000146                                                                                          negative regulation of cell motility
+GO:2000736                                                                                       regulation of stem cell differentiation
+GO:0030424                                                                                                                          axon
+GO:0031519                                                                                                           PcG protein complex
+GO:0000976                                                                 transcription regulatory region sequence-specific DNA binding
+GO:0000977                                                             RNA polymerase II regulatory region sequence-specific DNA binding
+GO:0000987                                                                   core promoter proximal region sequence-specific DNA binding
+GO:0001012                                                                               RNA polymerase II regulatory region DNA binding
+GO:0001047                                                                                                         core promoter binding
+GO:0001076                                                  RNA polymerase II transcription factor binding transcription factor activity
+GO:0001190 RNA polymerase II transcription factor binding transcription factor activity involved in positive regulation of transcription
+GO:0003729                                                                                                                  mRNA binding
+GO:0004252                                                                                            serine-type endopeptidase activity
+GO:0004675                                                               transmembrane receptor protein serine/threonine kinase activity
+GO:0004842                                                                                             ubiquitin-protein ligase activity
+GO:0005024                                                                   transforming growth factor beta-activated receptor activity
+GO:0016879                                                                                ligase activity, forming carbon-nitrogen bonds
+GO:0016881                                                                                               acid-amino acid ligase activity
+GO:0017091                                                                                                       AU-rich element binding
+GO:0019787                                                                                     small conjugating protein ligase activity
+GO:0030371                                                                                                translation repressor activity
+GO:0044822                                                                                                           poly(A) RNA binding
+[1] 1
+           blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec SUM onto
+GO:0000289    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0000910    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0001558    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0001649    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0001702    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0001843    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0001952    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0002053    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0002062    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0002088    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0002697    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1   1   bp
+GO:0003206    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0003231    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0006110    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0006399    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0006606    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0007044    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0007045    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0007254    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0007612    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0008033    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0008344    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0009118    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0009214    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0009913    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010171    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010464    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010563    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010613    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010638    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010644    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010649    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010717    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010720    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010721    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010812    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010830    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0014020    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0014033    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0   1   bp
+GO:0014742    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0014855    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0014902    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0015893    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0016049    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0016331    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0016579    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0017038    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0018022    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0   1   bp
+GO:0018205    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021542    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021549    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021700    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021761    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021766    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021879    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0021987    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0030072    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0030099    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0030111    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0030155    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0030278    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0030335    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0030879    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0031016    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0031058    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0031063    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0031076    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0031365    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032012    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032092    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032147    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032259    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0   1   bp
+GO:0032318    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032330    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032386    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032409    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032414    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032486    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032535    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032793    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0032970    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0033044    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0033121    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0033124    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0034199    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0034333    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0034405    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0034504    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0035020    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0035162    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0035601    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0040017    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0042326    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043087    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043393    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043467    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0043502    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043583    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0044744    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0045637    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0045667    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   1   bp
+GO:0045936    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0046847    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048010    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0048013    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048015    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048017    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048041    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048048    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048167    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048286    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048569    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048588    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048593    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048596    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048608    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048638    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048675    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048703    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048705    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048708    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048745    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048754    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0048839    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0050680    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0050684    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0050773    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051098    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051155    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051170    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051272    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051493    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051640    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0055001    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0055021    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0055024    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0055119    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060038    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060216    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060322    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060323    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060324    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060348    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060389    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060411    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060536    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060541    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060560    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060606    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0061458    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0071902    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0072091    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0072376    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0072583    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   bp
+GO:0086003    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0086064    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0090100    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1901214    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1901215    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1901605    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1902532    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1902593    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:1990138    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:2000147    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:2000648    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:2001237    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0000307    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0000932    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   cc
+GO:0005743    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0005759    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0005929    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0005938    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0016442    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0019866    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0030027    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0030175    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0030425    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0030426    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0030427    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0031332    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0033267    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   cc
+GO:0035770    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1   1   cc
+GO:0043197    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0044309    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0000149    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0000978    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0001046    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0001104    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0001159    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0003779    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0004221    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0004620    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0004702    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0004930    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0005083    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0005125    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0005158    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   1   mf
+GO:0005159    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0005248    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0008138    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0008236    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0015491    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0016298    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0016628    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0016829    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0017171    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0019838    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   1   mf
+GO:0019905    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0030246    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0030695    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0036459    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0044325    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0046875    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0046965    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0048037    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0048185    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0   1   mf
+GO:0050662    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0051287    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0   1   mf
+GO:0060589    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   mf
+                                                                                                      name
+GO:0000289                                                nuclear-transcribed mRNA poly(A) tail shortening
+GO:0000910                                                                                     cytokinesis
+GO:0001558                                                                       regulation of cell growth
+GO:0001649                                                                      osteoblast differentiation
+GO:0001702                                                          gastrulation with mouth forming second
+GO:0001843                                                                             neural tube closure
+GO:0001952                                                              regulation of cell-matrix adhesion
+GO:0002053                                           positive regulation of mesenchymal cell proliferation
+GO:0002062                                                                     chondrocyte differentiation
+GO:0002088                                                             lens development in camera-type eye
+GO:0002697                                                           regulation of immune effector process
+GO:0003206                                                                   cardiac chamber morphogenesis
+GO:0003231                                                                   cardiac ventricle development
+GO:0006110                                                                        regulation of glycolysis
+GO:0006399                                                                          tRNA metabolic process
+GO:0006606                                                                     protein import into nucleus
+GO:0007044                                                                cell-substrate junction assembly
+GO:0007045                                                       cell-substrate adherens junction assembly
+GO:0007254                                                                                     JNK cascade
+GO:0007612                                                                                        learning
+GO:0008033                                                                                 tRNA processing
+GO:0008344                                                                       adult locomotory behavior
+GO:0009118                                                      regulation of nucleoside metabolic process
+GO:0009214                                                             cyclic nucleotide catabolic process
+GO:0009913                                                                  epidermal cell differentiation
+GO:0010171                                                                              body morphogenesis
+GO:0010464                                                    regulation of mesenchymal cell proliferation
+GO:0010563                                             negative regulation of phosphorus metabolic process
+GO:0010613                                               positive regulation of cardiac muscle hypertrophy
+GO:0010638                                                   positive regulation of organelle organization
+GO:0010644                                                       cell communication by electrical coupling
+GO:0010649                                         regulation of cell communication by electrical coupling
+GO:0010717                                              regulation of epithelial to mesenchymal transition
+GO:0010720                                                         positive regulation of cell development
+GO:0010721                                                         negative regulation of cell development
+GO:0010812                                                  negative regulation of cell-substrate adhesion
+GO:0010830                                                           regulation of myotube differentiation
+GO:0014020                                                                   primary neural tube formation
+GO:0014033                                                               neural crest cell differentiation
+GO:0014742                                                       positive regulation of muscle hypertrophy
+GO:0014855                                                              striated muscle cell proliferation
+GO:0014902                                                                         myotube differentiation
+GO:0015893                                                                                  drug transport
+GO:0016049                                                                                     cell growth
+GO:0016331                                                           morphogenesis of embryonic epithelium
+GO:0016579                                                                        protein deubiquitination
+GO:0017038                                                                                  protein import
+GO:0018022                                                                     peptidyl-lysine methylation
+GO:0018205                                                                    peptidyl-lysine modification
+GO:0021542                                                                       dentate gyrus development
+GO:0021549                                                                          cerebellum development
+GO:0021700                                                                        developmental maturation
+GO:0021761                                                                       limbic system development
+GO:0021766                                                                         hippocampus development
+GO:0021879                                                                forebrain neuron differentiation
+GO:0021987                                                                     cerebral cortex development
+GO:0030072                                                                       peptide hormone secretion
+GO:0030099                                                                    myeloid cell differentiation
+GO:0030111                                                             regulation of Wnt signaling pathway
+GO:0030155                                                                     regulation of cell adhesion
+GO:0030278                                                                      regulation of ossification
+GO:0030335                                                           positive regulation of cell migration
+GO:0030879                                                                       mammary gland development
+GO:0031016                                                                            pancreas development
+GO:0031058                                                     positive regulation of histone modification
+GO:0031063                                                             regulation of histone deacetylation
+GO:0031076                                                           embryonic camera-type eye development
+GO:0031365                                                      N-terminal protein amino acid modification
+GO:0032012                                                   regulation of ARF protein signal transduction
+GO:0032092                                                          positive regulation of protein binding
+GO:0032147                                                           activation of protein kinase activity
+GO:0032259                                                                                     methylation
+GO:0032318                                                               regulation of Ras GTPase activity
+GO:0032330                                                       regulation of chondrocyte differentiation
+GO:0032386                                                           regulation of intracellular transport
+GO:0032409                                                              regulation of transporter activity
+GO:0032414                                   positive regulation of ion transmembrane transporter activity
+GO:0032486                                                                 Rap protein signal transduction
+GO:0032535                                                           regulation of cellular component size
+GO:0032793                                       positive regulation of CREB transcription factor activity
+GO:0032970                                                      regulation of actin filament-based process
+GO:0033044                                                           regulation of chromosome organization
+GO:0033121                                               regulation of purine nucleotide catabolic process
+GO:0033124                                                             regulation of GTP catabolic process
+GO:0034199                                                         activation of protein kinase A activity
+GO:0034333                                                                      adherens junction assembly
+GO:0034405                                                                  response to fluid shear stress
+GO:0034504                                                                 protein localization to nucleus
+GO:0035020                                                   regulation of Rac protein signal transduction
+GO:0035162                                                                           embryonic hemopoiesis
+GO:0035601                                                                             protein deacylation
+GO:0040017                                                               positive regulation of locomotion
+GO:0042326                                                          negative regulation of phosphorylation
+GO:0043087                                                                   regulation of GTPase activity
+GO:0043393                                                                   regulation of protein binding
+GO:0043467                                    regulation of generation of precursor metabolites and energy
+GO:0043502                                                                 regulation of muscle adaptation
+GO:0043583                                                                                 ear development
+GO:0044744                                                                    protein targeting to nucleus
+GO:0045637                                                      regulation of myeloid cell differentiation
+GO:0045667                                                        regulation of osteoblast differentiation
+GO:0045936                                              negative regulation of phosphate metabolic process
+GO:0046847                                                                             filopodium assembly
+GO:0048010                                   vascular endothelial growth factor receptor signaling pathway
+GO:0048013                                                               ephrin receptor signaling pathway
+GO:0048015                                                         phosphatidylinositol-mediated signaling
+GO:0048017                                                               inositol lipid-mediated signaling
+GO:0048041                                                                         focal adhesion assembly
+GO:0048048                                                                     embryonic eye morphogenesis
+GO:0048167                                                               regulation of synaptic plasticity
+GO:0048286                                                                       lung alveolus development
+GO:0048569                                                                post-embryonic organ development
+GO:0048588                                                                       developmental cell growth
+GO:0048593                                                                   camera-type eye morphogenesis
+GO:0048596                                                         embryonic camera-type eye morphogenesis
+GO:0048608                                                              reproductive structure development
+GO:0048638                                                              regulation of developmental growth
+GO:0048675                                                                                  axon extension
+GO:0048703                                                          embryonic viscerocranium morphogenesis
+GO:0048705                                                                   skeletal system morphogenesis
+GO:0048708                                                                       astrocyte differentiation
+GO:0048745                                                                smooth muscle tissue development
+GO:0048754                                                   branching morphogenesis of an epithelial tube
+GO:0048839                                                                           inner ear development
+GO:0050680                                            negative regulation of epithelial cell proliferation
+GO:0050684                                                                   regulation of mRNA processing
+GO:0050773                                                              regulation of dendrite development
+GO:0051098                                                                           regulation of binding
+GO:0051155                                     positive regulation of striated muscle cell differentiation
+GO:0051170                                                                                  nuclear import
+GO:0051272                                              positive regulation of cellular component movement
+GO:0051493                                                         regulation of cytoskeleton organization
+GO:0051640                                                                          organelle localization
+GO:0055001                                                                         muscle cell development
+GO:0055021                                                      regulation of cardiac muscle tissue growth
+GO:0055024                                                 regulation of cardiac muscle tissue development
+GO:0055119                                                                    relaxation of cardiac muscle
+GO:0060038                                                               cardiac muscle cell proliferation
+GO:0060216                                                                          definitive hemopoiesis
+GO:0060322                                                                                head development
+GO:0060323                                                                              head morphogenesis
+GO:0060324                                                                                face development
+GO:0060348                                                                                bone development
+GO:0060389                                                 pathway-restricted SMAD protein phosphorylation
+GO:0060411                                                                    cardiac septum morphogenesis
+GO:0060536                                                                         cartilage morphogenesis
+GO:0060541                                                                  respiratory system development
+GO:0060560                                                  developmental growth involved in morphogenesis
+GO:0060606                                                                                    tube closure
+GO:0061458                                                                 reproductive system development
+GO:0071902                                 positive regulation of protein serine/threonine kinase activity
+GO:0072091                                                           regulation of stem cell proliferation
+GO:0072376                                                                      protein activation cascade
+GO:0072583                                                                   clathrin-mediated endocytosis
+GO:0086003                                                                 cardiac muscle cell contraction
+GO:0086064                        cell communication by electrical coupling involved in cardiac conduction
+GO:0090100 positive regulation of transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:1901214                                                                      regulation of neuron death
+GO:1901215                                                             negative regulation of neuron death
+GO:1901605                                                              alpha-amino acid metabolic process
+GO:1902532                                        negative regulation of intracellular signal transduction
+GO:1902593                                                                  single-organism nuclear import
+GO:1990138                                                                     neuron projection extension
+GO:2000147                                                            positive regulation of cell motility
+GO:2000648                                                  positive regulation of stem cell proliferation
+GO:2001237                                    negative regulation of extrinsic apoptotic signaling pathway
+GO:0000307                                              cyclin-dependent protein kinase holoenzyme complex
+GO:0000932                                                                cytoplasmic mRNA processing body
+GO:0005743                                                                    mitochondrial inner membrane
+GO:0005759                                                                            mitochondrial matrix
+GO:0005929                                                                                          cilium
+GO:0005938                                                                                     cell cortex
+GO:0016442                                                                                    RISC complex
+GO:0019866                                                                        organelle inner membrane
+GO:0030027                                                                                   lamellipodium
+GO:0030175                                                                                      filopodium
+GO:0030425                                                                                        dendrite
+GO:0030426                                                                                     growth cone
+GO:0030427                                                                        site of polarized growth
+GO:0031332                                                                           RNAi effector complex
+GO:0033267                                                                                       axon part
+GO:0035770                                                                       ribonucleoprotein granule
+GO:0043197                                                                                 dendritic spine
+GO:0044309                                                                                    neuron spine
+GO:0000149                                                                                   SNARE binding
+GO:0000978                   RNA polymerase II core promoter proximal region sequence-specific DNA binding
+GO:0001046                                                     core promoter sequence-specific DNA binding
+GO:0001104                                               RNA polymerase II transcription cofactor activity
+GO:0001159                                                       core promoter proximal region DNA binding
+GO:0003779                                                                                   actin binding
+GO:0004221                                                                ubiquitin thiolesterase activity
+GO:0004620                                                                          phospholipase activity
+GO:0004702                                     receptor signaling protein serine/threonine kinase activity
+GO:0004930                                                             G-protein coupled receptor activity
+GO:0005083                                                                 small GTPase regulator activity
+GO:0005125                                                                               cytokine activity
+GO:0005158                                                                        insulin receptor binding
+GO:0005159                                                     insulin-like growth factor receptor binding
+GO:0005248                                                           voltage-gated sodium channel activity
+GO:0008138                                          protein tyrosine/serine/threonine phosphatase activity
+GO:0008236                                                                  serine-type peptidase activity
+GO:0015491                                                               cation:cation antiporter activity
+GO:0016298                                                                                 lipase activity
+GO:0016628           oxidoreductase activity, acting on the CH-CH group of donors, NAD or NADP as acceptor
+GO:0016829                                                                                  lyase activity
+GO:0017171                                                                       serine hydrolase activity
+GO:0019838                                                                           growth factor binding
+GO:0019905                                                                                syntaxin binding
+GO:0030246                                                                            carbohydrate binding
+GO:0030695                                                                       GTPase regulator activity
+GO:0036459                                                                  ubiquitinyl hydrolase activity
+GO:0044325                                                                             ion channel binding
+GO:0046875                                                                         ephrin receptor binding
+GO:0046965                                                                     retinoid X receptor binding
+GO:0048037                                                                                cofactor binding
+GO:0048185                                                                                 activin binding
+GO:0050662                                                                                coenzyme binding
+GO:0051287                                                                                     NAD binding
+GO:0060589                                                    nucleoside-triphosphatase regulator activity
+> sapply (comen.unpa, dim )
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+[1,]  219   94   57   24   10   10    8    1    1
+[2,]   23   23   23   23   23   23   23   23   23
+> 
+> ###
+> 
+> 
+> file.pair <- "common_enrichment_paired.xlsx"
+> unlink (file.pair)
+> order.pair <- order (pat.pair[,"SUM"], pat.pair[,"onto"], pat.pair[,"name"], decreasing = TRUE)
+> order.pair <- pat.pair[order.pair,]
+> order.pair[1:3,]
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto                                          name
+GO:0048589    0    0    0    0   -1    0   -1   -1    0   -1   -1    0    0    0   -1    0    0   6   bp                          developmental growth
+GO:0046578    0    0    0    0    0   -1    0   -1    0    0   -1    0    0    0    0    0   -1   4   bp regulation of Ras protein signal transduction
+GO:0051893    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0   -1    0   -1   4   bp         regulation of focal adhesion assembly
+> 
+> suma.pair <- sort (setdiff (unique (pat.pair[,"SUM"]), 0), decreasing = TRUE)
+> suma.pair
+[1] 6 4 3 2 1
+> comen.pair <- list ()  ## common enrichment
+> for (su in suma.pair) {
++     print (su)
++     touse <- pat.pair[,"SUM"] == su
++     mat <- pat.pair[touse,]
++     comen.pair[[su]] <- mat
++     print (mat)
++     write.xlsx2 (mat, file = file.pair, sheetName = paste ("common", su),
++                  col.names = TRUE, row.names = TRUE, append = TRUE)
++ }
+[1] 6
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto                 name
+GO:0048589    0    0    0    0   -1    0   -1   -1    0   -1   -1    0    0    0   -1    0    0   6   bp developmental growth
+[1] 4
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto                                           name
+GO:0007265    0    0    0    0    0   -1    0   -1    0   -1   -1    0    0    0    0    0    0   4   bp                Ras protein signal transduction
+GO:0018210    0    0    0    0   -1    0    0   -1    0   -1    0    0    0    0   -1    0    0   4   bp                peptidyl-threonine modification
+GO:0046578    0    0    0    0    0   -1    0   -1    0    0   -1    0    0    0    0    0   -1   4   bp  regulation of Ras protein signal transduction
+GO:0051893    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0   -1    0   -1   4   bp          regulation of focal adhesion assembly
+GO:0090109    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0   -1    0   -1   4   bp regulation of cell-substrate junction assembly
+[1] 3
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto                                                name
+GO:0008543    0    0    1    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   3   bp fibroblast growth factor receptor signaling pathway
+GO:0030278    0    0    0    0    0    0    0   -1    0   -1   -1    0    0    0    0    0    0   3   bp                          regulation of ossification
+GO:0030900    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0   -1    0    0   3   bp                               forebrain development
+GO:0033124    0    0    0    0    0   -1    0    0    0   -1   -1    0    0    0    0    0    0   3   bp                 regulation of GTP catabolic process
+GO:0043087    0    0    0    0    0   -1    0    0    0   -1   -1    0    0    0    0    0    0   3   bp                       regulation of GTPase activity
+[1] 2
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto
+GO:0001655    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   -1    0    0   2   bp
+GO:0001701    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0    0    0    0   2   bp
+GO:0001952    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0    0    0   2   bp
+GO:0002062    0    0    1    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   2   bp
+GO:0007045    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0007160    0    0    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0   2   bp
+GO:0007173    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0009118    0    0    0    0    0   -1    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0009896    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0009952    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0    0    0   2   bp
+GO:0016569    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0016570    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0017015    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0018105    0    0    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0   2   bp
+GO:0018107    0    0    0    0   -1    0    0   -1    0    0    0    0    0    0    0    0    0   2   bp
+GO:0018209    0    0    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0   2   bp
+GO:0021537    0    0    0    0    0    0    0    0    0   -1    0    0    0    0   -1    0    0   2   bp
+GO:0021953    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0023061    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0030512    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0030811    0    0    0    0    0   -1    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0031331    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0031344    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0031346    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0032844    0    0    0    0    0    0    0   -1    0   -1    0    0    0    0    0    0    0   2   bp
+GO:0033121    0    0    0    0    0   -1    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0038127    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0038179    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0044344    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0048011    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0048041    0    0    0    0   -1    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0060841    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0   -1   2   bp
+GO:0071774    0    0    1    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   2   bp
+GO:0090287    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+GO:0090288    0    0    0    0    0    0    0    0    0   -1   -1    0    0    0    0    0    0   2   bp
+                                                                                        name
+GO:0001655                                                     urogenital system development
+GO:0001701                                                    in utero embryonic development
+GO:0001952                                                regulation of cell-matrix adhesion
+GO:0002062                                                       chondrocyte differentiation
+GO:0007045                                         cell-substrate adherens junction assembly
+GO:0007160                                                              cell-matrix adhesion
+GO:0007173                                epidermal growth factor receptor signaling pathway
+GO:0009118                                        regulation of nucleoside metabolic process
+GO:0009896                                          positive regulation of catabolic process
+GO:0009952                                          anterior/posterior pattern specification
+GO:0016569                                                   covalent chromatin modification
+GO:0016570                                                              histone modification
+GO:0017015          regulation of transforming growth factor beta receptor signaling pathway
+GO:0018105                                                   peptidyl-serine phosphorylation
+GO:0018107                                                peptidyl-threonine phosphorylation
+GO:0018209                                                      peptidyl-serine modification
+GO:0021537                                                         telencephalon development
+GO:0021953                                     central nervous system neuron differentiation
+GO:0023061                                                                    signal release
+GO:0030512 negative regulation of transforming growth factor beta receptor signaling pathway
+GO:0030811                                        regulation of nucleotide catabolic process
+GO:0031331                                 positive regulation of cellular catabolic process
+GO:0031344                                        regulation of cell projection organization
+GO:0031346                               positive regulation of cell projection organization
+GO:0032844                                                 regulation of homeostatic process
+GO:0033121                                 regulation of purine nucleotide catabolic process
+GO:0038127                                                            ERBB signaling pathway
+GO:0038179                                                    neurotrophin signaling pathway
+GO:0044344                            cellular response to fibroblast growth factor stimulus
+GO:0048011                                       neurotrophin TRK receptor signaling pathway
+GO:0048041                                                           focal adhesion assembly
+GO:0060841                                                   venous blood vessel development
+GO:0071774                                              response to fibroblast growth factor
+GO:0090287                         regulation of cellular response to growth factor stimulus
+GO:0090288                negative regulation of cellular response to growth factor stimulus
+[1] 1
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec SUM onto
+GO:0001764    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   1   bp
+GO:0001953    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   1   bp
+GO:0002087    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   bp
+GO:0003002    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   bp
+GO:0005979    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0007178    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0008361    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0010810    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   bp
+GO:0010962    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0021543    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0   1   bp
+GO:0021766    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0021954    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   1   bp
+GO:0022604    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0030099    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   1   bp
+GO:0034333    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0038095    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043149    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0043467    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0045216    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0046777    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0   1   bp
+GO:0048634    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0048705    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051057    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0051216    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0051492    0    0    0   -1    0    0    0    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060348    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060349    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0060537    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0061035    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0061448    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   bp
+GO:0071709    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   bp
+GO:0090092    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0090101    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:1901888    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   bp
+GO:0005769    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0   1   cc
+GO:0017053    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0    0   1   cc
+GO:0001076    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   mf
+GO:0003714    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   mf
+GO:0004675    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   mf
+GO:0004842    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   mf
+GO:0004843    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0   1   mf
+GO:0005024    0    0    0    0    0    0    0    0    0    0   -1    0    0    0    0    0    0   1   mf
+GO:0005057    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   mf
+GO:0005158    0    0    0    0    0    0    0   -1    0    0    0    0    0    0    0    0    0   1   mf
+GO:0016755    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    1   1   mf
+GO:0019783    0    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0   1   mf
+GO:0070888    0    0    0    0    0    0    0    0    0    0    0    0    0   -1    0    0    0   1   mf
+                                                                                                      name
+GO:0001764                                                                                neuron migration
+GO:0001953                                                     negative regulation of cell-matrix adhesion
+GO:0002087                       regulation of respiratory gaseous exchange by neurological system process
+GO:0003002                                                                                 regionalization
+GO:0005979                                                     regulation of glycogen biosynthetic process
+GO:0007178                        transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0008361                                                                         regulation of cell size
+GO:0010810                                                           regulation of cell-substrate adhesion
+GO:0010962                                                       regulation of glucan biosynthetic process
+GO:0021543                                                                             pallium development
+GO:0021766                                                                         hippocampus development
+GO:0021954                                                       central nervous system neuron development
+GO:0022604                                                                regulation of cell morphogenesis
+GO:0030099                                                                    myeloid cell differentiation
+GO:0034333                                                                      adherens junction assembly
+GO:0038095                                                           Fc-epsilon receptor signaling pathway
+GO:0043149                                                                           stress fiber assembly
+GO:0043467                                    regulation of generation of precursor metabolites and energy
+GO:0045216                                                                 cell-cell junction organization
+GO:0046777                                                                     protein autophosphorylation
+GO:0048634                                                          regulation of muscle organ development
+GO:0048705                                                                   skeletal system morphogenesis
+GO:0051057                                positive regulation of small GTPase mediated signal transduction
+GO:0051216                                                                           cartilage development
+GO:0051492                                                             regulation of stress fiber assembly
+GO:0060348                                                                                bone development
+GO:0060349                                                                              bone morphogenesis
+GO:0060537                                                                       muscle tissue development
+GO:0061035                                                             regulation of cartilage development
+GO:0061448                                                                   connective tissue development
+GO:0071709                                                                               membrane assembly
+GO:0090092          regulation of transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0090101 negative regulation of transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:1901888                                                            regulation of cell junction assembly
+GO:0005769                                                                                  early endosome
+GO:0017053                                                               transcriptional repressor complex
+GO:0001076                    RNA polymerase II transcription factor binding transcription factor activity
+GO:0003714                                                              transcription corepressor activity
+GO:0004675                                 transmembrane receptor protein serine/threonine kinase activity
+GO:0004842                                                               ubiquitin-protein ligase activity
+GO:0004843                                                            ubiquitin-specific protease activity
+GO:0005024                                     transforming growth factor beta-activated receptor activity
+GO:0005057                                                             receptor signaling protein activity
+GO:0005158                                                                        insulin receptor binding
+GO:0016755                                            transferase activity, transferring amino-acyl groups
+GO:0019783                                            small conjugating protein-specific protease activity
+GO:0070888                                                                                   E-box binding
+> sapply (comen.pair, dim )
+[[1]]
+[1] 47 20
+
+[[2]]
+[1] 35 20
+
+[[3]]
+[1]  5 20
+
+[[4]]
+[1]  5 20
+
+[[5]]
+NULL
+
+[[6]]
+[1]  1 20
+
+> 
+> 
+> ### SAVE for the wiki
+> save (list = c("comen.pair", "comen.unpa"), file = file.path (.job$dir$proces, "common_enrichment.RData"))
+> 
+> ## PLOTS
+> graphics.off ()
+> setwd (.job$dir$plots)
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                  LC_TIME=es_ES.UTF-8           LC_COLLATE=en_US.UTF-8        LC_MONETARY=es_ES.UTF-8      
+ [6] LC_MESSAGES=en_US.UTF-8       LC_PAPER=es_ES.UTF-8          LC_NAME=es_ES.UTF-8           LC_ADDRESS=es_ES.UTF-8        LC_TELEPHONE=es_ES.UTF-8     
+[11] LC_MEASUREMENT=es_ES.UTF-8    LC_IDENTIFICATION=es_ES.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.0.0    RSQLite_1.0.0  DBI_0.3.1      xlsx_0.5.7     xlsxjars_0.6.1 rJava_0.9-6   
+
+loaded via a namespace (and not attached):
+ [1] lattice_0.20-33      IRanges_2.2.7        GO.db_2.14.0         GenomeInfoDb_1.4.1   grid_3.2.2           stats4_3.2.2         S4Vectors_0.6.3     
+ [8] KEGG.db_2.14.0       Matrix_1.2-2         Biobase_2.28.0       parallel_3.2.2       BiocGenerics_0.14.0  AnnotationDbi_1.30.1 cluster_2.0.3       
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 24.856   0.669  19.534 

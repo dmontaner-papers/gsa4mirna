@@ -1,0 +1,200 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##c010_compare_filtered_unfiltered.r
+> ##2015-09-01 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script compares the filtered (Godard's method) with the unfiltered results of the GSA analysis at miRNA level.
+> 
+> date ()
+[1] "Tue Sep  1 17:46:43 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                         
+[2] "-f"                                                                                            
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_godard/c010_compare_filtered_unfiltered.r"
+[4] "--restore"                                                                                     
+[5] "--save"                                                                                        
+[6] "--no-readline"                                                                                 
+[7] "--no-save"                                                                                     
+[8] "--no-restore"                                                                                  
+> rm (list = ls ())
+> R.version.string ##"R version 3.2.2 (2015-08-14)"
+[1] "R version 3.2.2 (2015-08-14)"
+> #library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"1.0.0"
+> #library (openxlsx); packageDescription ("openxlsx", fields = "Version") #"3.0.0"
+> #help (package = mdgsa)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_godard"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_godard/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_godard/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> 
+> #corte <- 0.05
+> 
+> ### DATA
+> setwd (file.path (.job$dir$proces))
+> load ("gsa_index_godard_unpaired_nofilter.RData")
+> load ("gsa_index_godard_unpaired.RData")
+> load ("gsa_index_godard_paired_nofilter.RData")
+> load ("gsa_index_godard_paired.RData")
+> 
+> ls ()
+[1] "imat.godard.pair"    "imat.godard.pair.nf" "imat.godard.unpa"    "imat.godard.unpa.nf"
+> 
+> dim (imat.godard.pair)
+[1] 13221    17
+> dim (imat.godard.pair.nf)
+[1] 13221    17
+> 
+> dim (imat.godard.unpa)
+[1] 13246    20
+> dim (imat.godard.unpa.nf)
+[1] 13246    20
+> 
+> table (rownames (imat.godard.pair) == rownames (imat.godard.pair.nf))
+
+ TRUE 
+13221 
+> table (rownames (imat.godard.unpa) == rownames (imat.godard.unpa.nf))
+
+ TRUE 
+13246 
+> 
+> comunes <- intersect (rownames (imat.godard.pair), rownames (imat.godard.unpa))
+> length (comunes)
+[1] 13221
+> 
+> 
+> ## EXPLORE CORRELATION
+> setwd (.job$dir$plots)
+> graphics.off ()
+> tags <- colnames (imat.godard.unpa)
+> tags
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+> 
+> tag <- "blca"
+> for (tag in tags) {
++     print (tag)
++     png (filename = paste0 ("filtered_vs_unfiltered_", tag, ".png"))
++     ##x11 ()
++     par (mfrow = c (2,2))
++     ##
++     try ({plot (imat.godard.unpa[,tag], imat.godard.unpa.nf[,tag], main = tag); abline (0, 1, col = "red")})
++     try ({plot (imat.godard.pair[,tag], imat.godard.pair.nf[,tag], main = tag); abline (0, 1, col = "red")})
++     ##
++     try ({plot (imat.godard.unpa   [comunes, tag], imat.godard.pair   [comunes, tag], main = tag); abline (0, 1, col = "red")})
++     try ({plot (imat.godard.unpa.nf[comunes, tag], imat.godard.pair.nf[comunes, tag], main = tag); abline (0, 1, col = "red")})
++     ##
++     dev.off ()
++ }
+[1] "blca"
+[1] "brca"
+[1] "cesc"
+[1] "coad"
+Error in imat.godard.pair[, tag] : subscript out of bounds
+Error in imat.godard.pair[comunes, tag] : subscript out of bounds
+Error in imat.godard.pair.nf[comunes, tag] : subscript out of bounds
+[1] "esca"
+[1] "hnsc"
+[1] "kich"
+[1] "kirc"
+[1] "kirp"
+[1] "lihc"
+[1] "luad"
+[1] "lusc"
+[1] "paad"
+[1] "pcpg"
+[1] "prad"
+[1] "read"
+Error in imat.godard.pair[, tag] : subscript out of bounds
+Error in imat.godard.pair[comunes, tag] : subscript out of bounds
+Error in imat.godard.pair.nf[comunes, tag] : subscript out of bounds
+[1] "skcm"
+Error in imat.godard.pair[, tag] : subscript out of bounds
+Error in imat.godard.pair[comunes, tag] : subscript out of bounds
+Error in imat.godard.pair.nf[comunes, tag] : subscript out of bounds
+[1] "stad"
+[1] "thca"
+[1] "ucec"
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 10.305   0.022  10.310 

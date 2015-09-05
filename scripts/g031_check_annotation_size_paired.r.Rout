@@ -1,0 +1,556 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##g031_get_annotation_size_paired.r
+> ##2015-08-28 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script counts the number of go terms analyzed in the paired analysis
+> 
+> date ()
+[1] "Fri Aug 28 17:36:21 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                   
+[2] "-f"                                                                                      
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts/g031_check_annotation_size_paired.r"
+[4] "--restore"                                                                               
+[5] "--save"                                                                                  
+[6] "--no-readline"                                                                           
+[7] "--no-save"                                                                               
+[8] "--no-restore"                                                                            
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.2.2 (2015-08-14)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ## ANNOTATION
+> load (file.path (.job$dir$proces, "annot_for_paired_data.RData"))
+> ls ()
+[1] "annot"
+> 
+> ontologias <- names (annot)
+> ontologias
+[1] "bp" "cc" "mf"
+> 
+> ## INDEX
+> load (file.path (.job$dir$proces, "rindex_paired.RData"))
+> ls ()
+[1] "annot"      "ontologias" "rindex"    
+> 
+> tags <- names (rindex)
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad"
+[11] "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> TAGS
+  blca   brca   cesc   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc 
+"BLCA" "BRCA" "CESC" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" 
+  paad   pcpg   prad   stad   thca   ucec 
+"PAAD" "PCPG" "PRAD" "STAD" "THCA" "UCEC" 
+> 
+> ################################################################################
+> 
+> ## GSA
+> lons <- list ()
+> for (tag in tags) {
++     for (onto in ontologias) {
++         cat ("\n=============== ", TAGS[tag], ":", onto, " ===============\n")
++         anotacion <- annotFilter (annot[[onto]], index = rindex[[tag]], minBlockSize = 10, maxBlockSize = 300)
++         lons[[onto]][tag] <- length (anotacion)
++     }
++ }
+
+===============  BLCA : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  BLCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  BLCA : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  BRCA : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  BRCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  BRCA : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  CESC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  CESC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  CESC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  ESCA : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  ESCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  ESCA : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  HNSC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  HNSC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  HNSC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  KICH : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  KICH : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  KICH : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  KIRC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  KIRC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  KIRC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  KIRP : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  KIRP : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  KIRP : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  LIHC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  LIHC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  LIHC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  LUAD : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  LUAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  LUAD : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  LUSC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  LUSC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  LUSC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  PAAD : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  PAAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  PAAD : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  PCPG : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  PCPG : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  PCPG : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  PRAD : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  PRAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  PRAD : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  STAD : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  STAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  STAD : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  THCA : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  THCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  THCA : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+
+===============  UCEC : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+
+===============  UCEC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+
+===============  UCEC : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+> 
+> as.data.frame (lons)
+       bp  cc  mf
+blca 3976 446 747
+brca 3976 446 747
+cesc 3976 446 747
+esca 3976 446 747
+hnsc 3976 446 747
+kich 3976 446 747
+kirc 3976 446 747
+kirp 3976 446 747
+lihc 3976 446 747
+luad 3976 446 747
+lusc 3976 446 747
+paad 3976 446 747
+pcpg 3976 446 747
+prad 3976 446 747
+stad 3976 446 747
+thca 3976 446 747
+ucec 3976 446 747
+> rowSums (as.data.frame (lons))
+blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca 
+5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 5169 
+ucec 
+5169 
+> sort (unique (rowSums (as.data.frame (lons))))
+[1] 5169
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.0.0   RSQLite_1.0.0 DBI_0.3.1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-2         IRanges_2.2.7        parallel_3.2.2      
+ [4] Biobase_2.28.0       AnnotationDbi_1.30.1 KEGG.db_2.14.0      
+ [7] grid_3.2.2           S4Vectors_0.6.3      BiocGenerics_0.14.0 
+[10] GenomeInfoDb_1.4.1   stats4_3.2.2         cluster_2.0.3       
+[13] GO.db_2.14.0         lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 60.918   0.376  61.294 

@@ -1,0 +1,1006 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##b020_gsa_at_mirna_level_no_filter_unpaired.r
+> ##2015-01-09 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script performs a GSA analysis at miRNA level following Godard's paradigm.
+> 
+> ## In this case we do not filter the miRNA universe to those annotated mirnas.
+> ## Lets see how it performs.
+> 
+> date ()
+[1] "Tue Sep  1 16:28:51 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                                   
+[2] "-f"                                                                                                      
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_godard/b020_gsa_at_mirna_level_no_filter_unpaired.r"
+[4] "--restore"                                                                                               
+[5] "--save"                                                                                                  
+[6] "--no-readline"                                                                                           
+[7] "--no-save"                                                                                               
+[8] "--no-restore"                                                                                            
+> rm (list = ls ())
+> R.version.string #"R version 3.2.2 (2015-08-14)"
+[1] "R version 3.2.2 (2015-08-14)"
+> ##library (edgeR); packageDescription ("edgeR", fields = "Version") #"3.6.1"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"1.0.0"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> #help (package = mdgsa)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_godard"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_godard/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_godard/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> ################################################################################
+> 
+> ## DATA
+> #load (file.path (.job$dir$data, "data_processed", "res_dif_exp_unpaired.RData"))
+> load (file.path (.job$dir$data, "data_processed", "rindex0_unpaired.RData"))
+> 
+> ## ANNOTATION
+> setwd (file.path (.job$dir$proces))
+> load ("annotation_unpaired.RData")
+> ls ()
+[1] "annot"   "rindex0"
+> 
+> ## annotated miRNAs
+> annot.mirnas <- unique (unlist (annot))
+> length (annot.mirnas)
+[1] 250
+> 
+> tag <- "blca"
+> res.godard.unpa.nf <- list ()
+> for (tag in names (rindex0)) {
++     cat ("\n========== ", tag, " ==========\n")
++ 
++     ## keep just annotated miRNAs as in Godard 2015
++     rindex <- rindex0[[tag]]
++     ## rindex <- rindex[names (rindex) %in% annot.mirnas]  ## FILTERING: using just the annotated miRNA universe
++     
++     ## transform (normalize) index
++     rindex <- indexTransform (index = rindex, method = "normalize")
++     ## boxplot (rindex)
++     ## boxplot (rindex0[[tag]])
++     ## plot (rindex0[[tag]], rindex)
++     
++     ## filter annotation
++     annotF <- annotFilter (annot = annot, index = rindex, minBlockSize = 10, maxBlockSize = 300)
++     if (.job$testmode) annotF <- annotF[1:3]
++     
++     ## uvGsa
++     res <- uvGsa (index = rindex, annot = annotF)
++     print (dim (uvSignif (res)))
++ 
++     ## save
++     res.godard.unpa.nf[[tag]] <- res
++ }
+
+==========  blca  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+29.46% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2951 small blocks removed.
+   0 big blocks removed.
+   13223 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 46.402   0.000  46.384 
+[1] 537   4
+
+==========  brca  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.45% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2960 small blocks removed.
+   0 big blocks removed.
+   13214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 44.664   0.008  44.655 
+[1] 0 4
+
+==========  cesc  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+30.28% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2964 small blocks removed.
+   0 big blocks removed.
+   13210 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 39.607   0.012  39.597 
+[1] 108   4
+
+==========  coad  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+31.36% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3023 small blocks removed.
+   0 big blocks removed.
+   13151 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 37.797   0.024  37.804 
+[1] 9810    4
+
+==========  esca  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+33.62% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3032 small blocks removed.
+   0 big blocks removed.
+   13142 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 35.729   0.012  35.723 
+[1] 5695    4
+
+==========  hnsc  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.5% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2947 small blocks removed.
+   0 big blocks removed.
+   13227 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 40.111   0.012  40.105 
+[1] 426   4
+
+==========  kich  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+34.14% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3028 small blocks removed.
+   0 big blocks removed.
+   13146 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 33.294   0.004  33.284 
+[1] 1 4
+
+==========  kirc  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+32.65% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3064 small blocks removed.
+   0 big blocks removed.
+   13110 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 34.016   0.012  34.014 
+[1] 6 4
+
+==========  kirp  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+30.59% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2977 small blocks removed.
+   0 big blocks removed.
+   13197 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 37.130   0.004  37.112 
+[1] 5 4
+
+==========  lihc  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+29.81% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2968 small blocks removed.
+   0 big blocks removed.
+   13206 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 51.490   0.004  51.461 
+[1] 0 4
+
+==========  luad  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.15% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2952 small blocks removed.
+   0 big blocks removed.
+   13222 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 38.619   0.004  38.598 
+[1] 154   4
+
+==========  lusc  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.72% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2948 small blocks removed.
+   0 big blocks removed.
+   13226 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 38.832   0.000  38.806 
+[1] 2713    4
+
+==========  paad  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+35.1% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3066 small blocks removed.
+   0 big blocks removed.
+   13108 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 31.912   0.000  31.890 
+[1] 1 4
+
+==========  pcpg  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+31.9% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3023 small blocks removed.
+   0 big blocks removed.
+   13151 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 36.305   0.000  36.281 
+[1] 0 4
+
+==========  prad  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+36.45% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3092 small blocks removed.
+   0 big blocks removed.
+   13082 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+time in seconds:
+   user  system elapsed 
+ 28.920   0.004  28.905 
+[1] 45  4
+
+==========  read  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+34.16% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3100 small blocks removed.
+   0 big blocks removed.
+   13074 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+time in seconds:
+   user  system elapsed 
+ 31.470   0.004  31.452 
+[1] 9460    4
+
+==========  skcm  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+31.28% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   3062 small blocks removed.
+   0 big blocks removed.
+   13112 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, time in seconds:
+   user  system elapsed 
+ 34.234   0.012  34.227 
+[1] 0 4
+
+==========  stad  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+29.9% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2943 small blocks removed.
+   0 big blocks removed.
+   13231 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 32.856   0.000  32.835 
+[1] 4458    4
+
+==========  thca  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.81% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2960 small blocks removed.
+   0 big blocks removed.
+   13214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 34.646   0.004  34.632 
+[1] 9 4
+
+==========  ucec  ==========
+Warning: There are genes in the annotation list which are not
+part of the gene universe defined by the ranking index;
+they will be eliminated form the annotation.
+28.03% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2938 small blocks removed.
+   0 big blocks removed.
+   13236 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, 4300, 4400, 4500, 4600, 4700, 4800, 4900, 5000, 
+
+5100, 5200, 5300, 5400, 5500, 5600, 5700, 5800, 5900, 6000, 
+
+6100, 6200, 6300, 6400, 6500, 6600, 6700, 6800, 6900, 7000, 
+
+7100, 7200, 7300, 7400, 7500, 7600, 7700, 7800, 7900, 8000, 
+
+8100, 8200, 8300, 8400, 8500, 8600, 8700, 8800, 8900, 9000, 
+
+9100, 9200, 9300, 9400, 9500, 9600, 9700, 9800, 9900, 10000, 
+
+10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900, 11000, 
+
+11100, 11200, 11300, 11400, 11500, 11600, 11700, 11800, 11900, 12000, 
+
+12100, 12200, 12300, 12400, 12500, 12600, 12700, 12800, 12900, 13000, 
+
+13100, 13200, time in seconds:
+   user  system elapsed 
+ 35.413   0.012  35.406 
+[1] 3127    4
+> 
+> ### SAVE
+> save (res.godard.unpa.nf, file = "res0_godard_unpaired_nofilter.RData")
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.0.0   RSQLite_1.0.0 DBI_0.3.1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-2         IRanges_2.2.7        parallel_3.2.2      
+ [4] Biobase_2.28.0       AnnotationDbi_1.30.1 KEGG.db_2.14.0      
+ [7] grid_3.2.2           S4Vectors_0.6.3      BiocGenerics_0.14.0 
+[10] GenomeInfoDb_1.4.1   stats4_3.2.2         cluster_2.0.3       
+[13] GO.db_2.14.0         lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+789.555   0.322 789.438 

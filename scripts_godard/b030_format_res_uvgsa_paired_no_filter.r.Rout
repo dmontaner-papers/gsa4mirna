@@ -1,0 +1,328 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##a030_format_res_uvgsa_paired.r
+> ##2015-09-01 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script collects all GSA results generated under Godard's paradigm.
+> 
+> date ()
+[1] "Tue Sep  1 17:13:19 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                               
+[2] "-f"                                                                                                  
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_godard/b030_format_res_uvgsa_paired_no_filter.r"
+[4] "--restore"                                                                                           
+[5] "--save"                                                                                              
+[6] "--no-readline"                                                                                       
+[7] "--no-save"                                                                                           
+[8] "--no-restore"                                                                                        
+> rm (list = ls ())
+> R.version.string ##"R version 3.2.2 (2015-08-14)"
+[1] "R version 3.2.2 (2015-08-14)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"1.0.0"
+Creating a generic function for ‘nchar’ from package ‘base’ in package ‘S4Vectors’
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.0.0"
+> library (openxlsx); packageDescription ("openxlsx", fields = "Version") #"3.0.0"
+[1] "3.0.0"
+> #help (package = mdgsa)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_godard"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_godard/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_godard/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 170)
+> 
+> corte <- 0.05
+> 
+> ### DATA
+> setwd (file.path (.job$dir$proces))
+> load ("res0_godard_paired_nofilter.RData")
+> ls ()
+[1] "corte"              "res.godard.pair.nf"
+> 
+> tag <- "blca"
+> for (tag in names (res.godard.pair.nf)) {
++     cat ("\n========== ", tag, " ==========\n")
++     
++     res <- res.godard.pair.nf[[tag]]
++     ##
++     res[,"pat"] <- uvPat (res, cutoff = corte)
++     res[,"index"] <- pval2index (pval = res[,"pval"], sign = res[,"lor"])
++     res[,"Name"] <- getGOnames (res, verbose = FALSE)
++     ##
++     orden <- order (res[,"index"], decreasing = TRUE)
++     res <- res[orden,]
++     ##
++     res.godard.pair.nf[[tag]] <- res
++ }
+
+==========  blca  ==========
+
+==========  brca  ==========
+
+==========  cesc  ==========
+
+==========  esca  ==========
+
+==========  hnsc  ==========
+
+==========  kich  ==========
+
+==========  kirc  ==========
+
+==========  kirp  ==========
+
+==========  lihc  ==========
+
+==========  luad  ==========
+
+==========  lusc  ==========
+
+==========  paad  ==========
+
+==========  pcpg  ==========
+
+==========  prad  ==========
+
+==========  stad  ==========
+
+==========  thca  ==========
+
+==========  ucec  ==========
+There were 17 warnings (use warnings() to see them)
+> 
+> ## SAVE
+> save (res.godard.pair.nf, file = "res_godard_paired_nofilter.RData")
+> 
+> ## xls
+> write.xlsx (res.godard.pair.nf, file = file.path (.job$dir$res, "res_godard_paired_nofilter.xlsx"))
+> 
+> ################################################################################
+> 
+> ### Matrix Format
+> gos <- sort (unique (unlist (lapply (res.godard.pair.nf, rownames))))
+> length (gos)
+[1] 13221
+> 
+> imat.godard.pair.nf <- matrix (NA, nrow = length (gos), ncol = length (res.godard.pair.nf))
+> rownames (imat.godard.pair.nf) <- gos
+> colnames (imat.godard.pair.nf) <- names (res.godard.pair.nf)
+> head (imat.godard.pair.nf)
+           blca brca cesc esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad stad thca ucec
+GO:0000002   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+GO:0000003   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+GO:0000010   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+GO:0000012   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+GO:0000014   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+GO:0000018   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+> 
+> for (tag in names (res.godard.pair.nf)) {
++     cat ("\n========== ", tag, " ==========\n")
++     imat.godard.pair.nf[,tag] <- res.godard.pair.nf[[tag]][gos, "index"]
++ }
+
+==========  blca  ==========
+
+==========  brca  ==========
+
+==========  cesc  ==========
+
+==========  esca  ==========
+
+==========  hnsc  ==========
+
+==========  kich  ==========
+
+==========  kirc  ==========
+
+==========  kirp  ==========
+
+==========  lihc  ==========
+
+==========  luad  ==========
+
+==========  lusc  ==========
+
+==========  paad  ==========
+
+==========  pcpg  ==========
+
+==========  prad  ==========
+
+==========  stad  ==========
+
+==========  thca  ==========
+
+==========  ucec  ==========
+> head (imat.godard.pair.nf)
+                blca       brca        cesc       esca      hnsc       kich       kirc        kirp       lihc      luad       lusc       paad        pcpg       prad
+GO:0000002 -3.148595 -0.4396205 -2.20131222  -2.324341 -2.531520 -3.6372732  1.7258619 -0.06071434  0.5278290 -6.183973  -8.422583 -0.3678121  1.80967494  0.2917291
+GO:0000003 -6.960179 -3.4222413 -6.02133350 -13.366210 -7.601992 -8.0127068 -0.8371912 -7.06570902 -5.9122055 -8.485457 -12.251190  0.3726115  0.79473854 -4.7814779
+GO:0000010 -1.908666 -0.5560016 -0.07881695  -4.192720 -5.508705  0.7291094 -1.5285594 -2.12888077 -2.3098175 -4.821428  -5.055751  0.1080309  0.04809964 -0.2723017
+GO:0000012 -4.032901 -0.9076357 -1.53922410  -5.209757 -4.995916 -7.7595142 -3.8017757 -3.86961873 -0.1323685 -3.996882  -9.388656  1.0404527  0.61176168 -4.5596151
+GO:0000014 -6.109804 -1.1917740 -4.97738280  -5.994367 -3.877808  1.5587163 -0.9567559 -0.49040009  1.3452868 -4.190603  -4.367783  0.4531265 -0.51258129  0.3084067
+GO:0000018 -2.189903 -0.6059955 -2.46295484  -5.881815 -3.243384 -2.7906677 -2.8180214 -3.21212759 -0.8920918 -5.320375  -8.432623  0.8364708  1.04162600 -1.7405030
+                stad        thca        ucec
+GO:0000002 -1.976154  0.68614453  -3.7317253
+GO:0000003 -7.800725 -2.94940793 -12.1925587
+GO:0000010 -2.016657 -1.01519956  -0.7046454
+GO:0000012 -3.392181 -0.02387142  -2.1086666
+GO:0000014 -3.275525  0.49570299  -5.6385612
+GO:0000018 -3.634168  0.59441506  -5.3605622
+> 
+> round (cor (imat.godard.pair.nf, use = "pairwise.complete.obs"), 2)
+      blca  brca  cesc  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad  pcpg  prad  stad  thca  ucec
+blca  1.00  0.83  0.83  0.78  0.77  0.43  0.21  0.59  0.54  0.75  0.79 -0.07  0.15  0.57  0.82  0.33  0.84
+brca  0.83  1.00  0.79  0.66  0.76  0.53  0.26  0.68  0.59  0.60  0.67  0.04 -0.02  0.67  0.74  0.39  0.81
+cesc  0.83  0.79  1.00  0.69  0.67  0.59  0.09  0.58  0.49  0.62  0.72 -0.08 -0.01  0.65  0.75  0.36  0.87
+esca  0.78  0.66  0.69  1.00  0.82  0.59  0.34  0.73  0.67  0.65  0.77 -0.05 -0.04  0.61  0.89  0.52  0.82
+hnsc  0.77  0.76  0.67  0.82  1.00  0.51  0.45  0.74  0.65  0.65  0.78  0.04 -0.06  0.53  0.83  0.39  0.79
+kich  0.43  0.53  0.59  0.59  0.51  1.00  0.14  0.70  0.59  0.35  0.52 -0.09 -0.40  0.74  0.48  0.48  0.69
+kirc  0.21  0.26  0.09  0.34  0.45  0.14  1.00  0.50  0.24  0.07  0.13 -0.21 -0.15  0.19  0.35  0.05  0.15
+kirp  0.59  0.68  0.58  0.73  0.74  0.70  0.50  1.00  0.80  0.41  0.55 -0.02 -0.20  0.67  0.62  0.42  0.73
+lihc  0.54  0.59  0.49  0.67  0.65  0.59  0.24  0.80  1.00  0.37  0.48  0.11 -0.07  0.55  0.55  0.48  0.66
+luad  0.75  0.60  0.62  0.65  0.65  0.35  0.07  0.41  0.37  1.00  0.87 -0.02  0.29  0.38  0.71  0.29  0.70
+lusc  0.79  0.67  0.72  0.77  0.78  0.52  0.13  0.55  0.48  0.87  1.00 -0.01  0.06  0.53  0.77  0.31  0.83
+paad -0.07  0.04 -0.08 -0.05  0.04 -0.09 -0.21 -0.02  0.11 -0.02 -0.01  1.00  0.06 -0.15 -0.04  0.31 -0.04
+pcpg  0.15 -0.02 -0.01 -0.04 -0.06 -0.40 -0.15 -0.20 -0.07  0.29  0.06  0.06  1.00 -0.34  0.06 -0.11 -0.08
+prad  0.57  0.67  0.65  0.61  0.53  0.74  0.19  0.67  0.55  0.38  0.53 -0.15 -0.34  1.00  0.57  0.31  0.70
+stad  0.82  0.74  0.75  0.89  0.83  0.48  0.35  0.62  0.55  0.71  0.77 -0.04  0.06  0.57  1.00  0.41  0.80
+thca  0.33  0.39  0.36  0.52  0.39  0.48  0.05  0.42  0.48  0.29  0.31  0.31 -0.11  0.31  0.41  1.00  0.43
+ucec  0.84  0.81  0.87  0.82  0.79  0.69  0.15  0.73  0.66  0.70  0.83 -0.04 -0.08  0.70  0.80  0.43  1.00
+> 
+> ###SALVAMOS
+> save (imat.godard.pair.nf, file = "gsa_index_godard_paired_nofilter.RData")
+> 
+> 
+> ###EXIT
+> warnings ()
+Warning messages:
+1: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+2: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+3: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+4: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+5: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+6: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+7: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+8: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+9: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+10: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+11: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+12: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+13: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+14: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+15: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+16: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+17: In getGOnames(res, verbose = FALSE) :
+  2 GOids where not found; missing names generated.
+> sessionInfo ()
+R version 3.2.2 (2015-08-14)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] openxlsx_3.0.0 mdgsa_1.0.0    RSQLite_1.0.0  DBI_0.3.1     
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.0          lattice_0.20-33      IRanges_2.2.7        GO.db_2.14.0         GenomeInfoDb_1.4.1   grid_3.2.2           stats4_3.2.2        
+ [8] S4Vectors_0.6.3      KEGG.db_2.14.0       Matrix_1.2-2         Biobase_2.28.0       parallel_3.2.2       BiocGenerics_0.14.0  AnnotationDbi_1.30.1
+[15] cluster_2.0.3       
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 19.487   0.346  19.815 
