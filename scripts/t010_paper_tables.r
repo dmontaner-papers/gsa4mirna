@@ -148,7 +148,7 @@ tabla.nams <- c ("ID",           "Down",                "Common",               
 #tabla.nams <- tabla.cols
 multicolumns <- "& \\\\multicolumn{3}{c}{Unpaired} & \\\\multicolumn{3}{c}{Paired} \\\\\\\\ \\\\cmidrule(r){2-4} \\\\cmidrule(r){5-7} \\\\\\\\"
 ##my.add.to.row <- list (pos = list (-1), command = multicolumns)
-tabla.capt <- c ("Number of GO terms associated to the genes targeted by the up and down regulated miRNAs.
+tabla.capt <- c ("Number of GO terms associated with the genes targeted by the up and down regulated miRNAs.
 Most GO terms are targeted in cases and controls at the same time
 as it can be seen in the \\textit{Common} column.
 The total number of GO terms annotated for the targeted genes is \\textbf{5169}.")
