@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Estimation of the type I error rate" />
+  <meta name="date" content="2015-10-22" />
+  <title>Integrated Gene Set Analysis for microRNA Studies</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Integrated Gene Set Analysis for microRNA Studies</h1>
+<h2 class="author">Estimation of the type I error rate</h2>
+<h3 class="date">2015-10-22</h3>
+</div>
+<h1 id="methods">Methods</h1>
+<p>The estimation of the type I error rate have been computed from a permutation strategy of the data. </p>
+<p>We have created a table of all miRNA - gene target pairs, and then randomly permuted the gene column. This would have the effect of preserving the number of genes each miRNA targets, and the genes and the number of miRNAs each gene is associated with, but would remove all biological association within and between miRNAs. </p>
+<h1 id="results">Results</h1>
+<p>For each cancer type, this table shows the percentage of significant results.</p>
+<p>The amount of False Positives (FP) found in the permuted analysis remains under the expected thresholds according to the p-value cutoff selected. </p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Cancer</th>
+<th align="left">% FP in paired studies</th>
+<th align="left">% FP in unpaired studies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">BLCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">BRCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">CESC</td>
+<td align="left">0.13542271</td>
+<td align="left">0.01934610</td>
+</tr>
+<tr class="even">
+<td align="left">COAD</td>
+<td align="left"></td>
+<td align="left">4.99129425</td>
+</tr>
+<tr class="odd">
+<td align="left">ESCA</td>
+<td align="left">0.03869220</td>
+<td align="left">0.17411492</td>
+</tr>
+<tr class="even">
+<td align="left">HNSC</td>
+<td align="left">0.13542271</td>
+<td align="left">0.27084542</td>
+</tr>
+<tr class="odd">
+<td align="left">KICH</td>
+<td align="left">0.17411492</td>
+<td align="left">0.01934610</td>
+</tr>
+<tr class="even">
+<td align="left">KIRC</td>
+<td align="left">0.19346102</td>
+<td align="left">2.01199458</td>
+</tr>
+<tr class="odd">
+<td align="left">KIRP</td>
+<td align="left">0.40626814</td>
+<td align="left">0.09673051</td>
+</tr>
+<tr class="even">
+<td align="left">LIHC</td>
+<td align="left">0.01934610</td>
+<td align="left">4.39156510</td>
+</tr>
+<tr class="odd">
+<td align="left">LUAD</td>
+<td align="left">0.61907526</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">LUSC</td>
+<td align="left">1.02534339</td>
+<td align="left">0.90926678</td>
+</tr>
+<tr class="odd">
+<td align="left">PAAD</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">PCPG</td>
+<td align="left">0</td>
+<td align="left">0.07738441</td>
+</tr>
+<tr class="odd">
+<td align="left">PRAD</td>
+<td align="left">0.01934610</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">READ</td>
+<td align="left"></td>
+<td align="left">0.85122848</td>
+</tr>
+<tr class="odd">
+<td align="left">SKCM</td>
+<td align="left"></td>
+<td align="left">1.29618882</td>
+</tr>
+<tr class="even">
+<td align="left">STAD</td>
+<td align="left">0.19346102</td>
+<td align="left">0.01934610</td>
+</tr>
+<tr class="odd">
+<td align="left">THCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">UCEC</td>
+<td align="left">0.09673051</td>
+<td align="left">1.45095763</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
