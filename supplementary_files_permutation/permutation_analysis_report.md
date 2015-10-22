@@ -14,6 +14,11 @@ We have created a table of all miRNA - gene target pairs, and then randomly
 permuted the gene column. This would have the effect of preserving the number of genes each
 miRNA targets, and the genes and the number of miRNAs each gene is associated with, but
 would remove all biological association within and between miRNAs.
+\newline
+
+All scripts are available in [https://github.com/dmontaner-papers/gsa4mirna](https://github.com/dmontaner-papers/gsa4mirna)
+(folder: scripts_permutation).
+
 \newpage
 
 
