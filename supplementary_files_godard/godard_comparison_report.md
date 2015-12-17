@@ -66,10 +66,5 @@ For each cancer type, there are several plots displaying the correlation between
 ![LUSC](plots/gene_vs_mirna_level_gsa_lusc.png)
 
 ![USEC](plots/gene_vs_mirna_level_gsa_ucec.png)
-\newpage
 
 ![READ](plots/gene_vs_mirna_level_gsa_read.png)
-
-
-
-
