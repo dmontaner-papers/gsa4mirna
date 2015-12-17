@@ -1,6 +1,6 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
-Copyright (C) 2015 The R Foundation for Statistical Computing
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -18,7 +18,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > date ()
-[1] "Sat Aug 29 16:31:21 2015"
+[1] "Sat Nov 28 18:41:39 2015"
 > Sys.info ()[c("nodename", "user")]
         nodename             user 
 "fgarcia-laptop"        "fgarcia" 
@@ -27,7 +27,7 @@ Type 'q()' to quit R.
 [4] "--restore"             "--save"                "--no-readline"        
 > rm (list = ls ())
 > R.version.string #"R version 3.0.0 RC (2013-03-26 r62418)"
-[1] "R version 3.2.1 (2015-06-18)"
+[1] "R version 3.1.2 (2014-10-31)"
 > library (Biobase); packageDescription ("Biobase", fields = "Version") #"2.22.0"
 Loading required package: BiocGenerics
 Loading required package: parallel
@@ -47,11 +47,10 @@ The following object is masked from ‘package:stats’:
 The following objects are masked from ‘package:base’:
 
     anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    do.call, duplicated, eval, evalq, Filter, Find, get, intersect,
-    is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax,
-    pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int,
-    rownames, sapply, setdiff, sort, table, tapply, union, unique,
-    unlist
+    duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted,
+    lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int,
+    pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames,
+    sapply, setdiff, sort, table, tapply, union, unique, unlist
 
 Welcome to Bioconductor
 
@@ -59,34 +58,37 @@ Welcome to Bioconductor
     'browseVignettes()'. To cite Bioconductor, see
     'citation("Biobase")', and for packages 'citation("pkgname")'.
 
-[1] "2.24.0"
+[1] "2.26.0"
 > #library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
 > library (TiddlyWikiR); packageDescription ("TiddlyWikiR", fields = "Version") #"1.0.4"
-[1] "1.0.4"
+[1] "1.0.1"
 > help (package = TiddlyWikiR)
 
 		Information on package ‘TiddlyWikiR’
 
 Description:
 
-Package:           TiddlyWikiR
-Type:              Package
-Title:             Create dynamic reports using a TiddlyWiki template.
-Version:           1.0.4
-Date:              2013-10-28
-Author:            David Montaner <dmontaner@cipf.es>
-Maintainer:        David Montaner <dmontaner@cipf.es>
-Description:       Utilities to generate wiki reports in TiddlyWiki
-                   format.
-URL:               https://github.com/dmontaner/TiddlyWikiR
-License:           GPL-2
-LazyData:          TRUE
-VignetteBuilder:   knitr
-Depends:           R (>= 2.14),
-Imports:           methods
-Suggests:          knitr
-Packaged:          2014-11-24 12:20:13 UTC; dmontaner
-Built:             R 3.2.0; ; 2015-05-09 08:11:03 UTC; unix
+Package:            TiddlyWikiR
+Type:               Package
+Title:              Create dynamic reports using a TiddlyWiki template.
+Version:            1.0.1
+Date:               2013-10-28
+Author:             David Montaner <dmontaner@cipf.es>
+Maintainer:         David Montaner <dmontaner@cipf.es>
+Description:        Utilities to generate wiki reports in TiddlyWiki
+                    format.
+URL:                https://github.com/dmontaner/TiddlyWikiR
+License:            GPL-2
+LazyData:           TRUE
+VignetteBuilder:    knitr
+Depends:            R (>= 2.14),
+Imports:            methods
+Suggests:           knitr
+Packaged:           2013-12-31 01:56:30 UTC; dmontaner
+NeedsCompilation:   no
+Repository:         CRAN
+Date/Publication:   2013-12-31 07:24:32
+Built:              R 3.1.2; ; 2015-11-28 17:26:54 UTC; unix
 
 Index:
 
@@ -100,7 +102,6 @@ newEmptyWiki            Creates a TiddlyWiki template to start working.
 ref                     Extract and replace the "ref" form 'twLink' and
                         'twImage' objects.
 tiddler-class           A class to handle TiddlyWiki tiddlers.
-twBold                  Basic TiddlyWiki formatting functions
 twImage-class           A class to handle TiddlyWiki images.
 twLink-class            A class to handle TiddlyWiki links.
 twList-class            A class to handle TiddlyWiki lists.
@@ -113,7 +114,7 @@ writeTiddlers           Inserts one or more tiddlers into a TiddlyWiki
 
 Further information is available in the following vignettes in
 directory
-‘/home/fgarcia/R/x86_64-pc-linux-gnu-library/3.2/TiddlyWikiR/doc’:
+‘/home/fgarcia/R/x86_64-pc-linux-gnu-library/3.1/TiddlyWikiR/doc’:
 
 TiddlyWikiR_getting_started: Getting started with TiddlyWikiR (source,
         pdf)
@@ -128,31 +129,31 @@ $name
 
 $dir
 $dir$data
-[1] "~/Desktop/papers/gsa4mirna/datos"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos"
 
 $dir$code
-[1] "~/Desktop/papers/gsa4mirna"
+[1] "~/Desktop/mirna_paper/gsa4mirna"
 
 $dir$scripts
-[1] "~/Desktop/papers/gsa4mirna/scripts"
+[1] "~/Desktop/mirna_paper/gsa4mirna/scripts"
 
 $dir$docs
-[1] "~/Desktop/papers/gsa4mirna/documents"
+[1] "~/Desktop/mirna_paper/gsa4mirna/documents"
 
 $dir$rawdat
-[1] "~/Desktop/papers/gsa4mirna/datos/data_raw"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos/data_raw"
 
 $dir$annotation
-[1] "~/Desktop/papers/gsa4mirna/datos/data_annotation"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos/data_annotation"
 
 $dir$proces
-[1] "~/Desktop/papers/gsa4mirna/datos/data_processed"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos/data_processed"
 
 $dir$plots
-[1] "~/Desktop/papers/gsa4mirna/datos/results/plots"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos/results/plots"
 
 $dir$res
-[1] "~/Desktop/papers/gsa4mirna/datos/results/files"
+[1] "~/Desktop/mirna_paper/gsa4mirna/datos/results/files"
 
 
 $testmode
@@ -280,12 +281,12 @@ cesc          5167          1
 > infile  <- file.path (.job$dir$docs, "index_template.html")
 > outfile <- file.path (.job$dir$code, "index.html")
 > infile
-[1] "~/Desktop/papers/gsa4mirna/documents/index_template.html"
+[1] "~/Desktop/mirna_paper/gsa4mirna/documents/index_template.html"
 > outfile
-[1] "~/Desktop/papers/gsa4mirna/index.html"
+[1] "~/Desktop/mirna_paper/gsa4mirna/index.html"
 > 
 > writeTiddlers (infile = infile, outfile = outfile)
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > ################################################################################
@@ -365,8 +366,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > #For this case, the tag is: @@~TABLA_all@@
 > mistags[["@@~TABLA_all@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",39)))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > #save this general table:
@@ -432,8 +433,8 @@ hnsc                         [[Head and Neck squamous cell carcinoma|https://tcg
 > #For this case, the tag is: @@~TABLA1_DATASETS@@
 > mistags[["@@~TABLA1_DATASETS@@"]] <-  twTable (dat = tabla1, sortable = TRUE, align = c("r", rep("c",4),"l"))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > 
@@ -458,8 +459,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > #For this case, the tag is: @@~TABLA_MIRNAS@@
 > mistags[["@@~TABLA2_MIRNAS@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",9)))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > 
@@ -511,8 +512,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > 
 > mistags[["@@~TABLA3_GENES@@"]] <-  twTable (dat = tabla, ref = links, sortable = TRUE, align = c(rep("c",9)))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > 
@@ -571,8 +572,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > #After generating the table, I have to wikify it. Good clue: in the template I have to indicate some tag to change this tag by the new table.
 > mistags[["@@~TABLA4_GOS@@"]] <-  twTable (dat = tabla,   sortable = TRUE, align = c(rep("c",7)))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > 
@@ -607,8 +608,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > 
 > mistags[["@@~TABLA5_GOS@@"]] <-  twTable (dat = tabla,  ref = links, sortable = TRUE, align = c(rep("c",31)))
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 >                                        
 > 
 > 
@@ -773,7 +774,7 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > ############################################################################################## 
 > ## by cancer
 > 
-> canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kick", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
+> canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kich", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
 +               "read", "skcm", "stad", "thca", "ucec")
 > 
 > 
@@ -849,8 +850,8 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 + }             
 > 
 > writeTags (mistags, file = outfile)
-Reading file: ~/Desktop/papers/gsa4mirna/index.html
-Writing file: ~/Desktop/papers/gsa4mirna/index.html
+Reading file: ~/Desktop/mirna_paper/gsa4mirna/index.html
+Writing file: ~/Desktop/mirna_paper/gsa4mirna/index.html
 > 
 > 
 > 
@@ -879,25 +880,24 @@ Writing file: ~/Desktop/papers/gsa4mirna/index.html
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.2.1 (2015-06-18)
+R version 3.1.2 (2014-10-31)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu precise (12.04.3 LTS)
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] parallel  stats     graphics  grDevices utils     datasets  methods  
 [8] base     
 
 other attached packages:
-[1] TiddlyWikiR_1.0.4   Biobase_2.24.0      BiocGenerics_0.10.0
+[1] TiddlyWikiR_1.0.1  Biobase_2.26.0     BiocGenerics_0.8.0
 > q ("no")
 > proc.time()
    user  system elapsed 
-  8.984   0.088   9.077 
+  8.849   0.079   8.933 

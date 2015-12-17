@@ -454,7 +454,7 @@ mistags[["@@~PLOTS_GENE_SET_LEVEL_RANKING_INDEX_CORRELATION_VS_CORRELATION_UNPAI
 ############################################################################################## 
 ## by cancer
 
-canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kick", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
+canceres <- c("blca", "brca", "cesc", "coad", "esca","hnsc", "kich", "kirc", "kirp", "lihc", "luad", "lusc", "paad", "pcpg", "prad",
               "read", "skcm", "stad", "thca", "ucec")
 
 
