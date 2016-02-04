@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="Estimation of the type I error rate" />
-  <meta name="date" content="2015-10-22" />
+  <meta name="date" content="2016-02-04" />
   <title>Integrated Gene Set Analysis for microRNA Studies</title>
   <style type="text/css">code{white-space: pre;}</style>
 </head>
@@ -13,22 +13,25 @@
 <div id="header">
 <h1 class="title">Integrated Gene Set Analysis for microRNA Studies</h1>
 <h2 class="author">Estimation of the type I error rate</h2>
-<h3 class="date">2015-10-22</h3>
+<h3 class="date">2016-02-04</h3>
 </div>
 <h1 id="methods">Methods</h1>
 <p>The estimation of the type I error rate have been computed from a permutation strategy of the data. </p>
 <p>We have created a table of all miRNA - gene target pairs, and then randomly permuted the gene column. This would have the effect of preserving the number of genes each miRNA targets, and the genes and the number of miRNAs each gene is associated with, but would remove all biological association within and between miRNAs. </p>
+<p>This permutation strategy was performed 100 times. Median and percentiles were used to describe the percentage of significant results. </p>
 <p>All scripts are available in <a href="https://github.com/dmontaner-papers/gsa4mirna" class="uri">https://github.com/dmontaner-papers/gsa4mirna</a> (folder: scripts_permutation).</p>
 
 <h1 id="results">Results</h1>
-<p>For each cancer type, this table shows the percentage of significant results.</p>
-<p>The amount of False Positives (FP) found in the permuted analysis remains under the expected thresholds according to the p-value cutoff selected. </p>
+<p>For each cancer type, this table shows the percentage of significant results. </p>
+<p>The amount of False Positives (FP) found in the permuted analysis in <strong>paired studies</strong> remains under the expected thresholds according to the p-value cutoff selected. </p>
 <table>
+<caption>% FP in paired studies</caption>
 <thead>
 <tr class="header">
 <th align="left">Cancer</th>
-<th align="left">% FP in paired studies</th>
-<th align="left">% FP in unpaired studies</th>
+<th align="left">Median</th>
+<th align="left">Percentile 5</th>
+<th align="left">Percentile 95</th>
 </tr>
 </thead>
 <tbody>
@@ -36,101 +39,238 @@
 <td align="left">BLCA</td>
 <td align="left">0</td>
 <td align="left">0</td>
+<td align="left">0.037</td>
 </tr>
 <tr class="even">
 <td align="left">BRCA</td>
 <td align="left">0</td>
 <td align="left">0</td>
+<td align="left">0.055</td>
 </tr>
 <tr class="odd">
 <td align="left">CESC</td>
-<td align="left">0.13542271</td>
-<td align="left">0.01934610</td>
-</tr>
-<tr class="even">
-<td align="left">COAD</td>
-<td align="left"></td>
-<td align="left">4.99129425</td>
-</tr>
-<tr class="odd">
-<td align="left">ESCA</td>
-<td align="left">0.03869220</td>
-<td align="left">0.17411492</td>
-</tr>
-<tr class="even">
-<td align="left">HNSC</td>
-<td align="left">0.13542271</td>
-<td align="left">0.27084542</td>
-</tr>
-<tr class="odd">
-<td align="left">KICH</td>
-<td align="left">0.17411492</td>
-<td align="left">0.01934610</td>
-</tr>
-<tr class="even">
-<td align="left">KIRC</td>
-<td align="left">0.19346102</td>
-<td align="left">2.01199458</td>
-</tr>
-<tr class="odd">
-<td align="left">KIRP</td>
-<td align="left">0.40626814</td>
-<td align="left">0.09673051</td>
-</tr>
-<tr class="even">
-<td align="left">LIHC</td>
-<td align="left">0.01934610</td>
-<td align="left">4.39156510</td>
-</tr>
-<tr class="odd">
-<td align="left">LUAD</td>
-<td align="left">0.61907526</td>
+<td align="left">0.037</td>
 <td align="left">0</td>
+<td align="left">0.405</td>
 </tr>
 <tr class="even">
-<td align="left">LUSC</td>
-<td align="left">1.02534339</td>
-<td align="left">0.90926678</td>
+<td align="left">ESCA</td>
+<td align="left">0.018</td>
+<td align="left">0</td>
+<td align="left">0.018</td>
 </tr>
 <tr class="odd">
+<td align="left">HNSC</td>
+<td align="left">0.11</td>
+<td align="left">0.037</td>
+<td align="left">0.883</td>
+</tr>
+<tr class="even">
+<td align="left">KICH</td>
+<td align="left">0.258</td>
+<td align="left">0.055</td>
+<td align="left">0.662</td>
+</tr>
+<tr class="odd">
+<td align="left">KIRC</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">KIRP</td>
+<td align="left">1.031</td>
+<td align="left">0.368</td>
+<td align="left">2.024</td>
+</tr>
+<tr class="odd">
+<td align="left">LIHC</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.147</td>
+</tr>
+<tr class="even">
+<td align="left">LUAD</td>
+<td align="left">1.104</td>
+<td align="left">0.276</td>
+<td align="left">1.987</td>
+</tr>
+<tr class="odd">
+<td align="left">LUSC</td>
+<td align="left">1.288</td>
+<td align="left">0.57</td>
+<td align="left">2.319</td>
+</tr>
+<tr class="even">
 <td align="left">PAAD</td>
 <td align="left">0</td>
 <td align="left">0</td>
+<td align="left">0.018</td>
+</tr>
+<tr class="odd">
+<td align="left">PCPG</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">PRAD</td>
+<td align="left">0.147</td>
+<td align="left">0</td>
+<td align="left">0.865</td>
+</tr>
+<tr class="odd">
+<td align="left">STAD</td>
+<td align="left">0.092</td>
+<td align="left">0</td>
+<td align="left">0.736</td>
+</tr>
+<tr class="even">
+<td align="left">THCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">UCEC</td>
+<td align="left">0.129</td>
+<td align="left">0</td>
+<td align="left">0.645</td>
+</tr>
+</tbody>
+</table>
+
+<p>The amount of False Positives found in the permuted analysis in <strong>unpaired studies</strong> remains under the expected thresholds according to the p-value cutoff selected except for COAD which shows a median next to this threshold. </p>
+<table>
+<caption>% FP in unpaired studies</caption>
+<thead>
+<tr class="header">
+<th align="left">Cancer</th>
+<th align="left">Median</th>
+<th align="left">Percentile 5</th>
+<th align="left">Percentile 95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">BLCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.037</td>
+</tr>
+<tr class="even">
+<td align="left">BRCA</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.018</td>
+</tr>
+<tr class="odd">
+<td align="left">CESC</td>
+<td align="left">0.184</td>
+<td align="left">0</td>
+<td align="left">0.755</td>
+</tr>
+<tr class="even">
+<td align="left">COAD</td>
+<td align="left">5.19</td>
+<td align="left">3.466</td>
+<td align="left">6.028</td>
+</tr>
+<tr class="odd">
+<td align="left">ESCA</td>
+<td align="left">0.791</td>
+<td align="left">0.276</td>
+<td align="left">1.463</td>
+</tr>
+<tr class="even">
+<td align="left">HNSC</td>
+<td align="left">0.865</td>
+<td align="left">0.055</td>
+<td align="left">1.987</td>
+</tr>
+<tr class="odd">
+<td align="left">KICH</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.04</td>
+</tr>
+<tr class="even">
+<td align="left">KIRC</td>
+<td align="left">0.313</td>
+<td align="left">0.11</td>
+<td align="left">1.141</td>
+</tr>
+<tr class="odd">
+<td align="left">KIRP</td>
+<td align="left">0.994</td>
+<td align="left">0.386</td>
+<td align="left">1.664</td>
+</tr>
+<tr class="even">
+<td align="left">LIHC</td>
+<td align="left">4.049</td>
+<td align="left">2.462</td>
+<td align="left">6.128</td>
+</tr>
+<tr class="odd">
+<td align="left">LUAD</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.092</td>
+</tr>
+<tr class="even">
+<td align="left">LUSC</td>
+<td align="left">1.224</td>
+<td align="left">0.54</td>
+<td align="left">1.844</td>
+</tr>
+<tr class="odd">
+<td align="left">PAAD</td>
+<td align="left">0.055</td>
+<td align="left">0</td>
+<td align="left">0.092</td>
 </tr>
 <tr class="even">
 <td align="left">PCPG</td>
 <td align="left">0</td>
-<td align="left">0.07738441</td>
+<td align="left">0</td>
+<td align="left">0.11</td>
 </tr>
 <tr class="odd">
 <td align="left">PRAD</td>
-<td align="left">0.01934610</td>
 <td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0.184</td>
 </tr>
 <tr class="even">
 <td align="left">READ</td>
-<td align="left"></td>
-<td align="left">0.85122848</td>
+<td align="left">0.313</td>
+<td align="left">0.055</td>
+<td align="left">2.337</td>
 </tr>
 <tr class="odd">
 <td align="left">SKCM</td>
-<td align="left"></td>
-<td align="left">1.29618882</td>
+<td align="left">1.601</td>
+<td align="left">0.791</td>
+<td align="left">2.882</td>
 </tr>
 <tr class="even">
 <td align="left">STAD</td>
-<td align="left">0.19346102</td>
-<td align="left">0.01934610</td>
+<td align="left">0.083</td>
+<td align="left">0</td>
+<td align="left">0.242</td>
 </tr>
 <tr class="odd">
 <td align="left">THCA</td>
 <td align="left">0</td>
 <td align="left">0</td>
+<td align="left">0.018</td>
 </tr>
 <tr class="even">
 <td align="left">UCEC</td>
-<td align="left">0.09673051</td>
-<td align="left">1.45095763</td>
+<td align="left">2.797</td>
+<td align="left">1.692</td>
+<td align="left">4.529</td>
 </tr>
 </tbody>
 </table>

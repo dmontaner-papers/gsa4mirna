@@ -1,0 +1,22 @@
+#!/bin/bash
+#$ -N sim_unpaired
+#$ -pe smp 1
+#$ -t 1-100
+#$ -tc 50
+#$ -l h_vmem=40G
+##$ -l long=true
+##$ -q long.q
+#$ -o /home/paco/gsa4mirna/scripts_permutation/logs/
+#$ -e /home/paco/gsa4mirna/scripts_permutation/logs
+#$ -j y
+##$ -m beas 
+##$ -M fgarcia@cipf.es
+
+# load your required modules
+#######################
+module load R/3.2.1-atlas
+
+# and here goes your command line
+SEEDFILE=/home/paco/gsa4mirna/scripts_permutation/j050_mirna_sim_unpaired_cmds.sh
+SEED=$(cat $SEEDFILE | head -n $SGE_TASK_ID | tail -n 1)
+$SEED

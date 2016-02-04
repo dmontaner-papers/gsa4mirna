@@ -1,0 +1,1327 @@
+[1] "Mon Feb  1 04:14:11 2016"
+nodename     user 
+"crom02"   "paco" 
+[1] "/opt/soft/libs/R/3.2.1_atlas/lib64/R/bin/exec/R"                               
+[2] "--slave"                                                                       
+[3] "--no-restore"                                                                  
+[4] "--file=/home/paco/gsa4mirna/scripts_permutation/j040_100simulations_unpaired.r"
+[5] "--args"                                                                        
+[6] "26"                                                                            
+[1] "R version 3.2.1 (2015-06-18)"
+Loading required package: limma
+Loading required package: methods
+[1] "3.12.0"
+Loading required package: rJava
+Loading required package: xlsxjars
+[1] "0.5.7"
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.2.0"
+[1] "0.0.2"
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/gsa4mirna/datos"
+
+$dir$code
+[1] "~/gsa4mirna"
+
+$dir$scripts
+[1] "~/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/gsa4mirna/datos/data_raw"
+
+$dir$annotation
+[1] "~/gsa4mirna/datos/data_annotation"
+
+$dir$proces
+[1] "~/gsa4mirna/datos/data_processed_permutation"
+
+$dir$plots
+[1] "~/gsa4mirna/datos/results_permutation/plots"
+
+$dir$res
+[1] "~/gsa4mirna/datos/results_permutation/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+[1] "list"
+[1] 2318
+$MIMAT0000062
+[1] "PPP1R15B" "LMX1A"    "SLC37A4"  "AFF2"     "EIF4G2"   "DAGLA"   
+
+$MIMAT0000063
+[1] "PPP1R15B" "LMX1A"    "SLC37A4"  "AFF2"     "EIF4G2"   "DAGLA"   
+
+[1] 1146551       2
+[1] 12084
+     [,1]       [,2]          
+[1,] "PPP1R15B" "MIMAT0000062"
+[2,] "LMX1A"    "MIMAT0000062"
+[3,] "SLC37A4"  "MIMAT0000062"
+[4,] "AFF2"     "MIMAT0000062"
+[5,] "EIF4G2"   "MIMAT0000062"
+[6,] "DAGLA"    "MIMAT0000062"
+     [,1]      [,2]          
+[1,] "TBPL1"   "MIMAT0000062"
+[2,] "CHKA"    "MIMAT0000062"
+[3,] "CAMKV"   "MIMAT0000062"
+[4,] "BCL2L1"  "MIMAT0000062"
+[5,] "PPP1R9A" "MIMAT0000062"
+[6,] "TMEM127" "MIMAT0000062"
+[1] "acc2geneTSp" "args"        "mat"         "nsim"        "res.edger"  
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc"
+[11] "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" 
+  lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+
+===============  BLCA  ===============
+  241miRNAs with annotated targets
+  577miRNAs without targets
+  2077miRNAs with targets but not in the ranking index
+
+===============  BRCA  ===============
+  239miRNAs with annotated targets
+  601miRNAs without targets
+  2079miRNAs with targets but not in the ranking index
+
+===============  CESC  ===============
+  238miRNAs with annotated targets
+  548miRNAs without targets
+  2080miRNAs with targets but not in the ranking index
+
+===============  COAD  ===============
+  228miRNAs with annotated targets
+  499miRNAs without targets
+  2090miRNAs with targets but not in the ranking index
+
+===============  ESCA  ===============
+  233miRNAs with annotated targets
+  460miRNAs without targets
+  2085miRNAs with targets but not in the ranking index
+
+===============  HNSC  ===============
+  242miRNAs with annotated targets
+  607miRNAs without targets
+  2076miRNAs with targets but not in the ranking index
+
+===============  KICH  ===============
+  226miRNAs with annotated targets
+  436miRNAs without targets
+  2092miRNAs with targets but not in the ranking index
+
+===============  KIRC  ===============
+  223miRNAs with annotated targets
+  460miRNAs without targets
+  2095miRNAs with targets but not in the ranking index
+
+===============  KIRP  ===============
+  238miRNAs with annotated targets
+  540miRNAs without targets
+  2080miRNAs with targets but not in the ranking index
+
+===============  LIHC  ===============
+  240miRNAs with annotated targets
+  565miRNAs without targets
+  2078miRNAs with targets but not in the ranking index
+
+===============  LUAD  ===============
+  239miRNAs with annotated targets
+  610miRNAs without targets
+  2079miRNAs with targets but not in the ranking index
+
+===============  LUSC  ===============
+  243miRNAs with annotated targets
+  603miRNAs without targets
+  2075miRNAs with targets but not in the ranking index
+
+===============  PAAD  ===============
+  225miRNAs with annotated targets
+  416miRNAs without targets
+  2093miRNAs with targets but not in the ranking index
+
+===============  PCPG  ===============
+  230miRNAs with annotated targets
+  491miRNAs without targets
+  2088miRNAs with targets but not in the ranking index
+
+===============  PRAD  ===============
+  222miRNAs with annotated targets
+  387miRNAs without targets
+  2096miRNAs with targets but not in the ranking index
+
+===============  READ  ===============
+  221miRNAs with annotated targets
+  426miRNAs without targets
+  2097miRNAs with targets but not in the ranking index
+
+===============  SKCM  ===============
+  229miRNAs with annotated targets
+  503miRNAs without targets
+  2089miRNAs with targets but not in the ranking index
+
+===============  STAD  ===============
+  244miRNAs with annotated targets
+  572miRNAs without targets
+  2074miRNAs with targets but not in the ranking index
+
+===============  THCA  ===============
+  238miRNAs with annotated targets
+  588miRNAs without targets
+  2080miRNAs with targets but not in the ranking index
+
+===============  UCEC  ===============
+  245miRNAs with annotated targets
+  629miRNAs without targets
+  2073miRNAs with targets but not in the ranking index
+        Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+blca -141.20 -0.4032 2.21600  1.0170  7.6670  39.010
+brca -724.90 -2.3880 2.57000 -2.5150 14.0600 226.800
+cesc  -77.21 -1.1120 0.21300 -0.6067  1.5810  23.910
+coad -426.00 -3.0050 1.01200  1.1990 10.5900 186.900
+esca  -62.58 -0.8205 1.09100  0.2357  3.5340  36.540
+hnsc -201.30 -2.9120 2.03100 -1.0030  7.7060  94.660
+kich -122.70 -3.5910 0.15440  0.6044  5.4620 184.400
+kirc -248.40 -3.0920 2.73600  5.4660 15.5000 211.100
+kirp -149.10 -7.0050 1.05800 -2.3740  7.3190 113.300
+lihc -146.40 -0.2768 3.45500  5.6030 12.7700  77.680
+luad -261.30 -0.6259 3.14900  1.5650 11.1000 117.500
+lusc -303.10 -0.9064 4.23800  0.4601 12.1900 164.400
+paad  -27.85 -0.7941 0.01349 -0.1669  1.0710   8.005
+pcpg  -36.74 -0.8505 0.22250 -0.3482  1.5190  21.890
+prad  -29.57 -1.4830 0.27110  0.4061  2.5560  24.000
+read -345.20 -2.1320 0.66720 -2.9850  6.1270  68.560
+skcm -129.10 -0.5055 0.02064 -0.9347  0.7939   7.338
+stad  -99.24 -1.5190 2.04800  1.3030  7.5950  83.520
+thca -121.10 -4.1140 0.02243  1.0930  6.3640 143.000
+ucec -433.10 -4.6070 1.39000 -4.9330  8.2150 125.300
+         Min.   1st Qu.   Median     Mean   3rd Qu.    Max.
+blca  -506.50  -43.0800   0.0000  -19.460  13.71000  217.40
+brca -3448.00 -110.4000   0.0000  -75.810  94.52000 1291.00
+cesc  -293.50  -25.1400  -2.6580  -16.440   1.96400   99.38
+coad  -832.90    0.1039  87.4300  170.400 261.80000 2177.00
+esca  -364.60  -35.8000  -5.7100  -21.610   1.11100   89.92
+hnsc -1235.00 -123.6000 -19.7700  -75.190   4.53200  301.00
+kich  -582.00  -43.1200  -0.3791  -11.540  15.75000  532.20
+kirc  -602.40   -1.7200  29.8800   92.830 166.30000 1891.00
+kirp  -731.80  -84.1900 -16.9500  -49.990   2.26200  289.20
+lihc  -246.50    0.0000  31.8900   69.120 109.20000  923.60
+luad  -835.50  -65.5500   0.0000  -17.710  38.91000  555.80
+lusc -2134.00 -239.7000 -34.9800 -142.100   4.77000  483.40
+paad   -80.08   -7.0700  -0.4190   -3.754   1.36200   36.08
+pcpg  -174.90  -12.9200  -0.5408   -6.663   1.96800   64.50
+prad  -131.70   -4.9260   0.4104    4.919  14.92000  148.10
+read  -642.00    0.0000  21.8000   40.370  80.30000  727.00
+skcm  -343.50  -28.0000  -2.8790  -20.020   0.07642   28.83
+stad  -517.70  -61.3600  -7.0530  -32.440   7.43000  265.20
+thca  -511.40  -18.2400   0.0000   18.770  43.27000  571.40
+ucec -2048.00 -244.6000 -57.7800 -157.800   0.00000  413.00
+       Min. 1st Qu.     Median      Mean 3rd Qu.  Max.
+blca -3.936 -0.6744 -6.957e-17 1.354e-17  0.6744 3.936
+brca -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+cesc -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+coad -3.936 -0.6744 -6.957e-17 1.408e-17  0.6744 3.936
+esca -3.936 -0.6744 -6.957e-17 1.354e-17  0.6744 3.936
+hnsc -3.936 -0.6744 -6.957e-17 1.354e-17  0.6744 3.936
+kich -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+kirc -3.936 -0.6744 -6.957e-17 1.357e-17  0.6744 3.936
+kirp -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+lihc -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+luad -3.936 -0.6744 -6.957e-17 1.353e-17  0.6744 3.936
+lusc -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+paad -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+pcpg -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+prad -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+read -3.936 -0.6744 -6.957e-17 1.358e-17  0.6744 3.936
+skcm -3.936 -0.6744 -6.957e-17 1.354e-17  0.6744 3.936
+stad -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+thca -3.936 -0.6744 -6.957e-17 1.356e-17  0.6744 3.936
+ucec -3.936 -0.6744 -6.957e-17 1.355e-17  0.6744 3.936
+     blca      brca      cesc      coad      esca      hnsc      kich      kirc 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     kirp      lihc      luad      lusc      paad      pcpg      prad      read 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+     skcm      stad      thca      ucec 
+"numeric" "numeric" "numeric" "numeric" 
+            blca       brca       cesc        coad       esca        hnsc
+A1CF  -1.4181160 -0.9842855 -1.1403568  1.66087034 -1.3546743 -1.41698293
+A2ML1 -1.0789299 -1.4674480 -0.7123475  0.04326341 -0.4585499 -0.17524079
+AADAT  0.7110115  0.7638300  0.9852961 -0.30470280  0.1029650  0.59147245
+AAED1 -0.7524934 -1.1164403 -1.3117943 -1.61793351 -0.3412005  0.07568175
+AAGAB -0.1391168 -0.3581801 -0.6008880 -2.07861126 -0.3385633  0.18093103
+AAK1   0.9011459 -2.5869763 -1.9386102  2.33367567 -0.3964933 -0.14037365
+             kich       kirc       kirp        lihc       luad         lusc
+A1CF  -0.28088525  0.9114677 -1.1289061  0.06195856 -1.6600470 -1.931863423
+A2ML1 -0.50726879  0.3379043 -0.2716186 -0.58925015 -0.7828520 -0.248872873
+AADAT -0.07609782 -1.0407376  0.6251687 -0.56864635  0.7618876  1.029748454
+AAED1 -0.77863183 -0.7177046 -0.6131083 -1.35208261 -0.5067970 -0.143307078
+AAGAB  0.56889021  0.7379805  0.1462417 -1.29914914 -0.4468293  0.008401162
+AAK1  -1.63191316  3.2699138 -0.7580113  3.08016616  1.6835391 -1.584302957
+            paad        pcpg         prad        read       skcm       stad
+A1CF   1.1608650 -0.62390824  1.566367975  1.62877899 -1.4979574 -0.9570404
+A2ML1 -0.6516183 -0.02458336 -0.380610591  0.30231347  1.0601862 -0.7136849
+AADAT  0.8701342  0.46778674 -0.003837532  0.05904917 -1.1584270  0.7107444
+AAED1 -0.1805093  0.40345927 -1.020626743 -1.29818501 -0.1940200 -0.8337550
+AAGAB  0.5523841  0.55335087  0.182196313 -1.56920378  0.2031173 -0.3592862
+AAK1  -2.8869920 -1.08975912  0.549004565  1.72244789 -0.6347814 -0.8574823
+            thca        ucec
+A1CF  -1.2442088 -1.47049891
+A2ML1 -0.7030215 -0.19655714
+AADAT  0.1988839  1.52195434
+AAED1 -0.5179139 -0.52909509
+AAGAB  0.6211386  0.00777884
+AAK1   1.4571758 -1.52261516
+ blca  brca  cesc  coad  esca  hnsc  kich  kirc  kirp  lihc  luad  lusc  paad 
+12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 12084 
+ pcpg  prad  read  skcm  stad  thca  ucec 
+12084 12084 12084 12084 12084 12084 12084 
+              blca       brca       cesc       coad       esca       hnsc
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.354e-17  1.355e-17  1.355e-17  1.408e-17  1.354e-17  1.354e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+              kich       kirc       kirp       lihc       luad       lusc
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.355e-17  1.357e-17  1.355e-17  1.355e-17  1.353e-17  1.355e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+              paad       pcpg       prad       read       skcm       stad
+Min.    -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17 -6.957e-17
+Mean     1.355e-17  1.355e-17  1.355e-17  1.358e-17  1.354e-17  1.355e-17
+3rd Qu.  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00  3.936e+00
+              thca       ucec
+Min.    -3.936e+00 -3.936e+00
+1st Qu. -6.744e-01 -6.744e-01
+Median  -6.957e-17 -6.957e-17
+Mean     1.356e-17  1.355e-17
+3rd Qu.  6.744e-01  6.744e-01
+Max.     3.936e+00  3.936e+00
+blca.FALSE brca.FALSE cesc.FALSE coad.FALSE esca.FALSE hnsc.FALSE kich.FALSE 
+     12084      12084      12084      12084      12084      12084      12084 
+kirc.FALSE kirp.FALSE lihc.FALSE luad.FALSE lusc.FALSE paad.FALSE pcpg.FALSE 
+     12084      12084      12084      12084      12084      12084      12084 
+prad.FALSE read.FALSE skcm.FALSE stad.FALSE thca.FALSE ucec.FALSE 
+     12084      12084      12084      12084      12084      12084 
+[1] 12084
+[1] 241740      2
+  GO.Term.Accession HGNC.symbol
+1        GO:0006810    SLC25A26
+2        GO:0005739    SLC25A26
+3        GO:0005634    SLC25A26
+
+ FALSE 
+241740 
+
+ FALSE 
+232998 
+
+ FALSE 
+240835 
+       na.gene
+na.go    FALSE   TRUE
+  FALSE 232094    904
+  TRUE    8741      1
+touse
+ FALSE   TRUE 
+  9646 232094 
+[1] 232094      2
+touse
+ FALSE   TRUE 
+ 66028 166066 
+  GO.Term.Accession HGNC.symbol
+1        GO:0006810    SLC25A26
+2        GO:0005739    SLC25A26
+3        GO:0005634    SLC25A26
+[1] 11608
+[1] 12661
+  HGNC.symbol GO.Term.Accession
+1    SLC25A26        GO:0006810
+2    SLC25A26        GO:0005739
+3    SLC25A26        GO:0005634
+   user  system elapsed 
+  1.623   0.001   1.623 
+[1] 12661
+   user  system elapsed 
+ 22.465   0.197  23.276 
+Using GO.db version: 3.2.2
+Some GO ids where not found, 
+they will be excluded from the list
+   bp    cc    mf 
+12050  1379  3433 
+[1] "bp" "cc" "mf"
+[1] 20
+
+===============  BLCA : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+315.326   0.092 315.289 
+
+===============  BLCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.780   0.010  35.772 
+
+===============  BLCA : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 58.012   0.017  58.008 
+
+===============  BRCA : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+318.252   0.088 318.182 
+
+===============  BRCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.396   0.004  35.389 
+
+===============  BRCA : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.481   0.012  59.485 
+
+===============  CESC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+329.509   0.079 329.474 
+
+===============  CESC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.779   0.006  36.778 
+
+===============  CESC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 60.197   0.008  60.200 
+
+===============  COAD : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+326.294   0.051 326.277 
+
+===============  COAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.626   0.010  35.627 
+
+===============  COAD : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 57.576   0.018  57.577 
+
+===============  ESCA : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+321.078   0.082 321.088 
+
+===============  ESCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.107   0.009  36.101 
+
+===============  ESCA : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 58.092   0.005  58.093 
+
+===============  HNSC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+319.593   0.042 319.575 
+
+===============  HNSC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.628   0.007  35.620 
+
+===============  HNSC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 57.732   0.006  57.732 
+
+===============  KICH : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+319.110   0.063 319.094 
+
+===============  KICH : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.715   0.009  35.717 
+
+===============  KICH : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 57.580   0.008  57.581 
+
+===============  KIRC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+319.646   0.046 319.618 
+
+===============  KIRC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.400   0.004  35.400 
+
+===============  KIRC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 57.864   0.005  57.863 
+
+===============  KIRP : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+319.460   0.058 319.444 
+
+===============  KIRP : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.830   0.005  35.830 
+
+===============  KIRP : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 58.240   0.008  58.237 
+
+===============  LIHC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+332.049   0.053 332.032 
+
+===============  LIHC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 37.064   0.004  37.064 
+
+===============  LIHC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.836   0.008  59.837 
+
+===============  LUAD : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+329.835   0.080 329.795 
+
+===============  LUAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 37.018   0.011  37.013 
+
+===============  LUAD : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.287   0.014  59.279 
+
+===============  LUSC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+329.679   0.081 329.633 
+
+===============  LUSC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.735   0.011  36.731 
+
+===============  LUSC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.527   0.010  59.521 
+
+===============  PAAD : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+330.012   0.082 329.958 
+
+===============  PAAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.816   0.008  36.815 
+
+===============  PAAD : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.514   0.022  59.508 
+
+===============  PCPG : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+327.108   0.065 327.069 
+
+===============  PCPG : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.912   0.005  36.906 
+
+===============  PCPG : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.692   0.010  59.688 
+
+===============  PRAD : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+329.632   0.071 329.588 
+
+===============  PRAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 37.084   0.008  37.082 
+
+===============  PRAD : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.346   0.010  59.334 
+
+===============  READ : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+329.282   0.092 329.212 
+
+===============  READ : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.712   0.012  36.701 
+
+===============  READ : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.807   0.009  59.798 
+
+===============  SKCM : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+331.227   0.078 331.166 
+
+===============  SKCM : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.863   0.012  36.858 
+
+===============  SKCM : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.309   0.019  59.298 
+
+===============  STAD : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+325.798   0.064 325.760 
+
+===============  STAD : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.903   0.010  35.897 
+
+===============  STAD : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 58.038   0.012  58.036 
+
+===============  THCA : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+326.283   3.131 329.305 
+
+===============  THCA : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 36.229   0.223  36.448 
+
+===============  THCA : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 59.872   2.073  61.921 
+
+===============  UCEC : bp  ===============
+83.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7346 small blocks removed.
+   490 big blocks removed.
+   4214 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, 4000, 
+
+4100, 4200, time in seconds:
+   user  system elapsed 
+330.385   0.057 330.369 
+
+===============  UCEC : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   819 small blocks removed.
+   89 big blocks removed.
+   471 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 35.925   0.006  35.919 
+
+===============  UCEC : mf  ===============
+87.7% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2598 small blocks removed.
+   86 big blocks removed.
+   749 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 58.648   0.010  58.641 
+ [1] "blca" "brca" "cesc" "coad" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "read" "skcm" "stad" "thca" "ucec"
+  blca   brca   cesc   coad   esca   hnsc   kich   kirc   kirp   lihc   luad   lusc   paad   pcpg   prad   read   skcm   stad   thca   ucec 
+"BLCA" "BRCA" "CESC" "COAD" "ESCA" "HNSC" "KICH" "KIRC" "KIRP" "LIHC" "LUAD" "LUSC" "PAAD" "PCPG" "PRAD" "READ" "SKCM" "STAD" "THCA" "UCEC" 
+ [1] "blca_bp.RData" "blca_cc.RData" "blca_mf.RData" "brca_bp.RData" "brca_cc.RData" "brca_mf.RData" "cesc_bp.RData" "cesc_cc.RData" "cesc_mf.RData" "coad_bp.RData"
+[11] "coad_cc.RData" "coad_mf.RData" "esca_bp.RData" "esca_cc.RData" "esca_mf.RData" "hnsc_bp.RData" "hnsc_cc.RData" "hnsc_mf.RData" "kich_bp.RData" "kich_cc.RData"
+[21] "kich_mf.RData" "kirc_bp.RData" "kirc_cc.RData" "kirc_mf.RData" "kirp_bp.RData" "kirp_cc.RData" "kirp_mf.RData" "lihc_bp.RData" "lihc_cc.RData" "lihc_mf.RData"
+[31] "luad_bp.RData" "luad_cc.RData" "luad_mf.RData" "lusc_bp.RData" "lusc_cc.RData" "lusc_mf.RData" "paad_bp.RData" "paad_cc.RData" "paad_mf.RData" "pcpg_bp.RData"
+[41] "pcpg_cc.RData" "pcpg_mf.RData" "prad_bp.RData" "prad_cc.RData" "prad_mf.RData" "read_bp.RData" "read_cc.RData" "read_mf.RData" "skcm_bp.RData" "skcm_cc.RData"
+[51] "skcm_mf.RData" "stad_bp.RData" "stad_cc.RData" "stad_mf.RData" "thca_bp.RData" "thca_cc.RData" "thca_mf.RData" "ucec_bp.RData" "ucec_cc.RData" "ucec_mf.RData"
+
+blca
+====================================================================================================
+
+brca
+====================================================================================================
+
+cesc
+====================================================================================================
+
+coad
+====================================================================================================
+
+esca
+====================================================================================================
+
+hnsc
+====================================================================================================
+
+kich
+====================================================================================================
+
+kirc
+====================================================================================================
+
+kirp
+====================================================================================================
+
+lihc
+====================================================================================================
+
+luad
+====================================================================================================
+
+lusc
+====================================================================================================
+
+paad
+====================================================================================================
+
+pcpg
+====================================================================================================
+
+prad
+====================================================================================================
+
+read
+====================================================================================================
+
+skcm
+====================================================================================================
+
+stad
+====================================================================================================
+
+thca
+====================================================================================================
+
+ucec
+====================================================================================================
+            N        lor        pval      padj        sd          t conv pat      index                         Name
+GO:0000030 10 0.32851196 0.297951532 1.0000000 0.3156095 1.04088117    1   0 1.21082445 mannosyltransferase activity
+GO:0000049 25 0.58005012 0.002562969 0.3003282 0.1922965 3.01643638    1   0 5.96658880                 tRNA binding
+GO:0000062 15 0.01357048 0.958116537 1.0000000 0.2583951 0.05251836    1   0 0.04278586       fatty-acyl-CoA binding
+            N        lor        pval      padj        sd          t conv pat      index                         Name
+GO:0000030 10 0.32851196 0.297951532 1.0000000 0.3156095 1.04088117    1   0 1.21082445 mannosyltransferase activity
+GO:0000049 25 0.58005012 0.002562969 0.3003282 0.1922965 3.01643638    1   0 5.96658880                 tRNA binding
+GO:0000062 15 0.01357048 0.958116537 1.0000000 0.2583951 0.05251836    1   0 0.04278586       fatty-acyl-CoA binding
+bp cc mf 
+20 20 20 
+
+[1] "bp"
+     blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec
+[1,] 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214 4214
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 4214
+[1] 4214
+[1] 4214
+
+[1] "cc"
+     blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec
+[1,]  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471  471
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 471
+[1] 471
+[1] 471
+
+[1] "mf"
+     blca brca cesc coad esca hnsc kich kirc kirp lihc luad lusc paad pcpg prad read skcm stad thca ucec
+[1,]  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749  749
+[2,]   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10   10
+[1] 749
+[1] 749
+[1] 749
+NULL
+R version 3.2.1 (2015-06-18)
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                  LC_TIME=en_US.UTF-8           LC_COLLATE=en_US.UTF-8        LC_MONETARY=en_US.UTF-8      
+ [6] LC_MESSAGES=en_US.UTF-8       LC_PAPER=en_US.UTF-8          LC_NAME=en_US.UTF-8           LC_ADDRESS=en_US.UTF-8        LC_TELEPHONE=en_US.UTF-8     
+[11] LC_MEASUREMENT=en_US.UTF-8    LC_IDENTIFICATION=en_US.UTF-8
+
+attached base packages:
+[1] methods   stats     graphics  grDevices utils     datasets  base     
+
+other attached packages:
+[1] mirbaseID_0.0.2 mdgsa_1.2.0     RSQLite_1.0.0   DBI_0.3.1       xlsx_0.5.7      xlsxjars_0.6.1  rJava_0.9-7     edgeR_3.12.0    limma_3.26.1   
+
+loaded via a namespace (and not attached):
+ [1] lattice_0.20-33      IRanges_2.4.1        GO.db_3.2.2          grid_3.2.1           stats4_3.2.1         S4Vectors_0.8.1      KEGG.db_3.2.2       
+ [8] Matrix_1.2-2         Biobase_2.30.0       parallel_3.2.1       BiocGenerics_0.16.0  AnnotationDbi_1.32.0 cluster_2.0.3       

@@ -1,6 +1,6 @@
 % Integrated Gene Set Analysis for microRNA Studies
 % Estimation of the type I error rate
-% 2015-10-22
+% 2016-02-04
 
 
 
@@ -16,6 +16,9 @@ miRNA targets, and the genes and the number of miRNAs each gene is associated wi
 would remove all biological association within and between miRNAs.
 \newline
 
+This permutation strategy was performed 100 times. Median and percentiles were used to describe the percentage of significant results.
+\newline
+
 All scripts are available in [https://github.com/dmontaner-papers/gsa4mirna](https://github.com/dmontaner-papers/gsa4mirna)
 (folder: scripts_permutation).
 
@@ -26,30 +29,63 @@ Results
 ===============================================================
 
 For each cancer type, this table shows the percentage of significant results. 
+\newline
 
-The amount of False Positives (FP) found in the permuted analysis remains under the expected thresholds according to the p-value cutoff selected.
+The amount of False Positives (FP) found in the permuted analysis in **paired studies** remains under the expected thresholds according to the p-value cutoff selected.
 \newline
 
 
-| Cancer | % FP in paired studies | % FP in unpaired studies |
-|--------|------------------------|--------------------------|
-| BLCA   |                      0 |                        0 |
-| BRCA   |                      0 |                        0 |
-| CESC   |             0.13542271 |               0.01934610 |
-| COAD   |                        |               4.99129425 |
-| ESCA   |             0.03869220 |               0.17411492 |
-| HNSC   |             0.13542271 |               0.27084542 |
-| KICH   |             0.17411492 |               0.01934610 |
-| KIRC   |             0.19346102 |               2.01199458 |
-| KIRP   |             0.40626814 |               0.09673051 |
-| LIHC   |             0.01934610 |               4.39156510 |
-| LUAD   |             0.61907526 |                        0 |
-| LUSC   |             1.02534339 |               0.90926678 |
-| PAAD   |                      0 |                        0 |
-| PCPG   |                      0 |               0.07738441 |
-| PRAD   |             0.01934610 |                        0 |
-| READ   |                        |               0.85122848 |
-| SKCM   |                        |               1.29618882 |
-| STAD   |             0.19346102 |               0.01934610 |
-| THCA   |                      0 |                        0 |
-| UCEC   |             0.09673051 |               1.45095763 |
+| Cancer | Median | Percentile 5 | Percentile 95 |
+|--------|------------------------|--------------------------|--------------------------|
+| BLCA| 0| 0| 0.037|
+| BRCA| 0| 0| 0.055|
+| CESC| 0.037| 0| 0.405|
+| ESCA| 0.018| 0| 0.018|
+| HNSC| 0.11| 0.037| 0.883|
+| KICH| 0.258| 0.055| 0.662|
+| KIRC| 0| 0| 0.055|
+| KIRP| 1.031| 0.368| 2.024|
+| LIHC| 0| 0| 0.147|
+| LUAD| 1.104| 0.276| 1.987|
+| LUSC| 1.288| 0.57| 2.319|
+| PAAD| 0| 0| 0.018|
+| PCPG| 0| 0| 0.055|
+| PRAD| 0.147| 0| 0.865|
+| STAD| 0.092| 0| 0.736|
+| THCA| 0| 0| 0|
+| UCEC| 0.129| 0| 0.645|
+
+:% FP in paired studies
+
+\newpage
+
+The amount of False Positives found in the permuted analysis in **unpaired studies** remains under the expected thresholds according to the p-value cutoff selected except for COAD which shows a median next to this threshold.
+\newline
+
+
+
+
+| Cancer | Median | Percentile 5 | Percentile 95 |
+|--------|------------------------|--------------------------|--------------------------|
+| BLCA| 0| 0| 0.037|
+| BRCA| 0| 0| 0.018|
+| CESC| 0.184| 0| 0.755|
+| COAD| 5.19| 3.466| 6.028|
+| ESCA| 0.791| 0.276| 1.463|
+| HNSC| 0.865| 0.055| 1.987|
+| KICH| 0| 0| 0.04|
+| KIRC| 0.313| 0.11| 1.141|
+| KIRP| 0.994| 0.386| 1.664|
+| LIHC| 4.049| 2.462| 6.128|
+| LUAD| 0| 0| 0.092|
+| LUSC| 1.224| 0.54| 1.844|
+| PAAD| 0.055| 0| 0.092|
+| PCPG| 0| 0| 0.11|
+| PRAD| 0| 0| 0.184|
+| READ| 0.313| 0.055| 2.337|
+| SKCM| 1.601| 0.791| 2.882|
+| STAD| 0.083| 0| 0.242|
+| THCA| 0| 0| 0.018|
+| UCEC| 2.797| 1.692| 4.529|
+
+:% FP in unpaired studies
