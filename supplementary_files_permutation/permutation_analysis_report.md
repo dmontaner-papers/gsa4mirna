@@ -1,6 +1,6 @@
 % Integrated Gene Set Analysis for microRNA Studies
 % Estimation of the type I error rate
-% 2016-02-04
+% 2016-02-05
 
 
 
@@ -55,11 +55,12 @@ The amount of False Positives (FP) found in the permuted analysis in **paired st
 | THCA| 0| 0| 0|
 | UCEC| 0.129| 0| 0.645|
 
+
 :% FP in paired studies
 
 \newpage
 
-The amount of False Positives found in the permuted analysis in **unpaired studies** remains under the expected thresholds according to the p-value cutoff selected except for COAD which shows a median next to this threshold.
+The amount of False Positives found in the permuted analysis in **unpaired studies** remains under the expected thresholds according to the p-value cutoff selected.
 \newline
 
 
@@ -68,24 +69,25 @@ The amount of False Positives found in the permuted analysis in **unpaired studi
 | Cancer | Median | Percentile 5 | Percentile 95 |
 |--------|------------------------|--------------------------|--------------------------|
 | BLCA| 0| 0| 0.037|
-| BRCA| 0| 0| 0.018|
-| CESC| 0.184| 0| 0.755|
-| COAD| 5.19| 3.466| 6.028|
-| ESCA| 0.791| 0.276| 1.463|
-| HNSC| 0.865| 0.055| 1.987|
-| KICH| 0| 0| 0.04|
-| KIRC| 0.313| 0.11| 1.141|
-| KIRP| 0.994| 0.386| 1.664|
-| LIHC| 4.049| 2.462| 6.128|
-| LUAD| 0| 0| 0.092|
-| LUSC| 1.224| 0.54| 1.844|
-| PAAD| 0.055| 0| 0.092|
-| PCPG| 0| 0| 0.11|
-| PRAD| 0| 0| 0.184|
-| READ| 0.313| 0.055| 2.337|
-| SKCM| 1.601| 0.791| 2.882|
-| STAD| 0.083| 0| 0.242|
-| THCA| 0| 0| 0.018|
-| UCEC| 2.797| 1.692| 4.529|
+| BRCA| 0| 0| 0|
+| CESC| 0.202| 0.018| 0.386|
+| COAD| 4.803| 3.607| 5.332|
+| ESCA| 0.755| 0.35| 1.104|
+| HNSC| 0.681| 0| 2.3|
+| KICH| 0| 0| 0.037|
+| KIRC| 0.202| 0.037| 1.822|
+| KIRP| 0.883| 0.294| 1.307|
+| LIHC| 4.141| 3.257| 6.294|
+| LUAD| 0| 0| 0|
+| LUSC| 0.883| 0.074| 2.079|
+| PAAD| 0.018| 0| 0.129|
+| PCPG| 0.018| 0| 0.055|
+| PRAD| 0| 0| 0.037|
+| READ| 0.294| 0.018| 0.626|
+| SKCM| 1.619| 0.773| 2.687|
+| STAD| 0.212| 0.018| 0.883|
+| THCA| 0| 0| 0.055|
+| UCEC| 2.843| 1.012| 4.734|
+
 
 :% FP in unpaired studies
