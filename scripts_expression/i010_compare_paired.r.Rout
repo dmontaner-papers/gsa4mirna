@@ -1,0 +1,660 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i010_compare_paired.r
+> ##2016-05-17 dmontaner@cipf.es
+> ##Compare results with and without filtering
+> 
+> date ()
+[1] "Tue May 17 08:55:25 2016"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "air" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                
+[2] "-f"                                                                                   
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_expression/i010_compare_paired.r"
+[4] "--restore"                                                                            
+[5] "--save"                                                                               
+[6] "--no-readline"                                                                        
+[7] "--no-save"                                                                            
+[8] "--no-restore"                                                                         
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.3.0 (2016-05-03)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.2.0"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw_expression"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_expression"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_expression/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_expression/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (widht = 240)
+> 
+> #dir (file.path (.job$dir$data, "data_processed", "res_uvgsa_paired"))
+> #dir (file.path (.job$dir$proces, "res_uvgsa_paired"))
+> 
+> 
+> tag <- "kich"
+> 
+> res.u <- NULL
+> res.f <- NULL
+> ##
+> for (onto in c ("bp", "cc", "mf")) {
++     load (file.path (.job$dir$data, "data_processed", "res_uvgsa_paired", paste0 (tag, "_", onto, ".RData"))) ## res
++     res[,"pat"] <- uvPat (res)
++     res.u <- rbind (res.u, res)
++     ##
++     load (file.path (.job$dir$proces, "res_uvgsa_paired", paste0 (tag, "_", onto, ".RData"))) ## res
++     res[,"pat"] <- uvPat (res)
++     res.f <- rbind (res.f, res)
++ }
+> rm (res)
+> 
+> table (rownames (res.u) == rownames (res.f))
+
+TRUE 
+5169 
+> 
+> res.u[,"name"] <- getGOnames (res.u)
+Using row names of the input matrix.
+Using GO.db version: 3.2.2
+Warning message:
+In getGOnames(res.u) : 22 GOids where not found; missing names generated.
+> res.f[,"name"] <- getGOnames (res.f)
+Using row names of the input matrix.
+Using GO.db version: 3.2.2
+Warning message:
+In getGOnames(res.f) : 22 GOids where not found; missing names generated.
+> 
+> head (res.u)
+            N         lor      pval padj        sd          t conv pat
+GO:0000002 11 -0.26681062 0.3755120    1 0.3010629 -0.8862287    1   0
+GO:0000018 36  0.07414388 0.6568231    1 0.1668725  0.4443146    1   0
+GO:0000038 13  0.05543656 0.8416790    1 0.2775289  0.1997506    1   0
+GO:0000041 79  0.12082623 0.2844177    1 0.1128694  1.0704956    1   0
+GO:0000042 12 -0.18049476 0.5303203    1 0.2876249 -0.6275353    1   0
+GO:0000045 31 -0.02622113 0.8841068    1 0.1798824 -0.1457682    1   0
+                                                   name
+GO:0000002             mitochondrial genome maintenance
+GO:0000018              regulation of DNA recombination
+GO:0000038 very long-chain fatty acid metabolic process
+GO:0000041               transition metal ion transport
+GO:0000042                   protein targeting to Golgi
+GO:0000045                       autophagosome assembly
+> head (res.f)
+            N         lor       pval padj        sd           t conv pat
+GO:0000002 11  0.07360212 0.90627373    1 0.6251114  0.11774240    1   0
+GO:0000018 36 -0.08275033 0.81414878    1 0.3520057 -0.23508238    1   0
+GO:0000038 13  0.02298165 0.96840481    1 0.5801999  0.03960988    1   0
+GO:0000041 79  0.02041083 0.93110934    1 0.2360970  0.08645100    1   0
+GO:0000042 12 -0.20269148 0.73750217    1 0.6047411 -0.33517066    1   0
+GO:0000045 31 -0.66798950 0.04466914    1 0.3326698 -2.00796581    1   0
+                                                   name
+GO:0000002             mitochondrial genome maintenance
+GO:0000018              regulation of DNA recombination
+GO:0000038 very long-chain fatty acid metabolic process
+GO:0000041               transition metal ion transport
+GO:0000042                   protein targeting to Golgi
+GO:0000045                       autophagosome assembly
+> 
+> plot (res.u$lor, res.f$lor)
+> cor (res.u$lor, res.f$lor)
+[1] 0.4919716
+> 
+> cor.test (res.u$lor, res.f$lor)
+
+	Pearson's product-moment correlation
+
+data:  res.u$lor and res.f$lor
+t = 40.62, df = 5167, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4710268 0.5123620
+sample estimates:
+      cor 
+0.4919716 
+
+> cor.test (pval2index (res.u$pval, res.u$lor),
++           pval2index (res.f$pval, res.f$lor))
+
+	Pearson's product-moment correlation
+
+data:  pval2index(res.u$pval, res.u$lor) and pval2index(res.f$pval, res.f$lor)
+t = 41.223, df = 5167, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4766876 0.5177254
+sample estimates:
+      cor 
+0.4974848 
+
+> 
+> table (u = res.u$pat, f = res.f$pat)
+    f
+u      -1    0    1
+  -1    1   29    0
+  0    19 5114    5
+  1     0    0    1
+> 
+> ############################################################
+> 
+> touse <- res.u$pat != 0
+> table (touse)
+touse
+FALSE  TRUE 
+ 5138    31 
+> 
+> res.u[touse,]
+             N        lor         pval         padj         sd         t conv
+GO:0001655 238 -0.2859860 1.386785e-05 0.0359047414 0.06577820 -4.347732    1
+GO:0001657  76 -0.4966888 1.638218e-05 0.0360906801 0.11521485 -4.310978    1
+GO:0001701 294 -0.2845974 1.840490e-06 0.0108124897 0.05963227 -4.772539    1
+GO:0006607  13 -1.2481330 2.145506e-07 0.0037813167 0.24052221 -5.189263    1
+GO:0007156 107  0.5649352 1.462041e-08 0.0005153507 0.09963860  5.669843    1
+GO:0007178 227 -0.3420577 4.869427e-07 0.0042910274 0.06794776 -5.034128    1
+GO:0007179 151 -0.3578260 1.618218e-05 0.0360906801 0.08295112 -4.313698    1
+GO:0016055 275 -0.3142419 3.250571e-07 0.0038192828 0.06148136 -5.111173    1
+GO:0016570 262 -0.2731922 1.426056e-05 0.0359047414 0.06292443 -4.341592    1
+GO:0030512  54 -0.6095502 1.750365e-05 0.0362930082 0.14187816 -4.296293    1
+GO:0030879 114 -0.4013325 2.640278e-05 0.0489823261 0.09546250 -4.204085    1
+GO:0048732 233 -0.3087991 3.721400e-06 0.0145749568 0.06671673 -4.628510    1
+GO:0051098 150 -0.3861101 2.950525e-06 0.0130002790 0.08256488 -4.676445    1
+GO:0051101  58 -0.5485734 2.093180e-05 0.0409899618 0.12888218 -4.256395    1
+GO:0060536  11 -1.1017047 4.416493e-06 0.0155675749 0.23987381 -4.592851    1
+GO:0060537 268 -0.2753531 9.495887e-06 0.0278931568 0.06215317 -4.430234    1
+GO:0071559 174 -0.3647285 2.410537e-06 0.0121383337 0.07730864 -4.717822    1
+GO:0071560 173 -0.3753270 1.318051e-06 0.0092919219 0.07755563 -4.839455    1
+GO:0072001 210 -0.3118249 8.494367e-06 0.0272195996 0.07000618 -4.454249    1
+GO:0005901  52 -0.7094356 7.141124e-07 0.0021271124 0.14302818 -4.960111    1
+GO:0000981 238 -0.2567784 9.922902e-05 0.0484768120 0.06594595 -3.893771    1
+GO:0000982  94 -0.6063354 8.263283e-09 0.0000444059 0.10513732 -5.767080    1
+GO:0001077  66 -0.5855425 3.987147e-06 0.0107132258 0.12690074 -4.614177    1
+GO:0001228  81 -0.4522232 6.516447e-05 0.0350186098 0.11320623 -3.994685    1
+GO:0004675  16 -1.2251824 2.414115e-05 0.0162164541 0.29003009 -4.224329    1
+GO:0004842 216 -0.2936669 2.075969e-05 0.0162164541 0.06896432 -4.258244    1
+GO:0005024  16 -1.2251824 2.414115e-05 0.0162164541 0.29003009 -4.224329    1
+GO:0016879 263 -0.2656337 2.173292e-05 0.0162164541 0.06253187 -4.247973    1
+GO:0016881 248 -0.2779923 1.607450e-05 0.0162164541 0.06442202 -4.315175    1
+GO:0019199  69 -0.5546566 9.477831e-06 0.0162164541 0.12518641 -4.430645    1
+GO:0019787 227 -0.2776994 3.664476e-05 0.0218805079 0.06725232 -4.129217    1
+           pat
+GO:0001655  -1
+GO:0001657  -1
+GO:0001701  -1
+GO:0006607  -1
+GO:0007156   1
+GO:0007178  -1
+GO:0007179  -1
+GO:0016055  -1
+GO:0016570  -1
+GO:0030512  -1
+GO:0030879  -1
+GO:0048732  -1
+GO:0051098  -1
+GO:0051101  -1
+GO:0060536  -1
+GO:0060537  -1
+GO:0071559  -1
+GO:0071560  -1
+GO:0072001  -1
+GO:0005901  -1
+GO:0000981  -1
+GO:0000982  -1
+GO:0001077  -1
+GO:0001228  -1
+GO:0004675  -1
+GO:0004842  -1
+GO:0005024  -1
+GO:0016879  -1
+GO:0016881  -1
+GO:0019199  -1
+GO:0019787  -1
+                                                                                                                      name
+GO:0001655                                                                                   urogenital system development
+GO:0001657                                                                                        ureteric bud development
+GO:0001701                                                                                  in utero embryonic development
+GO:0006607                                                                         NLS-bearing protein import into nucleus
+GO:0007156                                                 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0007178                                        transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0007179                                                      transforming growth factor beta receptor signaling pathway
+GO:0016055                                                                                           Wnt signaling pathway
+GO:0016570                                                                                            histone modification
+GO:0030512                               negative regulation of transforming growth factor beta receptor signaling pathway
+GO:0030879                                                                                       mammary gland development
+GO:0048732                                                                                               gland development
+GO:0051098                                                                                           regulation of binding
+GO:0051101                                                                                       regulation of DNA binding
+GO:0060536                                                                                         cartilage morphogenesis
+GO:0060537                                                                                       muscle tissue development
+GO:0071559                                                                     response to transforming growth factor beta
+GO:0071560                                                   cellular response to transforming growth factor beta stimulus
+GO:0072001                                                                                        renal system development
+GO:0005901                                                                                                         caveola
+GO:0000981                                  RNA polymerase II transcription factor activity, sequence-specific DNA binding
+GO:0000982        transcription factor activity, RNA polymerase II core promoter proximal region sequence-specific binding
+GO:0001077   transcriptional activator activity, RNA polymerase II core promoter proximal region sequence-specific binding
+GO:0001228 transcriptional activator activity, RNA polymerase II transcription regulatory region sequence-specific binding
+GO:0004675                                                 transmembrane receptor protein serine/threonine kinase activity
+GO:0004842                                                                          ubiquitin-protein transferase activity
+GO:0005024                                                     transforming growth factor beta-activated receptor activity
+GO:0016879                                                                  ligase activity, forming carbon-nitrogen bonds
+GO:0016881                                                                                 acid-amino acid ligase activity
+GO:0019199                                                                  transmembrane receptor protein kinase activity
+GO:0019787                                                                     ubiquitin-like protein transferase activity
+> res.f[touse,]
+             N         lor         pval         padj        sd          t conv
+GO:0001655 238 -0.33873251 1.219569e-02 1.000000e+00 0.1351250 -2.5068087    1
+GO:0001657  76 -0.67994663 1.111910e-03 5.520200e-01 0.2084863 -3.2613485    1
+GO:0001701 294 -0.28473876 2.066262e-02 1.000000e+00 0.1230293 -2.3143974    1
+GO:0006607  13 -0.17828399 7.596457e-01 1.000000e+00 0.5827168 -0.3059531    1
+GO:0007156 107  1.24498277 9.771160e-23 3.444209e-18 0.1265986  9.8340994    1
+GO:0007178 227 -0.14058937 3.199723e-01 1.000000e+00 0.1413589 -0.9945558    1
+GO:0007179 151 -0.16821015 3.292435e-01 1.000000e+00 0.1724033 -0.9756783    1
+GO:0016055 275 -0.24472437 5.549549e-02 1.000000e+00 0.1277826 -1.9151615    1
+GO:0016570 262 -0.50813595 3.501138e-05 4.746564e-02 0.1227469 -4.1397048    1
+GO:0030512  54 -0.32098282 2.515584e-01 1.000000e+00 0.2799365 -1.1466273    1
+GO:0030879 114 -0.20704073 2.952221e-01 1.000000e+00 0.1977883 -1.0467797    1
+GO:0048732 233 -0.09919516 4.775352e-01 1.000000e+00 0.1396535 -0.7102946    1
+GO:0051098 150 -0.34133569 4.325907e-02 1.000000e+00 0.1688600 -2.0214127    1
+GO:0051101  58 -0.76001558 8.219981e-04 4.689613e-01 0.2271332 -3.3461231    1
+GO:0060536  11 -1.16824351 1.638060e-03 7.128336e-01 0.3708998 -3.1497546    1
+GO:0060537 268 -0.42155384 7.894070e-04 4.689613e-01 0.1255621 -3.3573346    1
+GO:0071559 174 -0.24124047 1.305715e-01 1.000000e+00 0.1595554 -1.5119547    1
+GO:0071560 173 -0.24156586 1.311266e-01 1.000000e+00 0.1600011 -1.5097764    1
+GO:0072001 210 -0.32409235 2.451092e-02 1.000000e+00 0.1440854 -2.2493068    1
+GO:0005901  52 -0.44216346 1.079721e-01 1.000000e+00 0.2750638 -1.6074942    1
+GO:0000981 238 -0.35431684 8.641292e-03 1.000000e+00 0.1349081 -2.6263577    1
+GO:0000982  94 -0.63327965 9.239105e-04 4.964985e-01 0.1911183 -3.3135482    1
+GO:0001077  66 -0.74802801 4.922752e-04 4.752122e-01 0.2145884 -3.4858730    1
+GO:0001228  81 -0.55451444 9.354761e-03 1.000000e+00 0.2133382 -2.5992267    1
+GO:0004675  16 -0.63363508 1.603218e-01 1.000000e+00 0.4512825 -1.4040764    1
+GO:0004842 216 -0.20317276 1.586272e-01 1.000000e+00 0.1441155 -1.4097909    1
+GO:0005024  16 -0.63363508 1.603218e-01 1.000000e+00 0.4512825 -1.4040764    1
+GO:0016879 263 -0.19795541 1.307395e-01 1.000000e+00 0.1309840 -1.5112949    1
+GO:0016881 248 -0.19299275 1.524130e-01 1.000000e+00 0.1348515 -1.4311504    1
+GO:0019199  69 -0.81093515 6.767434e-05 3.026224e-01 0.2034607 -3.9857092    1
+GO:0019787 227 -0.19530133 1.653447e-01 1.000000e+00 0.1407676 -1.3874024    1
+           pat
+GO:0001655   0
+GO:0001657   0
+GO:0001701   0
+GO:0006607   0
+GO:0007156   1
+GO:0007178   0
+GO:0007179   0
+GO:0016055   0
+GO:0016570  -1
+GO:0030512   0
+GO:0030879   0
+GO:0048732   0
+GO:0051098   0
+GO:0051101   0
+GO:0060536   0
+GO:0060537   0
+GO:0071559   0
+GO:0071560   0
+GO:0072001   0
+GO:0005901   0
+GO:0000981   0
+GO:0000982   0
+GO:0001077   0
+GO:0001228   0
+GO:0004675   0
+GO:0004842   0
+GO:0005024   0
+GO:0016879   0
+GO:0016881   0
+GO:0019199   0
+GO:0019787   0
+                                                                                                                      name
+GO:0001655                                                                                   urogenital system development
+GO:0001657                                                                                        ureteric bud development
+GO:0001701                                                                                  in utero embryonic development
+GO:0006607                                                                         NLS-bearing protein import into nucleus
+GO:0007156                                                 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0007178                                        transmembrane receptor protein serine/threonine kinase signaling pathway
+GO:0007179                                                      transforming growth factor beta receptor signaling pathway
+GO:0016055                                                                                           Wnt signaling pathway
+GO:0016570                                                                                            histone modification
+GO:0030512                               negative regulation of transforming growth factor beta receptor signaling pathway
+GO:0030879                                                                                       mammary gland development
+GO:0048732                                                                                               gland development
+GO:0051098                                                                                           regulation of binding
+GO:0051101                                                                                       regulation of DNA binding
+GO:0060536                                                                                         cartilage morphogenesis
+GO:0060537                                                                                       muscle tissue development
+GO:0071559                                                                     response to transforming growth factor beta
+GO:0071560                                                   cellular response to transforming growth factor beta stimulus
+GO:0072001                                                                                        renal system development
+GO:0005901                                                                                                         caveola
+GO:0000981                                  RNA polymerase II transcription factor activity, sequence-specific DNA binding
+GO:0000982        transcription factor activity, RNA polymerase II core promoter proximal region sequence-specific binding
+GO:0001077   transcriptional activator activity, RNA polymerase II core promoter proximal region sequence-specific binding
+GO:0001228 transcriptional activator activity, RNA polymerase II transcription regulatory region sequence-specific binding
+GO:0004675                                                 transmembrane receptor protein serine/threonine kinase activity
+GO:0004842                                                                          ubiquitin-protein transferase activity
+GO:0005024                                                     transforming growth factor beta-activated receptor activity
+GO:0016879                                                                  ligase activity, forming carbon-nitrogen bonds
+GO:0016881                                                                                 acid-amino acid ligase activity
+GO:0019199                                                                  transmembrane receptor protein kinase activity
+GO:0019787                                                                     ubiquitin-like protein transferase activity
+> 
+> ############################################################
+> 
+> touse <- res.f$pat != 0
+> table (touse)
+touse
+FALSE  TRUE 
+ 5143    26 
+> 
+> res.u[touse,]
+             N        lor         pval         padj         sd          t conv
+GO:0001759  20 -0.5320575 1.333607e-02 1.0000000000 0.21497003 -2.4750312    1
+GO:0007156 107  0.5649352 1.462041e-08 0.0005153507 0.09963860  5.6698428    1
+GO:0016569 267 -0.2561884 3.933605e-05 0.0602845871 0.06228946 -4.1128688    1
+GO:0016570 262 -0.2731922 1.426056e-05 0.0359047414 0.06292443 -4.3415923    1
+GO:0021513  13  0.4587894 1.072592e-01 1.0000000000 0.28482875  1.6107552    1
+GO:0021514  10  0.5602964 8.628761e-02 1.0000000000 0.32661692  1.7154543    1
+GO:0021675  62 -0.4234416 1.082131e-03 0.4550343131 0.12953071 -3.2690444    1
+GO:0021772  27 -0.4042725 3.687474e-02 1.0000000000 0.19367466 -2.0873796    1
+GO:0021781  14  0.1091524 6.843130e-01 1.0000000000 0.26845520  0.4065945    1
+GO:0021889  10 -0.6247556 6.240962e-02 1.0000000000 0.33525084 -1.8635468    1
+GO:0021988  28 -0.3009872 1.150273e-01 1.0000000000 0.19096877 -1.5761071    1
+GO:0022406  31 -0.3751218 3.837715e-02 1.0000000000 0.18112811 -2.0710303    1
+GO:0030259  16  0.7162876 1.485498e-03 0.5630311583 0.22537302  3.1782315    1
+GO:0030901  29 -0.3631735 5.144435e-02 1.0000000000 0.18643905 -1.9479477    1
+GO:0045777  23  0.4565829 3.299320e-02 1.0000000000 0.21411584  2.1324108    1
+GO:0048167  92 -0.2858715 6.642222e-03 1.0000000000 0.10530348 -2.7147389    1
+GO:0048168  40 -0.6352392 7.823587e-05 0.0919325970 0.16077536 -3.9510979    1
+GO:0048169  25 -0.7454761 1.662676e-04 0.1395409386 0.19791722 -3.7666056    1
+GO:0048278  24 -0.3669988 7.568784e-02 1.0000000000 0.20659390 -1.7764263    1
+GO:0050768  84 -0.3389739 2.003777e-03 0.5865958915 0.10968800 -3.0903463    1
+GO:0050803  58 -0.2544615 5.330000e-02 1.0000000000 0.13166308 -1.9326717    1
+GO:0050807  53 -0.1975087 1.514487e-01 1.0000000000 0.13768243 -1.4345239    1
+GO:0050919  14 -0.7365137 5.900411e-03 1.0000000000 0.26745805 -2.7537539    1
+GO:0051963  34 -0.1857308 2.801886e-01 1.0000000000 0.17198187 -1.0799442    1
+GO:0060119  19 -0.2615173 2.587207e-01 1.0000000000 0.23153924 -1.1294731    1
+GO:0060384  16 -0.7901113 4.903755e-03 0.9877206625 0.28079786 -2.8138080    1
+           pat                                                            name
+GO:0001759   0                                                 organ induction
+GO:0007156   1 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0016569   0                                 covalent chromatin modification
+GO:0016570  -1                                            histone modification
+GO:0021513   0                           spinal cord dorsal/ventral patterning
+GO:0021514   0                 ventral spinal cord interneuron differentiation
+GO:0021675   0                                               nerve development
+GO:0021772   0                                      olfactory bulb development
+GO:0021781   0                                      glial cell fate commitment
+GO:0021889   0                      olfactory bulb interneuron differentiation
+GO:0021988   0                                      olfactory lobe development
+GO:0022406   0                                                membrane docking
+GO:0030259   0                                             lipid glycosylation
+GO:0030901   0                                            midbrain development
+GO:0045777   0                           positive regulation of blood pressure
+GO:0048167   0                               regulation of synaptic plasticity
+GO:0048168   0                      regulation of neuronal synaptic plasticity
+GO:0048169   0            regulation of long-term neuronal synaptic plasticity
+GO:0048278   0                                                 vesicle docking
+GO:0050768   0                             negative regulation of neurogenesis
+GO:0050803   0                     regulation of synapse structure or activity
+GO:0050807   0                              regulation of synapse organization
+GO:0050919   0                                             negative chemotaxis
+GO:0051963   0                                  regulation of synapse assembly
+GO:0060119   0                             inner ear receptor cell development
+GO:0060384   0                                                     innervation
+> res.f[touse,]
+             N        lor         pval         padj        sd         t conv
+GO:0001759  20 -1.1628174 2.423501e-05 3.559388e-02 0.2753238 -4.223453    1
+GO:0007156 107  1.2449828 9.771160e-23 3.444209e-18 0.1265986  9.834099    1
+GO:0016569 267 -0.5074169 3.060598e-05 4.315287e-02 0.1216682 -4.170496    1
+GO:0016570 262 -0.5081360 3.501138e-05 4.746564e-02 0.1227469 -4.139705    1
+GO:0021513  13  1.2828079 1.303042e-05 2.417399e-02 0.2941276  4.361399    1
+GO:0021514  10  1.4625037 1.231728e-06 5.173402e-03 0.3013653  4.852927    1
+GO:0021675  62 -0.9906553 7.195916e-06 1.585293e-02 0.2206471 -4.489774    1
+GO:0021772  27 -1.2251757 1.330287e-06 5.173402e-03 0.2532603 -4.837615    1
+GO:0021781  14  1.2934409 1.808009e-05 3.034762e-02 0.3015653  4.289090    1
+GO:0021889  10 -1.6546536 3.842951e-08 2.925924e-04 0.3007654 -5.501475    1
+GO:0021988  28 -1.2035063 1.704951e-06 5.173402e-03 0.2513617 -4.787947    1
+GO:0022406  31 -1.1393081 1.761222e-06 5.173402e-03 0.2382786 -4.781412    1
+GO:0030259  16  1.1502545 6.220316e-06 1.461721e-02 0.2544382  4.520762    1
+GO:0030901  29 -1.1792500 1.670446e-06 5.173402e-03 0.2460843 -4.792057    1
+GO:0045777  23  1.0547391 2.188508e-05 3.354005e-02 0.2483839  4.246407    1
+GO:0048167  92 -0.8520616 1.919266e-06 5.203976e-03 0.1788513 -4.764078    1
+GO:0048168  40 -1.2439731 1.311571e-08 2.311559e-04 0.2186832 -5.688472    1
+GO:0048169  25 -1.3105992 2.242585e-08 2.634942e-04 0.2342071 -5.595899    1
+GO:0048278  24 -1.1962116 4.184021e-06 1.053439e-02 0.2598123 -4.604138    1
+GO:0050768  84 -0.8100721 1.141151e-05 2.238738e-02 0.1845108 -4.390379    1
+GO:0050803  58 -0.9006998 2.020812e-05 3.237774e-02 0.2112201 -4.264270    1
+GO:0050807  53 -0.9473645 1.143227e-05 2.238738e-02 0.2158014 -4.389983    1
+GO:0050919  14 -1.4413563 3.736534e-07 1.881543e-03 0.2834673 -5.084735    1
+GO:0051963  34 -1.0769807 1.739177e-05 3.034762e-02 0.2505937 -4.297717    1
+GO:0060119  19 -1.3322704 2.797172e-07 1.643279e-03 0.2592200 -5.139537    1
+GO:0060384  16 -1.5926521 4.150398e-08 2.925924e-04 0.2902138 -5.487859    1
+           pat                                                            name
+GO:0001759  -1                                                 organ induction
+GO:0007156   1 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0016569  -1                                 covalent chromatin modification
+GO:0016570  -1                                            histone modification
+GO:0021513   1                           spinal cord dorsal/ventral patterning
+GO:0021514   1                 ventral spinal cord interneuron differentiation
+GO:0021675  -1                                               nerve development
+GO:0021772  -1                                      olfactory bulb development
+GO:0021781   1                                      glial cell fate commitment
+GO:0021889  -1                      olfactory bulb interneuron differentiation
+GO:0021988  -1                                      olfactory lobe development
+GO:0022406  -1                                                membrane docking
+GO:0030259   1                                             lipid glycosylation
+GO:0030901  -1                                            midbrain development
+GO:0045777   1                           positive regulation of blood pressure
+GO:0048167  -1                               regulation of synaptic plasticity
+GO:0048168  -1                      regulation of neuronal synaptic plasticity
+GO:0048169  -1            regulation of long-term neuronal synaptic plasticity
+GO:0048278  -1                                                 vesicle docking
+GO:0050768  -1                             negative regulation of neurogenesis
+GO:0050803  -1                     regulation of synapse structure or activity
+GO:0050807  -1                              regulation of synapse organization
+GO:0050919  -1                                             negative chemotaxis
+GO:0051963  -1                                  regulation of synapse assembly
+GO:0060119  -1                             inner ear receptor cell development
+GO:0060384  -1                                                     innervation
+> 
+> ############################################################
+> 
+> goLeaves (res.u)
+Using GO.db version: 3.2.2
+             N        lor         pval         padj         sd         t conv
+GO:0007156 107  0.5649352 1.462041e-08 0.0005153507 0.09963860  5.669843    1
+GO:0030879 114 -0.4013325 2.640278e-05 0.0489823261 0.09546250 -4.204085    1
+GO:0051101  58 -0.5485734 2.093180e-05 0.0409899618 0.12888218 -4.256395    1
+GO:0030512  54 -0.6095502 1.750365e-05 0.0362930082 0.14187816 -4.296293    1
+GO:0001657  76 -0.4966888 1.638218e-05 0.0360906801 0.11521485 -4.310978    1
+GO:0016570 262 -0.2731922 1.426056e-05 0.0359047414 0.06292443 -4.341592    1
+GO:0060537 268 -0.2753531 9.495887e-06 0.0278931568 0.06215317 -4.430234    1
+GO:0004842 216 -0.2936669 2.075969e-05 0.0162164541 0.06896432 -4.258244    1
+GO:0005024  16 -1.2251824 2.414115e-05 0.0162164541 0.29003009 -4.224329    1
+GO:0016881 248 -0.2779923 1.607450e-05 0.0162164541 0.06442202 -4.315175    1
+GO:0060536  11 -1.1017047 4.416493e-06 0.0155675749 0.23987381 -4.592851    1
+GO:0001701 294 -0.2845974 1.840490e-06 0.0108124897 0.05963227 -4.772539    1
+GO:0001077  66 -0.5855425 3.987147e-06 0.0107132258 0.12690074 -4.614177    1
+GO:0016055 275 -0.3142419 3.250571e-07 0.0038192828 0.06148136 -5.111173    1
+GO:0006607  13 -1.2481330 2.145506e-07 0.0037813167 0.24052221 -5.189263    1
+GO:0005901  52 -0.7094356 7.141124e-07 0.0021271124 0.14302818 -4.960111    1
+           pat
+GO:0007156   1
+GO:0030879  -1
+GO:0051101  -1
+GO:0030512  -1
+GO:0001657  -1
+GO:0016570  -1
+GO:0060537  -1
+GO:0004842  -1
+GO:0005024  -1
+GO:0016881  -1
+GO:0060536  -1
+GO:0001701  -1
+GO:0001077  -1
+GO:0016055  -1
+GO:0006607  -1
+GO:0005901  -1
+                                                                                                                    name
+GO:0007156                                               homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0030879                                                                                     mammary gland development
+GO:0051101                                                                                     regulation of DNA binding
+GO:0030512                             negative regulation of transforming growth factor beta receptor signaling pathway
+GO:0001657                                                                                      ureteric bud development
+GO:0016570                                                                                          histone modification
+GO:0060537                                                                                     muscle tissue development
+GO:0004842                                                                        ubiquitin-protein transferase activity
+GO:0005024                                                   transforming growth factor beta-activated receptor activity
+GO:0016881                                                                               acid-amino acid ligase activity
+GO:0060536                                                                                       cartilage morphogenesis
+GO:0001701                                                                                in utero embryonic development
+GO:0001077 transcriptional activator activity, RNA polymerase II core promoter proximal region sequence-specific binding
+GO:0016055                                                                                         Wnt signaling pathway
+GO:0006607                                                                       NLS-bearing protein import into nucleus
+GO:0005901                                                                                                       caveola
+> goLeaves (res.f)
+Using GO.db version: 3.2.2
+             N        lor         pval         padj        sd         t conv
+GO:0007156 107  1.2449828 9.771160e-23 3.444209e-18 0.1265986  9.834099    1
+GO:0021514  10  1.4625037 1.231728e-06 5.173402e-03 0.3013653  4.852927    1
+GO:0030259  16  1.1502545 6.220316e-06 1.461721e-02 0.2544382  4.520762    1
+GO:0021513  13  1.2828079 1.303042e-05 2.417399e-02 0.2941276  4.361399    1
+GO:0021781  14  1.2934409 1.808009e-05 3.034762e-02 0.3015653  4.289090    1
+GO:0045777  23  1.0547391 2.188508e-05 3.354005e-02 0.2483839  4.246407    1
+GO:0016570 262 -0.5081360 3.501138e-05 4.746564e-02 0.1227469 -4.139705    1
+GO:0001759  20 -1.1628174 2.423501e-05 3.559388e-02 0.2753238 -4.223453    1
+GO:0051963  34 -1.0769807 1.739177e-05 3.034762e-02 0.2505937 -4.297717    1
+GO:0050768  84 -0.8100721 1.141151e-05 2.238738e-02 0.1845108 -4.390379    1
+GO:0048278  24 -1.1962116 4.184021e-06 1.053439e-02 0.2598123 -4.604138    1
+GO:0030901  29 -1.1792500 1.670446e-06 5.173402e-03 0.2460843 -4.792057    1
+GO:0050919  14 -1.4413563 3.736534e-07 1.881543e-03 0.2834673 -5.084735    1
+GO:0060119  19 -1.3322704 2.797172e-07 1.643279e-03 0.2592200 -5.139537    1
+GO:0021889  10 -1.6546536 3.842951e-08 2.925924e-04 0.3007654 -5.501475    1
+GO:0060384  16 -1.5926521 4.150398e-08 2.925924e-04 0.2902138 -5.487859    1
+GO:0048169  25 -1.3105992 2.242585e-08 2.634942e-04 0.2342071 -5.595899    1
+           pat                                                            name
+GO:0007156   1 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0021514   1                 ventral spinal cord interneuron differentiation
+GO:0030259   1                                             lipid glycosylation
+GO:0021513   1                           spinal cord dorsal/ventral patterning
+GO:0021781   1                                      glial cell fate commitment
+GO:0045777   1                           positive regulation of blood pressure
+GO:0016570  -1                                            histone modification
+GO:0001759  -1                                                 organ induction
+GO:0051963  -1                                  regulation of synapse assembly
+GO:0050768  -1                             negative regulation of neurogenesis
+GO:0048278  -1                                                 vesicle docking
+GO:0030901  -1                                            midbrain development
+GO:0050919  -1                                             negative chemotaxis
+GO:0060119  -1                             inner ear receptor cell development
+GO:0021889  -1                      olfactory bulb interneuron differentiation
+GO:0060384  -1                                                     innervation
+GO:0048169  -1            regulation of long-term neuronal synaptic plasticity
+> 
+> 
+> ###EXIT
+> warnings ()
+Warning message:
+In getGOnames(res.f) : 22 GOids where not found; missing names generated.
+> sessionInfo ()
+R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.2.0   RSQLite_1.0.0 DBI_0.4-1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-6         IRanges_2.4.8        parallel_3.3.0      
+ [4] Biobase_2.30.0       AnnotationDbi_1.32.3 KEGG.db_3.2.2       
+ [7] grid_3.3.0           S4Vectors_0.8.11     BiocGenerics_0.16.1 
+[10] stats4_3.3.0         cluster_2.0.4        GO.db_3.2.2         
+[13] lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  6.136   0.148   6.354 

@@ -1,0 +1,200 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##d020_select_expressed_genes.r
+> ##2016-05-04 david.montaner@gmail.com
+> ##Select Expressed Genes
+> 
+> date ()
+[1] "Tue May 17 06:26:57 2016"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "air" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                                    
+[2] "-f"                                                                                                       
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_expression/a020_select_expressed_genes.r"
+[4] "--restore"                                                                                                
+[5] "--save"                                                                                                   
+[6] "--no-readline"                                                                                            
+[7] "--no-save"                                                                                                
+[8] "--no-restore"                                                                                             
+> rm (list = ls ())
+> R.version.string ##"R version 3.2.5 (2016-04-14)"
+[1] "R version 3.3.0 (2016-05-03)"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw_expression"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_expression"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_expression/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_expression/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 130)
+> options (width = 240)
+> 
+> 
+> ## Ranking INDEX
+> load (file.path (.job$dir$data, "data_processed", "rindex_paired.RData")) ## rindex
+> ls ()
+[1] "rindex"
+> names (rindex)
+ [1] "blca" "brca" "cesc" "esca" "hnsc" "kich" "kirc" "kirp" "lihc" "luad" "lusc" "paad" "pcpg" "prad" "stad" "thca" "ucec"
+> rindex <- rindex[["kich"]]
+> head (rindex)
+       A1CF       A2ML1       AADAT       AAED1       AAGAB        AAK1 
+ 1.15195889  0.05967257  0.79645157  0.35641125  0.34076078 -2.30319646 
+> 
+> 
+> 
+> ### EXPRESSION DATA
+> setwd (.job$dir$proces)
+> load ("kich_expression.RData")
+> dim (gexp)
+[1] 20531    91
+> gexp[100:103,1:5]
+            TCGA-KL-8323-01 TCGA-KL-8324-01 TCGA-KL-8324-11 TCGA-KL-8325-01 TCGA-KL-8326-01
+ABCD4|5826         564.4196       1364.1917        988.9883        619.2064        694.5989
+ABCE1|6059        1117.6705        580.8271        997.2471       1069.1742        759.8566
+ABCF1|23          1187.4751        989.6617       1699.5871        963.3583       1423.3099
+ABCF2|10061       3109.2940       1552.6316       1097.3847       1597.2521       1444.5680
+> 
+> sp <- strsplit (rownames (gexp), split = "\\|")
+> table (sapply (sp, length))
+
+    2 
+20531 
+> sp[[100]]
+[1] "ABCD4" "5826" 
+> rownames (gexp)[100]
+[1] "ABCD4|5826"
+> 
+> gname <- sapply (sp, "[", 1)
+> extra <- sapply (sp, "[", 2)
+> 
+> length (intersect (names (rindex), gname)) ## use this one
+[1] 11384
+> length (intersect (names (rindex), extra))
+[1] 0
+> 
+> table (names (rindex) %in% gname)
+
+FALSE  TRUE 
+  700 11384 
+> table (gname %in% names (rindex))
+
+FALSE  TRUE 
+ 9146 11385 
+> 
+> 
+> 
+> 
+> ### SELECT EXPRESSED GENES
+> table (apply (gexp >= 1, 1, any))
+
+FALSE  TRUE 
+ 1292 19239 
+> table (apply (gexp >= 1, 1, all))
+
+FALSE  TRUE 
+ 7398 13133 
+> table (apply (gexp >  0, 1, any))
+
+FALSE  TRUE 
+  603 19928 
+> table (apply (gexp >  0, 1, all))
+
+FALSE  TRUE 
+ 6577 13954 
+> 
+> touse <- apply (gexp > 1, 1, all)
+> table (touse)
+touse
+FALSE  TRUE 
+ 7399 13132 
+> 
+> exp.genes <- gname[touse]
+> length (exp.genes)
+[1] 13132
+> 
+> table (names (rindex) %in% exp.genes)
+
+FALSE  TRUE 
+ 3263  8821 
+> 
+> ### SAVE
+> save (exp.genes, file = "kich_expressed_genes.RData")
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  1.092   0.032   1.125 

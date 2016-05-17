@@ -1,0 +1,337 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##i010_compare_unpaired.r
+> ##2016-05-17 dmontaner@cipf.es
+> ##Compare results with and without filtering
+> 
+> date ()
+[1] "Tue May 17 08:55:28 2016"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "air" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                  
+[2] "-f"                                                                                     
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_expression/i010_compare_unpaired.r"
+[4] "--restore"                                                                              
+[5] "--save"                                                                                 
+[6] "--no-readline"                                                                          
+[7] "--no-save"                                                                              
+[8] "--no-restore"                                                                           
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.3.0 (2016-05-03)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.2.0"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw_expression"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_expression"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_expression/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_expression/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (widht = 240)
+> 
+> #dir (file.path (.job$dir$data, "data_processed", "res_uvgsa_unpaired"))
+> #dir (file.path (.job$dir$proces, "res_uvgsa_unpaired"))
+> 
+> 
+> tag <- "kich"
+> 
+> res.u <- NULL
+> res.f <- NULL
+> ##
+> for (onto in c ("bp", "cc", "mf")) {
++     load (file.path (.job$dir$data, "data_processed", "res_uvgsa_unpaired", paste0 (tag, "_", onto, ".RData"))) ## res
++     res[,"pat"] <- uvPat (res)
++     res.u <- rbind (res.u, res)
++     ##
++     load (file.path (.job$dir$proces, "res_uvgsa_unpaired", paste0 (tag, "_", onto, ".RData"))) ## res
++     res[,"pat"] <- uvPat (res)
++     res.f <- rbind (res.f, res)
++ }
+> rm (res)
+> 
+> table (rownames (res.u) == rownames (res.f))
+
+TRUE 
+5169 
+> 
+> res.u[,"name"] <- getGOnames (res.u)
+Using row names of the input matrix.
+Using GO.db version: 3.2.2
+Warning message:
+In getGOnames(res.u) : 22 GOids where not found; missing names generated.
+> res.f[,"name"] <- getGOnames (res.f)
+Using row names of the input matrix.
+Using GO.db version: 3.2.2
+Warning message:
+In getGOnames(res.f) : 22 GOids where not found; missing names generated.
+> 
+> head (res.u)
+            N         lor       pval padj        sd          t conv pat
+GO:0000002 11 -0.53956181 0.07407018    1 0.3020497 -1.7863345    1   0
+GO:0000018 36  0.02566050 0.87783489    1 0.1669326  0.1537177    1   0
+GO:0000038 13  0.08362138 0.76325442    1 0.2776120  0.3012167    1   0
+GO:0000041 79 -0.06958101 0.53762590    1 0.1128784 -0.6164247    1   0
+GO:0000042 12  0.01553908 0.95709938    1 0.2888573  0.0537950    1   0
+GO:0000045 31  0.15978228 0.37622397    1 0.1805638  0.8849078    1   0
+                                                   name
+GO:0000002             mitochondrial genome maintenance
+GO:0000018              regulation of DNA recombination
+GO:0000038 very long-chain fatty acid metabolic process
+GO:0000041               transition metal ion transport
+GO:0000042                   protein targeting to Golgi
+GO:0000045                       autophagosome assembly
+> head (res.f)
+            N          lor       pval padj        sd            t conv pat
+GO:0000002 11  0.013082473 0.98377939    1 0.6434635  0.020331336    1   0
+GO:0000018 36 -0.359859029 0.29334878    1 0.3424459 -1.050849398    1   0
+GO:0000038 13  0.032255013 0.95644247    1 0.5905398  0.054619540    1   0
+GO:0000041 79  0.001424721 0.99528511    1 0.2410944  0.005909391    1   0
+GO:0000042 12 -0.299039519 0.61932786    1 0.6019120 -0.496815980    1   0
+GO:0000045 31 -0.615863829 0.07029735    1 0.3402281 -1.810150060    1   0
+                                                   name
+GO:0000002             mitochondrial genome maintenance
+GO:0000018              regulation of DNA recombination
+GO:0000038 very long-chain fatty acid metabolic process
+GO:0000041               transition metal ion transport
+GO:0000042                   protein targeting to Golgi
+GO:0000045                       autophagosome assembly
+> 
+> plot (res.u$lor, res.f$lor)
+> cor (res.u$lor, res.f$lor)
+[1] 0.410436
+> 
+> cor.test (res.u$lor, res.f$lor)
+
+	Pearson's product-moment correlation
+
+data:  res.u$lor and res.f$lor
+t = 32.354, df = 5167, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3875097 0.4328549
+sample estimates:
+     cor 
+0.410436 
+
+> cor.test (pval2index (res.u$pval, res.u$lor),
++           pval2index (res.f$pval, res.f$lor))
+
+	Pearson's product-moment correlation
+
+data:  pval2index(res.u$pval, res.u$lor) and pval2index(res.f$pval, res.f$lor)
+t = 32.216, df = 5167, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3860264 0.4314365
+sample estimates:
+      cor 
+0.4089846 
+
+> 
+> table (u = res.u$pat, f = res.f$pat)
+    f
+u      -1    0    1
+  -1    0    1    0
+  0     4 5161    2
+  1     0    0    1
+> 
+> ############################################################
+> 
+> touse <- res.u$pat != 0
+> table (touse)
+touse
+FALSE  TRUE 
+ 5167     2 
+> 
+> res.u[touse,]
+             N        lor         pval        padj        sd         t conv pat
+GO:0007156 107  0.5384174 8.419130e-08 0.002967636 0.1004285  5.361203    1   1
+GO:0005811  40 -0.6697331 1.034176e-05 0.030804801 0.1518060 -4.411768    1  -1
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0005811                                                  lipid particle
+> res.f[touse,]
+             N       lor         pval         padj        sd         t conv pat
+GO:0007156 107  1.218240 5.445449e-17 1.919451e-12 0.1452186  8.389003    1   1
+GO:0005811  40 -0.134175 6.924094e-01 1.000000e+00 0.3391709 -0.395597    1   0
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0005811                                                  lipid particle
+> 
+> ############################################################
+> 
+> touse <- res.f$pat != 0
+> table (touse)
+touse
+FALSE  TRUE 
+ 5162     7 
+> 
+> res.u[touse,]
+             N        lor         pval        padj        sd         t conv pat
+GO:0007156 107  0.5384174 8.419130e-08 0.002967636 0.1004285  5.361203    1   1
+GO:0021513  13  0.3732172 1.907932e-01 1.000000000 0.2852667  1.308309    1   0
+GO:0021514  10  0.5623530 9.921113e-02 1.000000000 0.3410645  1.648817    1   0
+GO:0022406  31 -0.4913391 7.439913e-03 1.000000000 0.1835453 -2.676936    1   0
+GO:0030901  29 -0.3754457 4.497135e-02 1.000000000 0.1872425 -2.005131    1   0
+GO:0048278  24 -0.5031773 1.590155e-02 1.000000000 0.2086568 -2.411507    1   0
+GO:0060384  16 -0.7378634 8.317463e-03 1.000000000 0.2795638 -2.639339    1   0
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0021513                           spinal cord dorsal/ventral patterning
+GO:0021514                 ventral spinal cord interneuron differentiation
+GO:0022406                                                membrane docking
+GO:0030901                                            midbrain development
+GO:0048278                                                 vesicle docking
+GO:0060384                                                     innervation
+> res.f[touse,]
+             N       lor         pval         padj        sd         t conv pat
+GO:0007156 107  1.218240 5.445449e-17 1.919451e-12 0.1452186  8.389003    1   1
+GO:0021513  13  1.341999 2.987655e-06 1.504443e-02 0.2871277  4.673874    1   1
+GO:0021514  10  1.524529 1.649558e-07 1.565703e-03 0.2910456  5.238111    1   1
+GO:0022406  31 -1.176754 6.385591e-07 4.501678e-03 0.2362090 -4.981833    1  -1
+GO:0030901  29 -1.254328 1.776748e-07 1.565703e-03 0.2400926 -5.224351    1  -1
+GO:0048278  24 -1.241064 1.358051e-06 7.978258e-03 0.2567631 -4.833499    1  -1
+GO:0060384  16 -1.557785 6.950899e-08 1.225051e-03 0.2887037 -5.395794    1  -1
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0021513                           spinal cord dorsal/ventral patterning
+GO:0021514                 ventral spinal cord interneuron differentiation
+GO:0022406                                                membrane docking
+GO:0030901                                            midbrain development
+GO:0048278                                                 vesicle docking
+GO:0060384                                                     innervation
+> 
+> ############################################################
+> 
+> goLeaves (res.u)
+Using GO.db version: 3.2.2
+             N        lor         pval        padj        sd         t conv pat
+GO:0007156 107  0.5384174 8.419130e-08 0.002967636 0.1004285  5.361203    1   1
+GO:0005811  40 -0.6697331 1.034176e-05 0.030804801 0.1518060 -4.411768    1  -1
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0005811                                                  lipid particle
+> goLeaves (res.f)
+Using GO.db version: 3.2.2
+             N       lor         pval         padj        sd         t conv pat
+GO:0007156 107  1.218240 5.445449e-17 1.919451e-12 0.1452186  8.389003    1   1
+GO:0021514  10  1.524529 1.649558e-07 1.565703e-03 0.2910456  5.238111    1   1
+GO:0021513  13  1.341999 2.987655e-06 1.504443e-02 0.2871277  4.673874    1   1
+GO:0048278  24 -1.241064 1.358051e-06 7.978258e-03 0.2567631 -4.833499    1  -1
+GO:0030901  29 -1.254328 1.776748e-07 1.565703e-03 0.2400926 -5.224351    1  -1
+GO:0060384  16 -1.557785 6.950899e-08 1.225051e-03 0.2887037 -5.395794    1  -1
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0021514                 ventral spinal cord interneuron differentiation
+GO:0021513                           spinal cord dorsal/ventral patterning
+GO:0048278                                                 vesicle docking
+GO:0030901                                            midbrain development
+GO:0060384                                                     innervation
+> 
+> 
+> ###EXIT
+> warnings ()
+Warning message:
+In getGOnames(res.f) : 22 GOids where not found; missing names generated.
+> sessionInfo ()
+R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.2.0   RSQLite_1.0.0 DBI_0.4-1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-6         IRanges_2.4.8        parallel_3.3.0      
+ [4] Biobase_2.30.0       AnnotationDbi_1.32.3 KEGG.db_3.2.2       
+ [7] grid_3.3.0           S4Vectors_0.8.11     BiocGenerics_0.16.1 
+[10] stats4_3.3.0         cluster_2.0.4        GO.db_3.2.2         
+[13] lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  6.228   0.136   6.384 

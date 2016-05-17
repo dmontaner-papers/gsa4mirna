@@ -1,0 +1,317 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##h040_uvgsa_paired.r
+> ##2014-06-03 dmontaner@cipf.es
+> ##Analysis of the miRNA data from The Cancer Genome Atlas
+> ##This script performs the GSA analysis of the transferred miRNA
+> 
+> date ()
+[1] "Tue May 17 06:47:36 2016"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "air" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                          
+[2] "-f"                                                                                             
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_expression/h040_uvgsa_paired.r"
+[4] "--restore"                                                                                      
+[5] "--save"                                                                                         
+[6] "--no-readline"                                                                                  
+[7] "--no-save"                                                                                      
+[8] "--no-restore"                                                                                   
+> rm (list = ls ())
+> R.version.string ##"R version 3.0.2 (2013-09-25)"
+[1] "R version 3.3.0 (2016-05-03)"
+> library (mdgsa); packageDescription ("mdgsa", fields = "Version") #"0.3.3"
+Loading required package: DBI
+
+
+KEGG.db contains mappings based on older data because the original
+  resource was removed from the the public domain before the most
+  recent update was produced. This package should now be considered
+  deprecated and future versions of Bioconductor may not have it
+  available.  Users who want more current data are encouraged to look
+  at the KEGGREST or reactome.db packages
+
+[1] "1.2.0"
+> #library (mirbaseID); packageDescription ("mirbaseID", fields = "Version") #"0.0.2"
+> #help (package = mdgsa)
+> #help (package = mirbaseID)
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw_expression"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_expression"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_expression/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_expression/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> 
+> ## ANNOTATION
+> ##load (file.path (.job$dir$proces, "annot_for_paired_data.RData"))
+> load (file.path (.job$dir$data, "data_processed", "annot_for_paired_data.RData"))
+> ls ()
+[1] "annot"
+> 
+> ontologias <- names (annot)
+> ontologias
+[1] "bp" "cc" "mf"
+> 
+> 
+> ## INDEX
+> ##load (file.path (.job$dir$proces, "rindex_paired.RData"))
+> load (file.path (.job$dir$data, "data_processed",  "rindex_paired.RData"))
+> ls ()
+[1] "annot"      "ontologias" "rindex"    
+> 
+> 
+> ## FILTER JUST EXPRESSED GENES
+> ## non expressed genes go to 0
+> load (file.path (.job$dir$proces, "kich_expressed_genes.RData")) ## exp.genes
+> 
+> for (i in seq_along (rindex)) {
++     print (i)
++     touse <- names (rindex[[i]]) %in% exp.genes
++     print (table (touse))    
++     rindex[[i]][touse] <- 0
++ }
+[1] 1
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 2
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 3
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 4
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 5
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 6
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 7
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 8
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 9
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 10
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 11
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 12
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 13
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 14
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 15
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 16
+touse
+FALSE  TRUE 
+ 3263  8821 
+[1] 17
+touse
+FALSE  TRUE 
+ 3263  8821 
+> 
+> ################################################################################
+> 
+> ##tags <- names (rindex)
+> tags <- "kich"
+> TAGS <- toupper (tags)
+> names (TAGS) <- tags
+> tags
+[1] "kich"
+> TAGS
+  kich 
+"KICH" 
+> 
+> ################################################################################
+> 
+> length (tags)
+[1] 1
+> 
+> ## tags <- tags[1:3]    ## 1
+> ## tags <- tags[4:6]    ## 2
+> ## tags <- tags[7:9]    ## 3
+> ## tags <- tags[10:12]  ## 4
+> ## tags <- tags[13:15]  ## 5
+> ## tags <- tags[16:18]  ## 6
+> ## tags <- tags[19:20]  ## 7
+> 
+> ################################################################################
+> 
+> ## GSA
+> setwd (file.path (.job$dir$proces, "res_uvgsa_paired"))
+> 
+> for (tag in tags) {
++     for (onto in ontologias) {
++         cat ("\n=============== ", TAGS[tag], ":", onto, " ===============\n")
++         
++         anotacion <- annotFilter (annot[[onto]], index = rindex[[tag]], minBlockSize = 10, maxBlockSize = 300)
++ 
++         if (.job$testmode) anotacion <- anotacion[1:3]
++         
++         res <- try (uvGsa (rindex[[tag]], anotacion, fulltable = TRUE))
++         
++         fichero <- paste (tag, "_", onto, ".RData", sep = "")
++         save (list = "res", file = fichero)
++     }
++ }
+
+===============  KICH : bp  ===============
+83.87% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   7244 small blocks removed.
+   508 big blocks removed.
+   3976 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 
+
+1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 
+
+2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000, 
+
+3100, 3200, 3300, 3400, 3500, 3600, 3700, 3800, 3900, time in seconds:
+   user  system elapsed 
+283.880   0.332 286.169 
+
+===============  KICH : cc  ===============
+90.19% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   813 small blocks removed.
+   86 big blocks removed.
+   446 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, time in seconds:
+   user  system elapsed 
+ 15.652   0.000  15.673 
+
+===============  KICH : mf  ===============
+87.83% of the genes in the index are annotated in the list.
+Filtering annotation by size:
+   2588 small blocks removed.
+   86 big blocks removed.
+   747 blocks remain in the annotation.
+Analyzed blocks:
+100, 200, 300, 400, 500, 600, 700, time in seconds:
+   user  system elapsed 
+ 29.944   0.096  30.070 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mdgsa_1.2.0   RSQLite_1.0.0 DBI_0.4-1    
+
+loaded via a namespace (and not attached):
+ [1] Matrix_1.2-6         IRanges_2.4.8        parallel_3.3.0      
+ [4] Biobase_2.30.0       AnnotationDbi_1.32.3 KEGG.db_3.2.2       
+ [7] grid_3.3.0           S4Vectors_0.8.11     BiocGenerics_0.16.1 
+[10] stats4_3.3.0         cluster_2.0.4        GO.db_3.2.2         
+[13] lattice_0.20-33     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+338.176   0.596 340.840 

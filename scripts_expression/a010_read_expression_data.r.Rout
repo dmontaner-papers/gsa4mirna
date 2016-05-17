@@ -1,0 +1,359 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##d010_read_expression.r
+> ##2016-05-04 david.montaner@gmail.com
+> ##Read Expression Data
+> 
+> ### NOTES about the normalized data from; <http://seqanswers.com/forums/showthread.php?t=42911>
+> ## It took me a while to get my head around this, since the column names in the rsem.genes/isoforms.results files don't match the default output of RSEM, neither the version they claim to have used nor the most current version.
+> ## The (first) RSEM paper explains that the program calculates two values. One represent the (estimated) number of reads that aligned to a transcript. This value is not an integer because RSEM only reports a guess of how many ambiguously mapping reads belong to a transcript/gene. This number is what the TCGA slightly misleadingly calls raw counts.
+> ## The scaled estimate value on the other hand is the estimated frequency of the gene/transcript amongst the total number of transcripts that were sequenced. Newer versions of RSEM call this value (multiplied by 1e6) TPM - Transcripts Per Million. It's closely related to FPKM, as explained on the RSEM website. The important point is that TPM, like FPKM, is independent of transcript length, whereas "raw" counts are not!
+> ## The *.normalized_results files on the other hand just contain a scaled version of the raw_counts column. The values are divided by the 75-percentile and multiplied by 1000. This should make the values a bit more comparable between experiments. The Perl code for this quantile normalisation can be found here.
+> ## In conclusion, I would strongly recommend using the TPM/scaled_estimate values for all intents and purposes. It seems to me to be the more robust and mathematically sound value.
+> ## Hope that helps, best wishes,
+> ## Benjamin
+> 
+> 
+> date ()
+[1] "Tue May 17 06:05:18 2016"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "air" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                                                                  
+[2] "-f"                                                                                                     
+[3] "/home/dmontaner/trabajos_mios/2014/gsa4mirna/scripts_expression/a010_read_expression_data.r"
+[4] "--restore"                                                                                              
+[5] "--save"                                                                                                 
+[6] "--no-readline"                                                                                          
+[7] "--no-save"                                                                                              
+[8] "--no-restore"                                                                                           
+> rm (list = ls ())
+> R.version.string ##"R version 3.2.5 (2016-04-14)"
+[1] "R version 3.3.0 (2016-05-03)"
+> 
+> try (source (".job.r")); try (.job)
+
+.job.r has been sourced
+
+$name
+[1] "gsa4mirna"
+
+$dir
+$dir$data
+[1] "~/datos/2014/gsa4mirna"
+
+$dir$code
+[1] "~/trabajos_mios/2014/gsa4mirna"
+
+$dir$scripts
+[1] "~/trabajos_mios/2014/gsa4mirna/scripts"
+
+$dir$docs
+[1] "~/trabajos_mios/2014/gsa4mirna/documents"
+
+$dir$rawdat
+[1] "~/datos/2014/gsa4mirna/data_raw_expression"
+
+$dir$annotation
+[1] "~/datos/2014/gsa4mirna/data_annotation"
+
+$dir$proces
+[1] "~/datos/2014/gsa4mirna/data_processed_expression"
+
+$dir$plots
+[1] "~/datos/2014/gsa4mirna/results_expression/plots"
+
+$dir$res
+[1] "~/datos/2014/gsa4mirna/results_expression/files"
+
+
+$testmode
+[1] FALSE
+
+$dec
+[1] "."
+
+$idsep
+[1] " /// "
+
+> 
+> options (width = 240)
+> 
+> ##ftag <- ".rsem.genes.results"
+> ftag <- ".rsem.genes.normalized_results"
+> 
+> ##ecol <- "raw_count"
+> ecol <- "normalized_count"
+> 
+> 
+> ### SAMPLE INFO
+> sinfo <- read.table (file = file.path (.job$dir$rawdat, "KICH", "METADATA", "UNC__IlluminaHiSeq_RNASeqV2", "unc.edu_KICH.IlluminaHiSeq_RNASeqV2.1.2.0.sdrf.txt"),
++                      header = TRUE, sep = "\t", quote = "", as.is = TRUE)
+> table (sapply (sinfo, class))
+
+character 
+       26 
+> dim (sinfo)
+[1] 546  26
+> colnames (sinfo)
+ [1] "Extract.Name"                              "Comment..TCGA.Barcode."                    "Material.Type"                             "Protocol.REF"                              "Assay.Name"                               
+ [6] "Protocol.REF.1"                            "Assay.Name.1"                              "Protocol.REF.2"                            "Assay.Name.2"                              "Comment..NCBI.SRA.Experiment.Accession."  
+[11] "Annotation.REF"                            "Protocol.REF.3"                            "Data.Transformation.Name"                  "Derived.Data.File.REF"                     "Comment..Genome.reference."               
+[16] "Comment..NCBI.dbGAP.Experiment.Accession." "Comment..TCGA.Include.for.Analysis."       "Comment..TCGA.Data.Type."                  "Comment..TCGA.Data.Level."                 "Protocol.REF.4"                           
+[21] "Data.Transformation.Name.1"                "Derived.Data.File"                         "Comment..TCGA.Include.for.Analysis..1"     "Comment..TCGA.Data.Type..1"                "Comment..TCGA.Data.Level..1"              
+[26] "Comment..TCGA.Archive.Name."              
+> 
+> head (sinfo[,c ("Extract.Name", "Comment..TCGA.Barcode.", "Derived.Data.File")])
+                          Extract.Name       Comment..TCGA.Barcode.                                                                     Derived.Data.File
+1 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07            unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1714213.rsem.isoforms.results
+2 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07               unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1714212.rsem.genes.results
+3 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07       unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1745495.bt.exon_quantification.txt
+4 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07      unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1708454.junction_quantification.txt
+5 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07    unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1714287.rsem.genes.normalized_results
+6 bc33e129-174b-4193-b65a-844e06984a81 TCGA-KL-8324-01A-11R-2315-07 unc.edu.bc33e129-174b-4193-b65a-844e06984a81.1714280.rsem.isoforms.normalized_results
+> #sinfo[,"Extract.Name"]
+> #sinfo[,"Comment..TCGA.Barcode."]
+> 
+> touse <- grep (ftag, sinfo[,"Derived.Data.File"])
+> sinfo <- sinfo[touse,]
+> dim (sinfo)
+[1] 91 26
+> 
+> table (duplicated (sinfo[,"Comment..TCGA.Barcode."])) ## OK no dups
+
+FALSE 
+   91 
+> 
+> sinfo[,"sample"] <- substring (sinfo[,"Comment..TCGA.Barcode."], 1, 15)
+> 
+> 
+> 
+> ### COUNT DATA
+> setwd (file.path (.job$dir$rawdat, "KICH", "RNASeqV2", "UNC__IlluminaHiSeq_RNASeqV2", "Level_3"))
+> ficheros <- dir (pattern = ftag)
+> head (ficheros)
+[1] "unc.edu.01816f78-7cee-4160-8a99-85cb23d3a124.1729276.rsem.genes.normalized_results" "unc.edu.034d17f6-d3ef-474c-867a-2fa51eab60f2.1715877.rsem.genes.normalized_results"
+[3] "unc.edu.070ff02a-0851-4538-939c-01507b152e26.1728743.rsem.genes.normalized_results" "unc.edu.0acf650f-8275-4319-bdb4-bb0a6c35c235.1710547.rsem.genes.normalized_results"
+[5] "unc.edu.0d5727f8-2f06-4b7e-bc23-0241d44594cc.1728021.rsem.genes.normalized_results" "unc.edu.102bbfea-fb71-41c8-899d-75670fda81e8.1716425.rsem.genes.normalized_results"
+> length (ficheros)
+[1] 91
+> 
+> table (ficheros %in% sinfo[,"Derived.Data.File"])
+
+TRUE 
+  91 
+> table (ficheros == sinfo[,"Derived.Data.File"])   ### NOT IN THE SAME ORDER
+
+FALSE  TRUE 
+   89     2 
+> 
+> 
+> ## read first file
+> i <- 1
+> 
+> tabla <- read.table (file = sinfo[i,"Derived.Data.File"], header = TRUE, sep = "\t", quote = "", as.is = TRUE)
+> print (dim (tabla))
+[1] 20531     2
+> head (tabla)
+      gene_id normalized_count
+1 ?|100130426           0.0000
+2 ?|100133144          10.2397
+3 ?|100134869          25.0047
+4     ?|10357          60.3947
+5     ?|10431        1259.8684
+6    ?|136542           0.0000
+> 
+> gexp <- tabla[ecol]
+> rownames (gexp) <- tabla[,'gene_id']
+> colnames (gexp) <- sinfo[i,"sample"]
+> 
+> for (i in 2:nrow (sinfo)) {
++     print (i)
++     tabla <- read.table (file = sinfo[i,"Derived.Data.File"], header = TRUE, sep = "\t", quote = "", as.is = TRUE)
++     if (any (rownames (gexp) != tabla[,'gene_id'])) {
++         stop ('GENES DO NOT MATCH')
++     }
++     gexp[,sinfo[i,"sample"]] <- tabla[,ecol]
++ }
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+[1] 8
+[1] 9
+[1] 10
+[1] 11
+[1] 12
+[1] 13
+[1] 14
+[1] 15
+[1] 16
+[1] 17
+[1] 18
+[1] 19
+[1] 20
+[1] 21
+[1] 22
+[1] 23
+[1] 24
+[1] 25
+[1] 26
+[1] 27
+[1] 28
+[1] 29
+[1] 30
+[1] 31
+[1] 32
+[1] 33
+[1] 34
+[1] 35
+[1] 36
+[1] 37
+[1] 38
+[1] 39
+[1] 40
+[1] 41
+[1] 42
+[1] 43
+[1] 44
+[1] 45
+[1] 46
+[1] 47
+[1] 48
+[1] 49
+[1] 50
+[1] 51
+[1] 52
+[1] 53
+[1] 54
+[1] 55
+[1] 56
+[1] 57
+[1] 58
+[1] 59
+[1] 60
+[1] 61
+[1] 62
+[1] 63
+[1] 64
+[1] 65
+[1] 66
+[1] 67
+[1] 68
+[1] 69
+[1] 70
+[1] 71
+[1] 72
+[1] 73
+[1] 74
+[1] 75
+[1] 76
+[1] 77
+[1] 78
+[1] 79
+[1] 80
+[1] 81
+[1] 82
+[1] 83
+[1] 84
+[1] 85
+[1] 86
+[1] 87
+[1] 88
+[1] 89
+[1] 90
+[1] 91
+> 
+> gexp[1:5, 1:3]
+            TCGA-KL-8324-01 TCGA-KL-8323-01 TCGA-KL-8324-11
+?|100130426          0.0000          0.0000          0.0000
+?|100133144         10.2397          8.8472          7.1989
+?|100134869         25.0047          5.5126          5.8775
+?|10357             60.3947         98.6478        113.2037
+?|10431           1259.8684        723.5740        926.0151
+> summary (unlist (gexp))
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+     0.0      3.5    167.9    928.3    809.7 946600.0 
+> ##boxplot (log (1 + gexp))
+> 
+> 
+> ### REORDER AS MIRNA DATA
+> load (file.path (.job$dir$data, "data_processed", "datos_unpaired.RData")) ## datos
+> ls ()
+[1] "datos"    "ecol"     "ficheros" "ftag"     "gexp"     "i"        "sinfo"    "tabla"    "touse"   
+> 
+> dim (datos[["kich"]]$contmat)
+[1] 662  91
+> table (colnames (datos[["kich"]]$contmat) == rownames (datos[["kich"]]$sinfo))
+
+TRUE 
+  91 
+> colnames (datos[["kich"]]$contmat)
+ [1] "TCGA-KL-8323-01" "TCGA-KL-8324-01" "TCGA-KL-8324-11" "TCGA-KL-8325-01" "TCGA-KL-8326-01" "TCGA-KL-8326-11" "TCGA-KL-8327-01" "TCGA-KL-8328-01" "TCGA-KL-8329-01" "TCGA-KL-8329-11" "TCGA-KL-8330-01" "TCGA-KL-8331-01" "TCGA-KL-8332-01"
+[14] "TCGA-KL-8332-11" "TCGA-KL-8333-01" "TCGA-KL-8334-01" "TCGA-KL-8335-01" "TCGA-KL-8336-01" "TCGA-KL-8336-11" "TCGA-KL-8337-01" "TCGA-KL-8338-01" "TCGA-KL-8339-01" "TCGA-KL-8339-11" "TCGA-KL-8340-01" "TCGA-KL-8341-01" "TCGA-KL-8342-01"
+[27] "TCGA-KL-8343-01" "TCGA-KL-8344-01" "TCGA-KL-8345-01" "TCGA-KL-8346-01" "TCGA-KM-8438-01" "TCGA-KM-8439-01" "TCGA-KM-8440-01" "TCGA-KM-8441-01" "TCGA-KM-8442-01" "TCGA-KM-8443-01" "TCGA-KM-8476-01" "TCGA-KM-8477-01" "TCGA-KM-8639-01"
+[40] "TCGA-KN-8418-01" "TCGA-KN-8419-01" "TCGA-KN-8419-11" "TCGA-KN-8421-01" "TCGA-KN-8422-01" "TCGA-KN-8422-11" "TCGA-KN-8423-01" "TCGA-KN-8423-11" "TCGA-KN-8424-01" "TCGA-KN-8424-11" "TCGA-KN-8425-01" "TCGA-KN-8425-11" "TCGA-KN-8426-01"
+[53] "TCGA-KN-8426-11" "TCGA-KN-8427-01" "TCGA-KN-8427-11" "TCGA-KN-8428-01" "TCGA-KN-8428-11" "TCGA-KN-8429-01" "TCGA-KN-8429-11" "TCGA-KN-8430-01" "TCGA-KN-8430-11" "TCGA-KN-8431-01" "TCGA-KN-8431-11" "TCGA-KN-8432-01" "TCGA-KN-8432-11"
+[66] "TCGA-KN-8433-01" "TCGA-KN-8433-11" "TCGA-KN-8434-01" "TCGA-KN-8434-11" "TCGA-KN-8435-01" "TCGA-KN-8435-11" "TCGA-KN-8436-01" "TCGA-KN-8436-11" "TCGA-KN-8437-01" "TCGA-KN-8437-11" "TCGA-KO-8403-01" "TCGA-KO-8403-11" "TCGA-KO-8404-01"
+[79] "TCGA-KO-8405-01" "TCGA-KO-8406-01" "TCGA-KO-8407-01" "TCGA-KO-8408-01" "TCGA-KO-8409-01" "TCGA-KO-8410-01" "TCGA-KO-8411-01" "TCGA-KO-8413-01" "TCGA-KO-8414-01" "TCGA-KO-8415-01" "TCGA-KO-8415-11" "TCGA-KO-8416-01" "TCGA-KO-8417-01"
+> 
+> table (colnames (datos[["kich"]]$contmat) %in% colnames (gexp))
+
+TRUE 
+  91 
+> table (colnames (datos[["kich"]]$contmat) == colnames (gexp))  ## not in the same order
+
+FALSE  TRUE 
+   89     2 
+> 
+> ## reorder expression data
+> gexp <- gexp[,colnames (datos[["kich"]]$contmat)]
+> table (colnames (datos[["kich"]]$contmat) == colnames (gexp))  ## OK
+
+TRUE 
+  91 
+> 
+> 
+> ###SAVE
+> setwd (.job$dir$proces)
+> save (gexp, file = "kich_expression.RData")
+> 
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.3.0 (2016-05-03)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.4 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+  6.328   0.120   6.460 
