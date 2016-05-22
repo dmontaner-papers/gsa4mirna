@@ -71,8 +71,18 @@ res.f[touse,]
 
 ############################################################
 
+touse <- res.u$pat != 0 & res.f$pat != 0
+table (touse)
+
+res.u[touse,]
+res.f[touse,]
+
 goLeaves (res.u)
 goLeaves (res.f)
+
+intersect (goLeaves (res.u)$name,
+           goLeaves (res.f)$name)
+
 
 
 ###EXIT

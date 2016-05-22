@@ -22,7 +22,7 @@ Type 'q()' to quit R.
 > ##Compare results with and without filtering
 > 
 > date ()
-[1] "Tue May 17 08:55:25 2016"
+[1] "Wed May 18 07:12:08 2016"
 > Sys.info ()[c("nodename", "user")]
    nodename        user 
       "air" "dmontaner" 
@@ -532,6 +532,27 @@ GO:0060384  -1                                                     innervation
 > 
 > ############################################################
 > 
+> touse <- res.u$pat != 0 & res.f$pat != 0
+> table (touse)
+touse
+FALSE  TRUE 
+ 5167     2 
+> 
+> res.u[touse,]
+             N        lor         pval         padj         sd         t conv
+GO:0007156 107  0.5649352 1.462041e-08 0.0005153507 0.09963860  5.669843    1
+GO:0016570 262 -0.2731922 1.426056e-05 0.0359047414 0.06292443 -4.341592    1
+           pat                                                            name
+GO:0007156   1 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0016570  -1                                            histone modification
+> res.f[touse,]
+             N       lor         pval         padj        sd         t conv pat
+GO:0007156 107  1.244983 9.771160e-23 3.444209e-18 0.1265986  9.834099    1   1
+GO:0016570 262 -0.508136 3.501138e-05 4.746564e-02 0.1227469 -4.139705    1  -1
+                                                                      name
+GO:0007156 homophilic cell adhesion via plasma membrane adhesion molecules
+GO:0016570                                            histone modification
+> 
 > goLeaves (res.u)
 Using GO.db version: 3.2.2
              N        lor         pval         padj         sd         t conv
@@ -624,6 +645,14 @@ GO:0021889  -1                      olfactory bulb interneuron differentiation
 GO:0060384  -1                                                     innervation
 GO:0048169  -1            regulation of long-term neuronal synaptic plasticity
 > 
+> intersect (goLeaves (res.u)$name,
++            goLeaves (res.f)$name)
+Using GO.db version: 3.2.2
+Using GO.db version: 3.2.2
+[1] "homophilic cell adhesion via plasma membrane adhesion molecules"
+[2] "histone modification"                                           
+> 
+> 
 > 
 > ###EXIT
 > warnings ()
@@ -657,4 +686,4 @@ loaded via a namespace (and not attached):
 > q ("no")
 > proc.time()
    user  system elapsed 
-  6.136   0.148   6.354 
+  8.808   0.116   8.949 
